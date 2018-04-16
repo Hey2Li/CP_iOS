@@ -25,6 +25,8 @@
 		9B1D31D420736856007674CF /* WrongTopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1D31D320736856007674CF /* WrongTopicViewController.m */; };
 		9B1D31D720736866007674CF /* MyDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1D31D620736866007674CF /* MyDownloadViewController.m */; };
 		9B3D02C62084468E005C923B /* SUPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3D02C52084468E005C923B /* SUPlayer.m */; };
+		9B3D02CA20845338005C923B /* PaperDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3D02C820845338005C923B /* PaperDetailViewController.m */; };
+		9B3D02CB20845338005C923B /* PaperDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B3D02C920845338005C923B /* PaperDetailViewController.xib */; };
 		9B4BB6FD2079A9FC0029015F /* HomeListenCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4BB6FB2079A9FC0029015F /* HomeListenCell.m */; };
 		9B4BB6FE2079A9FC0029015F /* HomeListenCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B4BB6FC2079A9FC0029015F /* HomeListenCell.xib */; };
 		9B4BB7082079C1AE0029015F /* BottomLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4BB7072079C1AE0029015F /* BottomLabel.m */; };
@@ -109,6 +111,9 @@
 		9B1D31D520736866007674CF /* MyDownloadViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyDownloadViewController.h; sourceTree = "<group>"; };
 		9B1D31D620736866007674CF /* MyDownloadViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyDownloadViewController.m; sourceTree = "<group>"; };
 		9B3D02C52084468E005C923B /* SUPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SUPlayer.m; sourceTree = "<group>"; };
+		9B3D02C720845338005C923B /* PaperDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaperDetailViewController.h; sourceTree = "<group>"; };
+		9B3D02C820845338005C923B /* PaperDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaperDetailViewController.m; sourceTree = "<group>"; };
+		9B3D02C920845338005C923B /* PaperDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaperDetailViewController.xib; sourceTree = "<group>"; };
 		9B4BB6FA2079A9FC0029015F /* HomeListenCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeListenCell.h; sourceTree = "<group>"; };
 		9B4BB6FB2079A9FC0029015F /* HomeListenCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeListenCell.m; sourceTree = "<group>"; };
 		9B4BB6FC2079A9FC0029015F /* HomeListenCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeListenCell.xib; sourceTree = "<group>"; };
@@ -323,18 +328,21 @@
 			children = (
 				9B1D31BD20734891007674CF /* HomeViewController.h */,
 				9B1D31BE20734891007674CF /* HomeViewController.m */,
+				9B3D02C720845338005C923B /* PaperDetailViewController.h */,
+				9B3D02C820845338005C923B /* PaperDetailViewController.m */,
+				9B3D02C920845338005C923B /* PaperDetailViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
 		};
-		9B4BB70C207A0B2B0029015F /* Hearing */ = {
+		9B4BB70C207A0B2B0029015F /* LIstening */ = {
 			isa = PBXGroup;
 			children = (
 				9B13AD6B20819B760000C750 /* Model */,
 				9B13AD6A20819B6C0000C750 /* ViewController */,
 				9B13AD6920819B640000C750 /* View */,
 			);
-			path = Hearing;
+			path = LIstening;
 			sourceTree = "<group>";
 		};
 		9BC1D6B220738393007D88EF /* Utils */ = {
@@ -427,7 +435,7 @@
 				9B1D31C7207363C4007674CF /* Base */,
 				9B1D31C5207363AA007674CF /* LeftViewController */,
 				9B1D31C4207363A3007674CF /* Home */,
-				9B4BB70C207A0B2B0029015F /* Hearing */,
+				9B4BB70C207A0B2B0029015F /* LIstening */,
 				9BEA0A302071D9190026AF2C /* AppDelegate.h */,
 				9BEA0A312071D9190026AF2C /* AppDelegate.m */,
 				9BEA0A332071D9190026AF2C /* ViewController.h */,
@@ -605,6 +613,7 @@
 				9B4BB71D207A234D0029015F /* ListenPaperViewController.xib in Resources */,
 				9BEA0A3D2071D9190026AF2C /* LaunchScreen.storyboard in Resources */,
 				9BEA0A3A2071D9190026AF2C /* Assets.xcassets in Resources */,
+				9B3D02CB20845338005C923B /* PaperDetailViewController.xib in Resources */,
 				9BEA0A382071D9190026AF2C /* Main.storyboard in Resources */,
 				9B13AD6220807B8E0000C750 /* BannerCollectionViewCell.xib in Resources */,
 				9B4BB6FE2079A9FC0029015F /* HomeListenCell.xib in Resources */,
@@ -804,6 +813,7 @@
 				9B135CD2207CD96C0040A883 /* LTHttpManager.m in Sources */,
 				9B13AD682080885F0000C750 /* PaperModel.m in Sources */,
 				9B4BB6FD2079A9FC0029015F /* HomeListenCell.m in Sources */,
+				9B3D02CA20845338005C923B /* PaperDetailViewController.m in Sources */,
 				9B4BB71C207A234D0029015F /* ListenPaperViewController.m in Sources */,
 				9B1D31D420736856007674CF /* WrongTopicViewController.m in Sources */,
 				9B1D31D720736866007674CF /* MyDownloadViewController.m in Sources */,
