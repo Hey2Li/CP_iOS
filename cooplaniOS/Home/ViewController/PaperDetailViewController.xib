@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PaperDetailViewController">
             <connections>
+                <outlet property="myTableView" destination="jx1-0b-e4D" id="VdS-DQ-ULe"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -21,8 +22,78 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jx1-0b-e4D">
-                    <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                    <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <view key="tableHeaderView" contentMode="scaleToFill" id="Qv5-QK-xSt">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="140"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="如果你无法简洁的表达你的想法，那只说明你还不够了解它。如果你无法简洁的表达你的想法，那只说明你还不够了解它。如果你无法简洁的表达你的想法，那只说明你还不够了解它。" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wqi-Rp-EDu">
+                                <rect key="frame" x="10" y="5" width="355" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="myy-Rt-QNc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.53328466415405273" green="0.53336447477340698" blue="0.53326719999313354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pdj-eY-9h2">
+                                <rect key="frame" x="315" y="110" width="50" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="fhj-9E-NTM"/>
+                                    <constraint firstAttribute="width" constant="50" id="yBX-VQ-RRD"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <state key="normal" title="收藏本课">
+                                    <color key="titleColor" red="0.59210336208343506" green="0.59219121932983398" blue="0.59208416938781738" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="collection" translatesAutoresizingMaskIntoConstraints="NO" id="AKH-C8-p7P">
+                                <rect key="frame" x="271" y="103" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="S71-ZV-v2V"/>
+                                    <constraint firstAttribute="height" constant="44" id="lXo-Gk-Qte"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4pw-bd-8uq">
+                                <rect key="frame" x="221" y="110" width="50" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="fZv-zj-E7R"/>
+                                    <constraint firstAttribute="height" constant="30" id="vvI-tY-FFg"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <state key="normal" title="下载资源">
+                                    <color key="titleColor" red="0.59210336210000003" green="0.59219121929999996" blue="0.59208416939999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="download" translatesAutoresizingMaskIntoConstraints="NO" id="BHH-As-Re9">
+                                <rect key="frame" x="177" y="103" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="0qB-xd-Q9U"/>
+                                    <constraint firstAttribute="height" constant="44" id="EhK-TR-QSb"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.96854275465011597" green="0.96868163347244263" blue="0.96851235628128052" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="pdj-eY-9h2" firstAttribute="leading" secondItem="AKH-C8-p7P" secondAttribute="trailing" id="6ix-Q4-HAq"/>
+                            <constraint firstItem="pdj-eY-9h2" firstAttribute="centerY" secondItem="AKH-C8-p7P" secondAttribute="centerY" id="8c8-qa-yh6"/>
+                            <constraint firstItem="4pw-bd-8uq" firstAttribute="centerY" secondItem="BHH-As-Re9" secondAttribute="centerY" id="FYg-3f-zfZ"/>
+                            <constraint firstItem="wqi-Rp-EDu" firstAttribute="leading" secondItem="flm-NP-zbn" secondAttribute="leading" constant="10" id="NKJ-kc-CVB"/>
+                            <constraint firstItem="pdj-eY-9h2" firstAttribute="centerY" secondItem="4pw-bd-8uq" secondAttribute="centerY" id="TxO-13-8ce"/>
+                            <constraint firstItem="AKH-C8-p7P" firstAttribute="leading" secondItem="4pw-bd-8uq" secondAttribute="trailing" id="UCB-PA-K3c"/>
+                            <constraint firstItem="pdj-eY-9h2" firstAttribute="bottom" secondItem="flm-NP-zbn" secondAttribute="bottom" id="WfB-bw-RB3"/>
+                            <constraint firstItem="wqi-Rp-EDu" firstAttribute="top" secondItem="flm-NP-zbn" secondAttribute="top" constant="5" id="Yf8-LY-lfH"/>
+                            <constraint firstItem="pdj-eY-9h2" firstAttribute="trailing" secondItem="flm-NP-zbn" secondAttribute="trailing" constant="-10" id="Zxr-O0-bBd"/>
+                            <constraint firstItem="flm-NP-zbn" firstAttribute="trailing" secondItem="wqi-Rp-EDu" secondAttribute="trailing" constant="10" id="bMB-lp-77M"/>
+                            <constraint firstItem="4pw-bd-8uq" firstAttribute="leading" secondItem="BHH-As-Re9" secondAttribute="trailing" id="zoR-Yh-IhS"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="flm-NP-zbn"/>
+                    </view>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="mnZ-wu-QUD"/>
+                        <outlet property="delegate" destination="-1" id="xgh-kb-eiA"/>
+                    </connections>
                 </tableView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -32,13 +103,14 @@
                 <constraint firstItem="jx1-0b-e4D" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="hw6-qd-Oaw"/>
                 <constraint firstItem="Q5M-cg-NOt" firstAttribute="trailing" secondItem="jx1-0b-e4D" secondAttribute="trailing" id="sQa-DJ-2xY"/>
             </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <nil key="simulatedBottomBarMetrics"/>
             <viewLayoutGuide key="safeArea" id="Q5M-cg-NOt"/>
-        </view>
-        <view contentMode="scaleToFill" id="Qv5-QK-xSt">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-            <viewLayoutGuide key="safeArea" id="flm-NP-zbn"/>
+            <point key="canvasLocation" x="24.5" y="52.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="collection" width="44" height="44"/>
+        <image name="download" width="44" height="44"/>
+    </resources>
 </document>

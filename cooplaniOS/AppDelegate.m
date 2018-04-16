@@ -12,6 +12,9 @@
 #import "LeftViewController.h"
 #import "MMDrawerController.h"
 #import "MMDrawerVisualState.h"
+#import "LoginViewController.h"
+#import <KeyboardManager.h>
+
 
 @interface AppDelegate ()
 @property(nonatomic,strong) MMDrawerController * drawerController;
@@ -25,6 +28,7 @@
     //初始化控制器
     UIViewController *centerVC = [[HomeViewController alloc]init];
     UIViewController *leftVC = [[LeftViewController alloc]init];
+    
     //初始化导航控制器
     BaseViewController *centerNvaVC = [[BaseViewController alloc]initWithRootViewController:centerVC];
     
@@ -41,10 +45,17 @@
     [self.drawerController setDrawerVisualStateBlock:[MMDrawerVisualState slideAndScaleVisualStateBlock]];
     //把阴影关闭
 //    self.drawerController.showsShadow = YES;
+    UIViewController *loginVC = [[LoginViewController alloc]init];
+    BaseViewController *centerNvaVC1 = [[BaseViewController alloc]initWithRootViewController:loginVC];
     
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+    manager.enable = YES;
+    manager.shouldResignOnTouchOutside = YES;
+    manager.shouldToolbarUsesTextFieldTintColor = YES;
+    manager.enableAutoToolbar = NO;
     //初始化窗口、设置根控制器、显示窗口
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
-    [self.window setRootViewController:self.drawerController];
+    [self.window setRootViewController:centerNvaVC1];
     [self.window makeKeyAndVisible];
     return YES;
     

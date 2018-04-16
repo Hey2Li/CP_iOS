@@ -17,6 +17,7 @@
 #import "BottomLabel.h"
 #import "ListenPaperViewController.h"
 #import "BannerCollectionViewCell.h"
+#import "PaperDetailViewController.h"
 
 @interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource, SDCycleScrollViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -215,7 +216,9 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    ListenPaperViewController *vc = [[ListenPaperViewController alloc]init];
+//    ListenPaperViewController *vc = [[ListenPaperViewController alloc]init];
+//    [self.navigationController pushViewController:vc animated:YES];
+    PaperDetailViewController *vc = [PaperDetailViewController new];
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (void) viewDidAppear:(BOOL)animated{
