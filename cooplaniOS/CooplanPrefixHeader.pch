@@ -33,6 +33,10 @@
 #define SUBJECT_COLOR RGBCOLOR(96,189,195)
 #define DRGBCOLOR UIColorFromRGB(0xFFDF00)
 
+#define USERDEFAULTS [NSUserDefaults standardUserDefaults]
+#define USER_CODE_KEY @"user_code"
+#define USER_PHONE_KEY @"user_phonenumber"
+#define USER_ID @"user_id"
 //------------------------size--------------------------
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height

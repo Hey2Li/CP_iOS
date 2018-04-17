@@ -8,6 +8,8 @@
 
 #import "LoginViewController.h"
 #import "LoginNextViewController.h"
+#import "TYAttributedLabel.h"
+
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *phoneTF;
@@ -21,6 +23,16 @@
     // Do any additional setup after loading the view from its nib.
     [self.phoneTF addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     self.phoneTF.keyboardType = UIKeyboardTypePhonePad;
+    NSString *holderText = @"请输入您的手机号";
+    NSMutableAttributedString *placeholder = [[NSMutableAttributedString alloc] initWithString:holderText];
+    [placeholder addAttribute:NSForegroundColorAttributeName
+                        value:UIColorFromRGB(0xCCCCCC)
+                        range:NSMakeRange(0, holderText.length)];
+    [placeholder addAttribute:NSFontAttributeName
+                        value:[UIFont systemFontOfSize:14]
+                        range:NSMakeRange(0, holderText.length)];
+    self.phoneTF.attributedPlaceholder = placeholder;
+    
 }
 -(void)textFieldDidChange:(UITextField *)textField{
     CGFloat maxLength = 11;
@@ -49,10 +61,24 @@
 }
 - (IBAction)NextStep:(UIButton *)sender {
 //    [self presentViewController:[LoginNextViewController new] animated:YES completion:nil];
+    if ([Tool judgePhoneNumber:self.phoneTF.text]) {
+        [LTHttpManager UserSMSCodeWithPhone:self.phoneTF.text Complete:^(LTHttpResult result, NSString *message, id data) {
+            if (LTHttpResultSuccess == result) {
+                LoginNextViewController *vc = [[LoginNextViewController alloc]init];
+                [self.navigationController pushViewController:vc animated:YES];
+                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                [userDefaults setObject:self.phoneTF.text forKey:@"user_phonenumber"];
+                [userDefaults setObject:data[@"responseData"] forKey:@"user_code"];
+            }
+        }];
+    }else if (self.phoneTF.text.length == 0){
+        SVProgressShowStuteText(@"请输入手机号码", NO);
+    }else{
+        SVProgressShowStuteText(@"请输入正确的手机号码", NO);
+    }
     NSLog(@"%@",self.phoneTF.text);
-    LoginNextViewController *vc = [[LoginNextViewController alloc]init];
-    [self.navigationController pushViewController:vc animated:YES];
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

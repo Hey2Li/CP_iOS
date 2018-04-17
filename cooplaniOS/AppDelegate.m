@@ -55,7 +55,7 @@
     manager.enableAutoToolbar = NO;
     //初始化窗口、设置根控制器、显示窗口
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
-    [self.window setRootViewController:centerNvaVC1];
+    [self.window setRootViewController:self.drawerController];
     [self.window makeKeyAndVisible];
     return YES;
     

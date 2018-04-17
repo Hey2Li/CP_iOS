@@ -12,6 +12,7 @@
 #import "MyDownloadViewController.h"
 #import "WrongTopicViewController.h"
 #import "SettingViewController.h"
+#import "LoginViewController.h"
 
 @interface LeftViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -26,12 +27,55 @@
 }
 - (void)initWithView{
     self.view.backgroundColor = [UIColor whiteColor];
-    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 100, 200, SCREEN_HEIGHT) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 200, SCREEN_HEIGHT) style:UITableViewStylePlain];
     tableView.scrollEnabled = NO;
     tableView.delegate = self;
     tableView.dataSource = self;
     tableView.separatorStyle = NO;
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 200)];
+    headerView.backgroundColor = [UIColor whiteColor];
+    UIButton *headerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [headerBtn setImage:[UIImage imageNamed:@"touxiang"] forState:UIControlStateNormal];
+    [headerView addSubview:headerBtn];
+    [headerBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(headerView);
+        make.height.equalTo(@80);
+        make.width.equalTo(@80);
+    }];
+    headerBtn.layer.cornerRadius = 40.0f;
+    headerBtn.layer.masksToBounds = YES;
+    headerBtn.layer.borderWidth = 2.0f;
+    headerBtn.layer.borderColor = DRGBCOLOR.CGColor;
+    [headerBtn addTarget:self action:@selector(headerBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UILabel *userNameLb = [[UILabel alloc]init];
+    userNameLb.text = [USERDEFAULTS objectForKey:USER_PHONE_KEY]  ? [USERDEFAULTS objectForKey:USER_PHONE_KEY] : @"";
+    userNameLb.textAlignment = NSTextAlignmentCenter;
+    [headerView addSubview:userNameLb];
+    [userNameLb mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(headerBtn.mas_centerY);
+        make.top.equalTo(headerBtn.mas_bottom).offset(20);
+    }];
+    userNameLb.font = [UIFont systemFontOfSize:16];
+    userNameLb.textColor = UIColorFromRGB(0x444444);
+    tableView.tableHeaderView = headerView;
     [self.view addSubview:tableView];
+}
+- (void)headerBtnClick:(UIButton *)btn{
+    if ([USERDEFAULTS objectForKey:USER_ID]) {
+        return;
+    }else{
+        LoginViewController *vc = [[LoginViewController alloc]init];
+        //拿到我们的ViewController，让它去push
+        UINavigationController* nav = (UINavigationController*)self.mm_drawerController.centerViewController;
+        [nav pushViewController:vc animated:NO];
+        //当我们push成功之后，关闭我们的抽屉
+        [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
+            //设置打开抽屉模式为MMOpenDrawerGestureModeNone，也就是没有任何效果。
+            [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
+        }];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 #pragma mark -- UITableViewDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

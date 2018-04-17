@@ -17,6 +17,7 @@ target 'cooplaniOS' do
     pod 'MMDrawerController', '~> 0.5.7'
     pod 'SDCycleScrollView'
     pod 'DFPlayer'
+    pod 'TYAttributedLabel', '~> 2.6.2'
   target 'cooplaniOSTests' do
     inherit! :search_paths
     # Pods for testing

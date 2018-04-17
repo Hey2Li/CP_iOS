@@ -215,7 +215,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9B135CCC207CD8850040A883 /* NetWork */ = {
+		9B135CCC207CD8850040A883 /* Network */ = {
 			isa = PBXGroup;
 			children = (
 				9B135CCE207CD8AA0040A883 /* LTHTTPSessionManager.h */,
@@ -223,7 +223,7 @@
 				9B135CD0207CD96C0040A883 /* LTHttpManager.h */,
 				9B135CD1207CD96C0040A883 /* LTHttpManager.m */,
 			);
-			path = NetWork;
+			path = Network;
 			sourceTree = "<group>";
 		};
 		9B13AD6520807ECB0000C750 /* Model */ = {
@@ -457,7 +457,7 @@
 			isa = PBXGroup;
 			children = (
 				9B3D02D12084885C005C923B /* Login */,
-				9B135CCC207CD8850040A883 /* NetWork */,
+				9B135CCC207CD8850040A883 /* Network */,
 				9BC1D6E02078AA6C007D88EF /* Seeting */,
 				9BC1D6B220738393007D88EF /* Utils */,
 				9B1D31CB20736800007674CF /* Download */,
