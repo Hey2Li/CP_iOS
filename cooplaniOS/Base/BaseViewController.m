@@ -20,7 +20,7 @@
     self.navigationBar.barTintColor = DRGBCOLOR;
     self.navigationBar.translucent = NO;
     self.navigationBar.shadowImage = [UIImage new];
-    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(-200, -10) forBarMetrics:UIBarMetricsDefault];
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(-1000, -10) forBarMetrics:UIBarMetricsDefault];
 //    [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor clearColor]}forState:UIControlStateNormal];//将title 文字的颜色改为透明
     UIImage *back = [[UIImage imageNamed:@"back"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     self.navigationBar.backIndicatorImage = back;

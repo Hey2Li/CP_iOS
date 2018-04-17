@@ -73,11 +73,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rIL-4W-aNz">
-                    <rect key="frame" x="162" y="592" width="50" height="50"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="OPy-4o-6bt"/>
-                        <constraint firstAttribute="width" constant="50" id="eQp-aW-KqD"/>
-                    </constraints>
+                    <rect key="frame" x="153" y="574" width="68" height="68"/>
                     <state key="normal" image="wechat"/>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="第三方登录" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aYf-Oy-bPE">
@@ -142,6 +138,6 @@
     <resources>
         <image name="LOGO" width="82" height="79"/>
         <image name="phone" width="20" height="29"/>
-        <image name="wechat" width="44" height="44"/>
+        <image name="wechat" width="68" height="68"/>
     </resources>
 </document>

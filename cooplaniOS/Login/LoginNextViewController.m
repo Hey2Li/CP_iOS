@@ -34,6 +34,8 @@
 @property (weak, nonatomic) IBOutlet TYAttributedLabel *phoneNumber;
 @property (weak, nonatomic) IBOutlet TYAttributedLabel *vrCode;
 @property (weak, nonatomic) IBOutlet UILabel *userAgreementLb;
+@property (weak, nonatomic) IBOutlet UIButton *vrCodeBtn;
+@property (weak, nonatomic) IBOutlet UIButton *userAgreementBtn;
 @property (nonatomic, strong) NSString *textString;
 @end
 
@@ -51,43 +53,74 @@
     [self.loginBtn setTitleColor:UIColorFromRGB(0x9b9b9b) forState:UIControlStateNormal];
     [self.view bringSubviewToFront:self.becomeBtn];
     self.becomeBtn.userInteractionEnabled = YES;
-    [self addTextAttributed];
+
+    NSMutableAttributedString *userAgreement = [[NSMutableAttributedString alloc] initWithString:
+                                      @"点击确定，即表示已阅读并同意《酷学注册服务条款》"];
+    [userAgreement addAttribute:NSForegroundColorAttributeName value:
+     UIColorFromRGB(0xCCCCCC) range:NSMakeRange(0,14)];
+    [userAgreement addAttribute:NSForegroundColorAttributeName value:
+     UIColorFromRGB(0x4A90E2) range:NSMakeRange(14,10)];
+    [userAgreement addAttribute:NSUnderlineStyleAttributeName value:
+     [NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(14, 10)]; // 下划线
+    [userAgreement addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10] range:NSMakeRange(0, userAgreement.length)];
+    self.userAgreementLb.attributedText = userAgreement;
+    [self openCountdown];
 }
-- (void)addTextAttributed {
-    TYAttributedLabel *label = [[TYAttributedLabel alloc]init];
-    [self.view addSubview:label];
-    label.backgroundColor = [UIColor blackColor];
-    [label mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.view.mas_centerX);
-        make.top.equalTo(self.FirstTF.mas_bottom).offset(25);
+- (IBAction)userAgreementClick:(UIButton *)sender {
+    
+}
+- (IBAction)postVrCodeClick:(UIButton *)sender {
+    [LTHttpManager UserSMSCodeWithPhone:[USERDEFAULTS objectForKey:USER_PHONE_KEY] Complete:^(LTHttpResult result, NSString *message, id data) {
+        if (result == LTHttpResultSuccess) {
+            SVProgressShowStuteText(@"发送成功", YES);
+            [self openCountdown];
+        }else{
+            SVProgressShowStuteText(@"发送失败", NO);
+        }
     }];
-    // 规则声明
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc]initWithString:@"I agree to myApp "];
-    [attributedString addAttributeTextColor:[UIColor blackColor]];
-    [attributedString addAttributeFont:[UIFont systemFontOfSize:15]];
-    [label appendTextAttributedString:attributedString];
-    
-    // 增加链接 Terms and Conditions
-    [label appendLinkWithText:@"Terms and Conditions" linkFont:[UIFont systemFontOfSize:15] linkColor:[UIColor blueColor] linkData:@"https://www.baidu.com"];
-    // And
-    NSMutableAttributedString *attributedAndString = [[NSMutableAttributedString alloc]initWithString:@" and "];
-    [attributedAndString addAttributeTextColor:[UIColor blackColor]];
-    [attributedAndString addAttributeFont:[UIFont systemFontOfSize:15]];
-    [label appendTextAttributedString:attributedAndString];
-    
-    // 增加链接 Privacy Polices
-    [label appendLinkWithText:@"Privacy Polices" linkFont:[UIFont systemFontOfSize:15] linkColor:[UIColor blueColor] linkData:@"https://www.google.com"];
-    
-    [label sizeToFit];
 }
-#pragma mark - Delegate
-//TYAttributedLabelDelegate
-- (void)attributedLabel:(TYAttributedLabel *)attributedLabel textStorageClicked:(id<TYTextStorageProtocol>)TextRun atPoint:(CGPoint)point {
-    if ([TextRun isKindOfClass:[TYLinkTextStorage class]]) {
-        NSString *linkStr = ((TYLinkTextStorage*)TextRun).linkData;
-        NSLog(@"linkStr === %@",linkStr);
-    }
+// 开启倒计时效果
+-(void)openCountdown{
+    
+    __block NSInteger time = 59; //倒计时时间
+    
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+    
+    dispatch_source_set_timer(_timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0); //每秒执行
+    
+    dispatch_source_set_event_handler(_timer, ^{
+        
+        if(time <= 0){ //倒计时结束，关闭
+            
+            dispatch_source_cancel(_timer);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:
+                                                  @"验证码已发送，重新获取"];
+                [str addAttribute:NSForegroundColorAttributeName value:
+                 UIColorFromRGB(0xCCCCCC) range:NSMakeRange(0,7)];
+                [str addAttribute:NSForegroundColorAttributeName value:
+                 UIColorFromRGB(0x4A90E2) range:NSMakeRange(7,4)];
+                [str addAttribute:NSUnderlineStyleAttributeName value:
+                 [NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(7, 4)]; // 下划线
+                [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(0, str.length)];
+                self.vrCode.attributedText = str;
+                self.vrCodeBtn.userInteractionEnabled = YES;
+            });
+            
+        }else{
+            
+            int seconds = time % 60;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.vrCode.text = [NSString stringWithFormat:@"验证码已发送，%.2ds后重新获取",seconds];
+            });
+            self.vrCodeBtn.userInteractionEnabled = NO;
+            time--;
+        }
+    });
+    dispatch_resume(_timer);
 }
+
 - (IBAction)changePhoneNumber:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }

@@ -19,6 +19,8 @@
     // Do any additional setup after loading the view.
     self.title = @"设置";
     self.view.backgroundColor = [UIColor whiteColor];
+    NSString*appDomain = [[NSBundle mainBundle]bundleIdentifier];
+    [[NSUserDefaults standardUserDefaults]removePersistentDomainForName:appDomain];
 }
 
 - (void)didReceiveMemoryWarning {
