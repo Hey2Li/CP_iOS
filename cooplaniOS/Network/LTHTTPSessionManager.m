@@ -37,7 +37,7 @@ NSString *const kKeyModelList = @"modellist";
 }
 - (NSURLSessionDataTask *)POSTWithParameters:(NSString *)url parameters:(id)parameters complete:(completeBlock)complete{
     // 在此 添加网络加载动画
-    SVProgressShowText(@"正在加载...");
+    SVProgressShowText(@"正在加载");
     return [super POST:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         SVProgressHiden();
         NSLog(@"成功");

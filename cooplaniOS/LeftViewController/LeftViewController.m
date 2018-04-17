@@ -49,12 +49,15 @@
     [headerBtn addTarget:self action:@selector(headerBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     UILabel *userNameLb = [[UILabel alloc]init];
-    userNameLb.text = [USERDEFAULTS objectForKey:USER_PHONE_KEY]  ? [USERDEFAULTS objectForKey:USER_PHONE_KEY] : @"";
+    NSString *phoneStr = [USERDEFAULTS objectForKey:USER_PHONE_KEY];
+    userNameLb.text =  phoneStr.length > 0 ? [USERDEFAULTS objectForKey:USER_PHONE_KEY] : @"";
     userNameLb.textAlignment = NSTextAlignmentCenter;
     [headerView addSubview:userNameLb];
     [userNameLb mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(headerBtn.mas_centerY);
+        make.centerX.equalTo(headerBtn.mas_centerX);
         make.top.equalTo(headerBtn.mas_bottom).offset(20);
+        make.width.equalTo(@120);
+        make.height.equalTo(@20);
     }];
     userNameLb.font = [UIFont systemFontOfSize:16];
     userNameLb.textColor = UIColorFromRGB(0x444444);
