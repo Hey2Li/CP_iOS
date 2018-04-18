@@ -189,7 +189,11 @@
     }
 }
 - (void)setRate:(CGFloat)rate{
-    [self.player setRate:rate];
+    if (_state == SUPlayerStatePlaying) {
+         [self.player setRate:rate];
+    }else{
+        return;
+    }
 }
 - (void)playbackFinished {
     NSLog(@"播放完成");
