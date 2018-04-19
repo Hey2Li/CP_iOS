@@ -113,8 +113,8 @@
             int seconds = time % 60;
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.vrCode.text = [NSString stringWithFormat:@"验证码已发送，%.2ds后重新获取",seconds];
+                self.vrCodeBtn.userInteractionEnabled = NO;
             });
-            self.vrCodeBtn.userInteractionEnabled = NO;
             time--;
         }
     });

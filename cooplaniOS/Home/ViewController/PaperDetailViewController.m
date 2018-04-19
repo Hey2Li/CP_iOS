@@ -48,17 +48,18 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     PaperDetailTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([PaperDetailTableViewCell class])];
     if (indexPath.row == 1) {
-        [cell.titleBtn setImage:[UIImage imageNamed:@"practicemode"] forState:UIControlStateNormal];
-        [cell.titleBtn setTitle:@"真题练习" forState:UIControlStateNormal];
+        cell.modeImageView.image = [UIImage imageNamed:@"practicemode"];
+        cell.titleLb.text = @"真题练习";
     }else if (indexPath.row == 2){
-        [cell.titleBtn setImage:[UIImage imageNamed:@"testmode"] forState:UIControlStateNormal];
-        [cell.titleBtn setTitle:@"模拟考场" forState:UIControlStateNormal];
+        cell.modeImageView.image = [UIImage imageNamed:@"testmode"];
+        cell.titleLb.text = @"模拟考场";
     }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
         ListenPaperViewController *vc = [[ListenPaperViewController alloc]init];
+        vc.title = self.title;
         [self.navigationController pushViewController:vc animated:YES];
     }else{
         SVProgressShowStuteText(@"暂未开放", NO);

@@ -74,7 +74,6 @@
     }];
 }
 -(void)setupLeftMenuButton{
-    
     UIImage *image = [[UIImage imageNamed:@"view_list"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UIBarButtonItem *leftDrawerBtn = [[UIBarButtonItem alloc]initWithImage:image style:UIBarButtonItemStyleDone target:self action:@selector(leftDrawerButtonPress:)];
     leftDrawerBtn.tag = 0;
@@ -104,10 +103,11 @@
     tableView.delegate = self;
     tableView.dataSource = self;
     tableView.separatorStyle = NO;
+    tableView.showsVerticalScrollIndicator = NO;
     tableView.backgroundColor = [UIColor whiteColor];
     [tableView registerNib:[UINib nibWithNibName:@"HomeListenCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"HOMELISTEN"];
     
-    UIView *tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:270])];
+    UIView *tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:255])];
     //底部背景
     UIView *backView = [[UIView alloc]initWithFrame:CGRectMake((-750 + SCREEN_WIDTH)/2 , - 444 - 64, 750, 750)];
     backView.backgroundColor = DRGBCOLOR;
@@ -118,7 +118,7 @@
     UICollectionViewFlowLayout *flowlayout = [[UICollectionViewFlowLayout alloc]init];
     flowlayout.minimumLineSpacing = 20;
     flowlayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    UICollectionView *collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:270]) collectionViewLayout:flowlayout];
+    UICollectionView *collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, -10, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:270]) collectionViewLayout:flowlayout];
     collectionView.dataSource = self;
     collectionView.delegate = self;
     [collectionView registerNib:[UINib nibWithNibName:@"BannerCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([BannerCollectionViewCell class])];
@@ -156,14 +156,32 @@
 - (void)initWithNavi{
     UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH/2, 44)];
     titleView.backgroundColor = DRGBCOLOR;
-
+   
+    BottomLabel *monthAndDayLb = [[BottomLabel alloc]init];
+    monthAndDayLb.verticalAlignment = 2;
+    monthAndDayLb.font = [UIFont systemFontOfSize:14 weight:18];
+    monthAndDayLb.textColor = [UIColor blackColor];
+    monthAndDayLb.text = [NSString stringWithFormat:@"%@ %@",[Tool dateArray][2],[Tool dateArray][1]];
+    UIFont *font = [UIFont systemFontOfSize:14 weight:18];
+    // 根据字体得到NSString的尺寸
+    CGSize size = [monthAndDayLb.text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:font,NSFontAttributeName,nil]];
+    CGFloat width = size.width;
+    monthAndDayLb.textAlignment = NSTextAlignmentRight;
+    [titleView addSubview:monthAndDayLb];
+    [monthAndDayLb mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(titleView.mas_right);
+        make.bottom.equalTo(titleView).offset(-2);
+        make.top.equalTo(titleView);
+        make.width.equalTo(@(width + 10));
+    }];
+    
     BottomLabel *weekLb = [BottomLabel new];
     [titleView addSubview:weekLb];
     [weekLb mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(titleView);
         make.top.equalTo(titleView);
         make.bottom.equalTo(titleView);
-        make.width.equalTo(@((SCREEN_WIDTH/2)/6*5));
+        make.right.equalTo(monthAndDayLb.mas_left);
     }];
     weekLb.font = [UIFont systemFontOfSize:26 weight:26];
     NSString *weekStr = [Tool dateArray][0];
@@ -172,19 +190,6 @@
     weekLb.textColor = [UIColor blackColor];
     weekLb.textAlignment = NSTextAlignmentRight;
     
-    BottomLabel *monthAndDayLb = [[BottomLabel alloc]init];
-    [titleView addSubview:monthAndDayLb];
-    [monthAndDayLb mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(weekLb.mas_right);
-        make.right.equalTo(titleView.mas_right);
-        make.bottom.equalTo(titleView).offset(-2);
-        make.height.equalTo(weekLb);
-    }];
-    monthAndDayLb.verticalAlignment = 2;
-    monthAndDayLb.font = [UIFont systemFontOfSize:14 weight:18];
-    monthAndDayLb.textColor = [UIColor blackColor];
-    monthAndDayLb.text = [NSString stringWithFormat:@"%@ %@",[Tool dateArray][2],[Tool dateArray][1]];
-
     UIBarButtonItem *barItem = [[UIBarButtonItem alloc]initWithCustomView:titleView];
     self.navigationItem.rightBarButtonItem = barItem;
 }
@@ -197,11 +202,20 @@
     return 10;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 68;
+    return 88;
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    return @"四级听力";
+    NSMutableAttributedString *titleStr = [[NSMutableAttributedString alloc]initWithString:@"四级听力"];
+    [titleStr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:17]range:NSMakeRange(0, 3)];
+    return [titleStr string];//17bold
 }
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+//    UILabel *label = [UILabel new];
+//    NSMutableAttributedString *titleStr = [[NSMutableAttributedString alloc]initWithString:@"四级听力"];
+//    [titleStr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:17]range:NSMakeRange(0, 3)];
+//    label.attributedText = titleStr;
+//    return label;
+//}
 -(void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section{
     // Background color
     view.tintColor = [UIColor whiteColor];
@@ -209,9 +223,10 @@
     // Text Color
     UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
     [header.textLabel setTextColor:[UIColor blackColor]];
+    [header.textLabel setFont:[UIFont systemFontOfSize:17 weight:20]];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 30;
+    return 40;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     HomeListenCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HOMELISTEN"];
@@ -222,7 +237,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 //    ListenPaperViewController *vc = [[ListenPaperViewController alloc]init];
 //    [self.navigationController pushViewController:vc animated:YES];
+    HomeListenCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     PaperDetailViewController *vc = [PaperDetailViewController new];
+    vc.title = cell.TitleLabel.text;
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (void) viewDidAppear:(BOOL)animated{

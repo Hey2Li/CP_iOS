@@ -16,9 +16,9 @@
     self.backgroundColor = [UIColor whiteColor];
     self.layer.cornerRadius = 15.0f;
     self.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.layer.shadowOpacity = 0.5f;
+    self.layer.shadowOpacity = 0.2f;
     self.layer.shadowRadius = 6.0f;
-    self.layer.shadowOffset = CGSizeMake(1, 1);
+    self.layer.shadowOffset = CGSizeMake(2, 2);
     self.layer.masksToBounds = NO;
  
     self.bannerImageView.layer.cornerRadius = 15.0f;

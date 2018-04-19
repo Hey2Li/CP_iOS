@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface PaperDetailTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIButton *titleBtn;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
-
+@property (weak, nonatomic) IBOutlet UIImageView *modeImageView;
+@property (weak, nonatomic) IBOutlet UILabel *titleLb;
 @end

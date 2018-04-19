@@ -13,7 +13,8 @@
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *phoneTF;
-
+@property (weak, nonatomic) IBOutlet UIButton *nextStepBtn;
+@property (nonatomic, copy) NSString *StringCount;
 @end
 
 @implementation LoginViewController
@@ -32,11 +33,18 @@
                         value:[UIFont systemFontOfSize:14]
                         range:NSMakeRange(0, holderText.length)];
     self.phoneTF.attributedPlaceholder = placeholder;
-    
+    _StringCount = @"";
 }
 -(void)textFieldDidChange:(UITextField *)textField{
     CGFloat maxLength = 11;
     NSString *toBeString = textField.text;
+    if (toBeString.length < 11) {
+        self.nextStepBtn.backgroundColor = UIColorFromRGB(0xFDF6C1);
+        self.nextStepBtn.userInteractionEnabled = NO;
+    }else{
+        self.nextStepBtn.backgroundColor = DRGBCOLOR;
+        self.nextStepBtn.userInteractionEnabled = YES;
+    }
     //获取高亮部分
     UITextRange *selectedRange = [textField markedTextRange];
     UITextPosition *position = [textField positionFromPosition:selectedRange.start offset:0];
@@ -55,6 +63,7 @@
         }
     }
 }
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];

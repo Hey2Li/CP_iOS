@@ -13,6 +13,7 @@
 #import "WrongTopicViewController.h"
 #import "SettingViewController.h"
 #import "LoginViewController.h"
+#import "LeftViweTableViewCell.h"
 
 @interface LeftViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -32,6 +33,7 @@
     tableView.delegate = self;
     tableView.dataSource = self;
     tableView.separatorStyle = NO;
+    [tableView registerNib:[UINib nibWithNibName:@"LeftViweTableViewCell" bundle:nil] forCellReuseIdentifier:NSStringFromClass([LeftViweTableViewCell class])];
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 200)];
     headerView.backgroundColor = [UIColor whiteColor];
     UIButton *headerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -59,7 +61,7 @@
         make.width.equalTo(@120);
         make.height.equalTo(@20);
     }];
-    userNameLb.font = [UIFont systemFontOfSize:16];
+    userNameLb.font = [UIFont boldSystemFontOfSize:16];
     userNameLb.textColor = UIColorFromRGB(0x444444);
     tableView.tableHeaderView = headerView;
     [self.view addSubview:tableView];
@@ -88,30 +90,31 @@
     return [Tool layoutForAlliPhoneHeight:45];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+//    UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    LeftViweTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LeftViweTableViewCell class])];
     UIView *view = [[UIView alloc]init];
     view.backgroundColor = DRGBCOLOR;
     cell.selectedBackgroundView = view;
     switch (indexPath.row) {
         case 0:
-            cell.textLabel.text = @"我的笔记";
-            cell.imageView.image = [UIImage imageNamed:@"note"];
+            cell.titleLb.text = @"我的笔记";
+            cell.leftImageVIew.image = [UIImage imageNamed:@"note"];
             break;
         case 1:
-            cell.textLabel.text = @"我的收藏";
-            cell.imageView.image = [UIImage imageNamed:@"collection"];
+            cell.titleLb.text = @"我的收藏";
+            cell.leftImageVIew.image = [UIImage imageNamed:@"collection"];
             break;
         case 2:
-            cell.textLabel.text = @"错题本";
-            cell.imageView.image = [UIImage imageNamed:@"errorlog"];
+            cell.titleLb.text = @"错题本";
+            cell.leftImageVIew.image = [UIImage imageNamed:@"errorlog"];
             break;
         case 3:
-            cell.textLabel.text = @"我的下载";
-            cell.imageView.image = [UIImage imageNamed:@"download"];
+            cell.titleLb.text = @"我的下载";
+            cell.leftImageVIew.image = [UIImage imageNamed:@"download"];
             break;
         case 4:
-            cell.textLabel.text = @"设置";
-            cell.imageView.image = [UIImage imageNamed:@"settings"];
+            cell.titleLb.text = @"设置";
+            cell.leftImageVIew.image = [UIImage imageNamed:@"settings"];
         default:
             break;
     }

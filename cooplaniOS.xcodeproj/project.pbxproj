@@ -10,7 +10,6 @@
 		311F8994694632DA35DB4797 /* libPods-cooplaniOSUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AE146AACEAF93206FD6086 /* libPods-cooplaniOSUITests.a */; };
 		9B135CBB207C6B1D0040A883 /* UIImage+mask.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B135CBA207C6B1D0040A883 /* UIImage+mask.m */; };
 		9B135CC1207C886A0040A883 /* UISlider+time.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B135CC0207C886A0040A883 /* UISlider+time.m */; };
-		9B135CC3207CB0E60040A883 /* sss.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9B135CC2207CB0210040A883 /* sss.mp3 */; };
 		9B135CCF207CD8AA0040A883 /* LTHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B135CCD207CD8AA0040A883 /* LTHTTPSessionManager.m */; };
 		9B135CD2207CD96C0040A883 /* LTHttpManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B135CD1207CD96C0040A883 /* LTHttpManager.m */; };
 		9B13AD5D208053830000C750 /* TikaCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B13AD5C208053830000C750 /* TikaCollectionViewCell.m */; };
@@ -43,7 +42,7 @@
 		9B4BB72E207B6E9D0029015F /* SURequestTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4BB72C207B6E9D0029015F /* SURequestTask.m */; };
 		9B4BB736207B6EDC0029015F /* NSURL+SULoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4BB732207B6EDC0029015F /* NSURL+SULoader.m */; };
 		9B4BB737207B6EDC0029015F /* NSString+SULoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4BB735207B6EDC0029015F /* NSString+SULoader.m */; };
-		9B6FB859207F054C00BC07F3 /* encn.lrc in Resources */ = {isa = PBXBuildFile; fileRef = 9B6FB858207F054C00BC07F3 /* encn.lrc */; };
+		9B6FB859207F054C00BC07F3 /* 2017年6月四级真题（一）.lrc in Resources */ = {isa = PBXBuildFile; fileRef = 9B6FB858207F054C00BC07F3 /* 2017年6月四级真题（一）.lrc */; };
 		9B6FB85C207F3D2100BC07F3 /* UILabel+HYLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6FB85B207F3D2100BC07F3 /* UILabel+HYLabel.m */; };
 		9B6FB85F207F3D7B00BC07F3 /* HYWord.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6FB85D207F3D7B00BC07F3 /* HYWord.m */; };
 		9BC1D6BE20738507007D88EF /* PGIndexBannerSubiew.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC1D6BA20738506007D88EF /* PGIndexBannerSubiew.m */; };
@@ -51,6 +50,9 @@
 		9BC1D6C520738657007D88EF /* PGCustomBannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC1D6C320738657007D88EF /* PGCustomBannerView.m */; };
 		9BC1D6DF207862A8007D88EF /* Tool.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC1D6DD207862A8007D88EF /* Tool.m */; };
 		9BC1D6E32078AA87007D88EF /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC1D6E22078AA87007D88EF /* SettingViewController.m */; };
+		9BDFE0C4208833B500B59B3B /* LeftViweTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDFE0C2208833B500B59B3B /* LeftViweTableViewCell.m */; };
+		9BDFE0C5208833B500B59B3B /* LeftViweTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BDFE0C3208833B500B59B3B /* LeftViweTableViewCell.xib */; };
+		9BDFE0C720883F6800B59B3B /* 2017年6月四级真题（一）.MP3 in Resources */ = {isa = PBXBuildFile; fileRef = 9BDFE0C620883F6800B59B3B /* 2017年6月四级真题（一）.MP3 */; };
 		9BEA0A322071D9190026AF2C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BEA0A312071D9190026AF2C /* AppDelegate.m */; };
 		9BEA0A352071D9190026AF2C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BEA0A342071D9190026AF2C /* ViewController.m */; };
 		9BEA0A382071D9190026AF2C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9BEA0A362071D9190026AF2C /* Main.storyboard */; };
@@ -89,7 +91,6 @@
 		9B135CBA207C6B1D0040A883 /* UIImage+mask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+mask.m"; sourceTree = "<group>"; };
 		9B135CBF207C886A0040A883 /* UISlider+time.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UISlider+time.h"; sourceTree = "<group>"; };
 		9B135CC0207C886A0040A883 /* UISlider+time.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UISlider+time.m"; sourceTree = "<group>"; };
-		9B135CC2207CB0210040A883 /* sss.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sss.mp3; sourceTree = "<group>"; };
 		9B135CCD207CD8AA0040A883 /* LTHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTHTTPSessionManager.m; sourceTree = "<group>"; };
 		9B135CCE207CD8AA0040A883 /* LTHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTHTTPSessionManager.h; sourceTree = "<group>"; };
 		9B135CD0207CD96C0040A883 /* LTHttpManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTHttpManager.h; sourceTree = "<group>"; };
@@ -149,7 +150,7 @@
 		9B4BB733207B6EDC0029015F /* NSString+SULoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SULoader.h"; sourceTree = "<group>"; };
 		9B4BB734207B6EDC0029015F /* NSURL+SULoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+SULoader.h"; sourceTree = "<group>"; };
 		9B4BB735207B6EDC0029015F /* NSString+SULoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SULoader.m"; sourceTree = "<group>"; };
-		9B6FB858207F054C00BC07F3 /* encn.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = encn.lrc; sourceTree = "<group>"; };
+		9B6FB858207F054C00BC07F3 /* 2017年6月四级真题（一）.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "2017年6月四级真题（一）.lrc"; sourceTree = "<group>"; };
 		9B6FB85A207F3D2100BC07F3 /* UILabel+HYLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+HYLabel.h"; sourceTree = "<group>"; };
 		9B6FB85B207F3D2100BC07F3 /* UILabel+HYLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+HYLabel.m"; sourceTree = "<group>"; };
 		9B6FB85D207F3D7B00BC07F3 /* HYWord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYWord.m; sourceTree = "<group>"; };
@@ -164,6 +165,10 @@
 		9BC1D6DE207862A8007D88EF /* Tool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tool.h; sourceTree = "<group>"; };
 		9BC1D6E12078AA87007D88EF /* SettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		9BC1D6E22078AA87007D88EF /* SettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
+		9BDFE0C1208833B500B59B3B /* LeftViweTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeftViweTableViewCell.h; sourceTree = "<group>"; };
+		9BDFE0C2208833B500B59B3B /* LeftViweTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeftViweTableViewCell.m; sourceTree = "<group>"; };
+		9BDFE0C3208833B500B59B3B /* LeftViweTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeftViweTableViewCell.xib; sourceTree = "<group>"; };
+		9BDFE0C620883F6800B59B3B /* 2017年6月四级真题（一）.MP3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "2017年6月四级真题（一）.MP3"; sourceTree = "<group>"; };
 		9BEA0A2D2071D9190026AF2C /* cooplaniOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cooplaniOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BEA0A302071D9190026AF2C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9BEA0A312071D9190026AF2C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -276,6 +281,9 @@
 			children = (
 				9B1D31C120735804007674CF /* LeftViewController.h */,
 				9B1D31C220735804007674CF /* LeftViewController.m */,
+				9BDFE0C1208833B500B59B3B /* LeftViweTableViewCell.h */,
+				9BDFE0C2208833B500B59B3B /* LeftViweTableViewCell.m */,
+				9BDFE0C3208833B500B59B3B /* LeftViweTableViewCell.xib */,
 			);
 			path = LeftViewController;
 			sourceTree = "<group>";
@@ -478,8 +486,8 @@
 				9BEA0A3E2071D9190026AF2C /* Info.plist */,
 				9BEA0A3F2071D9190026AF2C /* main.m */,
 				9B1D31C020734B78007674CF /* CooplanPrefixHeader.pch */,
-				9B6FB858207F054C00BC07F3 /* encn.lrc */,
-				9B135CC2207CB0210040A883 /* sss.mp3 */,
+				9B6FB858207F054C00BC07F3 /* 2017年6月四级真题（一）.lrc */,
+				9BDFE0C620883F6800B59B3B /* 2017年6月四级真题（一）.MP3 */,
 			);
 			path = cooplaniOS;
 			sourceTree = "<group>";
@@ -640,10 +648,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9B6FB859207F054C00BC07F3 /* encn.lrc in Resources */,
+				9B6FB859207F054C00BC07F3 /* 2017年6月四级真题（一）.lrc in Resources */,
 				9B3D02D020847C5A005C923B /* PaperDetailTableViewCell.xib in Resources */,
+				9BDFE0C5208833B500B59B3B /* LeftViweTableViewCell.xib in Resources */,
 				9B3D02D620848878005C923B /* LoginViewController.xib in Resources */,
-				9B135CC3207CB0E60040A883 /* sss.mp3 in Resources */,
 				9B4BB71D207A234D0029015F /* ListenPaperViewController.xib in Resources */,
 				9BEA0A3D2071D9190026AF2C /* LaunchScreen.storyboard in Resources */,
 				9BEA0A3A2071D9190026AF2C /* Assets.xcassets in Resources */,
@@ -651,6 +659,7 @@
 				9B3D02CB20845338005C923B /* PaperDetailViewController.xib in Resources */,
 				9BEA0A382071D9190026AF2C /* Main.storyboard in Resources */,
 				9B13AD6220807B8E0000C750 /* BannerCollectionViewCell.xib in Resources */,
+				9BDFE0C720883F6800B59B3B /* 2017年6月四级真题（一）.MP3 in Resources */,
 				9B4BB6FE2079A9FC0029015F /* HomeListenCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -859,6 +868,7 @@
 				9BC1D6BF20738507007D88EF /* NewPagedFlowView.m in Sources */,
 				9B135CBB207C6B1D0040A883 /* UIImage+mask.m in Sources */,
 				9B4BB737207B6EDC0029015F /* NSString+SULoader.m in Sources */,
+				9BDFE0C4208833B500B59B3B /* LeftViweTableViewCell.m in Sources */,
 				9B4BB7082079C1AE0029015F /* BottomLabel.m in Sources */,
 				9B135CC1207C886A0040A883 /* UISlider+time.m in Sources */,
 				9B13AD6120807B8E0000C750 /* BannerCollectionViewCell.m in Sources */,

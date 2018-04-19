@@ -39,8 +39,9 @@
     self.drawerController.closeDrawerGestureModeMask =MMCloseDrawerGestureModeAll;
     //设置左右两边抽屉显示的多少
     self.drawerController.maximumLeftDrawerWidth = 200.0;
-    self.drawerController.maximumRightDrawerWidth = 200.0;
     self.drawerController.shouldStretchDrawer = YES;
+    self.drawerController.view.backgroundColor = [UIColor whiteColor];
+    self.drawerController.centerViewController.view.backgroundColor = [UIColor whiteColor];
     [leftVC setRestorationIdentifier:@"MMExampleLeftNavigationControllerRestorationKey"];
     [self.drawerController setDrawerVisualStateBlock:[MMDrawerVisualState slideAndScaleVisualStateBlock]];
     //把阴影关闭

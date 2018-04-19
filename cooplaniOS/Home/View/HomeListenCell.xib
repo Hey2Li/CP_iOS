@@ -21,20 +21,20 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CET4 2017年06月" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a6a-4F-mMT">
-                        <rect key="frame" x="16" y="11" width="278" height="14"/>
+                        <rect key="frame" x="16" y="17" width="278" height="14"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="14" id="2t2-j7-ubX"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.26664003729820251" green="0.26668369770050049" blue="0.26663047075271606" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="如果你无法简洁的表达你的想法那说明你还不够了解它" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P7b-Te-Hf2">
-                        <rect key="frame" x="16" y="25" width="250" height="29"/>
+                        <rect key="frame" x="16" y="37" width="250" height="36"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="29" id="QP7-RE-PxE"/>
+                            <constraint firstAttribute="height" constant="36" id="QP7-RE-PxE"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="12"/>
+                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="14"/>
                         <color key="textColor" red="0.53328466415405273" green="0.53336447477340698" blue="0.53326719999313354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -52,10 +52,10 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailingMargin" secondItem="a6a-4F-mMT" secondAttribute="trailing" constant="10" id="2vI-0e-lbs"/>
-                    <constraint firstItem="P7b-Te-Hf2" firstAttribute="top" secondItem="a6a-4F-mMT" secondAttribute="bottom" id="3IK-KA-oTO"/>
+                    <constraint firstItem="P7b-Te-Hf2" firstAttribute="top" secondItem="a6a-4F-mMT" secondAttribute="bottom" constant="6" id="3IK-KA-oTO"/>
                     <constraint firstItem="a6a-4F-mMT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="3Xk-L0-sRU"/>
                     <constraint firstItem="6DO-Bu-hhP" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Ck8-uD-1Rm"/>
-                    <constraint firstItem="a6a-4F-mMT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="DLe-Yh-FGM"/>
+                    <constraint firstItem="a6a-4F-mMT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="6" id="DLe-Yh-FGM"/>
                     <constraint firstAttribute="trailing" secondItem="6DO-Bu-hhP" secondAttribute="trailing" constant="10" id="PY2-Wk-ErO"/>
                     <constraint firstItem="P7b-Te-Hf2" firstAttribute="leading" secondItem="a6a-4F-mMT" secondAttribute="leading" id="heZ-6x-Ehs"/>
                     <constraint firstItem="6DO-Bu-hhP" firstAttribute="leading" secondItem="P7b-Te-Hf2" secondAttribute="trailing" id="nFR-Pr-KN0"/>

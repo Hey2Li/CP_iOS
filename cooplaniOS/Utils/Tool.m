@@ -29,6 +29,7 @@ static NSDateFormatter *cachedDateFormatter;
     if (!cachedDateFormatter) {
         cachedDateFormatter = [[NSDateFormatter alloc]init];
         [cachedDateFormatter setDateFormat:@"EEEE-MMMM-d"];
+        cachedDateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
     }
     return cachedDateFormatter;
 }

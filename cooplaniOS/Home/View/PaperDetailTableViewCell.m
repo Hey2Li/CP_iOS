@@ -20,7 +20,6 @@
     self.layer.shadowOffset = CGSizeMake(1, 1);
     self.selectionStyle = NO;
     self.backgroundColor = UIColorFromRGB(0xF7F7F7);
-    self.titleBtn.userInteractionEnabled = NO;
     self.clipsToBounds = YES;
 //    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.bottomView.bounds byRoundingCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight cornerRadii:CGSizeMake(6, 6)];
 //    
