@@ -34,7 +34,7 @@
 @property (nonatomic, strong) UIView *wordView;
 @property (nonatomic, copy)NSString *currentWord;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *otherVIewBottom;
-
+@property (nonatomic, assign) NSInteger lastIndex;
 @end
 
 @implementation ListenPaperViewController
@@ -52,9 +52,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     //网络
-    NSURL *url = [NSURL URLWithString:[self songURLList][self.songIndex]];
+//    NSURL *url = [NSURL URLWithString:[self songURLList][self.songIndex]];
     //本地
-    NSURL *fileUrl = [[NSBundle mainBundle]URLForResource:@"sss" withExtension:@"mp3"];
+    NSURL *fileUrl = [[NSBundle mainBundle]URLForResource:@"2017年6月四级真题（一）" withExtension:@"MP3"];
     self.player = [[SUPlayer alloc]initWithURL:fileUrl];
     
     [self.player addObserver:self forKeyPath:@"progress" options:NSKeyValueObservingOptionNew context:nil];
@@ -246,7 +246,7 @@
 }
 #pragma mark 解析歌词
 - (void)parseLrc{
-    NSURL *lyicUrl = [[NSBundle mainBundle]URLForResource:@"encn" withExtension:@"lrc"];
+    NSURL *lyicUrl = [[NSBundle mainBundle]URLForResource:@"2017年6月四级真题（一）" withExtension:@"lrc"];
     
     NSString *lrcString = [[NSString alloc]initWithContentsOfURL:lyicUrl encoding:NSUTF8StringEncoding error:nil];
     
@@ -277,7 +277,6 @@
         }
         
     }];
-    NSLog(@"%@--%@--%@",lyricArray, timeArray, lengthArray);
 }
 - (void)startRoll{
     if (_timer) return;
@@ -291,16 +290,16 @@
 }
 #pragma mark 歌词滚动
 - (void)scrollLyric{
-    
     NSString *secNow = [self convertStringWithTime:self.player.progress * self.player.duration];
-    for (NSInteger i = _currentIndex + 1; i < timeArray.count; i++) {
+    for (NSInteger i =  _currentIndex + 1; i < timeArray.count; i++) {
         NSString *time = [timeArray[i] substringWithRange:NSMakeRange(0, 5)];
-        NSLog(@"%@-----%@",timeArray[i], secNow);
         if ([time isEqualToString:secNow]) {
             NSArray *reloadRows = @[[NSIndexPath indexPathForRow:_currentIndex inSection:0],[NSIndexPath indexPathForRow:i inSection:0]];
             _currentIndex = i;
             [self.lyricTableView reloadRowsAtIndexPaths:reloadRows withRowAnimation:UITableViewRowAnimationNone];
             [self.lyricTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+            NSLog(@"scrollLyric/currentIndex%ld",(long)_currentIndex);
+
             break;
         }
     }
@@ -356,13 +355,14 @@
 - (void)changeProgress:(UISlider *)slider {
     float seekTime = self.player.duration * slider.value;
     [self.player seekToTime:seekTime];
+    [self startRoll];
 }
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
     if ([keyPath isEqualToString:@"progress"]) {
         if (self.progressSlider.state != UIControlStateHighlighted) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSString *time = [NSString stringWithFormat:@"%@/%@ ",[self convertStringWithTime:self.player.progress * self.player.duration], [self convertStringWithTime:self.player.duration]];
-                NSLog(@"%@",time);
+//                NSLog(@"%@",time);
                 [self.progressSlider setValue:self.player.progress andTime:time animated:YES];
             });
         }
@@ -383,41 +383,70 @@
 - (IBAction)paly:(UIButton *)sender {
     if (sender.selected) {
         [self.player pause];
+//        [self.playSongBtn setImage:[UIImage imageNamed:@"play"] forState:UIControlStateSelected];
         [self stopRoll];
     }else{
         [self.player play];
+//        [self.playSongBtn setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateSelected];
         [self startRoll];
         [self.lyricTableView reloadData];
     }
     sender.selected = !sender.selected;
 }
 - (IBAction)upSong:(id)sender {
-    self.songIndex--;
-    if (self.songIndex <= 0) {
-        self.songIndex = 0;
+    _lastIndex = _currentIndex;
+    _currentIndex--;
+    [self.player pause];
+    if (_currentIndex <= -1) {
+        _currentIndex = -1;
         [self.player play];
-        NSLog(@"已经是第一首了");
+        [self startRoll];
+        return;
     }else{
-        [self.player stop];
-        NSURL * url = [NSURL URLWithString:[self songURLList][self.songIndex]];
-        [self.player replaceItemWithURL:url];
+        [self stopRoll];
+        NSString *timeStr = self.timeArray[_currentIndex];
+        NSArray *timeArray = [timeStr componentsSeparatedByString:@":"];
+        CGFloat min = [timeArray[0] floatValue] * 60;
+        CGFloat sec = [timeArray[1] floatValue];
+        [self.player seekToTime:min + sec];
         [self.player play];
+        [self startRoll];
+        NSArray *reloadRows = @[[NSIndexPath indexPathForRow:_currentIndex inSection:0],[NSIndexPath indexPathForRow:_lastIndex inSection:0]];
+        [self.lyricTableView reloadRowsAtIndexPaths:reloadRows withRowAnimation:UITableViewRowAnimationNone];
+        [self.lyricTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+        //        [self scrollLyric];
+        NSLog(@"%ld",(long)_currentIndex);
+        [_lyricTableView reloadData];
     }
 }
 - (IBAction)downSong:(id)sender {
-    self.songIndex++;
-    if (self.songIndex >= 4)self.songIndex = 0;
-    [self.player stop];
-    NSURL * url = [NSURL URLWithString:[self songURLList][self.songIndex]];
-    [self.player replaceItemWithURL:url];
-    [self.player play];
+    _lastIndex = _currentIndex;
+    _currentIndex++;
+    [self.player pause];
+    [self stopRoll];
+    if (_currentIndex > self.timeArray.count) {
+        [self.player play];
+        [self startRoll];
+        return;
+    }else{
+        NSString *timeStr = self.timeArray[_currentIndex];
+        NSArray *timeArray = [timeStr componentsSeparatedByString:@":"];
+        CGFloat min = [timeArray[0] floatValue] * 60;
+        CGFloat sec = [timeArray[1] floatValue];
+        [self.player seekToTime:min + sec];
+        [self.player play];
+        self.playSongBtn.selected = YES;
+        [self.playSongBtn setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateSelected];
+        [self startRoll];
+        NSArray *reloadRows = @[[NSIndexPath indexPathForRow:_currentIndex inSection:0],[NSIndexPath indexPathForRow:_lastIndex inSection:0]];
+        [self.lyricTableView reloadRowsAtIndexPaths:reloadRows withRowAnimation:UITableViewRowAnimationNone];
+        [self.lyricTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+        //        [self scrollLyric];
+        NSLog(@"currentIndex%ld",(long)_currentIndex);
+        [_lyricTableView reloadData];
+    }
 }
-- (NSArray *)songURLList {
-    return @[@"http://download.lingyongqian.cn/music/AdagioSostenuto.mp3",
-             @"http://download.lingyongqian.cn/music/ForElise.mp3",
-             @"http://mr7.doubanio.com/39ec9c9b5bbac0af7b373d1c62c294a3/1/fm/song/p1393354_128k.mp4",
-             @"http://mr7.doubanio.com/16c59061a6a82bbb92bdd21e626db152/0/fm/song/p966452_128k.mp4"];
-}
+
 - (NSString *)convertStringWithTime:(float)time {
     if (isnan(time)) time = 0.2f;
     int min = time / 60.0;
@@ -456,10 +485,10 @@
         cell.backgroundColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1/1.0];
     }
     NSString *lrc = lyricArray[indexPath.row];
-    NSLog(@"%@",lrc);
+//    NSLog(@"%@",lrc);
     if ([lrc containsString:@"/"]) {
        NSArray *array = [lrc componentsSeparatedByString:@"/"];
-        NSLog(@"%@",array);
+//        NSLog(@"%@",array);
         switch (_CNTag % 3) {
             case 0:
                 cell.textLabel.text = [NSString stringWithFormat:@"%@\n%@", array[0],array[1]];
