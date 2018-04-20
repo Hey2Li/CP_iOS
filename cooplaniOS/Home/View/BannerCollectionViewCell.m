@@ -27,6 +27,6 @@
 - (void)setImageUrl:(NSString *)imageUrl{
     _imageUrl = imageUrl;
     NSString *str = [NSString stringWithFormat:@"http://%@",imageUrl];
-    [self.bannerImageView sd_setImageWithURL:[NSURL URLWithString:str] placeholderImage:[UIImage imageNamed:@"collection"]];
+    [self.bannerImageView sd_setImageWithURL:[NSURL URLWithString:str] placeholderImage:[UIImage imageNamed:@"LOADING"]];
 }
 @end

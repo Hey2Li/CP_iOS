@@ -14,6 +14,7 @@
 #import "SettingViewController.h"
 #import "LoginViewController.h"
 #import "LeftViweTableViewCell.h"
+#import "NoContentViewController.h"
 
 @interface LeftViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -126,30 +127,60 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     UIViewController *VC;
+//    switch (indexPath.row) {
+//        case 0:{
+//            VC = [[MyNoteViewController alloc]init];
+//        }
+//            break;
+//        case 1:{
+//            VC = [[MyCollectionViewController alloc]init];
+//        }
+//            break;
+//        case 2:{
+//            VC = [[WrongTopicViewController alloc]init];
+//        }
+//            break;
+//        case 3:{
+//            VC = [[MyDownloadViewController alloc]init];
+//        }
+//            break;
+//        case 4:{
+//            VC = [[SettingViewController alloc]init];
+//        }
+//        default:
+//            break;
+//    }
+    VC = [[NoContentViewController alloc]init];
     switch (indexPath.row) {
-        case 0:{
-            VC = [[MyNoteViewController alloc]init];
+        case 0:
+        {
+            VC.title = @"我的笔记";
         }
             break;
-        case 1:{
-            VC = [[MyCollectionViewController alloc]init];
+        case 1:
+        {
+            VC.title = @"我的收藏";
         }
             break;
-        case 2:{
-            VC = [[WrongTopicViewController alloc]init];
+        case 2:
+        {
+            VC.title = @"我的错题";
         }
             break;
-        case 3:{
-            VC = [[MyDownloadViewController alloc]init];
+        case 3:
+        {
+            VC.title = @"我的下载";
         }
             break;
-        case 4:{
+        case 4:
+        {
             VC = [[SettingViewController alloc]init];
+            VC.title = @"我的设置";
         }
         default:
             break;
     }
-   //拿到我们的ViewController，让它去push
+    ;   //拿到我们的ViewController，让它去push
     UINavigationController* nav = (UINavigationController*)self.mm_drawerController.centerViewController;
     [nav pushViewController:VC animated:NO];
     //当我们push成功之后，关闭我们的抽屉

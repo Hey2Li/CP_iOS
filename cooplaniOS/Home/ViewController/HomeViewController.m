@@ -19,7 +19,7 @@
 #import "BannerCollectionViewCell.h"
 #import "PaperDetailViewController.h"
 
-@interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource, SDCycleScrollViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) UITableView *myTableView;
 @property (nonatomic, strong) UICollectionView *myCollectionView;
 @property (nonatomic, strong) NSArray *bannerArray;

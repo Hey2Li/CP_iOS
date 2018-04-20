@@ -15,6 +15,11 @@ target 'cooplaniOS' do
 	pod 'SDCycleScrollView','~> 1.64'
 	pod 'IQKeyboardManager', '~> 3.3.4'
     pod 'MMDrawerController', '~> 0.5.7'
+    pod 'TYAttributedLabel', '~> 2.6.2'
+    pod 'UMCCommon'
+    pod 'UMCSecurityPlugins'
+    # 集成微信(精简版0.2M)
+    pod 'UMCShare/Social/ReducedWeChat'
   target 'cooplaniOSTests' do
     inherit! :search_paths
     # Pods for testing

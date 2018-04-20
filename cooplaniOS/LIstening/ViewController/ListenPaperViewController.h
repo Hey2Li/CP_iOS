@@ -15,5 +15,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLb;
 @property (weak, nonatomic) IBOutlet UISlider *progressSlider;
 @property (weak, nonatomic) IBOutlet UIView *otherView;
+@property (weak, nonatomic) IBOutlet UIImageView *backImageView;
 
 @end

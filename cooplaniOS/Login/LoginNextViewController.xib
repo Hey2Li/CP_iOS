@@ -53,10 +53,10 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rWJ-Sg-qTx">
-                    <rect key="frame" x="242.5" y="171" width="12" height="12"/>
+                    <rect key="frame" x="222.5" y="155" width="44" height="44"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="12" id="CpO-cA-Wib"/>
-                        <constraint firstAttribute="height" constant="12" id="msK-7p-g7x"/>
+                        <constraint firstAttribute="width" constant="44" id="CpO-cA-Wib"/>
+                        <constraint firstAttribute="height" constant="44" id="msK-7p-g7x"/>
                     </constraints>
                     <state key="normal" image="edit"/>
                     <connections>
@@ -323,7 +323,7 @@
                 <constraint firstItem="67V-BQ-U5W" firstAttribute="top" secondItem="ytm-q4-zyQ" secondAttribute="top" id="BpR-7L-bkt"/>
                 <constraint firstItem="Cof-gI-vUC" firstAttribute="bottom" secondItem="ppV-bt-K88" secondAttribute="bottom" id="COH-Tq-sZp"/>
                 <constraint firstItem="Fpy-on-6Vv" firstAttribute="trailing" secondItem="rL3-uR-z2y" secondAttribute="trailing" id="FEs-Gr-F09"/>
-                <constraint firstItem="rWJ-Sg-qTx" firstAttribute="leading" secondItem="lvR-VO-iVz" secondAttribute="trailing" constant="10" id="Glj-BW-wPn"/>
+                <constraint firstItem="rWJ-Sg-qTx" firstAttribute="leading" secondItem="lvR-VO-iVz" secondAttribute="trailing" constant="-10" id="Glj-BW-wPn"/>
                 <constraint firstItem="RFD-fC-ulJ" firstAttribute="bottom" secondItem="Fpy-on-6Vv" secondAttribute="bottom" id="Huh-Je-yfQ"/>
                 <constraint firstItem="56B-0k-4n6" firstAttribute="trailing" secondItem="Id6-fr-yox" secondAttribute="trailing" id="I2a-DB-UHN"/>
                 <constraint firstItem="Fpy-on-6Vv" firstAttribute="bottom" secondItem="rL3-uR-z2y" secondAttribute="bottom" id="JEK-bg-JEu"/>

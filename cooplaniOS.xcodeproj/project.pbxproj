@@ -26,6 +26,7 @@
 		9B1EDCE0208891BA0033183F /* ListenTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1EDCDE208891BA0033183F /* ListenTableViewCell.m */; };
 		9B1EDCE1208891BA0033183F /* ListenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B1EDCDF208891BA0033183F /* ListenTableViewCell.xib */; };
 		9B1EDCE42089C06D0033183F /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1EDCE32089C06C0033183F /* UIView+Toast.m */; };
+		9B1EDCE72089CEAE0033183F /* NoContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1EDCE62089CEAD0033183F /* NoContentViewController.m */; };
 		9B3D02C62084468E005C923B /* SUPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3D02C52084468E005C923B /* SUPlayer.m */; };
 		9B3D02CA20845338005C923B /* PaperDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3D02C820845338005C923B /* PaperDetailViewController.m */; };
 		9B3D02CB20845338005C923B /* PaperDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B3D02C920845338005C923B /* PaperDetailViewController.xib */; };
@@ -125,6 +126,8 @@
 		9B1EDCDF208891BA0033183F /* ListenTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListenTableViewCell.xib; sourceTree = "<group>"; };
 		9B1EDCE22089C06C0033183F /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
 		9B1EDCE32089C06C0033183F /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
+		9B1EDCE52089CEAD0033183F /* NoContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoContentViewController.h; sourceTree = "<group>"; };
+		9B1EDCE62089CEAD0033183F /* NoContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoContentViewController.m; sourceTree = "<group>"; };
 		9B3D02C52084468E005C923B /* SUPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SUPlayer.m; sourceTree = "<group>"; };
 		9B3D02C720845338005C923B /* PaperDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaperDetailViewController.h; sourceTree = "<group>"; };
 		9B3D02C820845338005C923B /* PaperDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaperDetailViewController.m; sourceTree = "<group>"; };
@@ -320,6 +323,8 @@
 		9B1D31C9207367E0007674CF /* Collection */ = {
 			isa = PBXGroup;
 			children = (
+				9B1EDCE52089CEAD0033183F /* NoContentViewController.h */,
+				9B1EDCE62089CEAD0033183F /* NoContentViewController.m */,
 				9B1D31CF20736846007674CF /* MyCollectionViewController.h */,
 				9B1D31D020736846007674CF /* MyCollectionViewController.m */,
 			);
@@ -885,6 +890,7 @@
 				9BDFE0C4208833B500B59B3B /* LeftViweTableViewCell.m in Sources */,
 				9B4BB7082079C1AE0029015F /* BottomLabel.m in Sources */,
 				9B135CC1207C886A0040A883 /* UISlider+time.m in Sources */,
+				9B1EDCE72089CEAE0033183F /* NoContentViewController.m in Sources */,
 				9B13AD6120807B8E0000C750 /* BannerCollectionViewCell.m in Sources */,
 				9B1D31C320735804007674CF /* LeftViewController.m in Sources */,
 				9B6FB85F207F3D7B00BC07F3 /* HYWord.m in Sources */,

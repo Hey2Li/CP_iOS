@@ -74,6 +74,9 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rIL-4W-aNz">
                     <rect key="frame" x="153" y="587" width="68" height="68"/>
                     <state key="normal" image="wechat"/>
+                    <connections>
+                        <action selector="wxLogin:" destination="-1" eventType="touchUpInside" id="eht-u7-v0K"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="第三方登录" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aYf-Oy-bPE">
                     <rect key="frame" x="152.5" y="553" width="70" height="14"/>

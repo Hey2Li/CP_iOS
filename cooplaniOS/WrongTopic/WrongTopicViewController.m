@@ -17,7 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"错题集";
+    self.title = @"我的错题";
     self.view.backgroundColor = [UIColor whiteColor];
 }
 

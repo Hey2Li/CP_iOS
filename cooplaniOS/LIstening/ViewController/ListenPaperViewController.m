@@ -130,6 +130,8 @@
 //    [self.tikaCollectionView addGestureRecognizer:_panGr];
 
     [self parseLrc];
+    self.backImageView.hidden = YES;
+    [self.view bringSubviewToFront:self.backImageView];
 }
 #pragma mark 手势操作
 - (void)SwipeGR:(UISwipeGestureRecognizer *)gr{
@@ -313,15 +315,19 @@
     switch (_CNTag % 4) {
         case 0:
             [sender setImage:[UIImage imageNamed:@"switch_EnCh"] forState:UIControlStateNormal];
+            self.backImageView.hidden = YES;
             break;
         case 1:
             [sender setImage:[UIImage imageNamed:@"switch_En"] forState:UIControlStateNormal];
+            self.backImageView.hidden = YES;
             break;
         case 2:
             [sender setImage:[UIImage imageNamed:@"switch_Ch"] forState:UIControlStateNormal];
+            self.backImageView.hidden = YES;
             break;
         case 3:
             [sender setImage:[UIImage imageNamed:@"switch_no"] forState:UIControlStateNormal];
+            self.backImageView.hidden = NO;
         default:
             break;
     }
@@ -361,8 +367,24 @@
 - (void)changeProgress:(UISlider *)slider {
     float seekTime = self.player.duration * slider.value;
     [self.player seekToTime:seekTime];
-//    [self.progressSlider setValue:self.player.progress andTime:[NSString stringWithFormat:@"%f",seekTime] animated:YES];
-    [self startRoll];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        CGFloat minTime = 100;
+        for (NSInteger i = 0; i < timeArray.count; i++) {
+            NSString *time = [timeArray[i] substringWithRange:NSMakeRange(0, 5)];
+            NSArray *timeArray = [time componentsSeparatedByString:@":"];
+            CGFloat allTime = [timeArray[0] floatValue] * 60 + [timeArray[1] floatValue];
+            CGFloat otherTime = fabs(allTime - seekTime);
+            if (minTime > otherTime) {
+                minTime = otherTime;
+                _currentIndex = i;
+                NSLog(@"--------------------------------------mintime:%f,i:%ld,seekTime:%f",minTime,(long)i,seekTime);
+            }
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.lyricTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+            NSLog(@"scrollLyric/currentIndex%ld",(long)_currentIndex);
+        });
+    });
 }
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
     if ([keyPath isEqualToString:@"progress"]) {

@@ -20,9 +20,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <UIButton+WebCache.h>
 #import "SVProgressHUD.h"
-#import "SDCycleScrollView.h"
 #import "Tool.h"
-#import "DFPlayer.h"
 #import "LTHttpManager.h"
 #import "MJExtension.h"
 #import "UIView+Toast.h"

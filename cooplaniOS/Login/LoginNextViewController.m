@@ -73,6 +73,7 @@
     [LTHttpManager UserSMSCodeWithPhone:self.phoneStr Complete:^(LTHttpResult result, NSString *message, id data) {
         if (result == LTHttpResultSuccess) {
             SVProgressShowStuteText(@"发送成功", YES);
+            [USERDEFAULTS setObject:data[@"responseData"] forKey:USER_CODE_KEY];
             [self openCountdown];
         }else{
             SVProgressShowStuteText(@"发送失败", NO);
@@ -96,7 +97,7 @@
             dispatch_source_cancel(_timer);
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:
-                                                  @"验证码已发送，重新获取"];
+                                                  @"验证码已发送，重新发送"];
                 [str addAttribute:NSForegroundColorAttributeName value:
                  UIColorFromRGB(0xCCCCCC) range:NSMakeRange(0,7)];
                 [str addAttribute:NSForegroundColorAttributeName value:
@@ -152,12 +153,14 @@
             self.drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModePanningCenterView;
             self.drawerController.closeDrawerGestureModeMask =MMCloseDrawerGestureModeAll;
             //设置左右两边抽屉显示的多少
-            self.drawerController.maximumLeftDrawerWidth = 200.0;
-            self.drawerController.maximumRightDrawerWidth = 200.0;
+            self.drawerController.maximumLeftDrawerWidth = 160.0;
             self.drawerController.shouldStretchDrawer = YES;
             [leftVC setRestorationIdentifier:@"MMExampleLeftNavigationControllerRestorationKey"];
             [self.drawerController setDrawerVisualStateBlock:[MMDrawerVisualState slideAndScaleVisualStateBlock]];
+            self.drawerController.view.backgroundColor = [UIColor whiteColor];
+            self.drawerController.centerViewController.view.backgroundColor = [UIColor whiteColor];
             [self presentViewController:self.drawerController animated:YES completion:nil];
+            
             [USERDEFAULTS setObject:data[@"responseData"][@"phone"] forKey:USER_PHONE_KEY];
             [USERDEFAULTS setObject:data[@"responseData"][@"id"] forKey:USER_ID];
         }else{
