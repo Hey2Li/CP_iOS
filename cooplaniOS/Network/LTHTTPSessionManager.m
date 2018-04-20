@@ -49,8 +49,8 @@ NSString *const kKeyModelList = @"modellist";
         }else if(![responseObject[kKeyResult] isEqualToString:@"1"]){
             complete(LTHttpResultFailure, responseObject[kKeyMessage], nil);
             //添加SV错误提示
-            [SVProgressHUD setMinimumDismissTimeInterval:1];
-            [SVProgressHUD showErrorWithStatus:responseObject[kKeyMessage]];
+//            [SVProgressHUD setMinimumDismissTimeInterval:1];
+//            [SVProgressHUD showErrorWithStatus:responseObject[kKeyMessage]];
         }else{
             complete(LTHttpResultSuccess, responseObject[kKeyMessage], responseObject);
         }

@@ -23,6 +23,9 @@
 		9B1D31D120736846007674CF /* MyCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1D31D020736846007674CF /* MyCollectionViewController.m */; };
 		9B1D31D420736856007674CF /* WrongTopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1D31D320736856007674CF /* WrongTopicViewController.m */; };
 		9B1D31D720736866007674CF /* MyDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1D31D620736866007674CF /* MyDownloadViewController.m */; };
+		9B1EDCE0208891BA0033183F /* ListenTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1EDCDE208891BA0033183F /* ListenTableViewCell.m */; };
+		9B1EDCE1208891BA0033183F /* ListenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B1EDCDF208891BA0033183F /* ListenTableViewCell.xib */; };
+		9B1EDCE42089C06D0033183F /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1EDCE32089C06C0033183F /* UIView+Toast.m */; };
 		9B3D02C62084468E005C923B /* SUPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3D02C52084468E005C923B /* SUPlayer.m */; };
 		9B3D02CA20845338005C923B /* PaperDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3D02C820845338005C923B /* PaperDetailViewController.m */; };
 		9B3D02CB20845338005C923B /* PaperDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B3D02C920845338005C923B /* PaperDetailViewController.xib */; };
@@ -117,6 +120,11 @@
 		9B1D31D320736856007674CF /* WrongTopicViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WrongTopicViewController.m; sourceTree = "<group>"; };
 		9B1D31D520736866007674CF /* MyDownloadViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyDownloadViewController.h; sourceTree = "<group>"; };
 		9B1D31D620736866007674CF /* MyDownloadViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyDownloadViewController.m; sourceTree = "<group>"; };
+		9B1EDCDD208891BA0033183F /* ListenTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListenTableViewCell.h; sourceTree = "<group>"; };
+		9B1EDCDE208891BA0033183F /* ListenTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListenTableViewCell.m; sourceTree = "<group>"; };
+		9B1EDCDF208891BA0033183F /* ListenTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListenTableViewCell.xib; sourceTree = "<group>"; };
+		9B1EDCE22089C06C0033183F /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
+		9B1EDCE32089C06C0033183F /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
 		9B3D02C52084468E005C923B /* SUPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SUPlayer.m; sourceTree = "<group>"; };
 		9B3D02C720845338005C923B /* PaperDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaperDetailViewController.h; sourceTree = "<group>"; };
 		9B3D02C820845338005C923B /* PaperDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaperDetailViewController.m; sourceTree = "<group>"; };
@@ -245,6 +253,9 @@
 			children = (
 				9B13AD5B208053830000C750 /* TikaCollectionViewCell.h */,
 				9B13AD5C208053830000C750 /* TikaCollectionViewCell.m */,
+				9B1EDCDD208891BA0033183F /* ListenTableViewCell.h */,
+				9B1EDCDE208891BA0033183F /* ListenTableViewCell.m */,
+				9B1EDCDF208891BA0033183F /* ListenTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -387,6 +398,8 @@
 		9BC1D6B220738393007D88EF /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				9B1EDCE22089C06C0033183F /* UIView+Toast.h */,
+				9B1EDCE32089C06C0033183F /* UIView+Toast.m */,
 				9B4BB731207B6EDC0029015F /* SULoaderCategory.h */,
 				9B4BB734207B6EDC0029015F /* NSURL+SULoader.h */,
 				9B4BB732207B6EDC0029015F /* NSURL+SULoader.m */,
@@ -656,6 +669,7 @@
 				9BEA0A3D2071D9190026AF2C /* LaunchScreen.storyboard in Resources */,
 				9BEA0A3A2071D9190026AF2C /* Assets.xcassets in Resources */,
 				9B3D02DB208488A3005C923B /* LoginNextViewController.xib in Resources */,
+				9B1EDCE1208891BA0033183F /* ListenTableViewCell.xib in Resources */,
 				9B3D02CB20845338005C923B /* PaperDetailViewController.xib in Resources */,
 				9BEA0A382071D9190026AF2C /* Main.storyboard in Resources */,
 				9B13AD6220807B8E0000C750 /* BannerCollectionViewCell.xib in Resources */,
@@ -739,14 +753,12 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-cooplaniOS/Pods-cooplaniOS-resources.sh",
-				"${PODS_ROOT}/DFPlayer/DFPlayer/DFPlayer.bundle",
 				"${PODS_ROOT}/IQKeyboardManager/IQKeyBoardManager/Resources/IQKeyboardManager.bundle",
 				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
 				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/DFPlayer.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/IQKeyboardManager.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MJRefresh.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SVProgressHUD.bundle",
@@ -845,9 +857,11 @@
 				9BC1D6C520738657007D88EF /* PGCustomBannerView.m in Sources */,
 				9B4BB72E207B6E9D0029015F /* SURequestTask.m in Sources */,
 				9B13AD5D208053830000C750 /* TikaCollectionViewCell.m in Sources */,
+				9B1EDCE0208891BA0033183F /* ListenTableViewCell.m in Sources */,
 				9B1D31D120736846007674CF /* MyCollectionViewController.m in Sources */,
 				9B6FB85C207F3D2100BC07F3 /* UILabel+HYLabel.m in Sources */,
 				9B3D02CF20847C5A005C923B /* PaperDetailTableViewCell.m in Sources */,
+				9B1EDCE42089C06D0033183F /* UIView+Toast.m in Sources */,
 				9B3D02C62084468E005C923B /* SUPlayer.m in Sources */,
 				9B135CCF207CD8AA0040A883 /* LTHTTPSessionManager.m in Sources */,
 				9BEA0A352071D9190026AF2C /* ViewController.m in Sources */,
@@ -1042,6 +1056,7 @@
 			baseConfigurationReference = 9AB145F84570512990287D28 /* Pods-cooplaniOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5VFC77CT8S;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1060,6 +1075,7 @@
 			baseConfigurationReference = 14880E1BC0DACFA7A6535D1A /* Pods-cooplaniOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5VFC77CT8S;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

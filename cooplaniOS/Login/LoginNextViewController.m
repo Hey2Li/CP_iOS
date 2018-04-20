@@ -70,7 +70,7 @@
     
 }
 - (IBAction)postVrCodeClick:(UIButton *)sender {
-    [LTHttpManager UserSMSCodeWithPhone:[USERDEFAULTS objectForKey:USER_PHONE_KEY] Complete:^(LTHttpResult result, NSString *message, id data) {
+    [LTHttpManager UserSMSCodeWithPhone:self.phoneStr Complete:^(LTHttpResult result, NSString *message, id data) {
         if (result == LTHttpResultSuccess) {
             SVProgressShowStuteText(@"发送成功", YES);
             [self openCountdown];
@@ -127,8 +127,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO];
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    self.phoneNumber.text = [userDefaults objectForKey:@"user_phonenumber"];
+    self.phoneNumber.text = self.phoneStr;
 }
 - (IBAction)becomeFirst:(id)sender {
     [self.FirstTF becomeFirstResponder];
@@ -138,7 +137,7 @@
         SVProgressShowStuteText(@"验证码错误", NO);
         return;
     }
-    [LTHttpManager UserCodeLoginWithPhone:[USERDEFAULTS objectForKey:USER_PHONE_KEY] andCode:[USERDEFAULTS objectForKey:USER_CODE_KEY] Complete:^(LTHttpResult result, NSString *message, id data) {
+    [LTHttpManager UserCodeLoginWithPhone:self.phoneStr andCode:[USERDEFAULTS objectForKey:USER_CODE_KEY] Complete:^(LTHttpResult result, NSString *message, id data) {
         if (LTHttpResultSuccess == result) {
             //初始化控制器
             UIViewController *centerVC = [[HomeViewController alloc]init];

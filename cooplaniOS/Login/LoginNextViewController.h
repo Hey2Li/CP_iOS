@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface LoginNextViewController : UIViewController
-
+@property (nonatomic, strong) NSString *phoneStr;
 @end

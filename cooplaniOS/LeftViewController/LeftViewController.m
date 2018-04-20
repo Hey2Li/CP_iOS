@@ -17,6 +17,7 @@
 
 @interface LeftViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
+@property (nonatomic, strong) UIButton *headerBtn;
 @end
 
 @implementation LeftViewController
@@ -24,17 +25,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     [self initWithView];
 }
 - (void)initWithView{
     self.view.backgroundColor = [UIColor whiteColor];
-    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 200, SCREEN_HEIGHT) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 160.0, SCREEN_HEIGHT) style:UITableViewStylePlain];
     tableView.scrollEnabled = NO;
     tableView.delegate = self;
     tableView.dataSource = self;
     tableView.separatorStyle = NO;
     [tableView registerNib:[UINib nibWithNibName:@"LeftViweTableViewCell" bundle:nil] forCellReuseIdentifier:NSStringFromClass([LeftViweTableViewCell class])];
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 200)];
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 160.0, 200)];
     headerView.backgroundColor = [UIColor whiteColor];
     UIButton *headerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [headerBtn setImage:[UIImage imageNamed:@"touxiang"] forState:UIControlStateNormal];
@@ -49,10 +53,10 @@
     headerBtn.layer.borderWidth = 2.0f;
     headerBtn.layer.borderColor = DRGBCOLOR.CGColor;
     [headerBtn addTarget:self action:@selector(headerBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    
+    self.headerBtn = headerBtn;
     UILabel *userNameLb = [[UILabel alloc]init];
     NSString *phoneStr = [USERDEFAULTS objectForKey:USER_PHONE_KEY];
-    userNameLb.text =  phoneStr.length > 0 ? [USERDEFAULTS objectForKey:USER_PHONE_KEY] : @"";
+    userNameLb.text =  phoneStr.length > 0 ? [USERDEFAULTS objectForKey:USER_PHONE_KEY] : @"请登录";
     userNameLb.textAlignment = NSTextAlignmentCenter;
     [headerView addSubview:userNameLb];
     [userNameLb mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -105,7 +109,7 @@
             cell.leftImageVIew.image = [UIImage imageNamed:@"collection"];
             break;
         case 2:
-            cell.titleLb.text = @"错题本";
+            cell.titleLb.text = @"我的错题";
             cell.leftImageVIew.image = [UIImage imageNamed:@"errorlog"];
             break;
         case 3:

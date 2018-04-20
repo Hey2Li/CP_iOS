@@ -38,7 +38,7 @@
     self.drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModePanningCenterView;
     self.drawerController.closeDrawerGestureModeMask =MMCloseDrawerGestureModeAll;
     //设置左右两边抽屉显示的多少
-    self.drawerController.maximumLeftDrawerWidth = 200.0;
+    self.drawerController.maximumLeftDrawerWidth = 160.0;
     self.drawerController.shouldStretchDrawer = YES;
     self.drawerController.view.backgroundColor = [UIColor whiteColor];
     self.drawerController.centerViewController.view.backgroundColor = [UIColor whiteColor];
@@ -54,6 +54,8 @@
     manager.shouldResignOnTouchOutside = YES;
     manager.shouldToolbarUsesTextFieldTintColor = YES;
     manager.enableAutoToolbar = NO;
+    [NSThread sleepForTimeInterval:1];
+
     //初始化窗口、设置根控制器、显示窗口
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     [self.window setRootViewController:self.drawerController];

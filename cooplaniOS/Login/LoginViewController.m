@@ -40,10 +40,12 @@
     NSString *toBeString = textField.text;
     if (toBeString.length < 11) {
         self.nextStepBtn.backgroundColor = UIColorFromRGB(0xFDF6C1);
+        [self.nextStepBtn setTitleColor:UIColorFromRGB(0x9B9B9B) forState:UIControlStateNormal];
         self.nextStepBtn.userInteractionEnabled = NO;
     }else{
         self.nextStepBtn.backgroundColor = DRGBCOLOR;
         self.nextStepBtn.userInteractionEnabled = YES;
+        [self.nextStepBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     }
     //获取高亮部分
     UITextRange *selectedRange = [textField markedTextRange];
@@ -76,8 +78,11 @@
                 LoginNextViewController *vc = [[LoginNextViewController alloc]init];
                 [self.navigationController pushViewController:vc animated:YES];
                 NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                [userDefaults setObject:self.phoneTF.text forKey:@"user_phonenumber"];
+//                [userDefaults setObject:self.phoneTF.text forKey:@"user_phonenumber"];
+                vc.phoneStr = self.phoneTF.text;
                 [userDefaults setObject:data[@"responseData"] forKey:@"user_code"];
+            }else{
+                [self.view makeToast:message];
             }
         }];
     }else if (self.phoneTF.text.length == 0){

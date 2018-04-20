@@ -89,6 +89,7 @@
 //        sender.tag = 0;
 //        [sender setImage:image];
 //    }
+    
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 //    [self.mm_drawerController openDrawerSide:MMDrawerSideLeft animated:YES completion:^(BOOL finished) {
 //        [sender setImage:back];

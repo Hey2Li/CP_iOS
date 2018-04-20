@@ -43,7 +43,7 @@
                     <rect key="frame" x="146" y="43" width="82" height="79"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18888888888" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lvR-VO-iVz">
-                    <rect key="frame" x="132.5" y="167" width="90" height="20"/>
+                    <rect key="frame" x="142.5" y="167" width="90" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="okV-sK-7f9"/>
                         <constraint firstAttribute="width" constant="90" id="xxj-Kk-kVp"/>
@@ -53,7 +53,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rWJ-Sg-qTx">
-                    <rect key="frame" x="232.5" y="171" width="12" height="12"/>
+                    <rect key="frame" x="242.5" y="171" width="12" height="12"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="12" id="CpO-cA-Wib"/>
                         <constraint firstAttribute="height" constant="12" id="msK-7p-g7x"/>
@@ -238,7 +238,7 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点击确定，即表示已阅读并同意《酷学注册服务条款》" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aDe-xc-BVd">
-                    <rect key="frame" x="65.5" y="364" width="245.5" height="30"/>
+                    <rect key="frame" x="65.5" y="364" width="245.5" height="20"/>
                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                     <color key="textColor" red="0.79992926119999996" green="0.80004531150000002" blue="0.79990386960000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
@@ -292,7 +292,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RSk-Jk-kmn">
-                    <rect key="frame" x="211" y="364" width="100" height="30"/>
+                    <rect key="frame" x="211" y="354" width="100" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="100" id="lDg-S6-EXA"/>
                     </constraints>
@@ -358,12 +358,12 @@
                 <constraint firstItem="56v-D0-kUQ" firstAttribute="centerX" secondItem="dmF-RJ-teZ" secondAttribute="centerX" id="feT-TQ-LM7"/>
                 <constraint firstItem="Fpy-on-6Vv" firstAttribute="leading" secondItem="rL3-uR-z2y" secondAttribute="leading" id="g3n-UF-Tpw"/>
                 <constraint firstItem="jku-1R-SxH" firstAttribute="trailing" secondItem="RFD-fC-ulJ" secondAttribute="trailing" id="gEj-Cj-XLg"/>
-                <constraint firstItem="RSk-Jk-kmn" firstAttribute="top" secondItem="aDe-xc-BVd" secondAttribute="top" id="giE-Kn-kgK"/>
+                <constraint firstItem="RSk-Jk-kmn" firstAttribute="top" secondItem="aDe-xc-BVd" secondAttribute="top" constant="-10" id="giE-Kn-kgK"/>
                 <constraint firstItem="56v-D0-kUQ" firstAttribute="bottom" secondItem="Y9a-Lz-RFf" secondAttribute="bottom" id="gii-Cq-TbX"/>
                 <constraint firstItem="an3-GS-BPo" firstAttribute="trailing" secondItem="jku-1R-SxH" secondAttribute="trailing" id="hBP-mh-zpR"/>
                 <constraint firstItem="an3-GS-BPo" firstAttribute="leading" secondItem="Id6-fr-yox" secondAttribute="trailing" constant="20" id="i0D-Nn-2Ur"/>
                 <constraint firstItem="OHo-s5-zto" firstAttribute="centerX" secondItem="K7L-Kq-BoQ" secondAttribute="centerX" id="i2H-9O-ref"/>
-                <constraint firstItem="lvR-VO-iVz" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" constant="-10" id="j1G-Sc-rId"/>
+                <constraint firstItem="lvR-VO-iVz" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="j1G-Sc-rId"/>
                 <constraint firstItem="rWJ-Sg-qTx" firstAttribute="centerY" secondItem="lvR-VO-iVz" secondAttribute="centerY" id="jIZ-xf-797"/>
                 <constraint firstItem="67V-BQ-U5W" firstAttribute="trailing" secondItem="ytm-q4-zyQ" secondAttribute="trailing" id="jf9-nH-TgJ"/>
                 <constraint firstItem="aDe-xc-BVd" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="jwx-ag-rYL"/>

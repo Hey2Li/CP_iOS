@@ -25,6 +25,7 @@
 #import "DFPlayer.h"
 #import "LTHttpManager.h"
 #import "MJExtension.h"
+#import "UIView+Toast.h"
 
 
 //-----------------color----------------------

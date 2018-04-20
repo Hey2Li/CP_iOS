@@ -66,7 +66,7 @@
     UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);
     [[UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:radius]addClip];
     CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetAlpha(context, 0.5);
+    CGContextSetAlpha(context, 0.8);
     CGContextSetStrokeColorWithColor(context, textColor.CGColor);
     CGContextSetFillColorWithColor(context, backgroundColor.CGColor);
     CGContextFillRect(context, rect);
