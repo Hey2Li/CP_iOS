@@ -197,7 +197,7 @@
 }
 - (void)playbackFinished {
     NSLog(@"播放完成");
-    [self stop];
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"playFinished" object:nil];
 }
 
 #pragma mark - SULoaderDelegate

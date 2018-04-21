@@ -69,6 +69,7 @@
     _RateTag = 0;
     [self initWithView];
     [self loadLongPress];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playFinished:) name:@"playFinished" object:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -365,6 +366,7 @@
 
 #pragma mark 播放器相关
 - (void)changeProgress:(UISlider *)slider {
+    [self.player pause];
     float seekTime = self.player.duration * slider.value;
     [self.player seekToTime:seekTime];
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
@@ -385,6 +387,17 @@
             NSLog(@"scrollLyric/currentIndex%ld",(long)_currentIndex);
         });
     });
+    [self.player play];
+}
+#pragma mark 播放完成
+- (void)playFinished:(NSNotification *)notifi{
+    [self.player seekToTime:0];
+    _currentIndex = 0;
+    [self.player pause];
+    if (self.playSongBtn.selected) {
+        [self paly:self.playSongBtn];
+    }
+    [self.lyricTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
 }
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
     if ([keyPath isEqualToString:@"progress"]) {
@@ -411,11 +424,9 @@
 - (IBAction)paly:(UIButton *)sender {
     if (sender.selected) {
         [self.player pause];
-//        [self.playSongBtn setImage:[UIImage imageNamed:@"play"] forState:UIControlStateSelected];
         [self stopRoll];
     }else{
         [self.player play];
-//        [self.playSongBtn setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateSelected];
         [self startRoll];
         [self.lyricTableView reloadData];
     }
@@ -467,12 +478,9 @@
         self.playSongBtn.selected = YES;
         [self.playSongBtn setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateSelected];
         [self startRoll];
-//        NSArray *reloadRows = @[[NSIndexPath indexPathForRow:_currentIndex inSection:0],[NSIndexPath indexPathForRow:_lastIndex inSection:0]];
-//        [self.lyricTableView reloadRowsAtIndexPaths:reloadRows withRowAnimation:UITableViewRowAnimationNone];
-//        [self.lyricTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+
         [_lyricTableView reloadData];
         [_lyricTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
-        //        [self scrollLyric];
         NSLog(@"currentIndex%ld",(long)_currentIndex);
     }
 }
@@ -508,49 +516,6 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    static NSString *cellID = @"lyricCell";
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-//    if (cell == nil) {
-//        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        cell.textLabel.textAlignment = NSTextAlignmentLeft;
-//        cell.backgroundColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1/1.0];
-//    }
-//    NSString *lrc = lyricArray[indexPath.row];
-////    NSLog(@"%@",lrc);
-//    if ([lrc containsString:@"/"]) {
-//       NSArray *array = [lrc componentsSeparatedByString:@"/"];
-////        NSLog(@"%@",array);
-//        switch (_CNTag % 3) {
-//            case 0:
-//                cell.textLabel.text = [NSString stringWithFormat:@"%@\n%@", array[0],array[1]];
-//                break;
-//            case 1:
-//                cell.textLabel.text = array[0];
-//                break;
-//            case 2:
-//                cell.textLabel.text = array[1];
-//                break;
-//            default:
-//                break;
-//        }
-//    }else{
-//        if (_CNTag % 3 == 2) {
-//            cell.textLabel.text = @"";
-//        }else{
-//            cell.textLabel.text = lrc;
-//        }
-//    }
-//
-//    cell.textLabel.font = [UIFont systemFontOfSize:18];
-//    cell.textLabel.numberOfLines = 0;
-//    if (indexPath.row == _currentIndex) {
-//        cell.textLabel.textColor = DRGBCOLOR;
-//        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    }else{
-//        cell.textLabel.textColor = [UIColor colorWithRed:102/255.0 green:102/255.0 blue:102/255.0 alpha:1/1.0];
-//        cell.selected = YES;
-//    }
     ListenTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ListenTableViewCell class]) forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.listenLb.textAlignment = NSTextAlignmentLeft;
@@ -620,7 +585,9 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
 /*
 #pragma mark - Navigation
 
