@@ -491,7 +491,7 @@
     _currentIndex++;
     [self.player pause];
     [self stopRoll];
-    if (_currentIndex > self.timeArray.count) {
+    if (_currentIndex+1 > self.timeArray.count) {
         [self.player play];
         [self startRoll];
         return;
