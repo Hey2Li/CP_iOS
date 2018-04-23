@@ -9,6 +9,8 @@
 #import "PaperDetailViewController.h"
 #import "PaperDetailTableViewCell.h"
 #import "ListenPaperViewController.h"
+#import "TestModeViewController.h"
+
 
 @interface PaperDetailViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
@@ -61,7 +63,12 @@
         ListenPaperViewController *vc = [[ListenPaperViewController alloc]init];
         vc.title = self.title;
         [self.navigationController pushViewController:vc animated:YES];
-    }else{
+    }else if (indexPath.row == 2){
+        TestModeViewController *vc = [[TestModeViewController alloc]init];
+        vc.title = self.title;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else{
         SVProgressShowStuteText(@"暂未开放", NO);
     }
 }

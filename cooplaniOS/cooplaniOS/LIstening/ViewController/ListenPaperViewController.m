@@ -393,6 +393,8 @@
     }else{
         [self.player pause];
         float seekTime = self.player.duration * slider.value;
+        NSString *time = [NSString stringWithFormat:@"%@/%@ ",[self convertStringWithTime:seekTime], [self convertStringWithTime:self.player.duration]];
+        [self.progressSlider setValue:self.player.progress andTime:time animated:YES];
         [self.player seekToTime:seekTime];
         self.playSongBtn.selected = NO;
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
