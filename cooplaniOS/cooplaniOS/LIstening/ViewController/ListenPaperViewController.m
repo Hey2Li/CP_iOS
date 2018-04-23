@@ -15,7 +15,7 @@
 #import "TikaCollectionViewCell.h"
 #import "ListenTableViewCell.h"
 
-@interface ListenPaperViewController ()<UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>
+@interface ListenPaperViewController ()<UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
 @property (nonatomic, strong) CADisplayLink *timer;//界面刷新定时器
 @property (nonatomic, strong) SUPlayer *player;
 @property (nonatomic, assign) NSInteger songIndex;
@@ -25,11 +25,7 @@
 @property (nonatomic, strong) NSMutableArray *timeArray;
 @property (nonatomic, strong) NSMutableArray *lengthArray;
 @property (nonatomic, assign) NSInteger currentIndex;
-@property (nonatomic, strong) UICollectionView *tikaCollectionView;
-@property (nonatomic, strong) UISwipeGestureRecognizer *swipeDownGR;
-@property (nonatomic, strong) UISwipeGestureRecognizer *swipeUpGR;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGr;
-@property (nonatomic, assign) BOOL isOpen;
 @property (nonatomic, assign) int CNTag;//判断中英文
 @property (nonatomic, assign) int RateTag;//判断播放器速率
 @property (nonatomic, strong) UIView *wordView;
@@ -64,7 +60,6 @@
     [self.progressSlider addTarget:self action:@selector(changeProgress:) forControlEvents:UIControlEventTouchUpInside];
     [self.progressSlider setValue:self.player.progress andTime:@"00:00/00:00" animated:YES];
     self.timeLb.hidden = YES;
-    _isOpen = YES;
     _CNTag = 0;
     _RateTag = 0;
     [self initWithView];
@@ -96,73 +91,14 @@
     [self.lyricTableView registerNib:[UINib nibWithNibName:@"ListenTableViewCell" bundle:nil] forCellReuseIdentifier:NSStringFromClass([ListenTableViewCell class])];
     self.lyricTableView.backgroundColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1/1.0];
     
-    UICollectionViewFlowLayout *flowlayout = [[UICollectionViewFlowLayout alloc]init];
-    flowlayout.minimumLineSpacing = 0;
-    flowlayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    UICollectionView *collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, 0, 0) collectionViewLayout:flowlayout];
-//    [self.view addSubview:collectionView];
-//    [collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(self.view.mas_left);
-//        make.right.equalTo(self.view.mas_right);
-//        make.center.equalTo(self.view);
-//        make.height.equalTo(@300);
-//    }];
-//
-//    [self.view bringSubviewToFront:collectionView];
     [self.view bringSubviewToFront:self.bottomView];
     [self.view bringSubviewToFront:self.otherView];
-    collectionView.backgroundColor = [UIColor clearColor];
-    collectionView.dataSource = self;
-    collectionView.delegate = self;
-    [collectionView registerClass:[TikaCollectionViewCell class] forCellWithReuseIdentifier:NSStringFromClass([TikaCollectionViewCell class])];
-    collectionView.backgroundColor = [UIColor clearColor];
-    collectionView.pagingEnabled = YES;
-    collectionView.showsHorizontalScrollIndicator = NO;
-    self.tikaCollectionView = collectionView;
-    self.swipeDownGR = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(SwipeGR:)];
-    [self.swipeDownGR setDirection:UISwipeGestureRecognizerDirectionDown];
-    [self.tikaCollectionView addGestureRecognizer:self.swipeDownGR];
-
-    [self.swipeUpGR setDirection:UISwipeGestureRecognizerDirectionUp];
-    self.swipeUpGR = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(SwipeGR:)];
-    [self.tikaCollectionView addGestureRecognizer:self.swipeUpGR];
-    
-//    self.panGr = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(panGr:)];
-//    [self.tikaCollectionView addGestureRecognizer:_panGr];
 
     [self parseLrc];
     self.backImageView.hidden = YES;
     [self.view bringSubviewToFront:self.backImageView];
 }
-#pragma mark 手势操作
-- (void)SwipeGR:(UISwipeGestureRecognizer *)gr{
-    NSLog(@"%lu",gr.direction);
-    if (gr.direction == UISwipeGestureRecognizerDirectionUp) {
-        [UIView animateWithDuration:0.5 animations:^{
-            self.tikaCollectionView.transform = CGAffineTransformIdentity;
-        }];
-        _isOpen = YES;
-    }
-    if (gr.direction == UISwipeGestureRecognizerDirectionDown) {
-        [UIView animateWithDuration:0.5 animations:^{
-            self.tikaCollectionView.transform = CGAffineTransformMakeTranslation(0, SCREEN_HEIGHT/3 + 50);
-        }];
-        _isOpen = NO;
-    }
-}
-- (void)panGr:(UIPanGestureRecognizer *)pan{
-    if (_isOpen) {
-        [UIView animateWithDuration:0.5 animations:^{
-            self.tikaCollectionView.transform = CGAffineTransformMakeTranslation(0, SCREEN_HEIGHT/2);
-            _isOpen = !_isOpen;
-        }];
-    }else{
-        [UIView animateWithDuration:0.5 animations:^{
-            self.tikaCollectionView.transform = CGAffineTransformIdentity;
-            _isOpen = !_isOpen;
-        }];
-    }
-}
+
 #pragma mark 查词
 - (void)loadLongPress{
     //添加长按手势
@@ -457,7 +393,6 @@
     }else{
         [self.player play];
         [self startRoll];
-        [self.lyricTableView reloadData];
     }
     sender.selected = !sender.selected;
 }
@@ -581,35 +516,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     _currentIndex = (int)indexPath.row;
 }
-#pragma mark UICollectionViewDelegate
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return  4;
-}
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake(SCREEN_WIDTH, 290);
-}
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
-    return UIEdgeInsetsMake(0, 0, 0, 0);
-}
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    TikaCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TikaCollectionViewCell class]) forIndexPath:indexPath];
-    cell.UpAndDownBtnClick = ^(UIButton *btn) {
-        if (_isOpen) {
-            [UIView animateWithDuration:0.5 animations:^{
-                self.tikaCollectionView.transform = CGAffineTransformMakeTranslation(0, SCREEN_HEIGHT/3 + 50);
-            }];
-            _isOpen = NO;
-        }else{
-            [UIView animateWithDuration:0.5 animations:^{
-                self.tikaCollectionView.transform = CGAffineTransformIdentity;
-            }];
-            _isOpen = YES;
-        }
-    };
-    //    cell.layer.masksToBounds = YES;
-    return cell;
-}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
