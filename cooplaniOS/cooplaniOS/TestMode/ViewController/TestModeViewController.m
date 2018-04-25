@@ -140,7 +140,16 @@
  
 }
 - (void)donePaperClick:(UIButton *)btn{
-    [self.navigationController pushViewController:[[AnswerViewController alloc]init] animated:YES];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确定交卷" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self.navigationController pushViewController:[[AnswerViewController alloc]init] animated:YES];
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"退出" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        [alert dismissViewControllerAnimated:YES completion:nil];
+    }];
+    [alert addAction:sureAction];
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 #pragma mark UICollectionViewDelegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{

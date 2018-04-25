@@ -67,9 +67,10 @@
             make.top.equalTo(self);
             make.height.equalTo(@0.1);
         }];
-        [topLb.layer setShadowOffset:CGSizeMake(-1, -1)];
-        [topLb.layer setShadowColor:[UIColor blackColor].CGColor];
-        [topLb.layer setShadowOpacity:0.5];
+        [self.layer setShadowOffset:CGSizeMake(-1, -1)];
+        [self.layer setShadowColor:[UIColor blackColor].CGColor];
+        [self.layer setShadowOpacity:0.2];
+        [self.layer setMasksToBounds:NO];
         
         self.questionIndexLb = questionIndexLb;
         self.donePapersBtn = donePaperBtn;

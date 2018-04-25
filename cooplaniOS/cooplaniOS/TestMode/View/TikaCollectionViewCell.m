@@ -16,22 +16,32 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = UIColorFromRGB(0xf7f7f7);
-        UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 0, 0) style:UITableViewStylePlain];
-        tableView.delegate = self;
-        tableView.dataSource = self;
-        [self addSubview:tableView];
-        [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        UIView *backView = [[UIView alloc]init];
+        backView.backgroundColor = [UIColor whiteColor];
+        [self addSubview:backView];
+        [backView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.mas_left).offset(17);
             make.right.equalTo(self.mas_right).offset(-17);
             make.top.equalTo(self.mas_top).offset(10);
             make.bottom.equalTo(self.mas_bottom).offset(-10);
         }];
-        tableView.separatorStyle = NO;
+        [backView.layer setCornerRadius:8];
+        [backView.layer setShadowOpacity:0.2];
+        [backView.layer setShadowColor:[UIColor blackColor].CGColor];
+        [backView.layer setShadowOffset:CGSizeMake(2, 2)];
+        [backView.layer setMasksToBounds:NO];
+        
+        UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 0, 0) style:UITableViewStylePlain];
+        tableView.delegate = self;
+        tableView.dataSource = self;
+        [backView addSubview:tableView];
+        [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(backView.mas_left);
+            make.right.equalTo(backView.mas_right);
+            make.top.equalTo(backView.mas_top);
+            make.bottom.equalTo(backView.mas_bottom);
+        }];
         [tableView.layer setCornerRadius:8];
-        [tableView.layer setShadowOpacity:0.5];
-        [tableView.layer setShadowColor:[UIColor blackColor].CGColor];
-        [tableView.layer setShadowOffset:CGSizeMake(2, 2)];
-        [tableView.layer setMasksToBounds:YES];
         tableView.backgroundColor = [UIColor whiteColor];
         tableView.tableFooterView = [UIView new];
         
