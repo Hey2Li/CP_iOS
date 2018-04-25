@@ -19,6 +19,13 @@
 		9B16B073208D781F00094EE7 /* TestModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B16B072208D781F00094EE7 /* TestModeViewController.m */; };
 		9B16B076208D7DC900094EE7 /* ListenPlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B16B075208D7DC900094EE7 /* ListenPlay.m */; };
 		9B16B078208D7DDE00094EE7 /* ListenPlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B16B077208D7DDE00094EE7 /* ListenPlay.xib */; };
+		9B16B07B208F054300094EE7 /* AnswerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B16B07A208F054300094EE7 /* AnswerViewController.m */; };
+		9B16B07F208F140A00094EE7 /* AnswerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B16B07D208F140A00094EE7 /* AnswerTableViewCell.m */; };
+		9B16B080208F140A00094EE7 /* AnswerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B16B07E208F140A00094EE7 /* AnswerTableViewCell.xib */; };
+		9B16B08820904FDD00094EE7 /* TestModeBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B16B08720904FDD00094EE7 /* TestModeBottomView.m */; };
+		9B16B08F20905BF100094EE7 /* PracticeModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B16B08E20905BF100094EE7 /* PracticeModeViewController.m */; };
+		9B16B0932090623E00094EE7 /* QuestionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B16B0912090623E00094EE7 /* QuestionTableViewCell.m */; };
+		9B16B0942090623E00094EE7 /* QuestionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B16B0922090623E00094EE7 /* QuestionTableViewCell.xib */; };
 		9B1D31BC2073487F007674CF /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1D31BB2073487F007674CF /* BaseViewController.m */; };
 		9B1D31BF20734891007674CF /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1D31BE20734891007674CF /* HomeViewController.m */; };
 		9B1D31C320735804007674CF /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1D31C220735804007674CF /* LeftViewController.m */; };
@@ -114,6 +121,18 @@
 		9B16B074208D7DC900094EE7 /* ListenPlay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListenPlay.h; sourceTree = "<group>"; };
 		9B16B075208D7DC900094EE7 /* ListenPlay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListenPlay.m; sourceTree = "<group>"; };
 		9B16B077208D7DDE00094EE7 /* ListenPlay.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListenPlay.xib; sourceTree = "<group>"; };
+		9B16B079208F054300094EE7 /* AnswerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnswerViewController.h; sourceTree = "<group>"; };
+		9B16B07A208F054300094EE7 /* AnswerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnswerViewController.m; sourceTree = "<group>"; };
+		9B16B07C208F140A00094EE7 /* AnswerTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnswerTableViewCell.h; sourceTree = "<group>"; };
+		9B16B07D208F140A00094EE7 /* AnswerTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnswerTableViewCell.m; sourceTree = "<group>"; };
+		9B16B07E208F140A00094EE7 /* AnswerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnswerTableViewCell.xib; sourceTree = "<group>"; };
+		9B16B08620904FDD00094EE7 /* TestModeBottomView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestModeBottomView.h; sourceTree = "<group>"; };
+		9B16B08720904FDD00094EE7 /* TestModeBottomView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestModeBottomView.m; sourceTree = "<group>"; };
+		9B16B08D20905BF100094EE7 /* PracticeModeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PracticeModeViewController.h; sourceTree = "<group>"; };
+		9B16B08E20905BF100094EE7 /* PracticeModeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PracticeModeViewController.m; sourceTree = "<group>"; };
+		9B16B0902090623E00094EE7 /* QuestionTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuestionTableViewCell.h; sourceTree = "<group>"; };
+		9B16B0912090623E00094EE7 /* QuestionTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuestionTableViewCell.m; sourceTree = "<group>"; };
+		9B16B0922090623E00094EE7 /* QuestionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuestionTableViewCell.xib; sourceTree = "<group>"; };
 		9B1D31BA2073487F007674CF /* BaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		9B1D31BB2073487F007674CF /* BaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		9B1D31BD20734891007674CF /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
@@ -262,8 +281,6 @@
 		9B13AD6920819B640000C750 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				9B13AD5B208053830000C750 /* TikaCollectionViewCell.h */,
-				9B13AD5C208053830000C750 /* TikaCollectionViewCell.m */,
 				9B1EDCDD208891BA0033183F /* ListenTableViewCell.h */,
 				9B1EDCDE208891BA0033183F /* ListenTableViewCell.m */,
 				9B1EDCDF208891BA0033183F /* ListenTableViewCell.xib */,
@@ -280,8 +297,6 @@
 				9B4BB719207A234D0029015F /* ListenPaperViewController.h */,
 				9B4BB71A207A234D0029015F /* ListenPaperViewController.m */,
 				9B4BB71B207A234D0029015F /* ListenPaperViewController.xib */,
-				9B16B071208D781F00094EE7 /* TestModeViewController.h */,
-				9B16B072208D781F00094EE7 /* TestModeViewController.m */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -291,6 +306,84 @@
 			children = (
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		9B16B08220904F6B00094EE7 /* TestMode */ = {
+			isa = PBXGroup;
+			children = (
+				9B16B08520904F8B00094EE7 /* Model */,
+				9B16B08420904F8400094EE7 /* View */,
+				9B16B08320904F7B00094EE7 /* ViewController */,
+			);
+			path = TestMode;
+			sourceTree = "<group>";
+		};
+		9B16B08320904F7B00094EE7 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				9B16B071208D781F00094EE7 /* TestModeViewController.h */,
+				9B16B072208D781F00094EE7 /* TestModeViewController.m */,
+				9B16B079208F054300094EE7 /* AnswerViewController.h */,
+				9B16B07A208F054300094EE7 /* AnswerViewController.m */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		9B16B08420904F8400094EE7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9B16B07C208F140A00094EE7 /* AnswerTableViewCell.h */,
+				9B16B07D208F140A00094EE7 /* AnswerTableViewCell.m */,
+				9B16B07E208F140A00094EE7 /* AnswerTableViewCell.xib */,
+				9B13AD5B208053830000C750 /* TikaCollectionViewCell.h */,
+				9B13AD5C208053830000C750 /* TikaCollectionViewCell.m */,
+				9B16B08620904FDD00094EE7 /* TestModeBottomView.h */,
+				9B16B08720904FDD00094EE7 /* TestModeBottomView.m */,
+				9B16B0902090623E00094EE7 /* QuestionTableViewCell.h */,
+				9B16B0912090623E00094EE7 /* QuestionTableViewCell.m */,
+				9B16B0922090623E00094EE7 /* QuestionTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9B16B08520904F8B00094EE7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		9B16B08920905BA600094EE7 /* PracticeMode */ = {
+			isa = PBXGroup;
+			children = (
+				9B16B08C20905BBC00094EE7 /* ViewController */,
+				9B16B08B20905BB600094EE7 /* Model */,
+				9B16B08A20905BB000094EE7 /* View */,
+			);
+			path = PracticeMode;
+			sourceTree = "<group>";
+		};
+		9B16B08A20905BB000094EE7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9B16B08B20905BB600094EE7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		9B16B08C20905BBC00094EE7 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				9B16B08D20905BF100094EE7 /* PracticeModeViewController.h */,
+				9B16B08E20905BF100094EE7 /* PracticeModeViewController.m */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		9B1D31C4207363A3007674CF /* Home */ = {
@@ -507,6 +600,8 @@
 				9B1D31C5207363AA007674CF /* LeftViewController */,
 				9B1D31C4207363A3007674CF /* Home */,
 				9B4BB70C207A0B2B0029015F /* LIstening */,
+				9B16B08220904F6B00094EE7 /* TestMode */,
+				9B16B08920905BA600094EE7 /* PracticeMode */,
 				9BEA0A302071D9190026AF2C /* AppDelegate.h */,
 				9BEA0A312071D9190026AF2C /* AppDelegate.m */,
 				9BEA0A332071D9190026AF2C /* ViewController.h */,
@@ -681,6 +776,7 @@
 			files = (
 				9B16B078208D7DDE00094EE7 /* ListenPlay.xib in Resources */,
 				9B6FB859207F054C00BC07F3 /* 2017年6月四级真题（一）.lrc in Resources */,
+				9B16B0942090623E00094EE7 /* QuestionTableViewCell.xib in Resources */,
 				9B3D02D020847C5A005C923B /* PaperDetailTableViewCell.xib in Resources */,
 				9BDFE0C5208833B500B59B3B /* LeftViweTableViewCell.xib in Resources */,
 				9B3D02D620848878005C923B /* LoginViewController.xib in Resources */,
@@ -690,6 +786,7 @@
 				9B3D02DB208488A3005C923B /* LoginNextViewController.xib in Resources */,
 				9B1EDCE1208891BA0033183F /* ListenTableViewCell.xib in Resources */,
 				9B3D02CB20845338005C923B /* PaperDetailViewController.xib in Resources */,
+				9B16B080208F140A00094EE7 /* AnswerTableViewCell.xib in Resources */,
 				9BEA0A382071D9190026AF2C /* Main.storyboard in Resources */,
 				9B13AD6220807B8E0000C750 /* BannerCollectionViewCell.xib in Resources */,
 				9BDFE0C720883F6800B59B3B /* 2017年6月四级真题（一）.MP3 in Resources */,
@@ -874,15 +971,18 @@
 			files = (
 				9B4BB72D207B6E9D0029015F /* SUFileHandle.m in Sources */,
 				9BC1D6C520738657007D88EF /* PGCustomBannerView.m in Sources */,
+				9B16B08820904FDD00094EE7 /* TestModeBottomView.m in Sources */,
 				9B4BB72E207B6E9D0029015F /* SURequestTask.m in Sources */,
 				9B13AD5D208053830000C750 /* TikaCollectionViewCell.m in Sources */,
 				9B1EDCE0208891BA0033183F /* ListenTableViewCell.m in Sources */,
+				9B16B07F208F140A00094EE7 /* AnswerTableViewCell.m in Sources */,
 				9B1D31D120736846007674CF /* MyCollectionViewController.m in Sources */,
 				9B6FB85C207F3D2100BC07F3 /* UILabel+HYLabel.m in Sources */,
 				9B3D02CF20847C5A005C923B /* PaperDetailTableViewCell.m in Sources */,
 				9B1EDCE42089C06D0033183F /* UIView+Toast.m in Sources */,
 				9B3D02C62084468E005C923B /* SUPlayer.m in Sources */,
 				9B135CCF207CD8AA0040A883 /* LTHTTPSessionManager.m in Sources */,
+				9B16B0932090623E00094EE7 /* QuestionTableViewCell.m in Sources */,
 				9BEA0A352071D9190026AF2C /* ViewController.m in Sources */,
 				9B4BB736207B6EDC0029015F /* NSURL+SULoader.m in Sources */,
 				9B1D31BC2073487F007674CF /* BaseViewController.m in Sources */,
@@ -896,6 +996,7 @@
 				9B3D02DA208488A3005C923B /* LoginNextViewController.m in Sources */,
 				9B4BB71C207A234D0029015F /* ListenPaperViewController.m in Sources */,
 				9B1D31D420736856007674CF /* WrongTopicViewController.m in Sources */,
+				9B16B08F20905BF100094EE7 /* PracticeModeViewController.m in Sources */,
 				9B1D31D720736866007674CF /* MyDownloadViewController.m in Sources */,
 				9B4BB728207B6E910029015F /* SUResourceLoader.m in Sources */,
 				9BEA0A402071D9190026AF2C /* main.m in Sources */,
@@ -908,6 +1009,7 @@
 				9B16B076208D7DC900094EE7 /* ListenPlay.m in Sources */,
 				9B1EDCE72089CEAE0033183F /* NoContentViewController.m in Sources */,
 				9B13AD6120807B8E0000C750 /* BannerCollectionViewCell.m in Sources */,
+				9B16B07B208F054300094EE7 /* AnswerViewController.m in Sources */,
 				9B1D31C320735804007674CF /* LeftViewController.m in Sources */,
 				9B6FB85F207F3D7B00BC07F3 /* HYWord.m in Sources */,
 				9B1D31BF20734891007674CF /* HomeViewController.m in Sources */,

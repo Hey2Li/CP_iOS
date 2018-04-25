@@ -8,7 +8,7 @@
 
 #import "LTHTTPSessionManager.h"
 
-#define BaseURL @"http://app.cooplan.cn"
+#define BaseURL @"http://192.168.0.101:8080/cooplan-rest"
 @interface LTHttpManager : LTHTTPSessionManager
 
 

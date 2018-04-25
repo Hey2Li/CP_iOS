@@ -63,12 +63,15 @@
         ListenPaperViewController *vc = [[ListenPaperViewController alloc]init];
         vc.title = self.title;
         [self.navigationController pushViewController:vc animated:YES];
+    }else if (indexPath.row == 1){
+        TestModeViewController *vc = [[TestModeViewController alloc]init];
+        vc.title = self.title;
+        [self.navigationController pushViewController:vc animated:YES];
     }else if (indexPath.row == 2){
         TestModeViewController *vc = [[TestModeViewController alloc]init];
         vc.title = self.title;
         [self.navigationController pushViewController:vc animated:YES];
-    }
-    else{
+    }else{
         SVProgressShowStuteText(@"暂未开放", NO);
     }
 }
