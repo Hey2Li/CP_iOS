@@ -31,6 +31,17 @@
             self.bottomView.hidden = YES;
         }];
     }
+    if (model.isCorrect) {
+        self.shapeImageView.hidden = NO;
+        self.CorrectLb.hidden = YES;
+        self.questionView.backgroundColor = UIColorFromRGB(0xFFFFFF);
+        self.questionNameLb.textColor = UIColorFromRGB(0x666666);
+    }else{
+        self.shapeImageView.hidden = YES;
+        self.CorrectLb.hidden = NO;
+        self.questionView.backgroundColor = UIColorFromRGB(0xD76F67);
+        self.questionNameLb.textColor = UIColorFromRGB(0xFFFFFF);
+    }
 //    if (model.cellHeight <= 50) {
 //        self.cellHeight.constant = 0;
 //    }else{

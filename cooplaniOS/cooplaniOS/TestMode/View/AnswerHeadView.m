@@ -17,10 +17,16 @@
     // Drawing code
 }
 */
-- (instancetype)init{
-    if (self = [super init]) {
-        
+- (void)setCorrectStr:(NSString *)correctStr{
+    _correctStr = correctStr;
+    if ([correctStr integerValue] < 60) {
+        self.correctImagView.image = [UIImage imageNamed:@"成绩圈"];
+        self.correctLb.text = [NSString stringWithFormat:@"%@%%",correctStr];
+        self.correctLb.textColor = UIColorFromRGB(0xD76F67);
+    }else{
+        self.correctImagView.image = [UIImage imageNamed:@"成绩圈绿"];
+        self.correctLb.text = [NSString stringWithFormat:@"%@%%",correctStr];
+        self.correctLb.textColor = UIColorFromRGB(0x4DAC7D);
     }
-    return self;
 }
 @end

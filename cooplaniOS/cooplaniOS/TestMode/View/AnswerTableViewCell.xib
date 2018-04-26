@@ -34,6 +34,13 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Shape" translatesAutoresizingMaskIntoConstraints="NO" id="oeV-iD-rIa">
+                                <rect key="frame" x="380" y="20" width="16" height="11"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="11" id="gLR-8w-pbz"/>
+                                    <constraint firstAttribute="width" constant="16" id="wIV-5U-pVc"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.8413051962852478" green="0.43714123964309692" blue="0.40334248542785645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -41,7 +48,9 @@
                             <constraint firstItem="eYX-s7-V7r" firstAttribute="centerY" secondItem="Gd0-hR-nhJ" secondAttribute="centerY" id="60w-J8-CMh"/>
                             <constraint firstAttribute="height" constant="50" id="9xa-tm-D6k"/>
                             <constraint firstItem="I30-tW-8V9" firstAttribute="centerY" secondItem="Gd0-hR-nhJ" secondAttribute="centerY" id="FqD-MG-R34"/>
+                            <constraint firstItem="oeV-iD-rIa" firstAttribute="centerY" secondItem="eYX-s7-V7r" secondAttribute="centerY" id="RIJ-hP-pAL"/>
                             <constraint firstAttribute="trailing" secondItem="eYX-s7-V7r" secondAttribute="trailing" constant="10" id="TEJ-pS-ET3"/>
+                            <constraint firstAttribute="trailing" secondItem="oeV-iD-rIa" secondAttribute="trailing" constant="10" id="htY-Wp-GiY"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JUZ-lV-3k0">
@@ -106,9 +115,14 @@
                 <outlet property="bottomView" destination="JUZ-lV-3k0" id="EEE-PC-ejP"/>
                 <outlet property="correctAnswerBtn" destination="yea-Fm-wYs" id="xZh-sc-JTd"/>
                 <outlet property="questionNameLb" destination="I30-tW-8V9" id="l8d-mp-5YV"/>
+                <outlet property="questionView" destination="Gd0-hR-nhJ" id="2qt-TL-Idc"/>
+                <outlet property="shapeImageView" destination="oeV-iD-rIa" id="HZI-HP-9eL"/>
                 <outlet property="yourAnswerBtn" destination="bjX-pZ-5Pi" id="GDG-e2-cOn"/>
             </connections>
             <point key="canvasLocation" x="28" y="119"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="Shape" width="16" height="11"/>
+    </resources>
 </document>

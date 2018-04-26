@@ -18,5 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (nonatomic, assign) BOOL isSelected;
 //@property (weak, nonatomic) IBOutlet NSLayoutConstraint *cellHeight;
+@property (weak, nonatomic) IBOutlet UIImageView *shapeImageView;
+@property (weak, nonatomic) IBOutlet UIView *questionView;
 @property (nonatomic, strong) answerModel *model;
 @end

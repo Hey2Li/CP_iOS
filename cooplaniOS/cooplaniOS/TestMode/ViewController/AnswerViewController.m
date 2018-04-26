@@ -52,13 +52,14 @@
         model.questionNum = [NSString stringWithFormat:@"Q%d",i];
         model.correct = @"70%";
         model.answerDetail = @"【精析】事实细节题。新闻讲述了Addison卖柠檬水和画为生病的弟弟筹资的故事。新闻开门见山讲到，新墨西哥州9岁的女孩Addison已经为需要做心脏手术的弟弟筹集了500多美元。由此可知，女孩筹钱是为了给弟弟看病。";
-        model.isCorrect = NO;
+        model.isCorrect = i%2 ? YES : NO;
         model.isSelected = NO;
         [self.dataSourceArray addObject:model];
     }
     [self.myTableView reloadData];
     NSString *className = NSStringFromClass([AnswerHeadView class]);
     _headView = [[UINib nibWithNibName:className bundle:nil] instantiateWithOwner:nil options:nil].firstObject;
+    _headView.correctStr = @"70";
     self.myTableView.tableHeaderView = _headView;
 }
 #pragma mark TableViewDataSource&Delegate
@@ -92,7 +93,7 @@
     sectionLb.font = [UIFont boldSystemFontOfSize:14];
     [headerView addSubview:sectionLb];
     [sectionLb mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(headerView.mas_left).offset(10);
+        make.left.equalTo(headerView.mas_left).offset(15);
         make.right.equalTo(headerView.mas_right).offset(10);
         make.top.equalTo(headerView);
         make.height.equalTo(@40);

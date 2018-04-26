@@ -17,16 +17,16 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="AsK-Bc-XsH">
-                    <rect key="frame" x="10" y="29" width="228" height="42"/>
+                    <rect key="frame" x="15" y="29" width="223" height="42"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2017年12月" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Awe-6A-6SE">
-                            <rect key="frame" x="0.0" y="0.0" width="228" height="21.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="223" height="21.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                             <color key="textColor" red="0.3994230329990387" green="0.3997485339641571" blue="0.39947354793548584" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="大学英语四级考试真题（一）" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RTP-4q-OLI">
-                            <rect key="frame" x="0.0" y="21.5" width="228" height="20.5"/>
+                            <rect key="frame" x="0.0" y="21.5" width="223" height="20.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" red="0.39942303299999998" green="0.39974853399999999" blue="0.3994735479" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
@@ -53,12 +53,18 @@
                 <constraint firstItem="AdW-WC-hSG" firstAttribute="centerY" secondItem="V90-PY-fJw" secondAttribute="centerY" id="Aiw-fB-BJ9"/>
                 <constraint firstItem="AdW-WC-hSG" firstAttribute="centerX" secondItem="V90-PY-fJw" secondAttribute="centerX" id="LRP-wC-Hrp"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="V90-PY-fJw" secondAttribute="trailing" constant="30" id="VXg-qT-CDE"/>
-                <constraint firstItem="AsK-Bc-XsH" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="ZKE-lG-xk3"/>
+                <constraint firstItem="AsK-Bc-XsH" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="15" id="ZKE-lG-xk3"/>
                 <constraint firstItem="V90-PY-fJw" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="b42-JO-9Jw"/>
                 <constraint firstItem="V90-PY-fJw" firstAttribute="leading" secondItem="AsK-Bc-XsH" secondAttribute="trailing" constant="10" id="eRE-jb-h4n"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="correctImagView" destination="V90-PY-fJw" id="SGy-AU-XeM"/>
+                <outlet property="correctLb" destination="AdW-WC-hSG" id="1hv-La-gu5"/>
+                <outlet property="paperDateLb" destination="Awe-6A-6SE" id="lkN-EZ-LAB"/>
+                <outlet property="paperNameLb" destination="RTP-4q-OLI" id="Lcg-6A-zWD"/>
+            </connections>
             <point key="canvasLocation" x="-81" y="-58"/>
         </view>
     </objects>

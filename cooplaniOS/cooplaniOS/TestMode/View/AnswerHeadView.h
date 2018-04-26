@@ -9,5 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface AnswerHeadView : UIView
-
+@property (weak, nonatomic) IBOutlet UILabel *correctLb;
+@property (weak, nonatomic) IBOutlet UIImageView *correctImagView;
+@property (weak, nonatomic) IBOutlet UILabel *paperDateLb;
+@property (weak, nonatomic) IBOutlet UILabel *paperNameLb;
+@property (nonatomic, copy) NSString *correctStr;
 @end
