@@ -13,8 +13,34 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    self.bottomView.hidden = YES;
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
+- (void)setModel:(answerModel *)model{
+    _model = model;
+    [self layoutIfNeeded];
+    if (model.isSelected) {
+        [UIView animateWithDuration:0.2 animations:^{
+            [self layoutIfNeeded];
+            self.bottomView.hidden = NO;
+        }];
+    }else{
+        [UIView animateWithDuration:0.2 animations:^{
+            [self layoutIfNeeded];
+            self.bottomView.hidden = YES;
+        }];
+    }
+//    if (model.cellHeight <= 50) {
+//        self.cellHeight.constant = 0;
+//    }else{
+//        self.cellHeight.constant = model.cellHeight = model.cellHeight;
+//    }
+    self.questionNameLb.text = model.questionNum;
+    self.CorrectLb.text = model.correct;
+    [self.yourAnswerBtn setTitle:model.yourAnswer forState:UIControlStateNormal];
+    [self.correctAnswerBtn setTitle:model.correctAnswer forState:UIControlStateNormal];
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

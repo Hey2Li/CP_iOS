@@ -26,6 +26,9 @@
 		9B16B08F20905BF100094EE7 /* PracticeModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B16B08E20905BF100094EE7 /* PracticeModeViewController.m */; };
 		9B16B0932090623E00094EE7 /* QuestionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B16B0912090623E00094EE7 /* QuestionTableViewCell.m */; };
 		9B16B0942090623E00094EE7 /* QuestionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B16B0922090623E00094EE7 /* QuestionTableViewCell.xib */; };
+		9B16B0972091B63900094EE7 /* answerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B16B0962091B63900094EE7 /* answerModel.m */; };
+		9B16B0992091C7AE00094EE7 /* AnswerHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B16B0982091C7AE00094EE7 /* AnswerHeadView.xib */; };
+		9B16B09C2091CA2600094EE7 /* AnswerHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B16B09B2091CA2600094EE7 /* AnswerHeadView.m */; };
 		9B1D31BC2073487F007674CF /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1D31BB2073487F007674CF /* BaseViewController.m */; };
 		9B1D31BF20734891007674CF /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1D31BE20734891007674CF /* HomeViewController.m */; };
 		9B1D31C320735804007674CF /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1D31C220735804007674CF /* LeftViewController.m */; };
@@ -133,6 +136,11 @@
 		9B16B0902090623E00094EE7 /* QuestionTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuestionTableViewCell.h; sourceTree = "<group>"; };
 		9B16B0912090623E00094EE7 /* QuestionTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuestionTableViewCell.m; sourceTree = "<group>"; };
 		9B16B0922090623E00094EE7 /* QuestionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuestionTableViewCell.xib; sourceTree = "<group>"; };
+		9B16B0952091B63900094EE7 /* answerModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = answerModel.h; sourceTree = "<group>"; };
+		9B16B0962091B63900094EE7 /* answerModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = answerModel.m; sourceTree = "<group>"; };
+		9B16B0982091C7AE00094EE7 /* AnswerHeadView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnswerHeadView.xib; sourceTree = "<group>"; };
+		9B16B09A2091CA2600094EE7 /* AnswerHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnswerHeadView.h; sourceTree = "<group>"; };
+		9B16B09B2091CA2600094EE7 /* AnswerHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnswerHeadView.m; sourceTree = "<group>"; };
 		9B1D31BA2073487F007674CF /* BaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		9B1D31BB2073487F007674CF /* BaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		9B1D31BD20734891007674CF /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
@@ -342,6 +350,9 @@
 				9B16B0902090623E00094EE7 /* QuestionTableViewCell.h */,
 				9B16B0912090623E00094EE7 /* QuestionTableViewCell.m */,
 				9B16B0922090623E00094EE7 /* QuestionTableViewCell.xib */,
+				9B16B09A2091CA2600094EE7 /* AnswerHeadView.h */,
+				9B16B09B2091CA2600094EE7 /* AnswerHeadView.m */,
+				9B16B0982091C7AE00094EE7 /* AnswerHeadView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -349,6 +360,8 @@
 		9B16B08520904F8B00094EE7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				9B16B0952091B63900094EE7 /* answerModel.h */,
+				9B16B0962091B63900094EE7 /* answerModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -782,6 +795,7 @@
 				9B3D02D620848878005C923B /* LoginViewController.xib in Resources */,
 				9B4BB71D207A234D0029015F /* ListenPaperViewController.xib in Resources */,
 				9BEA0A3D2071D9190026AF2C /* LaunchScreen.storyboard in Resources */,
+				9B16B0992091C7AE00094EE7 /* AnswerHeadView.xib in Resources */,
 				9BEA0A3A2071D9190026AF2C /* Assets.xcassets in Resources */,
 				9B3D02DB208488A3005C923B /* LoginNextViewController.xib in Resources */,
 				9B1EDCE1208891BA0033183F /* ListenTableViewCell.xib in Resources */,
@@ -991,9 +1005,11 @@
 				9BC1D6BE20738507007D88EF /* PGIndexBannerSubiew.m in Sources */,
 				9B135CD2207CD96C0040A883 /* LTHttpManager.m in Sources */,
 				9B13AD682080885F0000C750 /* PaperModel.m in Sources */,
+				9B16B09C2091CA2600094EE7 /* AnswerHeadView.m in Sources */,
 				9B4BB6FD2079A9FC0029015F /* HomeListenCell.m in Sources */,
 				9B3D02CA20845338005C923B /* PaperDetailViewController.m in Sources */,
 				9B3D02DA208488A3005C923B /* LoginNextViewController.m in Sources */,
+				9B16B0972091B63900094EE7 /* answerModel.m in Sources */,
 				9B4BB71C207A234D0029015F /* ListenPaperViewController.m in Sources */,
 				9B1D31D420736856007674CF /* WrongTopicViewController.m in Sources */,
 				9B16B08F20905BF100094EE7 /* PracticeModeViewController.m in Sources */,

@@ -7,10 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "answerModel.h"
 
 @interface AnswerTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIButton *yourAnswerBtn;
 @property (weak, nonatomic) IBOutlet UIButton *correctAnswerBtn;
 @property (weak, nonatomic) IBOutlet UILabel *answerDetailLb;
-
+@property (weak, nonatomic) IBOutlet UILabel *questionNameLb;
+@property (weak, nonatomic) IBOutlet UILabel *CorrectLb;
+@property (weak, nonatomic) IBOutlet UIView *bottomView;
+@property (nonatomic, assign) BOOL isSelected;
+//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *cellHeight;
+@property (nonatomic, strong) answerModel *model;
 @end
