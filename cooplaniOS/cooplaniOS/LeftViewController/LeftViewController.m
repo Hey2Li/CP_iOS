@@ -11,7 +11,6 @@
 #import "MyCollectionViewController.h"
 #import "MyDownloadViewController.h"
 #import "WrongTopicViewController.h"
-#import "SettingViewController.h"
 #import "LoginViewController.h"
 #import "LeftViweTableViewCell.h"
 #import "NoContentViewController.h"
@@ -88,19 +87,48 @@
     }
 }
 #pragma mark -- UITableViewDelegate
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 6;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 5;
+    return 1;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    switch (section) {
+        case 0:
+            return 10;
+            break;
+        case 1:
+        case 2:
+        case 4:
+            return 2;
+            break;
+        case 3:
+            return 95;
+            break;
+        case 5:
+            return 20;
+            break;
+            break;
+        default:
+            return CGFLOAT_MIN;
+            break;
+    }
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView *view = [UIView new];
+    view.backgroundColor = [UIColor whiteColor];
+    return view;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return [Tool layoutForAlliPhoneHeight:45];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     LeftViweTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LeftViweTableViewCell class])];
     UIView *view = [[UIView alloc]init];
     view.backgroundColor = DRGBCOLOR;
     cell.selectedBackgroundView = view;
-    switch (indexPath.row) {
+    switch (indexPath.section) {
         case 0:
             cell.titleLb.text = @"我的笔记";
             cell.leftImageVIew.image = [UIImage imageNamed:@"note"];
@@ -110,16 +138,24 @@
             cell.leftImageVIew.image = [UIImage imageNamed:@"collection"];
             break;
         case 2:
-            cell.titleLb.text = @"我的错题";
+            cell.titleLb.text = @"我的下载";
             cell.leftImageVIew.image = [UIImage imageNamed:@"errorlog"];
             break;
         case 3:
-            cell.titleLb.text = @"我的下载";
-            cell.leftImageVIew.image = [UIImage imageNamed:@"download"];
+            cell.titleLb.text = @"意见反馈";
+            cell.leftImageVIew.image = [UIImage imageNamed:@"Feedback"];
             break;
         case 4:
-            cell.titleLb.text = @"设置";
-            cell.leftImageVIew.image = [UIImage imageNamed:@"settings"];
+            cell.titleLb.text = @"关于我们";
+            cell.leftImageVIew.image = [UIImage imageNamed:@"about us"];
+            break;
+        case 5:
+            cell.titleLb.text = @"退出登录";
+            cell.titleLb.textAlignment = NSTextAlignmentLeft;
+            cell.titleLb.font = [UIFont systemFontOfSize:14];
+            cell.titleLb.textColor = UIColorFromRGB(0xFFFFFF);
+            cell.contentView.backgroundColor = UIColorFromRGB(0xD76F67);
+            cell.selectionStyle = NO;
         default:
             break;
     }
@@ -127,68 +163,93 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     UIViewController *VC;
-//    switch (indexPath.row) {
-//        case 0:{
-//            VC = [[MyNoteViewController alloc]init];
-//        }
-//            break;
-//        case 1:{
-//            VC = [[MyCollectionViewController alloc]init];
-//        }
-//            break;
-//        case 2:{
-//            VC = [[WrongTopicViewController alloc]init];
-//        }
-//            break;
-//        case 3:{
-//            VC = [[MyDownloadViewController alloc]init];
-//        }
-//            break;
-//        case 4:{
-//            VC = [[SettingViewController alloc]init];
-//        }
-//        default:
-//            break;
-//    }
     VC = [[NoContentViewController alloc]init];
-    switch (indexPath.row) {
+    switch (indexPath.section) {
         case 0:
         {
             VC.title = @"我的笔记";
+            //拿到我们的ViewController，让它去push
+            UINavigationController* nav = (UINavigationController*)self.mm_drawerController.centerViewController;
+            [nav pushViewController:VC animated:NO];
+            //当我们push成功之后，关闭我们的抽屉
+            [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
+                //设置打开抽屉模式为MMOpenDrawerGestureModeNone，也就是没有任何效果。
+                [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
+                [tableView deselectRowAtIndexPath:indexPath animated:NO];
+            }];
         }
             break;
         case 1:
         {
             VC.title = @"我的收藏";
+            //拿到我们的ViewController，让它去push
+            UINavigationController* nav = (UINavigationController*)self.mm_drawerController.centerViewController;
+            [nav pushViewController:VC animated:NO];
+            //当我们push成功之后，关闭我们的抽屉
+            [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
+                //设置打开抽屉模式为MMOpenDrawerGestureModeNone，也就是没有任何效果。
+                [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
+                [tableView deselectRowAtIndexPath:indexPath animated:NO];
+            }];
         }
             break;
         case 2:
         {
-            VC.title = @"我的错题";
+            VC.title = @"我的下载";
+            //拿到我们的ViewController，让它去push
+            UINavigationController* nav = (UINavigationController*)self.mm_drawerController.centerViewController;
+            [nav pushViewController:VC animated:NO];
+            //当我们push成功之后，关闭我们的抽屉
+            [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
+                //设置打开抽屉模式为MMOpenDrawerGestureModeNone，也就是没有任何效果。
+                [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
+                [tableView deselectRowAtIndexPath:indexPath animated:NO];
+            }];
         }
             break;
         case 3:
         {
-            VC.title = @"我的下载";
+            VC.title = @"意见反馈";
+            //拿到我们的ViewController，让它去push
+            UINavigationController* nav = (UINavigationController*)self.mm_drawerController.centerViewController;
+            [nav pushViewController:VC animated:NO];
+            //当我们push成功之后，关闭我们的抽屉
+            [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
+                //设置打开抽屉模式为MMOpenDrawerGestureModeNone，也就是没有任何效果。
+                [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
+                [tableView deselectRowAtIndexPath:indexPath animated:NO];
+            }];
         }
-            break;
         case 4:
         {
-            VC = [[SettingViewController alloc]init];
-            VC.title = @"我的设置";
+            VC.title = @"关于我们";
+            //拿到我们的ViewController，让它去push
+            UINavigationController* nav = (UINavigationController*)self.mm_drawerController.centerViewController;
+            [nav pushViewController:VC animated:NO];
+            //当我们push成功之后，关闭我们的抽屉
+            [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
+                //设置打开抽屉模式为MMOpenDrawerGestureModeNone，也就是没有任何效果。
+                [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
+                [tableView deselectRowAtIndexPath:indexPath animated:NO];
+            }];
+        }
+            break;
+        case 5:
+        {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确定退出登录" message:nil preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                NSString*appDomain = [[NSBundle mainBundle]bundleIdentifier];
+                [[NSUserDefaults standardUserDefaults]removePersistentDomainForName:appDomain];            }];
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"退出" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+                [alert dismissViewControllerAnimated:YES completion:nil];
+            }];
+            [alert addAction:sureAction];
+            [alert addAction:cancelAction];
+            [self presentViewController:alert animated:YES completion:nil];
         }
         default:
             break;
     }
-    ;   //拿到我们的ViewController，让它去push
-    UINavigationController* nav = (UINavigationController*)self.mm_drawerController.centerViewController;
-    [nav pushViewController:VC animated:NO];
-    //当我们push成功之后，关闭我们的抽屉
-    [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
-        //设置打开抽屉模式为MMOpenDrawerGestureModeNone，也就是没有任何效果。
-        [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
-        [tableView deselectRowAtIndexPath:indexPath animated:NO]; 
-    }];
 }
 
 

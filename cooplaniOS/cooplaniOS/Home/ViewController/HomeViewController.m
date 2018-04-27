@@ -12,7 +12,6 @@
 #import "NewPagedFlowView.h"
 #import "PGIndexBannerSubiew.h"
 #import "PGCustomBannerView.h"
-#import "SettingViewController.h"
 #import "HomeListenCell.h"
 #import "BottomLabel.h"
 #import "ListenPaperViewController.h"

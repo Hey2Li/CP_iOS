@@ -20,7 +20,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Eyn-57-CvQ">
+                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Eyn-57-CvQ">
                         <rect key="frame" x="14" y="-0.5" width="44" height="44.5"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="44" id="63w-qN-fNg"/>
@@ -34,6 +34,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <color key="backgroundColor" red="0.96912556886672974" green="0.96985918283462524" blue="0.96923929452896118" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
                     <constraint firstItem="Eyn-57-CvQ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="CjS-n9-s8h"/>
                     <constraint firstItem="5sZ-R9-1q9" firstAttribute="leading" secondItem="Eyn-57-CvQ" secondAttribute="trailing" id="NGr-tN-vt3"/>

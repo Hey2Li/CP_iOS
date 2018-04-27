@@ -82,14 +82,30 @@
                                     <color key="titleColor" red="0.64346855878829956" green="0.64396888017654419" blue="0.64354604482650757" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6eZ-Bs-T6U">
+                                <rect key="frame" x="128.5" y="20" width="11.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.8413051963" green="0.43714123960000001" blue="0.40334248540000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="B" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LL0-w1-I1z">
+                                <rect key="frame" x="365" y="20" width="11" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.3026795685" green="0.67348021270000002" blue="0.49126440290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.99963909387588501" green="1" blue="0.99975615739822388" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="LL0-w1-I1z" firstAttribute="trailing" secondItem="yea-Fm-wYs" secondAttribute="trailing" constant="-20" id="A5w-yL-f2q"/>
                             <constraint firstItem="yea-Fm-wYs" firstAttribute="top" secondItem="JUZ-lV-3k0" secondAttribute="top" constant="10" id="Gqu-hD-LxU"/>
+                            <constraint firstItem="6eZ-Bs-T6U" firstAttribute="centerY" secondItem="bjX-pZ-5Pi" secondAttribute="centerY" id="H7y-Z6-Xa4"/>
                             <constraint firstItem="bjX-pZ-5Pi" firstAttribute="top" secondItem="JUZ-lV-3k0" secondAttribute="top" constant="10" id="HYz-7R-6pm"/>
                             <constraint firstAttribute="trailing" secondItem="hju-XU-JHn" secondAttribute="trailing" constant="10" id="LVA-vG-Q80"/>
                             <constraint firstAttribute="bottom" secondItem="hju-XU-JHn" secondAttribute="bottom" constant="5" id="O4q-CI-sf3"/>
                             <constraint firstItem="bjX-pZ-5Pi" firstAttribute="leading" secondItem="JUZ-lV-3k0" secondAttribute="leading" constant="10" id="PPT-LZ-rz3"/>
+                            <constraint firstItem="LL0-w1-I1z" firstAttribute="centerY" secondItem="yea-Fm-wYs" secondAttribute="centerY" id="TlU-x6-mH6"/>
+                            <constraint firstItem="6eZ-Bs-T6U" firstAttribute="trailing" secondItem="bjX-pZ-5Pi" secondAttribute="trailing" constant="-20" id="bEl-zu-JjI"/>
                             <constraint firstItem="hju-XU-JHn" firstAttribute="top" secondItem="yea-Fm-wYs" secondAttribute="bottom" constant="10" id="cYm-fl-s7j"/>
                             <constraint firstItem="yea-Fm-wYs" firstAttribute="width" secondItem="bjX-pZ-5Pi" secondAttribute="width" id="hgi-hm-01E"/>
                             <constraint firstItem="hju-XU-JHn" firstAttribute="leading" secondItem="JUZ-lV-3k0" secondAttribute="leading" constant="10" id="l00-IX-tvL"/>
@@ -111,12 +127,19 @@
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
                 <outlet property="CorrectLb" destination="eYX-s7-V7r" id="Wfu-g3-LFY"/>
+                <outlet property="answerDetailBottomHeight" destination="O4q-CI-sf3" id="KYl-j1-9QR"/>
                 <outlet property="answerDetailLb" destination="hju-XU-JHn" id="5q2-m8-pAz"/>
+                <outlet property="answerDetailTopHeight" destination="cYm-fl-s7j" id="g5k-Wg-0ea"/>
                 <outlet property="bottomView" destination="JUZ-lV-3k0" id="EEE-PC-ejP"/>
                 <outlet property="correctAnswerBtn" destination="yea-Fm-wYs" id="xZh-sc-JTd"/>
+                <outlet property="correctAnswerBtnTopHeight" destination="Gqu-hD-LxU" id="guO-gd-f3j"/>
+                <outlet property="correctAnswerLb" destination="LL0-w1-I1z" id="2rS-9e-yao"/>
                 <outlet property="questionNameLb" destination="I30-tW-8V9" id="l8d-mp-5YV"/>
                 <outlet property="questionView" destination="Gd0-hR-nhJ" id="2qt-TL-Idc"/>
                 <outlet property="shapeImageView" destination="oeV-iD-rIa" id="HZI-HP-9eL"/>
+                <outlet property="youAnswerBtnTopHeight" destination="HYz-7R-6pm" id="WG7-9M-18v"/>
+                <outlet property="youAnswerLb" destination="6eZ-Bs-T6U" id="UkB-Mq-HMw"/>
+                <outlet property="youAnswertBtnHeight" destination="5AR-dd-8co" id="GGr-u2-gCv"/>
                 <outlet property="yourAnswerBtn" destination="bjX-pZ-5Pi" id="GDG-e2-cOn"/>
             </connections>
             <point key="canvasLocation" x="28" y="119"/>

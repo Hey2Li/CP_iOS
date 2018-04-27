@@ -30,7 +30,7 @@
 }
 - (UITableView *)myTableView{
     if (!_myTableView) {
-        _myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
+        _myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64) style:UITableViewStylePlain];
         _myTableView.delegate = self;
         _myTableView.dataSource = self;
         [_myTableView registerNib:[UINib nibWithNibName:@"AnswerTableViewCell" bundle:nil] forCellReuseIdentifier:NSStringFromClass([AnswerTableViewCell class])];
@@ -74,9 +74,9 @@
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    answerModel *model = self.dataSourceArray[indexPath.row];
-//    return model.cellHeight;
-    if (self.isOpen && self.selectIndexPath == indexPath) {
+    answerModel *model = self.dataSourceArray[indexPath.row];
+   
+    if (model.isSelected) {
         return self.myTableView.rowHeight;
     }else{
         return 50;
@@ -108,46 +108,10 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     answerModel *model = self.dataSourceArray[indexPath.row];
-    if (!self.selectIndexPath) {
-        self.isOpen = YES;
-        model.isSelected = YES;
-        self.selectIndexPath = indexPath;
-        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else {
-        if (self.isOpen) {
-            if (self.selectIndexPath == indexPath) {
-                self.isOpen = NO;
-                model.isSelected = NO;
-                [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                self.selectIndexPath = nil;
-            } else {
-                self.isOpen = NO;
-                answerModel *models = self.dataSourceArray[self.selectIndexPath.row];
-                models.isSelected = NO;
-                [tableView reloadRowsAtIndexPaths:@[self.selectIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-                self.selectIndexPath = nil;
-            }
-        }
-    }
-//    model.isSelected = !model.isSelected;
-//    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:nil];
-    NSLog(@"indexPath:%ld, selectedIndexPath:%ld, lastSelectedIndexPath:%ld",(long)indexPath.row, self.selectIndexPath.row, self.lastSelectedIndexPath.row);
+    model.isSelected = !model.isSelected;
+    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:nil];
 }
-//设置table view 为可编辑的
-//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
-//    return YES;
-//}
-//#pragma mark - 返回按钮／处理按钮的点击事件
-//- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    //添加一个更多按钮
-//    UITableViewRowAction *moreRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"加入错题本" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-//        NSLog(@"点击了更多");
-//        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationMiddle];
-//
-//    }];
-//
-//    return @[moreRowAction];
-//}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat sectionHeaderHeight = 40;
     if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {

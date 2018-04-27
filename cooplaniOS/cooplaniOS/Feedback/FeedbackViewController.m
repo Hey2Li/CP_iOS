@@ -1,26 +1,22 @@
 //
-//  SettingViewController.m
+//  FeedbackViewController.m
 //  cooplaniOS
 //
-//  Created by Lee on 2018/4/7.
+//  Created by Lee on 2018/4/27.
 //  Copyright © 2018年 Lee. All rights reserved.
 //
 
-#import "SettingViewController.h"
+#import "FeedbackViewController.h"
 
-@interface SettingViewController ()
+@interface FeedbackViewController ()
 
 @end
 
-@implementation SettingViewController
+@implementation FeedbackViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    self.title = @"设置";
-    self.view.backgroundColor = [UIColor whiteColor];
-    NSString*appDomain = [[NSBundle mainBundle]bundleIdentifier];
-    [[NSUserDefaults standardUserDefaults]removePersistentDomainForName:appDomain];
+    // Do any additional setup after loading the view from its nib.
 }
 
 - (void)didReceiveMemoryWarning {

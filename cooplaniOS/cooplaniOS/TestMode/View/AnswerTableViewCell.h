@@ -20,5 +20,12 @@
 //@property (weak, nonatomic) IBOutlet NSLayoutConstraint *cellHeight;
 @property (weak, nonatomic) IBOutlet UIImageView *shapeImageView;
 @property (weak, nonatomic) IBOutlet UIView *questionView;
+@property (weak, nonatomic) IBOutlet UILabel *youAnswerLb;
+@property (weak, nonatomic) IBOutlet UILabel *correctAnswerLb;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *youAnswertBtnHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *youAnswerBtnTopHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *correctAnswerBtnTopHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *answerDetailTopHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *answerDetailBottomHeight;
 @property (nonatomic, strong) answerModel *model;
 @end
