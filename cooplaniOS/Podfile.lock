@@ -37,6 +37,7 @@ PODS:
   - SDWebImage/Core (3.8.2)
   - SVProgressHUD (2.1.2)
   - TYAttributedLabel (2.6.6)
+  - TZImagePickerController (2.0.1)
   - UMCCommon (1.5.0)
   - UMCSecurityPlugins (1.0.6)
   - UMCShare/Core (6.9.0):
@@ -56,6 +57,7 @@ DEPENDENCIES:
   - SDWebImage (~> 3.8.2)
   - SVProgressHUD (~> 2.1.2)
   - TYAttributedLabel (~> 2.6.2)
+  - TZImagePickerController
   - UMCCommon
   - UMCSecurityPlugins
   - UMCShare/Social/ReducedWeChat
@@ -71,10 +73,11 @@ SPEC CHECKSUMS:
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
   TYAttributedLabel: cb8fc910d97eb5224936d4f692a78e042af691b2
+  TZImagePickerController: 34ecb53af8c349964394407e42b6e54e22589ebe
   UMCCommon: 82d21f4bb9532a5472cc533bbd8ed48aff376a14
   UMCSecurityPlugins: 0831a08f3988f3cea9f1d3a7626cd9bee4fef150
   UMCShare: 0c406a22c874fe6c9c97784a71db349e7fcea0eb
 
-PODFILE CHECKSUM: 75fd22ef15a39a69b0d3585dd401f92ad556dcdb
+PODFILE CHECKSUM: 76fa317af3992cc22e2f14a296dd5601d7a45dc7
 
 COCOAPODS: 1.4.0

@@ -63,7 +63,12 @@
 		9B6FB85C207F3D2100BC07F3 /* UILabel+HYLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6FB85B207F3D2100BC07F3 /* UILabel+HYLabel.m */; };
 		9B6FB85F207F3D7B00BC07F3 /* HYWord.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6FB85D207F3D7B00BC07F3 /* HYWord.m */; };
 		9BA08EB0209308440026935E /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA08EAD209308440026935E /* FeedbackViewController.m */; };
-		9BA08EB1209308440026935E /* FeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BA08EAF209308440026935E /* FeedbackViewController.xib */; };
+		9BA08EB52093120C0026935E /* FeedbackTypeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA08EB32093120C0026935E /* FeedbackTypeTableViewCell.m */; };
+		9BA08EB62093120C0026935E /* FeedbackTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BA08EB42093120C0026935E /* FeedbackTypeTableViewCell.xib */; };
+		9BA08EBA209313B00026935E /* FeedbackContentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA08EB8209313B00026935E /* FeedbackContentTableViewCell.m */; };
+		9BA08EBB209313B00026935E /* FeedbackContentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BA08EB9209313B00026935E /* FeedbackContentTableViewCell.xib */; };
+		9BA08EBF2093174A0026935E /* FeedbackPhoneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA08EBD2093174A0026935E /* FeedbackPhoneTableViewCell.m */; };
+		9BA08EC02093174A0026935E /* FeedbackPhoneTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BA08EBE2093174A0026935E /* FeedbackPhoneTableViewCell.xib */; };
 		9BC1D6BE20738507007D88EF /* PGIndexBannerSubiew.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC1D6BA20738506007D88EF /* PGIndexBannerSubiew.m */; };
 		9BC1D6BF20738507007D88EF /* NewPagedFlowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC1D6BD20738507007D88EF /* NewPagedFlowView.m */; };
 		9BC1D6C520738657007D88EF /* PGCustomBannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC1D6C320738657007D88EF /* PGCustomBannerView.m */; };
@@ -204,7 +209,15 @@
 		9B6FB85E207F3D7B00BC07F3 /* HYWord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYWord.h; sourceTree = "<group>"; };
 		9BA08EAD209308440026935E /* FeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackViewController.m; sourceTree = "<group>"; };
 		9BA08EAE209308440026935E /* FeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackViewController.h; sourceTree = "<group>"; };
-		9BA08EAF209308440026935E /* FeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedbackViewController.xib; sourceTree = "<group>"; };
+		9BA08EB22093120C0026935E /* FeedbackTypeTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeedbackTypeTableViewCell.h; sourceTree = "<group>"; };
+		9BA08EB32093120C0026935E /* FeedbackTypeTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeedbackTypeTableViewCell.m; sourceTree = "<group>"; };
+		9BA08EB42093120C0026935E /* FeedbackTypeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedbackTypeTableViewCell.xib; sourceTree = "<group>"; };
+		9BA08EB7209313B00026935E /* FeedbackContentTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeedbackContentTableViewCell.h; sourceTree = "<group>"; };
+		9BA08EB8209313B00026935E /* FeedbackContentTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeedbackContentTableViewCell.m; sourceTree = "<group>"; };
+		9BA08EB9209313B00026935E /* FeedbackContentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedbackContentTableViewCell.xib; sourceTree = "<group>"; };
+		9BA08EBC2093174A0026935E /* FeedbackPhoneTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeedbackPhoneTableViewCell.h; sourceTree = "<group>"; };
+		9BA08EBD2093174A0026935E /* FeedbackPhoneTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeedbackPhoneTableViewCell.m; sourceTree = "<group>"; };
+		9BA08EBE2093174A0026935E /* FeedbackPhoneTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedbackPhoneTableViewCell.xib; sourceTree = "<group>"; };
 		9BC1D6BA20738506007D88EF /* PGIndexBannerSubiew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGIndexBannerSubiew.m; sourceTree = "<group>"; };
 		9BC1D6BB20738507007D88EF /* PGIndexBannerSubiew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGIndexBannerSubiew.h; sourceTree = "<group>"; };
 		9BC1D6BC20738507007D88EF /* NewPagedFlowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPagedFlowView.h; sourceTree = "<group>"; };
@@ -526,7 +539,15 @@
 			children = (
 				9BA08EAE209308440026935E /* FeedbackViewController.h */,
 				9BA08EAD209308440026935E /* FeedbackViewController.m */,
-				9BA08EAF209308440026935E /* FeedbackViewController.xib */,
+				9BA08EB22093120C0026935E /* FeedbackTypeTableViewCell.h */,
+				9BA08EB32093120C0026935E /* FeedbackTypeTableViewCell.m */,
+				9BA08EB42093120C0026935E /* FeedbackTypeTableViewCell.xib */,
+				9BA08EB7209313B00026935E /* FeedbackContentTableViewCell.h */,
+				9BA08EB8209313B00026935E /* FeedbackContentTableViewCell.m */,
+				9BA08EB9209313B00026935E /* FeedbackContentTableViewCell.xib */,
+				9BA08EBC2093174A0026935E /* FeedbackPhoneTableViewCell.h */,
+				9BA08EBD2093174A0026935E /* FeedbackPhoneTableViewCell.m */,
+				9BA08EBE2093174A0026935E /* FeedbackPhoneTableViewCell.xib */,
 			);
 			path = Feedback;
 			sourceTree = "<group>";
@@ -790,6 +811,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9BA08EB62093120C0026935E /* FeedbackTypeTableViewCell.xib in Resources */,
 				9B16B078208D7DDE00094EE7 /* ListenPlay.xib in Resources */,
 				9B6FB859207F054C00BC07F3 /* 2017年6月四级真题（一）.lrc in Resources */,
 				9B16B0942090623E00094EE7 /* QuestionTableViewCell.xib in Resources */,
@@ -797,6 +819,7 @@
 				9BDFE0C5208833B500B59B3B /* LeftViweTableViewCell.xib in Resources */,
 				9B3D02D620848878005C923B /* LoginViewController.xib in Resources */,
 				9B4BB71D207A234D0029015F /* ListenPaperViewController.xib in Resources */,
+				9BA08EBB209313B00026935E /* FeedbackContentTableViewCell.xib in Resources */,
 				9BEA0A3D2071D9190026AF2C /* LaunchScreen.storyboard in Resources */,
 				9B16B0992091C7AE00094EE7 /* AnswerHeadView.xib in Resources */,
 				9BEA0A3A2071D9190026AF2C /* Assets.xcassets in Resources */,
@@ -805,10 +828,10 @@
 				9B3D02CB20845338005C923B /* PaperDetailViewController.xib in Resources */,
 				9B16B080208F140A00094EE7 /* AnswerTableViewCell.xib in Resources */,
 				9BEA0A382071D9190026AF2C /* Main.storyboard in Resources */,
+				9BA08EC02093174A0026935E /* FeedbackPhoneTableViewCell.xib in Resources */,
 				9B13AD6220807B8E0000C750 /* BannerCollectionViewCell.xib in Resources */,
 				9BDFE0C720883F6800B59B3B /* 2017年6月四级真题（一）.MP3 in Resources */,
 				9B4BB6FE2079A9FC0029015F /* HomeListenCell.xib in Resources */,
-				9BA08EB1209308440026935E /* FeedbackViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -890,12 +913,14 @@
 				"${PODS_ROOT}/IQKeyboardManager/IQKeyBoardManager/Resources/IQKeyboardManager.bundle",
 				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
 				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
+				"${PODS_ROOT}/TZImagePickerController/TZImagePickerController/TZImagePickerController/TZImagePickerController.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/IQKeyboardManager.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MJRefresh.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SVProgressHUD.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TZImagePickerController.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -991,6 +1016,7 @@
 				9BC1D6C520738657007D88EF /* PGCustomBannerView.m in Sources */,
 				9B16B08820904FDD00094EE7 /* TestModeBottomView.m in Sources */,
 				9B4BB72E207B6E9D0029015F /* SURequestTask.m in Sources */,
+				9BA08EBA209313B00026935E /* FeedbackContentTableViewCell.m in Sources */,
 				9B13AD5D208053830000C750 /* TikaCollectionViewCell.m in Sources */,
 				9B1EDCE0208891BA0033183F /* ListenTableViewCell.m in Sources */,
 				9B16B07F208F140A00094EE7 /* AnswerTableViewCell.m in Sources */,
@@ -1004,6 +1030,7 @@
 				9BEA0A352071D9190026AF2C /* ViewController.m in Sources */,
 				9B4BB736207B6EDC0029015F /* NSURL+SULoader.m in Sources */,
 				9B1D31BC2073487F007674CF /* BaseViewController.m in Sources */,
+				9BA08EB52093120C0026935E /* FeedbackTypeTableViewCell.m in Sources */,
 				9BC1D6DF207862A8007D88EF /* Tool.m in Sources */,
 				9B16B073208D781F00094EE7 /* TestModeViewController.m in Sources */,
 				9BC1D6BE20738507007D88EF /* PGIndexBannerSubiew.m in Sources */,
@@ -1036,6 +1063,7 @@
 				9B3D02D520848878005C923B /* LoginViewController.m in Sources */,
 				9BA08EB0209308440026935E /* FeedbackViewController.m in Sources */,
 				9BEA0A322071D9190026AF2C /* AppDelegate.m in Sources */,
+				9BA08EBF2093174A0026935E /* FeedbackPhoneTableViewCell.m in Sources */,
 				9B1D31CE2073683A007674CF /* MyNoteViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

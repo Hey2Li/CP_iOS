@@ -237,7 +237,7 @@ NSAttributedString *returnNumAttr(NSString *str,NSInteger fontSize){
 
 + (NSString *)getAppVersion{
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    CFShow((__bridge CFTypeRef)(infoDictionary));
+//    CFShow((__bridge CFTypeRef)(infoDictionary));
     NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
     return app_Version;
 }

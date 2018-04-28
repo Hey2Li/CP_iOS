@@ -16,6 +16,7 @@ target 'cooplaniOS' do
 	pod 'IQKeyboardManager', '~> 3.3.4'
     pod 'MMDrawerController', '~> 0.5.7'
     pod 'TYAttributedLabel', '~> 2.6.2'
+    pod 'TZImagePickerController'
     pod 'UMCCommon'
     pod 'UMCSecurityPlugins'
     # 集成微信(精简版0.2M)

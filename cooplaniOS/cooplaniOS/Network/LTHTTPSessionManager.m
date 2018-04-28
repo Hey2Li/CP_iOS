@@ -159,7 +159,6 @@ NSString *const kKeyModelList = @"modellist";
     SVProgressShowText(@"正在加载...");
     return [super POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         for (int i = 0; i < photoArray.count; i++) {
-            
             UIImage *image = photoArray[i];
             NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
             
@@ -178,7 +177,7 @@ NSString *const kKeyModelList = @"modellist";
              3. fileName：要保存在服务器上的文件名
              4. mimeType：上传的文件的类型
              */
-            [formData appendPartWithFileData:imageData name:@"photo" fileName:fileName mimeType:@"image/jpeg"]; //
+           [formData appendPartWithFileData:imageData name:@"files" fileName:fileName mimeType:@"image/jpeg"]; 
         }
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         

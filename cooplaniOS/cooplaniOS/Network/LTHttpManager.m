@@ -49,4 +49,25 @@
                                 };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/user/smsCode",BaseURL]parameters:paramters complete:complete];
 }
+/**
+ 用户意见反馈
+ 
+ @param user_id 用户id
+ @param type 类型
+ @param info 用户反馈信息
+ @param contactInfo 用户联系方式
+ @param files 图片流
+ @param complete block
+ */
++ (void)feedbackWithUserId:(NSNumber *)user_id Type:(NSString *)type Info:(NSString *)info ContactInfo:(NSString *)contactInfo Files:(NSArray *)files Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [LTHTTPSessionManager new];
+    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+                                @"userId":user_id,
+                                @"type":type,
+                                @"info":info,
+                                @"contactInfo":contactInfo,
+                                };
+//    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/feedback/feedback",BaseURL]parameters:paramters complete:complete];
+    [manager UPLOADWithParameters:[NSString stringWithFormat:@"%@/client/public/feedback/feedback",BaseURL] parameters:paramters photoArray:files complete:complete];
+}
 @end

@@ -8,7 +8,7 @@
 
 #import "LTHTTPSessionManager.h"
 
-#define BaseURL @"http://192.168.0.101:8080/cooplan-rest"
+#define BaseURL @"http://192.168.0.106:8080/cooplan-rest"
 @interface LTHttpManager : LTHTTPSessionManager
 
 
@@ -43,4 +43,17 @@
  @param complete block
  */
 + (void)UserSMSCodeWithPhone:(NSString *)phone Complete:(completeBlock)complete;
+
+
+/**
+ 用户意见反馈
+
+ @param user_id 用户id
+ @param type 类型
+ @param info 用户反馈信息
+ @param contactInfo 用户联系方式
+ @param files 图片流
+ @param complete block
+ */
++ (void)feedbackWithUserId:(NSNumber *)user_id Type:(NSString *)type Info:(NSString *)info ContactInfo:(NSString *)contactInfo Files:(NSArray *)files Complete:(completeBlock)complete;
 @end
