@@ -524,14 +524,14 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
-		9B4BB70C207A0B2B0029015F /* LIstening */ = {
+		9B4BB70C207A0B2B0029015F /* LearningMode */ = {
 			isa = PBXGroup;
 			children = (
 				9B13AD6B20819B760000C750 /* Model */,
 				9B13AD6A20819B6C0000C750 /* ViewController */,
 				9B13AD6920819B640000C750 /* View */,
 			);
-			path = LIstening;
+			path = LearningMode;
 			sourceTree = "<group>";
 		};
 		9BA08EAC2093083A0026935E /* Feedback */ = {
@@ -636,7 +636,7 @@
 				9B1D31C7207363C4007674CF /* Base */,
 				9B1D31C5207363AA007674CF /* LeftViewController */,
 				9B1D31C4207363A3007674CF /* Home */,
-				9B4BB70C207A0B2B0029015F /* LIstening */,
+				9B4BB70C207A0B2B0029015F /* LearningMode */,
 				9B16B08220904F6B00094EE7 /* TestMode */,
 				9B16B08920905BA600094EE7 /* PracticeMode */,
 				9BEA0A302071D9190026AF2C /* AppDelegate.h */,
