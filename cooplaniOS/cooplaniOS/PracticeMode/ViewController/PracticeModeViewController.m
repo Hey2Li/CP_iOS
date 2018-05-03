@@ -11,6 +11,7 @@
 #import "PracticeModeHeaderView.h"
 #import "AnswerViewController.h"
 #import "PracticeModeTiKaCCell.h"
+#import "PMAnswerViewController.h"
 
 @interface PracticeModeViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) UISwipeGestureRecognizer *swipeDownGR;
@@ -47,7 +48,7 @@
         make.top.equalTo(self.view);
         make.height.equalTo(@86);
     }];
-    
+
     [self.view addSubview:self.player];
     [self.player mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view);
@@ -56,13 +57,6 @@
         make.bottom.equalTo(self.view);
     }];
     
-    self.swipeDownGR = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(SwipeGR:)];
-    [self.swipeDownGR setDirection:UISwipeGestureRecognizerDirectionDown];
-    [self.tikaCollectionView addGestureRecognizer:self.swipeDownGR];
-    
-    [self.swipeUpGR setDirection:UISwipeGestureRecognizerDirectionUp];
-    self.swipeUpGR = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(SwipeGR:)];
-    [self.tikaCollectionView addGestureRecognizer:self.swipeUpGR];
     UICollectionViewFlowLayout *flowlayout = [[UICollectionViewFlowLayout alloc]init];
     flowlayout.minimumLineSpacing = 0;
     flowlayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
@@ -72,26 +66,34 @@
     [collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
-        make.bottom.equalTo(self.view.mas_bottom).offset(-175);
-        make.top.equalTo(self.headerView.mas_bottom).offset(10);
+//        make.bottom.equalTo(self.player.bottomView.mas_top);
+        make.height.equalTo(@(SCREEN_HEIGHT - 86 - 120 - 64));
+        make.top.equalTo(self.headerView.mas_bottom);
     }];
     
     collectionView.backgroundColor = UIColorFromRGB(0xf7f7f7);
     collectionView.dataSource = self;
     collectionView.delegate = self;
     [collectionView registerClass:[PracticeModeTiKaCCell class] forCellWithReuseIdentifier:NSStringFromClass([PracticeModeTiKaCCell class])];
-    collectionView.backgroundColor = [UIColor clearColor];
     collectionView.pagingEnabled = YES;
     collectionView.showsHorizontalScrollIndicator = NO;
     self.tikaCollectionView = collectionView;
+    self.swipeDownGR = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(SwipeGR:)];
+    [self.swipeDownGR setDirection:UISwipeGestureRecognizerDirectionDown];
+    [self.tikaCollectionView addGestureRecognizer:self.swipeDownGR];
+    
+    [self.swipeUpGR setDirection:UISwipeGestureRecognizerDirectionUp];
+    self.swipeUpGR = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(SwipeGR:)];
+    [self.tikaCollectionView addGestureRecognizer:self.swipeUpGR];
     [self scrollViewDidScroll:collectionView];
+    _isOpen = YES;
 }
 #pragma mark UICollectionViewDelegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     return  4;
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake(SCREEN_WIDTH, collectionView.bounds.size.height);
+    return CGSizeMake(SCREEN_WIDTH, self.tikaCollectionView.bounds.size.height);
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
     return UIEdgeInsetsMake(0, 0, 0, 0);
@@ -104,11 +106,13 @@
     cell.UpAndDownBtnClick = ^(UIButton *btn) {
         if (_isOpen) {
             [UIView animateWithDuration:0.5 animations:^{
+                self.tikaCollectionView.backgroundColor = [UIColor clearColor];
                 self.tikaCollectionView.transform = CGAffineTransformMakeTranslation(0, SCREEN_HEIGHT/2);
             }];
             _isOpen = NO;
         }else{
             [UIView animateWithDuration:0.5 animations:^{
+                self.tikaCollectionView.backgroundColor = UIColorFromRGB(0xf7f7f7);
                 self.tikaCollectionView.transform = CGAffineTransformIdentity;
             }];
             _isOpen = YES;
@@ -116,14 +120,14 @@
     };
     cell.collectionIndexPath = indexPath;
     WeakSelf
-    cell.questionCellClick = ^(NSIndexPath *cellIndexPath) {
+    cell.questionCellClick = ^(NSIndexPath *cellIndexPath, NSString *answerStr) {
         NSIndexPath *nextIndexPath = [NSIndexPath indexPathForItem:cellIndexPath.item + 1 inSection:0];
-        NSLog(@"indexPathrow+1%ld---indexPath.row%ld",cellIndexPath.row + 1, cellIndexPath.row);
+        NSLog(@"indexPathrow+1 = %ld---indexPath.row%ld---%@",cellIndexPath.row + 1, cellIndexPath.row, answerStr);
         if (cellIndexPath.row + 1 < 4) {
             [weakSelf.view layoutIfNeeded];
             [weakSelf.tikaCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
         }else if (indexPath.row == 3){
-            AnswerViewController *vc = [[AnswerViewController alloc]init];
+            PMAnswerViewController *vc = [[PMAnswerViewController alloc]init];
             [self.navigationController pushViewController:vc animated:YES];
         }
     };

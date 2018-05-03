@@ -7,6 +7,7 @@
 //
 
 #import "PracticeModeTiKaCCell.h"
+#import "PaperJSONKey.h"
 
 @interface PracticeModeTiKaCCell ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UILabel *questionLb;
@@ -15,15 +16,15 @@
 @implementation PracticeModeTiKaCCell
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
-        self.backgroundColor = UIColorFromRGB(0xf7f7f7);
+        self.backgroundColor = [UIColor clearColor];
         UIView *backView = [[UIView alloc]init];
         backView.backgroundColor = [UIColor whiteColor];
         [self addSubview:backView];
         [backView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.mas_left).offset(17);
             make.right.equalTo(self.mas_right).offset(-17);
-            make.top.equalTo(self.mas_top).offset(10);
-            make.bottom.equalTo(self.mas_bottom).offset(-10);
+            make.top.equalTo(self.mas_top).offset(20);
+            make.bottom.equalTo(self.mas_bottom).offset(-20);
         }];
         [backView.layer setCornerRadius:8];
         [backView.layer setShadowOpacity:0.2];
@@ -34,11 +35,12 @@
         UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 0, 0) style:UITableViewStylePlain];
         tableView.delegate = self;
         tableView.dataSource = self;
+        tableView.scrollEnabled = NO;
         [backView addSubview:tableView];
         [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(backView.mas_left);
             make.right.equalTo(backView.mas_right);
-            make.top.equalTo(self.mas_top);
+            make.top.equalTo(self.mas_top).offset(30);
             make.bottom.equalTo(backView.mas_bottom);
         }];
         [tableView.layer setCornerRadius:8];
@@ -64,7 +66,8 @@
         btn.backgroundColor = [UIColor whiteColor];
         [self addSubview:btn];
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(self.mas_centerX);
+            make.left.equalTo(tableView.mas_left).offset(10);
+            make.right.equalTo(tableView.mas_right).offset(-10);
             make.top.equalTo(tableView.mas_top);
             make.height.equalTo(@30);
         }];
@@ -110,7 +113,26 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row > 1) {
         if (self.questionCellClick) {
-            self.questionCellClick(self.collectionIndexPath);
+            switch (indexPath.row) {
+                case 1:
+                    NSLog(@"A");
+                    self.questionCellClick(self.collectionIndexPath,@"A");
+                    break;
+                case 2:
+                    NSLog(@"B");
+                    self.questionCellClick(self.collectionIndexPath,@"B");
+                    break;
+                case 3:
+                    NSLog(@"C");
+                    self.questionCellClick(self.collectionIndexPath,@"C");
+                    break;
+                case 4:
+                    NSLog(@"D");
+                    self.questionCellClick(self.collectionIndexPath,@"D");
+                    break;
+                default:
+                    break;
+            }
         }
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

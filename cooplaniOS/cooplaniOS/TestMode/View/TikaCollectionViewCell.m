@@ -92,7 +92,26 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.questionCellClick) {
-        self.questionCellClick(self.collectionIndexPath);
+        switch (indexPath.row) {
+            case 1:
+                NSLog(@"A");
+                self.questionCellClick(self.collectionIndexPath,@"A");
+                break;
+            case 2:
+                NSLog(@"B");
+                self.questionCellClick(self.collectionIndexPath,@"B");
+                break;
+            case 3:
+                NSLog(@"C");
+                self.questionCellClick(self.collectionIndexPath,@"C");
+                break;
+            case 4:
+                NSLog(@"D");
+                self.questionCellClick(self.collectionIndexPath,@"D");
+                break;
+            default:
+                break;
+        }
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

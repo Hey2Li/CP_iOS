@@ -30,7 +30,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qzb-iy-OOk" userLabel="otherView">
-                    <rect key="frame" x="0.0" y="667" width="375" height="45"/>
+                    <rect key="frame" x="0.0" y="667" width="375" height="50"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecY-Uk-Wf5">
                             <rect key="frame" x="0.0" y="-1" width="375" height="1"/>
@@ -43,33 +43,33 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="ENb-BM-yfi">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gym-VS-o3h">
-                                    <rect key="frame" x="0.0" y="0.0" width="75" height="45"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="75" height="50"/>
                                     <state key="normal" image="Group 12 Copy"/>
                                     <state key="selected" image="single_favor_fill"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dzj-Hv-mhW">
-                                    <rect key="frame" x="75" y="0.0" width="75" height="45"/>
+                                    <rect key="frame" x="75" y="0.0" width="75" height="50"/>
                                     <state key="normal" image="Group 13 Copy"/>
                                     <connections>
                                         <action selector="ENCNSwitch:" destination="-1" eventType="touchUpInside" id="3KZ-cn-EG6"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gnB-Bc-qhw">
-                                    <rect key="frame" x="150" y="0.0" width="75" height="45"/>
+                                    <rect key="frame" x="150" y="0.0" width="75" height="50"/>
                                     <state key="normal" image="Group 15 Copy"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1MM-3P-0Dl">
-                                    <rect key="frame" x="225" y="0.0" width="75" height="45"/>
+                                    <rect key="frame" x="225" y="0.0" width="75" height="50"/>
                                     <state key="normal" image="Oval 5"/>
                                     <connections>
                                         <action selector="RateWithPlay:" destination="-1" eventType="touchUpInside" id="6Ff-0j-yiq"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VSa-xw-3nC">
-                                    <rect key="frame" x="300" y="0.0" width="75" height="45"/>
+                                    <rect key="frame" x="300" y="0.0" width="75" height="50"/>
                                     <state key="normal" image="Group 17 Copy"/>
                                 </button>
                             </subviews>
@@ -81,7 +81,7 @@
                         <constraint firstItem="ENb-BM-yfi" firstAttribute="top" secondItem="qzb-iy-OOk" secondAttribute="top" id="QYs-yU-OBg"/>
                         <constraint firstAttribute="trailing" secondItem="ecY-Uk-Wf5" secondAttribute="trailing" id="U2a-s1-aYx"/>
                         <constraint firstAttribute="trailing" secondItem="ENb-BM-yfi" secondAttribute="trailing" id="WHp-eD-4bG"/>
-                        <constraint firstAttribute="height" constant="45" id="Yfw-nT-Kqd"/>
+                        <constraint firstAttribute="height" constant="50" id="Yfw-nT-Kqd"/>
                         <constraint firstItem="ecY-Uk-Wf5" firstAttribute="leading" secondItem="qzb-iy-OOk" secondAttribute="leading" id="fBY-qo-3xk"/>
                         <constraint firstItem="ENb-BM-yfi" firstAttribute="leading" secondItem="qzb-iy-OOk" secondAttribute="leading" id="hI3-e2-0Xc"/>
                         <constraint firstAttribute="bottom" secondItem="ENb-BM-yfi" secondAttribute="bottom" id="kEu-Ld-UEb"/>
@@ -174,7 +174,7 @@
             <constraints>
                 <constraint firstItem="aU1-w9-9vj" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="OUh-Ng-gZd"/>
                 <constraint firstItem="l4n-lS-m9q" firstAttribute="leading" secondItem="Q5M-cg-NOt" secondAttribute="leading" id="UQC-O3-ov0"/>
-                <constraint firstAttribute="bottom" secondItem="qzb-iy-OOk" secondAttribute="bottom" constant="-45" id="bqf-DT-7vK"/>
+                <constraint firstAttribute="bottom" secondItem="qzb-iy-OOk" secondAttribute="bottom" constant="-50" id="bqf-DT-7vK"/>
                 <constraint firstItem="l4n-lS-m9q" firstAttribute="trailing" secondItem="Q5M-cg-NOt" secondAttribute="trailing" id="gAN-JX-DBR"/>
                 <constraint firstItem="aU1-w9-9vj" firstAttribute="top" secondItem="l4n-lS-m9q" secondAttribute="bottom" id="hNO-oc-gDY"/>
                 <constraint firstItem="qzb-iy-OOk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="m4l-T8-Spj"/>

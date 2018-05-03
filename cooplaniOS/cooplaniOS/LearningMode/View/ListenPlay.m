@@ -245,15 +245,15 @@
     sender.selected = !sender.selected;
     [self layoutIfNeeded];
     if (sender.selected) {
-        [UIView animateWithDuration:0.4 delay:0.2 usingSpringWithDamping:0.4f initialSpringVelocity:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        [UIView animateWithDuration:0.4 animations:^{
             self.otherViewBottom.constant = 0;
             [self layoutIfNeeded];
-        } completion:nil];
+        }];
     }else{
-        [UIView animateWithDuration:0.4 delay:0.2 usingSpringWithDamping:0.4f initialSpringVelocity:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
-             self.otherViewBottom.constant = -45;
+        [UIView animateWithDuration:0.4 animations:^{
+            self.otherViewBottom.constant = -50;
             [self layoutIfNeeded];
-        } completion:nil];
+        }];
     }
 }
 #pragma mark 变速播放
@@ -261,7 +261,7 @@
     _RateTag++;
     switch (_RateTag % 5) {
         case 0:
-            [sender setImage:[UIImage imageNamed:@"times_1x"] forState:UIControlStateNormal];
+            [sender setImage:[UIImage imageNamed:@"Oval 5"] forState:UIControlStateNormal];
             [self.player setRate:1.0];
             break;
         case 1:

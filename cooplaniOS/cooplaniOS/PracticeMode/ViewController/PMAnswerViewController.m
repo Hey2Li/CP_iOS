@@ -1,17 +1,17 @@
 //
-//  AnswerViewController.m
+//  PMAnswerViewController.m
 //  cooplaniOS
 //
-//  Created by Lee on 2018/4/24.
+//  Created by Lee on 2018/5/3.
 //  Copyright © 2018年 Lee. All rights reserved.
 //
 
-#import "AnswerViewController.h"
+#import "PMAnswerViewController.h"
 #import "AnswerTableViewCell.h"
 #import "answerModel.h"
 #import "AnswerHeadView.h"
 
-@interface AnswerViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface PMAnswerViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
 @property (nonatomic, assign) BOOL isOpen;
 @property (nonatomic, strong) NSIndexPath *selectIndexPath;
@@ -20,7 +20,7 @@
 @property (nonatomic ,strong) AnswerHeadView *headView;
 @end
 
-@implementation AnswerViewController
+@implementation PMAnswerViewController
 
 - (NSMutableArray *)dataSourceArray{
     if (!_dataSourceArray) {
@@ -30,7 +30,7 @@
 }
 - (UITableView *)myTableView{
     if (!_myTableView) {
-        _myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64) style:UITableViewStylePlain];
+        _myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64 - 45) style:UITableViewStylePlain];
         _myTableView.delegate = self;
         _myTableView.dataSource = self;
         [_myTableView registerNib:[UINib nibWithNibName:@"AnswerTableViewCell" bundle:nil] forCellReuseIdentifier:NSStringFromClass([AnswerTableViewCell class])];
@@ -44,6 +44,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"考试成绩单";
+    [self initWithView];
+}
+- (void)initWithView{
     [self.view addSubview:self.myTableView];
     [self.dataSourceArray removeAllObjects];
     for (int i = 0; i < 3; i ++) {
@@ -62,6 +65,22 @@
     _headView = [[UINib nibWithNibName:className bundle:nil] instantiateWithOwner:nil options:nil].firstObject;
     _headView.correctStr = @"70";
     self.myTableView.tableHeaderView = _headView;
+    
+    UIButton *continueBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [continueBtn setTitle:@"继续" forState:UIControlStateNormal];
+    [continueBtn setBackgroundColor:DRGBCOLOR];
+    [continueBtn setTitleColor:UIColorFromRGB(0x666666) forState:UIControlStateNormal];
+    [self.view addSubview:continueBtn];
+    [continueBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view);
+        make.right.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+        make.height.equalTo(@45);
+    }];
+    [continueBtn addTarget:self action:@selector(continueBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+}
+- (void)continueBtnClick:(UIButton *)btn{
+    
 }
 #pragma mark TableViewDataSource&Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -76,7 +95,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     answerModel *model = self.dataSourceArray[indexPath.row];
-   
+    
     if (model.isSelected) {
         return self.myTableView.rowHeight;
     }else{

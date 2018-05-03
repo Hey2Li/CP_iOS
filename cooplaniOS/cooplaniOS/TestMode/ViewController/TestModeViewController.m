@@ -155,9 +155,9 @@
     cell.questionStr = [NSString stringWithFormat:@"这是第%ld题",indexPath.row + 1];
     cell.collectionIndexPath = indexPath;
     WeakSelf
-    cell.questionCellClick = ^(NSIndexPath *cellIndexPath) {
+    cell.questionCellClick = ^(NSIndexPath *cellIndexPath, NSString *answerStr) {
         NSIndexPath *nextIndexPath = [NSIndexPath indexPathForItem:cellIndexPath.item + 1 inSection:0];
-        NSLog(@"indexPathrow+1%ld---indexPath.row%ld",cellIndexPath.row + 1, cellIndexPath.row);
+        NSLog(@"indexPathrow+1 = %ld---indexPath.row%ld---%@",cellIndexPath.row + 1, cellIndexPath.row, answerStr);
         if (cellIndexPath.row + 1 < 4) {
             [weakSelf.view layoutIfNeeded];
             [weakSelf.tikaCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];

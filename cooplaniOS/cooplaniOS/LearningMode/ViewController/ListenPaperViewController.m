@@ -469,7 +469,7 @@
         } completion:nil];
     }else{
         [UIView animateWithDuration:0.4 delay:0.2 usingSpringWithDamping:0.4f initialSpringVelocity:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            self.otherVIewBottom.constant = - 45;
+            self.otherVIewBottom.constant = - 50;
             [self.view layoutIfNeeded];
         } completion:nil];
     }

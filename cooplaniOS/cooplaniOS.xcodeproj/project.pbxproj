@@ -72,9 +72,8 @@
 		9BB3E26320998A4400FDBE77 /* PracticeModeHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB3E26220998A4400FDBE77 /* PracticeModeHeaderView.m */; };
 		9BB3E26520998A6000FDBE77 /* PracticeModeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BB3E26420998A6000FDBE77 /* PracticeModeHeaderView.xib */; };
 		9BB3E26B2099B3FC00FDBE77 /* PracticeModeTiKaCCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB3E26A2099B3FC00FDBE77 /* PracticeModeTiKaCCell.m */; };
-		9BC1D6BE20738507007D88EF /* PGIndexBannerSubiew.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC1D6BA20738506007D88EF /* PGIndexBannerSubiew.m */; };
-		9BC1D6BF20738507007D88EF /* NewPagedFlowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC1D6BD20738507007D88EF /* NewPagedFlowView.m */; };
-		9BC1D6C520738657007D88EF /* PGCustomBannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC1D6C320738657007D88EF /* PGCustomBannerView.m */; };
+		9BB3E26E209AA60A00FDBE77 /* PaperJSONKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB3E26D209AA60A00FDBE77 /* PaperJSONKey.m */; };
+		9BB3E271209AD05600FDBE77 /* PMAnswerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB3E270209AD05600FDBE77 /* PMAnswerViewController.m */; };
 		9BC1D6DF207862A8007D88EF /* Tool.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC1D6DD207862A8007D88EF /* Tool.m */; };
 		9BDFE0C4208833B500B59B3B /* LeftViweTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDFE0C2208833B500B59B3B /* LeftViweTableViewCell.m */; };
 		9BDFE0C5208833B500B59B3B /* LeftViweTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BDFE0C3208833B500B59B3B /* LeftViweTableViewCell.xib */; };
@@ -226,12 +225,10 @@
 		9BB3E26420998A6000FDBE77 /* PracticeModeHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PracticeModeHeaderView.xib; sourceTree = "<group>"; };
 		9BB3E2692099B3FC00FDBE77 /* PracticeModeTiKaCCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PracticeModeTiKaCCell.h; sourceTree = "<group>"; };
 		9BB3E26A2099B3FC00FDBE77 /* PracticeModeTiKaCCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PracticeModeTiKaCCell.m; sourceTree = "<group>"; };
-		9BC1D6BA20738506007D88EF /* PGIndexBannerSubiew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGIndexBannerSubiew.m; sourceTree = "<group>"; };
-		9BC1D6BB20738507007D88EF /* PGIndexBannerSubiew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGIndexBannerSubiew.h; sourceTree = "<group>"; };
-		9BC1D6BC20738507007D88EF /* NewPagedFlowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPagedFlowView.h; sourceTree = "<group>"; };
-		9BC1D6BD20738507007D88EF /* NewPagedFlowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewPagedFlowView.m; sourceTree = "<group>"; };
-		9BC1D6C320738657007D88EF /* PGCustomBannerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGCustomBannerView.m; sourceTree = "<group>"; };
-		9BC1D6C420738657007D88EF /* PGCustomBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGCustomBannerView.h; sourceTree = "<group>"; };
+		9BB3E26C209AA60A00FDBE77 /* PaperJSONKey.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaperJSONKey.h; sourceTree = "<group>"; };
+		9BB3E26D209AA60A00FDBE77 /* PaperJSONKey.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaperJSONKey.m; sourceTree = "<group>"; };
+		9BB3E26F209AD05600FDBE77 /* PMAnswerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMAnswerViewController.h; sourceTree = "<group>"; };
+		9BB3E270209AD05600FDBE77 /* PMAnswerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PMAnswerViewController.m; sourceTree = "<group>"; };
 		9BC1D6DD207862A8007D88EF /* Tool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tool.m; sourceTree = "<group>"; };
 		9BC1D6DE207862A8007D88EF /* Tool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tool.h; sourceTree = "<group>"; };
 		9BDFE0C1208833B500B59B3B /* LeftViweTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeftViweTableViewCell.h; sourceTree = "<group>"; };
@@ -423,6 +420,8 @@
 			children = (
 				9B16B08D20905BF100094EE7 /* PracticeModeViewController.h */,
 				9B16B08E20905BF100094EE7 /* PracticeModeViewController.m */,
+				9BB3E26F209AD05600FDBE77 /* PMAnswerViewController.h */,
+				9BB3E270209AD05600FDBE77 /* PMAnswerViewController.m */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -595,22 +594,10 @@
 				9B6FB85B207F3D2100BC07F3 /* UILabel+HYLabel.m */,
 				9B6FB85E207F3D7B00BC07F3 /* HYWord.h */,
 				9B6FB85D207F3D7B00BC07F3 /* HYWord.m */,
-				9BC1D6C22073854C007D88EF /* NewPagedFlowView */,
+				9BB3E26C209AA60A00FDBE77 /* PaperJSONKey.h */,
+				9BB3E26D209AA60A00FDBE77 /* PaperJSONKey.m */,
 			);
 			path = Utils;
-			sourceTree = "<group>";
-		};
-		9BC1D6C22073854C007D88EF /* NewPagedFlowView */ = {
-			isa = PBXGroup;
-			children = (
-				9BC1D6BB20738507007D88EF /* PGIndexBannerSubiew.h */,
-				9BC1D6BA20738506007D88EF /* PGIndexBannerSubiew.m */,
-				9BC1D6BC20738507007D88EF /* NewPagedFlowView.h */,
-				9BC1D6BD20738507007D88EF /* NewPagedFlowView.m */,
-				9BC1D6C420738657007D88EF /* PGCustomBannerView.h */,
-				9BC1D6C320738657007D88EF /* PGCustomBannerView.m */,
-			);
-			path = NewPagedFlowView;
 			sourceTree = "<group>";
 		};
 		9BEA0A242071D9190026AF2C = {
@@ -1027,7 +1014,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B4BB72D207B6E9D0029015F /* SUFileHandle.m in Sources */,
-				9BC1D6C520738657007D88EF /* PGCustomBannerView.m in Sources */,
 				9B16B08820904FDD00094EE7 /* TestModeBottomView.m in Sources */,
 				9B4BB72E207B6E9D0029015F /* SURequestTask.m in Sources */,
 				9BA08EBA209313B00026935E /* FeedbackContentTableViewCell.m in Sources */,
@@ -1047,7 +1033,6 @@
 				9BA08EB52093120C0026935E /* FeedbackTypeTableViewCell.m in Sources */,
 				9BC1D6DF207862A8007D88EF /* Tool.m in Sources */,
 				9B16B073208D781F00094EE7 /* TestModeViewController.m in Sources */,
-				9BC1D6BE20738507007D88EF /* PGIndexBannerSubiew.m in Sources */,
 				9B135CD2207CD96C0040A883 /* LTHttpManager.m in Sources */,
 				9B13AD682080885F0000C750 /* PaperModel.m in Sources */,
 				9B16B09C2091CA2600094EE7 /* AnswerHeadView.m in Sources */,
@@ -1062,7 +1047,6 @@
 				9B1D31D720736866007674CF /* MyDownloadViewController.m in Sources */,
 				9B4BB728207B6E910029015F /* SUResourceLoader.m in Sources */,
 				9BEA0A402071D9190026AF2C /* main.m in Sources */,
-				9BC1D6BF20738507007D88EF /* NewPagedFlowView.m in Sources */,
 				9B135CBB207C6B1D0040A883 /* UIImage+mask.m in Sources */,
 				9B4BB737207B6EDC0029015F /* NSString+SULoader.m in Sources */,
 				9BDFE0C4208833B500B59B3B /* LeftViweTableViewCell.m in Sources */,
@@ -1078,6 +1062,8 @@
 				9B3D02D520848878005C923B /* LoginViewController.m in Sources */,
 				9BA08EB0209308440026935E /* FeedbackViewController.m in Sources */,
 				9BEA0A322071D9190026AF2C /* AppDelegate.m in Sources */,
+				9BB3E271209AD05600FDBE77 /* PMAnswerViewController.m in Sources */,
+				9BB3E26E209AA60A00FDBE77 /* PaperJSONKey.m in Sources */,
 				9BA08EBF2093174A0026935E /* FeedbackPhoneTableViewCell.m in Sources */,
 				9BB3E26B2099B3FC00FDBE77 /* PracticeModeTiKaCCell.m in Sources */,
 				9B1D31CE2073683A007674CF /* MyNoteViewController.m in Sources */,
