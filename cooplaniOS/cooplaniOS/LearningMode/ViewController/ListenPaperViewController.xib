@@ -33,7 +33,7 @@
                     <rect key="frame" x="0.0" y="667" width="375" height="45"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecY-Uk-Wf5">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
+                            <rect key="frame" x="0.0" y="-1" width="375" height="1"/>
                             <color key="backgroundColor" red="0.79992926119999996" green="0.80004531150000002" blue="0.79990386960000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="1" id="HM8-XL-nph"/>
@@ -47,37 +47,37 @@
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gym-VS-o3h">
                                     <rect key="frame" x="0.0" y="0.0" width="75" height="45"/>
-                                    <state key="normal" image="single_favor"/>
+                                    <state key="normal" image="Group 12 Copy"/>
                                     <state key="selected" image="single_favor_fill"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dzj-Hv-mhW">
                                     <rect key="frame" x="75" y="0.0" width="75" height="45"/>
-                                    <state key="normal" image="switch_EnCh"/>
+                                    <state key="normal" image="Group 13 Copy"/>
                                     <connections>
                                         <action selector="ENCNSwitch:" destination="-1" eventType="touchUpInside" id="3KZ-cn-EG6"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gnB-Bc-qhw">
                                     <rect key="frame" x="150" y="0.0" width="75" height="45"/>
-                                    <state key="normal" image="Slice Copy 15"/>
+                                    <state key="normal" image="Group 15 Copy"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1MM-3P-0Dl">
                                     <rect key="frame" x="225" y="0.0" width="75" height="45"/>
-                                    <state key="normal" image="times_1x"/>
+                                    <state key="normal" image="Oval 5"/>
                                     <connections>
                                         <action selector="RateWithPlay:" destination="-1" eventType="touchUpInside" id="6Ff-0j-yiq"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VSa-xw-3nC">
                                     <rect key="frame" x="300" y="0.0" width="75" height="45"/>
-                                    <state key="normal" image="Slice Copy 17"/>
+                                    <state key="normal" image="Group 17 Copy"/>
                                 </button>
                             </subviews>
                         </stackView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="ecY-Uk-Wf5" firstAttribute="top" secondItem="qzb-iy-OOk" secondAttribute="top" id="N5j-Jx-5DS"/>
+                        <constraint firstItem="ecY-Uk-Wf5" firstAttribute="top" secondItem="qzb-iy-OOk" secondAttribute="top" constant="-1" id="N5j-Jx-5DS"/>
                         <constraint firstItem="ENb-BM-yfi" firstAttribute="top" secondItem="qzb-iy-OOk" secondAttribute="top" id="QYs-yU-OBg"/>
                         <constraint firstAttribute="trailing" secondItem="ecY-Uk-Wf5" secondAttribute="trailing" id="U2a-s1-aYx"/>
                         <constraint firstAttribute="trailing" secondItem="ENb-BM-yfi" secondAttribute="trailing" id="WHp-eD-4bG"/>
@@ -190,18 +190,18 @@
         </view>
     </objects>
     <resources>
+        <image name="Group 12 Copy" width="53" height="53"/>
+        <image name="Group 13 Copy" width="53" height="53"/>
+        <image name="Group 15 Copy" width="53" height="53"/>
+        <image name="Group 17 Copy" width="53" height="53"/>
         <image name="Group 5 Copy" width="226" height="222"/>
-        <image name="Slice Copy 15" width="44" height="44"/>
-        <image name="Slice Copy 17" width="44" height="44"/>
+        <image name="Oval 5" width="53" height="53"/>
         <image name="backward" width="44" height="44"/>
         <image name="forward" width="44" height="44"/>
         <image name="more1" width="44" height="44"/>
         <image name="more1_fill" width="44" height="44"/>
         <image name="pause" width="48" height="48"/>
         <image name="play" width="48" height="48"/>
-        <image name="single_favor" width="44" height="44"/>
         <image name="single_favor_fill" width="44" height="44"/>
-        <image name="switch_EnCh" width="44" height="44"/>
-        <image name="times_1x" width="44" height="44"/>
     </resources>
 </document>

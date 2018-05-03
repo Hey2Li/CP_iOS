@@ -251,7 +251,7 @@
     _CNTag++;
     switch (_CNTag % 4) {
         case 0:
-            [sender setImage:[UIImage imageNamed:@"switch_EnCh"] forState:UIControlStateNormal];
+            [sender setImage:[UIImage imageNamed:@"Group 13 Copy"] forState:UIControlStateNormal];
             self.backImageView.hidden = YES;
             break;
         case 1:
@@ -276,7 +276,7 @@
     _RateTag++;
     switch (_RateTag % 5) {
         case 0:
-            [sender setImage:[UIImage imageNamed:@"times_1x"] forState:UIControlStateNormal];
+            [sender setImage:[UIImage imageNamed:@"Oval 5"] forState:UIControlStateNormal];
             [self.player setRate:1.0];
             break;
         case 1:

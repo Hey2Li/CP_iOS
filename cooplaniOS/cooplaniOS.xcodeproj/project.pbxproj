@@ -69,6 +69,9 @@
 		9BA08EBB209313B00026935E /* FeedbackContentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BA08EB9209313B00026935E /* FeedbackContentTableViewCell.xib */; };
 		9BA08EBF2093174A0026935E /* FeedbackPhoneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA08EBD2093174A0026935E /* FeedbackPhoneTableViewCell.m */; };
 		9BA08EC02093174A0026935E /* FeedbackPhoneTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BA08EBE2093174A0026935E /* FeedbackPhoneTableViewCell.xib */; };
+		9BB3E26320998A4400FDBE77 /* PracticeModeHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB3E26220998A4400FDBE77 /* PracticeModeHeaderView.m */; };
+		9BB3E26520998A6000FDBE77 /* PracticeModeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BB3E26420998A6000FDBE77 /* PracticeModeHeaderView.xib */; };
+		9BB3E26B2099B3FC00FDBE77 /* PracticeModeTiKaCCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB3E26A2099B3FC00FDBE77 /* PracticeModeTiKaCCell.m */; };
 		9BC1D6BE20738507007D88EF /* PGIndexBannerSubiew.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC1D6BA20738506007D88EF /* PGIndexBannerSubiew.m */; };
 		9BC1D6BF20738507007D88EF /* NewPagedFlowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC1D6BD20738507007D88EF /* NewPagedFlowView.m */; };
 		9BC1D6C520738657007D88EF /* PGCustomBannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC1D6C320738657007D88EF /* PGCustomBannerView.m */; };
@@ -218,6 +221,11 @@
 		9BA08EBC2093174A0026935E /* FeedbackPhoneTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeedbackPhoneTableViewCell.h; sourceTree = "<group>"; };
 		9BA08EBD2093174A0026935E /* FeedbackPhoneTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeedbackPhoneTableViewCell.m; sourceTree = "<group>"; };
 		9BA08EBE2093174A0026935E /* FeedbackPhoneTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedbackPhoneTableViewCell.xib; sourceTree = "<group>"; };
+		9BB3E26120998A4400FDBE77 /* PracticeModeHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PracticeModeHeaderView.h; sourceTree = "<group>"; };
+		9BB3E26220998A4400FDBE77 /* PracticeModeHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PracticeModeHeaderView.m; sourceTree = "<group>"; };
+		9BB3E26420998A6000FDBE77 /* PracticeModeHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PracticeModeHeaderView.xib; sourceTree = "<group>"; };
+		9BB3E2692099B3FC00FDBE77 /* PracticeModeTiKaCCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PracticeModeTiKaCCell.h; sourceTree = "<group>"; };
+		9BB3E26A2099B3FC00FDBE77 /* PracticeModeTiKaCCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PracticeModeTiKaCCell.m; sourceTree = "<group>"; };
 		9BC1D6BA20738506007D88EF /* PGIndexBannerSubiew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PGIndexBannerSubiew.m; sourceTree = "<group>"; };
 		9BC1D6BB20738507007D88EF /* PGIndexBannerSubiew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PGIndexBannerSubiew.h; sourceTree = "<group>"; };
 		9BC1D6BC20738507007D88EF /* NewPagedFlowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewPagedFlowView.h; sourceTree = "<group>"; };
@@ -394,6 +402,11 @@
 		9B16B08A20905BB000094EE7 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				9BB3E26120998A4400FDBE77 /* PracticeModeHeaderView.h */,
+				9BB3E26220998A4400FDBE77 /* PracticeModeHeaderView.m */,
+				9BB3E26420998A6000FDBE77 /* PracticeModeHeaderView.xib */,
+				9BB3E2692099B3FC00FDBE77 /* PracticeModeTiKaCCell.h */,
+				9BB3E26A2099B3FC00FDBE77 /* PracticeModeTiKaCCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -820,6 +833,7 @@
 				9B3D02D620848878005C923B /* LoginViewController.xib in Resources */,
 				9B4BB71D207A234D0029015F /* ListenPaperViewController.xib in Resources */,
 				9BA08EBB209313B00026935E /* FeedbackContentTableViewCell.xib in Resources */,
+				9BB3E26520998A6000FDBE77 /* PracticeModeHeaderView.xib in Resources */,
 				9BEA0A3D2071D9190026AF2C /* LaunchScreen.storyboard in Resources */,
 				9B16B0992091C7AE00094EE7 /* AnswerHeadView.xib in Resources */,
 				9BEA0A3A2071D9190026AF2C /* Assets.xcassets in Resources */,
@@ -1041,6 +1055,7 @@
 				9B3D02CA20845338005C923B /* PaperDetailViewController.m in Sources */,
 				9B3D02DA208488A3005C923B /* LoginNextViewController.m in Sources */,
 				9B16B0972091B63900094EE7 /* answerModel.m in Sources */,
+				9BB3E26320998A4400FDBE77 /* PracticeModeHeaderView.m in Sources */,
 				9B4BB71C207A234D0029015F /* ListenPaperViewController.m in Sources */,
 				9B1D31D420736856007674CF /* WrongTopicViewController.m in Sources */,
 				9B16B08F20905BF100094EE7 /* PracticeModeViewController.m in Sources */,
@@ -1064,6 +1079,7 @@
 				9BA08EB0209308440026935E /* FeedbackViewController.m in Sources */,
 				9BEA0A322071D9190026AF2C /* AppDelegate.m in Sources */,
 				9BA08EBF2093174A0026935E /* FeedbackPhoneTableViewCell.m in Sources */,
+				9BB3E26B2099B3FC00FDBE77 /* PracticeModeTiKaCCell.m in Sources */,
 				9B1D31CE2073683A007674CF /* MyNoteViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

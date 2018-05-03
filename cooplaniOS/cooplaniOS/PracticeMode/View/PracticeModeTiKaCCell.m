@@ -1,18 +1,18 @@
 //
-//  TikaCollectionViewCell.m
+//  PracticeModeTiKaCCell.m
 //  cooplaniOS
 //
-//  Created by Lee on 2018/4/13.
+//  Created by Lee on 2018/5/2.
 //  Copyright © 2018年 Lee. All rights reserved.
 //
 
-#import "TikaCollectionViewCell.h"
+#import "PracticeModeTiKaCCell.h"
 
-@interface TikaCollectionViewCell ()<UITableViewDelegate, UITableViewDataSource>
+@interface PracticeModeTiKaCCell ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UILabel *questionLb;
 @end
 
-@implementation TikaCollectionViewCell
+@implementation PracticeModeTiKaCCell
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = UIColorFromRGB(0xf7f7f7);
@@ -30,7 +30,7 @@
         [backView.layer setShadowColor:[UIColor blackColor].CGColor];
         [backView.layer setShadowOffset:CGSizeMake(2, 2)];
         [backView.layer setMasksToBounds:NO];
-        
+    
         UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 0, 0) style:UITableViewStylePlain];
         tableView.delegate = self;
         tableView.dataSource = self;
@@ -38,7 +38,7 @@
         [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(backView.mas_left);
             make.right.equalTo(backView.mas_right);
-            make.top.equalTo(backView.mas_top);
+            make.top.equalTo(self.mas_top);
             make.bottom.equalTo(backView.mas_bottom);
         }];
         [tableView.layer setCornerRadius:8];
@@ -55,33 +55,50 @@
         [questionLb mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(tableView).offset(20);
             make.right.equalTo(tableView).offset(-20);
-            make.height.equalTo(@60);
-            make.top.equalTo(tableView);
+            make.height.equalTo(@45);
+            make.top.equalTo(tableView).offset(35);
         }];
         self.questionLb = questionLb;
+        
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.backgroundColor = [UIColor whiteColor];
+        [self addSubview:btn];
+        [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.mas_centerX);
+            make.top.equalTo(tableView.mas_top);
+            make.height.equalTo(@30);
+        }];
+        [btn setImage:[UIImage imageNamed:@"Group 3"] forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
+}
+
+- (void)setQuestionStr:(NSString *)questionStr{
+    _questionStr = questionStr;
+    self.questionLb.text = questionStr;
 }
 - (void)btnClick:(UIButton *)btn{
     if (self.UpAndDownBtnClick) {
         self.UpAndDownBtnClick(btn);
     }
 }
-- (void)setQuestionStr:(NSString *)questionStr{
-    _questionStr = questionStr;
-    self.questionLb.text = questionStr;
-}
 #pragma mark UITableViewDataSource&Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 5;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 45;
+    if (indexPath.row == 0) {
+        return 80;
+    }else{
+        return 45;
+    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     cell.textLabel.textColor = UIColorFromRGB(0x666666);
     cell.textLabel.font = [UIFont systemFontOfSize:14];
+    cell.selectionStyle = NO;
     if (indexPath.row == 0) {
         cell.textLabel.text = [NSString stringWithFormat:@"Q%ld",self.collectionIndexPath.row + 1];
         cell.textLabel.textColor = UIColorFromRGB(0xBBBBBB);
@@ -91,8 +108,10 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (self.questionCellClick) {
-        self.questionCellClick(self.collectionIndexPath);
+    if (indexPath.row > 1) {
+        if (self.questionCellClick) {
+            self.questionCellClick(self.collectionIndexPath);
+        }
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

@@ -289,7 +289,7 @@
     _CNTag++;
     switch (_CNTag % 4) {
         case 0:
-            [sender setImage:[UIImage imageNamed:@"switch_EnCh"] forState:UIControlStateNormal];
+            [sender setImage:[UIImage imageNamed:@"Group 13 Copy"] forState:UIControlStateNormal];
             self.backImageView.hidden = YES;
             break;
         case 1:
