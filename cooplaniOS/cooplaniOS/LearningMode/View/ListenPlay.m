@@ -245,12 +245,12 @@
     sender.selected = !sender.selected;
     [self layoutIfNeeded];
     if (sender.selected) {
-        [UIView animateWithDuration:0.4 animations:^{
+        [UIView animateWithDuration:0.2 animations:^{
             self.otherViewBottom.constant = 0;
             [self layoutIfNeeded];
         }];
     }else{
-        [UIView animateWithDuration:0.4 animations:^{
+        [UIView animateWithDuration:0.2 animations:^{
             self.otherViewBottom.constant = -50;
             [self layoutIfNeeded];
         }];
