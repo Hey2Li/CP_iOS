@@ -111,7 +111,7 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row > 1) {
+    if (indexPath.row > 0) {
         if (self.questionCellClick) {
             switch (indexPath.row) {
                 case 1:
