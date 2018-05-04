@@ -7,18 +7,56 @@
 //
 
 #import "MyCollectionViewController.h"
+#import "MyCollectionPaperTableViewCell.h"
 
-@interface MyCollectionViewController ()
-
+@interface MyCollectionViewController ()<UITableViewDelegate, UITableViewDataSource>
+@property (nonatomic, strong) UITableView *myTableView;
 @end
 
 @implementation MyCollectionViewController
-
+- (UITableView *)myTableView{
+    if (!_myTableView) {
+        _myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
+        _myTableView.delegate = self;
+        _myTableView.dataSource = self;
+        _myTableView.separatorStyle = NO;
+        [_myTableView registerNib:[UINib nibWithNibName:NSStringFromClass([MyCollectionPaperTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([MyCollectionPaperTableViewCell class])];
+    }
+    return _myTableView;
+}
+#pragma mark UITableViewDegate&DataSource
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 2;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 74;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    MyCollectionPaperTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([MyCollectionPaperTableViewCell class])];
+    cell.selectionStyle = NO;
+    return cell;
+}
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    return YES;
+}
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return @"删除";
+}
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    // 从数据源中删除
+    //    [_data removeObjectAtIndex:indexPath.row];
+    // 从列表中删除
+    //    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
+    }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"我的收藏";
     self.view.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.myTableView];
 }
 
 - (void)didReceiveMemoryWarning {

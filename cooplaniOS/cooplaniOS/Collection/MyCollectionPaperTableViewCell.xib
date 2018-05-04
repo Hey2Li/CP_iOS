@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="130" id="KGk-i7-Jjw" customClass="MyCollectionPaperTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="74"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="73.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="roy-bx-Ht0">
+                        <rect key="frame" x="0.0" y="72.5" width="375" height="1"/>
+                        <color key="backgroundColor" red="0.96912556890000001" green="0.96985918280000005" blue="0.96923929450000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.80000000000000004" id="pKl-rr-Ept"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.64346855879999998" green="0.64396888019999998" blue="0.64354604479999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image" translatesAutoresizingMaskIntoConstraints="NO" id="Rse-IW-efj">
+                        <rect key="frame" x="18" y="8" width="56" height="56"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="56" id="CfS-nC-miG"/>
+                            <constraint firstAttribute="width" constant="56" id="cFC-c5-BJy"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2017年12月 大学英语四级考试真题（一）" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i0C-0i-Uv4">
+                        <rect key="frame" x="88" y="8" width="186" height="39"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="39" id="HnB-30-7Jg"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.39942303299999998" green="0.39974853399999999" blue="0.3994735479" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3.5M " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FPt-5w-Znu">
+                        <rect key="frame" x="105" y="49" width="27" height="12"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="12" id="cCc-l6-f6Z"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" red="0.64346855879999998" green="0.64396888019999998" blue="0.64354604479999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="file" translatesAutoresizingMaskIntoConstraints="NO" id="hzC-J8-1uj">
+                        <rect key="frame" x="88" y="51" width="10" height="9"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="9" id="WWA-WB-z3I"/>
+                            <constraint firstAttribute="width" constant="10" id="cIc-dr-GHQ"/>
+                        </constraints>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qb4-6o-ZKt">
+                        <rect key="frame" x="312" y="14" width="44" height="44"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="44" id="Vg9-YH-xHh"/>
+                            <constraint firstAttribute="width" constant="44" id="p7h-Ur-bX1"/>
+                        </constraints>
+                        <state key="normal" image="download-1"/>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="i0C-0i-Uv4" firstAttribute="top" secondItem="Rse-IW-efj" secondAttribute="top" id="22x-Wf-yvE"/>
+                    <constraint firstItem="FPt-5w-Znu" firstAttribute="centerY" secondItem="hzC-J8-1uj" secondAttribute="centerY" id="3g5-xa-Old"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="qb4-6o-ZKt" secondAttribute="trailing" constant="3" id="9Ue-PS-cLB"/>
+                    <constraint firstItem="roy-bx-Ht0" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="BZL-r7-EC6"/>
+                    <constraint firstItem="i0C-0i-Uv4" firstAttribute="leading" secondItem="Rse-IW-efj" secondAttribute="trailing" constant="14" id="OHK-pU-Uwi"/>
+                    <constraint firstItem="FPt-5w-Znu" firstAttribute="leading" secondItem="hzC-J8-1uj" secondAttribute="trailing" constant="7" id="Oy4-fv-HuT"/>
+                    <constraint firstItem="hzC-J8-1uj" firstAttribute="leading" secondItem="Rse-IW-efj" secondAttribute="trailing" constant="14" id="QQC-Rs-cP9"/>
+                    <constraint firstAttribute="bottom" secondItem="roy-bx-Ht0" secondAttribute="bottom" id="UgN-Wr-2cd"/>
+                    <constraint firstItem="hzC-J8-1uj" firstAttribute="top" secondItem="i0C-0i-Uv4" secondAttribute="bottom" constant="4" id="X7G-jV-fqw"/>
+                    <constraint firstItem="qb4-6o-ZKt" firstAttribute="centerY" secondItem="Rse-IW-efj" secondAttribute="centerY" id="c6y-QF-Xjk"/>
+                    <constraint firstItem="qb4-6o-ZKt" firstAttribute="leading" secondItem="i0C-0i-Uv4" secondAttribute="trailing" constant="38" id="cpL-05-a2a"/>
+                    <constraint firstItem="qb4-6o-ZKt" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="gS0-Ve-3Ro"/>
+                    <constraint firstAttribute="trailing" secondItem="roy-bx-Ht0" secondAttribute="trailing" id="q8p-Ca-Epw"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="dowloadBtn" destination="qb4-6o-ZKt" id="Mbl-cD-COr"/>
+                <outlet property="fileSizeLb" destination="FPt-5w-Znu" id="FrE-4U-jY0"/>
+                <outlet property="paperImageView" destination="Rse-IW-efj" id="Eqw-5e-HMm"/>
+                <outlet property="paperName" destination="i0C-0i-Uv4" id="tNn-z4-JvA"/>
+            </connections>
+            <point key="canvasLocation" x="48.5" y="95"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="download-1" width="20" height="21"/>
+        <image name="file" width="10" height="9"/>
+        <image name="image" width="52" height="52"/>
+    </resources>
+</document>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="199" id="KGk-i7-Jjw" customClass="SentenceTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="335" height="199"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="335" height="198.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rTg-m7-Ib5">
+                        <rect key="frame" x="32" y="21" width="271" height="60"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="60" id="g5i-FF-hVK"/>
+                        </constraints>
+                        <string key="text">A 9-year-old girl in New Mexico has raised more than $500 for her little brother who needs heart surgery in Houston, Texas this July. </string>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                        <color key="textColor" red="0.39942303299999998" green="0.39974853399999999" blue="0.3994735479" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="新墨西哥州的一名9岁女孩在今年7月份在德克萨斯州休斯顿为她需要心脏手术的小弟弟募集了500多美元。" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="57T-bJ-7eP">
+                        <rect key="frame" x="32" y="92" width="271" height="61.5"/>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                        <color key="textColor" red="0.3994230329990387" green="0.3997485339641571" blue="0.39947354793548584" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2017年12月 大学英语四级考试真题（一）" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g0H-A0-4mF">
+                        <rect key="frame" x="135.5" y="169.5" width="190.5" height="19"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="19" id="Kun-j3-MwZ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" red="0.64346855878829956" green="0.64396888017654419" blue="0.64354604482650757" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ho4-ZL-vSN">
+                        <rect key="frame" x="0.0" y="197.5" width="335" height="1"/>
+                        <color key="backgroundColor" red="0.96912556886672974" green="0.96985918283462524" blue="0.96923929452896118" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.80000000000000004" id="Fy5-k1-iHg"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.64346855879999998" green="0.64396888019999998" blue="0.64354604479999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="ho4-ZL-vSN" secondAttribute="trailing" id="5gQ-nO-hBH"/>
+                    <constraint firstItem="57T-bJ-7eP" firstAttribute="trailing" secondItem="rTg-m7-Ib5" secondAttribute="trailing" id="EFh-kd-9zf"/>
+                    <constraint firstAttribute="trailing" secondItem="g0H-A0-4mF" secondAttribute="trailing" constant="9" id="Fzd-l5-Fu8"/>
+                    <constraint firstAttribute="bottom" secondItem="g0H-A0-4mF" secondAttribute="bottom" constant="10" id="KQA-g0-qfk"/>
+                    <constraint firstItem="g0H-A0-4mF" firstAttribute="top" secondItem="57T-bJ-7eP" secondAttribute="bottom" constant="16" id="LUR-ez-V4K"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="rTg-m7-Ib5" secondAttribute="trailing" constant="16" id="Mjd-uC-EjN"/>
+                    <constraint firstItem="57T-bJ-7eP" firstAttribute="top" secondItem="rTg-m7-Ib5" secondAttribute="bottom" constant="11" id="SMJ-0T-n4o"/>
+                    <constraint firstItem="rTg-m7-Ib5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="TGO-n0-qwo"/>
+                    <constraint firstAttribute="bottom" secondItem="ho4-ZL-vSN" secondAttribute="bottom" id="WCo-vz-zO7"/>
+                    <constraint firstItem="rTg-m7-Ib5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="16" id="cAa-yC-3jD"/>
+                    <constraint firstItem="57T-bJ-7eP" firstAttribute="leading" secondItem="rTg-m7-Ib5" secondAttribute="leading" id="n7Z-O7-Ixp"/>
+                    <constraint firstItem="ho4-ZL-vSN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="nib-CA-Gpb"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="chineseSentenceLb" destination="57T-bJ-7eP" id="3o6-jD-lLE"/>
+                <outlet property="englishSentenceLb" destination="rTg-m7-Ib5" id="cjO-oE-bfv"/>
+                <outlet property="paperNameLb" destination="g0H-A0-4mF" id="B2T-px-D7X"/>
+            </connections>
+            <point key="canvasLocation" x="55.5" y="197.5"/>
+        </tableViewCell>
+    </objects>
+</document>

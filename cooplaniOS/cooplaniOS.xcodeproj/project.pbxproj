@@ -40,6 +40,10 @@
 		9B1EDCE1208891BA0033183F /* ListenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B1EDCDF208891BA0033183F /* ListenTableViewCell.xib */; };
 		9B1EDCE42089C06D0033183F /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1EDCE32089C06C0033183F /* UIView+Toast.m */; };
 		9B1EDCE72089CEAE0033183F /* NoContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1EDCE62089CEAD0033183F /* NoContentViewController.m */; };
+		9B32CB0B209BF00300FCEED3 /* SentenceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B32CB09209BF00300FCEED3 /* SentenceTableViewCell.m */; };
+		9B32CB0C209BF00300FCEED3 /* SentenceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B32CB0A209BF00300FCEED3 /* SentenceTableViewCell.xib */; };
+		9B32CB15209C25A500FCEED3 /* MyCollectionPaperTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B32CB13209C25A500FCEED3 /* MyCollectionPaperTableViewCell.m */; };
+		9B32CB16209C25A500FCEED3 /* MyCollectionPaperTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B32CB14209C25A500FCEED3 /* MyCollectionPaperTableViewCell.xib */; };
 		9B3D02C62084468E005C923B /* SUPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3D02C52084468E005C923B /* SUPlayer.m */; };
 		9B3D02CA20845338005C923B /* PaperDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3D02C820845338005C923B /* PaperDetailViewController.m */; };
 		9B3D02CB20845338005C923B /* PaperDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B3D02C920845338005C923B /* PaperDetailViewController.xib */; };
@@ -171,6 +175,12 @@
 		9B1EDCE32089C06C0033183F /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
 		9B1EDCE52089CEAD0033183F /* NoContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoContentViewController.h; sourceTree = "<group>"; };
 		9B1EDCE62089CEAD0033183F /* NoContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoContentViewController.m; sourceTree = "<group>"; };
+		9B32CB08209BF00300FCEED3 /* SentenceTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SentenceTableViewCell.h; sourceTree = "<group>"; };
+		9B32CB09209BF00300FCEED3 /* SentenceTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SentenceTableViewCell.m; sourceTree = "<group>"; };
+		9B32CB0A209BF00300FCEED3 /* SentenceTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SentenceTableViewCell.xib; sourceTree = "<group>"; };
+		9B32CB12209C25A500FCEED3 /* MyCollectionPaperTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyCollectionPaperTableViewCell.h; sourceTree = "<group>"; };
+		9B32CB13209C25A500FCEED3 /* MyCollectionPaperTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyCollectionPaperTableViewCell.m; sourceTree = "<group>"; };
+		9B32CB14209C25A500FCEED3 /* MyCollectionPaperTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyCollectionPaperTableViewCell.xib; sourceTree = "<group>"; };
 		9B3D02C52084468E005C923B /* SUPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SUPlayer.m; sourceTree = "<group>"; };
 		9B3D02C720845338005C923B /* PaperDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaperDetailViewController.h; sourceTree = "<group>"; };
 		9B3D02C820845338005C923B /* PaperDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaperDetailViewController.m; sourceTree = "<group>"; };
@@ -462,6 +472,9 @@
 			children = (
 				9B1D31CC2073683A007674CF /* MyNoteViewController.h */,
 				9B1D31CD2073683A007674CF /* MyNoteViewController.m */,
+				9B32CB08209BF00300FCEED3 /* SentenceTableViewCell.h */,
+				9B32CB09209BF00300FCEED3 /* SentenceTableViewCell.m */,
+				9B32CB0A209BF00300FCEED3 /* SentenceTableViewCell.xib */,
 			);
 			path = Note;
 			sourceTree = "<group>";
@@ -473,6 +486,9 @@
 				9B1EDCE62089CEAD0033183F /* NoContentViewController.m */,
 				9B1D31CF20736846007674CF /* MyCollectionViewController.h */,
 				9B1D31D020736846007674CF /* MyCollectionViewController.m */,
+				9B32CB12209C25A500FCEED3 /* MyCollectionPaperTableViewCell.h */,
+				9B32CB13209C25A500FCEED3 /* MyCollectionPaperTableViewCell.m */,
+				9B32CB14209C25A500FCEED3 /* MyCollectionPaperTableViewCell.xib */,
 			);
 			path = Collection;
 			sourceTree = "<group>";
@@ -823,6 +839,7 @@
 				9BB3E26520998A6000FDBE77 /* PracticeModeHeaderView.xib in Resources */,
 				9BEA0A3D2071D9190026AF2C /* LaunchScreen.storyboard in Resources */,
 				9B16B0992091C7AE00094EE7 /* AnswerHeadView.xib in Resources */,
+				9B32CB16209C25A500FCEED3 /* MyCollectionPaperTableViewCell.xib in Resources */,
 				9BEA0A3A2071D9190026AF2C /* Assets.xcassets in Resources */,
 				9B3D02DB208488A3005C923B /* LoginNextViewController.xib in Resources */,
 				9B1EDCE1208891BA0033183F /* ListenTableViewCell.xib in Resources */,
@@ -832,6 +849,7 @@
 				9BA08EC02093174A0026935E /* FeedbackPhoneTableViewCell.xib in Resources */,
 				9B13AD6220807B8E0000C750 /* BannerCollectionViewCell.xib in Resources */,
 				9BDFE0C720883F6800B59B3B /* 2017年6月四级真题（一）.MP3 in Resources */,
+				9B32CB0C209BF00300FCEED3 /* SentenceTableViewCell.xib in Resources */,
 				9B4BB6FE2079A9FC0029015F /* HomeListenCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1024,6 +1042,7 @@
 				9B6FB85C207F3D2100BC07F3 /* UILabel+HYLabel.m in Sources */,
 				9B3D02CF20847C5A005C923B /* PaperDetailTableViewCell.m in Sources */,
 				9B1EDCE42089C06D0033183F /* UIView+Toast.m in Sources */,
+				9B32CB0B209BF00300FCEED3 /* SentenceTableViewCell.m in Sources */,
 				9B3D02C62084468E005C923B /* SUPlayer.m in Sources */,
 				9B135CCF207CD8AA0040A883 /* LTHTTPSessionManager.m in Sources */,
 				9B16B0932090623E00094EE7 /* QuestionTableViewCell.m in Sources */,
@@ -1037,6 +1056,7 @@
 				9B13AD682080885F0000C750 /* PaperModel.m in Sources */,
 				9B16B09C2091CA2600094EE7 /* AnswerHeadView.m in Sources */,
 				9B4BB6FD2079A9FC0029015F /* HomeListenCell.m in Sources */,
+				9B32CB15209C25A500FCEED3 /* MyCollectionPaperTableViewCell.m in Sources */,
 				9B3D02CA20845338005C923B /* PaperDetailViewController.m in Sources */,
 				9B3D02DA208488A3005C923B /* LoginNextViewController.m in Sources */,
 				9B16B0972091B63900094EE7 /* answerModel.m in Sources */,

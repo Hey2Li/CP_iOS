@@ -168,10 +168,11 @@
     switch (indexPath.section) {
         case 0:
         {
-            VC.title = @"我的笔记";
+            MyNoteViewController *vc = [[MyNoteViewController alloc]init];
+            vc.title = @"我的笔记";
             //拿到我们的ViewController，让它去push
             UINavigationController* nav = (UINavigationController*)self.mm_drawerController.centerViewController;
-            [nav pushViewController:VC animated:NO];
+            [nav pushViewController:vc animated:NO];
             //当我们push成功之后，关闭我们的抽屉
             [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
                 //设置打开抽屉模式为MMOpenDrawerGestureModeNone，也就是没有任何效果。
@@ -182,10 +183,10 @@
             break;
         case 1:
         {
-            VC.title = @"我的收藏";
+            MyCollectionViewController *vc = [[MyCollectionViewController alloc]init];
             //拿到我们的ViewController，让它去push
             UINavigationController* nav = (UINavigationController*)self.mm_drawerController.centerViewController;
-            [nav pushViewController:VC animated:NO];
+            [nav pushViewController:vc animated:NO];
             //当我们push成功之后，关闭我们的抽屉
             [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
                 //设置打开抽屉模式为MMOpenDrawerGestureModeNone，也就是没有任何效果。
