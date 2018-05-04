@@ -157,8 +157,10 @@
     NSArray *strArray = [UILabel cuttingStringInLabel:cell.listenLb];
     for (HYWord *hyword in strArray) {
         CGRect frame = hyword.frame;
-        frame.origin.x += cell.frame.origin.x + 15;
-        frame.origin.y += cell.frame.origin.y + 12;
+        frame.origin.x += cell.frame.origin.x + 14;
+        frame.origin.y += cell.frame.origin.y + 6;
+        frame.size.height += 2;
+        frame.size.width += 2;
             if ([self pointInRectangle:frame point:point]) {
             self.wordView.hidden = NO;
             self.wordView.frame = frame;
@@ -251,7 +253,7 @@
     _CNTag++;
     switch (_CNTag % 4) {
         case 0:
-            [sender setImage:[UIImage imageNamed:@"Group 13 Copy"] forState:UIControlStateNormal];
+            [sender setImage:[UIImage imageNamed:@"translations"] forState:UIControlStateNormal];
             self.backImageView.hidden = YES;
             break;
         case 1:
@@ -276,23 +278,23 @@
     _RateTag++;
     switch (_RateTag % 5) {
         case 0:
-            [sender setImage:[UIImage imageNamed:@"Oval 5"] forState:UIControlStateNormal];
+            [sender setImage:[UIImage imageNamed:@"1.0"] forState:UIControlStateNormal];
             [self.player setRate:1.0];
             break;
         case 1:
-            [sender setImage:[UIImage imageNamed:@"times_0.5x"] forState:UIControlStateNormal];
+            [sender setImage:[UIImage imageNamed:@"0.5"] forState:UIControlStateNormal];
             [self.player setRate:0.5];
             break;
         case 2:
-            [sender setImage:[UIImage imageNamed:@"times_0.8x"] forState:UIControlStateNormal];
+            [sender setImage:[UIImage imageNamed:@"0.8"] forState:UIControlStateNormal];
             [self.player setRate:0.8];
             break;
         case 3:
-            [sender setImage:[UIImage imageNamed:@"times_1.2x"] forState:UIControlStateNormal];
+            [sender setImage:[UIImage imageNamed:@"1.2"] forState:UIControlStateNormal];
             [self.player setRate:1.2];
             break;
         case 4:
-            [sender setImage:[UIImage imageNamed:@"times_1.5x"] forState:UIControlStateNormal];
+            [sender setImage:[UIImage imageNamed:@"1.5"] forState:UIControlStateNormal];
             [self.player setRate:1.5];
             break;
         default:

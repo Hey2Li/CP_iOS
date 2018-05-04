@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SUPlayer.h"
 
 @interface ListenPlay : UIView
 @property (weak, nonatomic) IBOutlet UIButton *upSongBtn;
@@ -18,5 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (weak, nonatomic) IBOutlet UITableView *lyricTableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *otherViewBottom;
-
+@property (nonatomic, strong) SUPlayer *player;
+- (void)stopRoll;
+- (void)startRoll;
 @end

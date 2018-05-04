@@ -106,30 +106,30 @@
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AKG-jj-SiL">
                                     <rect key="frame" x="0.0" y="0.0" width="75" height="50"/>
-                                    <state key="normal" image="Group 12 Copy"/>
+                                    <state key="normal" image="collection-2"/>
                                     <state key="selected" image="single_favor_fill"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7qe-my-NAU">
                                     <rect key="frame" x="75" y="0.0" width="75" height="50"/>
-                                    <state key="normal" image="Group 13 Copy"/>
+                                    <state key="normal" image="translations"/>
                                     <connections>
                                         <action selector="ENAndCN:" destination="iN0-l3-epB" eventType="touchUpInside" id="eW0-jj-ecP"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G46-6T-6vG">
                                     <rect key="frame" x="150" y="0.0" width="75" height="50"/>
-                                    <state key="normal" image="Group 15 Copy"/>
+                                    <state key="normal" image="cycle"/>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lbO-qx-AQb">
                                     <rect key="frame" x="225" y="0.0" width="75" height="50"/>
-                                    <state key="normal" image="Oval 5"/>
+                                    <state key="normal" image="1.0"/>
                                     <connections>
                                         <action selector="roteWithPlay:" destination="iN0-l3-epB" eventType="touchUpInside" id="OxK-9K-a3D"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aLe-aR-BKe">
                                     <rect key="frame" x="300" y="0.0" width="75" height="50"/>
-                                    <state key="normal" image="Group 17 Copy"/>
+                                    <state key="normal" image="correct"/>
                                 </button>
                             </subviews>
                         </stackView>
@@ -189,18 +189,18 @@
         </view>
     </objects>
     <resources>
-        <image name="Group 12 Copy" width="53" height="53"/>
-        <image name="Group 13 Copy" width="53" height="53"/>
-        <image name="Group 15 Copy" width="53" height="53"/>
-        <image name="Group 17 Copy" width="53" height="53"/>
+        <image name="1.0" width="44" height="44"/>
         <image name="Group 5 Copy" width="226" height="222"/>
-        <image name="Oval 5" width="53" height="53"/>
         <image name="backward" width="44" height="44"/>
+        <image name="collection-2" width="44" height="44"/>
+        <image name="correct" width="44" height="44"/>
+        <image name="cycle" width="44" height="44"/>
         <image name="forward" width="44" height="44"/>
         <image name="more1" width="44" height="44"/>
         <image name="more1_fill" width="44" height="44"/>
         <image name="pause" width="48" height="48"/>
         <image name="play" width="48" height="48"/>
         <image name="single_favor_fill" width="44" height="44"/>
+        <image name="translations" width="44" height="44"/>
     </resources>
 </document>

@@ -66,15 +66,15 @@
         SVProgressShowStuteText(@"请填写反馈内容", NO);
         return;
     }
-    if (self.userContact.length == 0) {
-        SVProgressShowStuteText(@"请填写联系方式", NO);
-        return;
-    }
+//    if (self.userContact.length == 0) {
+//        SVProgressShowStuteText(@"请填写联系方式", NO);
+//        return;
+//    }
     if (![USERDEFAULTS objectForKey:USER_ID]) {
         SVProgressShowStuteText(@"请先登录", NO);
         return;
     }
-    [LTHttpManager feedbackWithUserId:[USERDEFAULTS objectForKey:USER_ID] Type:[NSString stringWithFormat:@"%ld",(long)self.feedbackType] Info:self.feedbackContent ContactInfo:self.userContact Files:self.imageDataArray Complete:^(LTHttpResult result, NSString *message, id data) {
+    [LTHttpManager feedbackWithUserId:[USERDEFAULTS objectForKey:USER_ID] Type:[NSString stringWithFormat:@"%ld",(long)self.feedbackType] Info:self.feedbackContent ContactInfo:self.userContact ? self.userContact : @"" Files:self.imageDataArray Complete:^(LTHttpResult result, NSString *message, id data) {
         if (LTHttpResultSuccess == result) {
             SVProgressShowStuteText(@"反馈成功", YES);
             [self.navigationController popViewControllerAnimated:YES];

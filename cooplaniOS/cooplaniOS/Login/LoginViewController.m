@@ -35,6 +35,7 @@
     self.phoneTF.attributedPlaceholder = placeholder;
     _StringCount = @"";
 }
+
 -(void)textFieldDidChange:(UITextField *)textField{
     CGFloat maxLength = 11;
     NSString *toBeString = textField.text;

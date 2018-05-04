@@ -44,6 +44,8 @@
 		9B32CB0C209BF00300FCEED3 /* SentenceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B32CB0A209BF00300FCEED3 /* SentenceTableViewCell.xib */; };
 		9B32CB15209C25A500FCEED3 /* MyCollectionPaperTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B32CB13209C25A500FCEED3 /* MyCollectionPaperTableViewCell.m */; };
 		9B32CB16209C25A500FCEED3 /* MyCollectionPaperTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B32CB14209C25A500FCEED3 /* MyCollectionPaperTableViewCell.xib */; };
+		9B32CB19209C410700FCEED3 /* UIView+YYAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B32CB17209C410600FCEED3 /* UIView+YYAdd.m */; };
+		9B32CB1B209C4DF600FCEED3 /* CET-Template.json in Resources */ = {isa = PBXBuildFile; fileRef = 9B32CB1A209C4DF600FCEED3 /* CET-Template.json */; };
 		9B3D02C62084468E005C923B /* SUPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3D02C52084468E005C923B /* SUPlayer.m */; };
 		9B3D02CA20845338005C923B /* PaperDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3D02C820845338005C923B /* PaperDetailViewController.m */; };
 		9B3D02CB20845338005C923B /* PaperDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B3D02C920845338005C923B /* PaperDetailViewController.xib */; };
@@ -73,6 +75,7 @@
 		9BA08EBB209313B00026935E /* FeedbackContentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BA08EB9209313B00026935E /* FeedbackContentTableViewCell.xib */; };
 		9BA08EBF2093174A0026935E /* FeedbackPhoneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA08EBD2093174A0026935E /* FeedbackPhoneTableViewCell.m */; };
 		9BA08EC02093174A0026935E /* FeedbackPhoneTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BA08EBE2093174A0026935E /* FeedbackPhoneTableViewCell.xib */; };
+		9BB0A07E209C762C00089C4A /* TestPaperModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB0A07D209C762C00089C4A /* TestPaperModel.m */; };
 		9BB3E26320998A4400FDBE77 /* PracticeModeHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB3E26220998A4400FDBE77 /* PracticeModeHeaderView.m */; };
 		9BB3E26520998A6000FDBE77 /* PracticeModeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BB3E26420998A6000FDBE77 /* PracticeModeHeaderView.xib */; };
 		9BB3E26B2099B3FC00FDBE77 /* PracticeModeTiKaCCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB3E26A2099B3FC00FDBE77 /* PracticeModeTiKaCCell.m */; };
@@ -181,6 +184,9 @@
 		9B32CB12209C25A500FCEED3 /* MyCollectionPaperTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyCollectionPaperTableViewCell.h; sourceTree = "<group>"; };
 		9B32CB13209C25A500FCEED3 /* MyCollectionPaperTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyCollectionPaperTableViewCell.m; sourceTree = "<group>"; };
 		9B32CB14209C25A500FCEED3 /* MyCollectionPaperTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyCollectionPaperTableViewCell.xib; sourceTree = "<group>"; };
+		9B32CB17209C410600FCEED3 /* UIView+YYAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+YYAdd.m"; sourceTree = "<group>"; };
+		9B32CB18209C410700FCEED3 /* UIView+YYAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+YYAdd.h"; sourceTree = "<group>"; };
+		9B32CB1A209C4DF600FCEED3 /* CET-Template.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "CET-Template.json"; sourceTree = "<group>"; };
 		9B3D02C52084468E005C923B /* SUPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SUPlayer.m; sourceTree = "<group>"; };
 		9B3D02C720845338005C923B /* PaperDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaperDetailViewController.h; sourceTree = "<group>"; };
 		9B3D02C820845338005C923B /* PaperDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaperDetailViewController.m; sourceTree = "<group>"; };
@@ -230,6 +236,8 @@
 		9BA08EBC2093174A0026935E /* FeedbackPhoneTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeedbackPhoneTableViewCell.h; sourceTree = "<group>"; };
 		9BA08EBD2093174A0026935E /* FeedbackPhoneTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeedbackPhoneTableViewCell.m; sourceTree = "<group>"; };
 		9BA08EBE2093174A0026935E /* FeedbackPhoneTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedbackPhoneTableViewCell.xib; sourceTree = "<group>"; };
+		9BB0A07C209C762C00089C4A /* TestPaperModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestPaperModel.h; sourceTree = "<group>"; };
+		9BB0A07D209C762C00089C4A /* TestPaperModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestPaperModel.m; sourceTree = "<group>"; };
 		9BB3E26120998A4400FDBE77 /* PracticeModeHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PracticeModeHeaderView.h; sourceTree = "<group>"; };
 		9BB3E26220998A4400FDBE77 /* PracticeModeHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PracticeModeHeaderView.m; sourceTree = "<group>"; };
 		9BB3E26420998A6000FDBE77 /* PracticeModeHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PracticeModeHeaderView.xib; sourceTree = "<group>"; };
@@ -390,6 +398,8 @@
 		9B16B08520904F8B00094EE7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				9BB0A07C209C762C00089C4A /* TestPaperModel.h */,
+				9BB0A07D209C762C00089C4A /* TestPaperModel.m */,
 				9B16B0952091B63900094EE7 /* answerModel.h */,
 				9B16B0962091B63900094EE7 /* answerModel.m */,
 			);
@@ -583,6 +593,8 @@
 		9BC1D6B220738393007D88EF /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				9B32CB18209C410700FCEED3 /* UIView+YYAdd.h */,
+				9B32CB17209C410600FCEED3 /* UIView+YYAdd.m */,
 				9B1EDCE22089C06C0033183F /* UIView+Toast.h */,
 				9B1EDCE32089C06C0033183F /* UIView+Toast.m */,
 				9B4BB731207B6EDC0029015F /* SULoaderCategory.h */,
@@ -665,6 +677,7 @@
 				9BEA0A3E2071D9190026AF2C /* Info.plist */,
 				9BEA0A3F2071D9190026AF2C /* main.m */,
 				9B1D31C020734B78007674CF /* CooplanPrefixHeader.pch */,
+				9B32CB1A209C4DF600FCEED3 /* CET-Template.json */,
 				9B6FB858207F054C00BC07F3 /* 2017年6月四级真题（一）.lrc */,
 				9BDFE0C620883F6800B59B3B /* 2017年6月四级真题（一）.MP3 */,
 			);
@@ -827,6 +840,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B32CB1B209C4DF600FCEED3 /* CET-Template.json in Resources */,
 				9BA08EB62093120C0026935E /* FeedbackTypeTableViewCell.xib in Resources */,
 				9B16B078208D7DDE00094EE7 /* ListenPlay.xib in Resources */,
 				9B6FB859207F054C00BC07F3 /* 2017年6月四级真题（一）.lrc in Resources */,
@@ -1041,6 +1055,7 @@
 				9B1D31D120736846007674CF /* MyCollectionViewController.m in Sources */,
 				9B6FB85C207F3D2100BC07F3 /* UILabel+HYLabel.m in Sources */,
 				9B3D02CF20847C5A005C923B /* PaperDetailTableViewCell.m in Sources */,
+				9BB0A07E209C762C00089C4A /* TestPaperModel.m in Sources */,
 				9B1EDCE42089C06D0033183F /* UIView+Toast.m in Sources */,
 				9B32CB0B209BF00300FCEED3 /* SentenceTableViewCell.m in Sources */,
 				9B3D02C62084468E005C923B /* SUPlayer.m in Sources */,
@@ -1060,6 +1075,7 @@
 				9B3D02CA20845338005C923B /* PaperDetailViewController.m in Sources */,
 				9B3D02DA208488A3005C923B /* LoginNextViewController.m in Sources */,
 				9B16B0972091B63900094EE7 /* answerModel.m in Sources */,
+				9B32CB19209C410700FCEED3 /* UIView+YYAdd.m in Sources */,
 				9BB3E26320998A4400FDBE77 /* PracticeModeHeaderView.m in Sources */,
 				9B4BB71C207A234D0029015F /* ListenPaperViewController.m in Sources */,
 				9B1D31D420736856007674CF /* WrongTopicViewController.m in Sources */,

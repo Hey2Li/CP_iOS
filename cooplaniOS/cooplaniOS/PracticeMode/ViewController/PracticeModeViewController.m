@@ -194,7 +194,11 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.player.player stop];
+    [self.player stopRoll];
+}
 /*
 #pragma mark - Navigation
 

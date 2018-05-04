@@ -14,6 +14,7 @@
 #import "ListenPaperViewController.h"
 #import "BannerCollectionViewCell.h"
 #import "PaperDetailViewController.h"
+#import "TestPaperModel.h"
 
 @interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -33,6 +34,8 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.barTintColor = DRGBCOLOR;
+    [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
+    [self.mm_drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -42,6 +45,17 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self setupLeftMenuButton];
     [self loadData];
+    NSString *jsonStr = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"CET-Template" ofType:@"json"] encoding:0 error:nil];
+    NSData *jsonData = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
+    NSMutableDictionary *jsonDic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:nil];
+    NSLog(@"%@",jsonDic);
+    TestPaperModel *model = [TestPaperModel mj_objectWithKeyValues:jsonDic];
+    PartsModel *partModel = model.Parts[0];
+    SectionsModel *sectionModel= partModel.Sections[0];
+    PassageModel *passageModel = sectionModel.Passage[0];
+    QuestionsModel *questionsModel = passageModel.Questions[0];
+    OptionsModel *optionsModel = questionsModel.Options[0];
+    NSLog(@"%@,%@,%@,%@",model.Parts, partModel, optionsModel.Alphabet,optionsModel.Text);
 }
 - (void)loadData{
     [LTHttpManager FindAllBannerWithComplete:^(LTHttpResult result, NSString *message, id data) {
