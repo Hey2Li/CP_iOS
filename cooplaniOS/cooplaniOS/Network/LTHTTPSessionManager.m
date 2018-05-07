@@ -37,7 +37,7 @@ NSString *const kKeyModelList = @"modellist";
 }
 - (NSURLSessionDataTask *)POSTWithParameters:(NSString *)url parameters:(id)parameters complete:(completeBlock)complete{
     // 在此 添加网络加载动画
-    SVProgressShowText(@"正在加载");
+    SVProgressShow();
     return [super POST:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         SVProgressHiden();
         NSLog(@"成功");
@@ -156,7 +156,7 @@ NSString *const kKeyModelList = @"modellist";
 - (NSURLSessionDataTask *)UPLOADWithParameters:(NSString *)url parameters:(id)parameters photoArray:(NSArray *)photoArray complete:(completeBlock)complete{
     self.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/plain", @"multipart/form-data", @"application/json", @"text/html", @"image/jpeg", @"image/png", @"application/octet-stream", @"text/json", nil];
     // 在此 添加网络加载动画
-    SVProgressShowText(@"正在加载...");
+    SVProgressShow();
     return [super POST:url parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         for (int i = 0; i < photoArray.count; i++) {
             UIImage *image = photoArray[i];

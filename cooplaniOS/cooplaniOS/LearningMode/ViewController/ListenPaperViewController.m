@@ -44,6 +44,7 @@
     [super viewWillAppear:animated];
     self.mm_drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
     self.mm_drawerController.closeDrawerGestureModeMask = MMCloseDrawerGestureModeNone;
+    [self.player play];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -71,6 +72,7 @@
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }
+    [self.player pause];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{

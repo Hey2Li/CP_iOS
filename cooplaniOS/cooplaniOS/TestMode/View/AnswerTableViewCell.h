@@ -27,5 +27,5 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *correctAnswerBtnTopHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *answerDetailTopHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *answerDetailBottomHeight;
-@property (nonatomic, strong) answerModel *model;
+@property (nonatomic, strong) QuestionsModel *model;
 @end

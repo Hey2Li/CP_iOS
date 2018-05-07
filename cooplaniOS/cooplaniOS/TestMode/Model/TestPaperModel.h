@@ -50,6 +50,9 @@
 @property (nonatomic, strong) NSArray *Options;
 @property (nonatomic, copy) NSString *Answer;
 @property (nonatomic, copy) NSString *Explanation;
+@property (nonatomic, assign) BOOL isCorrect;
+@property (nonatomic, assign) BOOL isSelected;
+@property (nonatomic, copy) NSString *youAnswer;
 @end
 
 @interface OptionsModel: NSObject

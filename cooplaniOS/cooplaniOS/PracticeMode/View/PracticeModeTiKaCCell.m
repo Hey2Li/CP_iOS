@@ -11,9 +11,17 @@
 
 @interface PracticeModeTiKaCCell ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UILabel *questionLb;
+@property (nonatomic, strong) NSMutableArray *questionArray;
+@property (nonatomic, strong) UITableView *tableView;
 @end
 
 @implementation PracticeModeTiKaCCell
+- (NSMutableArray *)questionArray{
+    if (!_questionArray) {
+        _questionArray = [NSMutableArray array];
+    }
+    return _questionArray;
+}
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor clearColor];
@@ -46,19 +54,20 @@
         [tableView.layer setCornerRadius:8];
         tableView.backgroundColor = [UIColor whiteColor];
         tableView.tableFooterView = [UIView new];
+        self.tableView = tableView;
         
         UILabel *questionLb = [[UILabel alloc]init];
         questionLb.text = @"这是题目";
         questionLb.numberOfLines = 2;
         questionLb.textColor = UIColorFromRGB(0x666666);
         questionLb.font = [UIFont boldSystemFontOfSize:14];
-        tableView.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 60)];
+        tableView.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 80)];
         [tableView.tableHeaderView addSubview:questionLb];
         [questionLb mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(tableView).offset(20);
-            make.right.equalTo(tableView).offset(-20);
-            make.height.equalTo(@45);
-            make.top.equalTo(tableView).offset(35);
+            make.left.equalTo(backView).offset(20);
+            make.right.equalTo(backView).offset(-20);
+            make.height.equalTo(@80);
+            make.top.equalTo(backView).offset(35);
         }];
         self.questionLb = questionLb;
         
@@ -88,13 +97,13 @@
 }
 #pragma mark UITableViewDataSource&Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 5;
+    return self.questionArray.count + 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
-        return 80;
+        return [Tool layoutForAlliPhoneHeight:60];
     }else{
-        return 45;
+        return [Tool layoutForAlliPhoneHeight:45];
     }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -106,7 +115,8 @@
         cell.textLabel.text = [NSString stringWithFormat:@"Q%ld",self.collectionIndexPath.row + 1];
         cell.textLabel.textColor = UIColorFromRGB(0xBBBBBB);
     }else{
-        cell.textLabel.text = [NSString stringWithFormat:@"%ld.Her friend Erika.",(long)indexPath.row];
+        OptionsModel *model = self.questionArray[indexPath.row - 1];
+        cell.textLabel.text = [NSString stringWithFormat:@"%@.%@",model.Alphabet,model.Text];
     }
     return cell;
 }
@@ -116,19 +126,23 @@
             switch (indexPath.row) {
                 case 1:
                     NSLog(@"A");
-                    self.questionCellClick(self.collectionIndexPath,@"A");
+                    _questionsModel.youAnswer = @"A";
+                    self.questionCellClick(self.collectionIndexPath,[@"A" isEqualToString:_questionsModel.Answer]);
                     break;
                 case 2:
                     NSLog(@"B");
-                    self.questionCellClick(self.collectionIndexPath,@"B");
+                    _questionsModel.youAnswer = @"B";
+                    self.questionCellClick(self.collectionIndexPath,[@"B" isEqualToString:_questionsModel.Answer]);
                     break;
                 case 3:
                     NSLog(@"C");
-                    self.questionCellClick(self.collectionIndexPath,@"C");
+                    _questionsModel.youAnswer = @"C";
+                    self.questionCellClick(self.collectionIndexPath,[@"C" isEqualToString:_questionsModel.Answer]);
                     break;
                 case 4:
                     NSLog(@"D");
-                    self.questionCellClick(self.collectionIndexPath,@"D");
+                    _questionsModel.youAnswer = @"D";
+                    self.questionCellClick(self.collectionIndexPath,[@"D" isEqualToString:_questionsModel.Answer]);
                     break;
                 default:
                     break;
@@ -136,5 +150,13 @@
         }
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+- (void)setQuestionsModel:(QuestionsModel *)questionsModel{
+    _questionsModel = questionsModel;
+    [self.questionArray removeAllObjects];
+    for (OptionsModel *optionsModel in questionsModel.Options) {
+        [self.questionArray addObject:optionsModel];
+    }
+    [self.tableView reloadData];
 }
 @end

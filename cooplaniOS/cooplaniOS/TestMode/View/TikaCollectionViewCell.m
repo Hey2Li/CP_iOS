@@ -10,9 +10,17 @@
 
 @interface TikaCollectionViewCell ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UILabel *questionLb;
+@property (nonatomic, strong) NSMutableArray *questionArray;
+@property (nonatomic, strong) UITableView *tableView;
 @end
 
 @implementation TikaCollectionViewCell
+- (NSMutableArray *)questionArray{
+    if (!_questionArray) {
+        _questionArray = [NSMutableArray array];
+    }
+    return _questionArray;
+}
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = UIColorFromRGB(0xf7f7f7);
@@ -44,7 +52,8 @@
         [tableView.layer setCornerRadius:8];
         tableView.backgroundColor = [UIColor whiteColor];
         tableView.tableFooterView = [UIView new];
-        
+        self.tableView = tableView;
+
         UILabel *questionLb = [[UILabel alloc]init];
         questionLb.text = @"这是题目";
         questionLb.numberOfLines = 2;
@@ -53,10 +62,10 @@
         tableView.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 60)];
         [tableView.tableHeaderView addSubview:questionLb];
         [questionLb mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(tableView).offset(20);
-            make.right.equalTo(tableView).offset(-20);
+            make.left.equalTo(backView).offset(20);
+            make.right.equalTo(backView).offset(-20);
             make.height.equalTo(@60);
-            make.top.equalTo(tableView);
+            make.top.equalTo(backView);
         }];
         self.questionLb = questionLb;
     }
@@ -73,7 +82,7 @@
 }
 #pragma mark UITableViewDataSource&Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 5;
+    return self.questionArray.count + 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 45;
@@ -86,7 +95,8 @@
         cell.textLabel.text = [NSString stringWithFormat:@"Q%ld",self.collectionIndexPath.row + 1];
         cell.textLabel.textColor = UIColorFromRGB(0xBBBBBB);
     }else{
-        cell.textLabel.text = [NSString stringWithFormat:@"%ld.Her friend Erika.",(long)indexPath.row];
+        OptionsModel *model = self.questionArray[indexPath.row - 1];
+        cell.textLabel.text = [NSString stringWithFormat:@"%@.%@",model.Alphabet,model.Text];
     }
     return cell;
 }
@@ -95,24 +105,36 @@
         switch (indexPath.row) {
             case 1:
                 NSLog(@"A");
-                self.questionCellClick(self.collectionIndexPath,@"A");
+                _questionsModel.youAnswer = @"A";
+                self.questionCellClick(self.collectionIndexPath,[@"A" isEqualToString:_questionsModel.Answer]);
                 break;
             case 2:
                 NSLog(@"B");
-                self.questionCellClick(self.collectionIndexPath,@"B");
+                _questionsModel.youAnswer = @"B";
+                self.questionCellClick(self.collectionIndexPath,[@"B" isEqualToString:_questionsModel.Answer]);
                 break;
             case 3:
                 NSLog(@"C");
-                self.questionCellClick(self.collectionIndexPath,@"C");
+                _questionsModel.youAnswer = @"C";
+                self.questionCellClick(self.collectionIndexPath,[@"C" isEqualToString:_questionsModel.Answer]);
                 break;
             case 4:
                 NSLog(@"D");
-                self.questionCellClick(self.collectionIndexPath,@"D");
+                _questionsModel.youAnswer = @"D";
+                self.questionCellClick(self.collectionIndexPath,[@"D" isEqualToString:_questionsModel.Answer]);
                 break;
             default:
                 break;
         }
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+- (void)setQuestionsModel:(QuestionsModel *)questionsModel{
+    _questionsModel = questionsModel;
+    [self.questionArray removeAllObjects];
+    for (OptionsModel *optionsModel in questionsModel.Options) {
+        [self.questionArray addObject:optionsModel];
+    }
+    [self.tableView reloadData];
 }
 @end

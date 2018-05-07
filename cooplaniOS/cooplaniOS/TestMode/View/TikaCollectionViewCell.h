@@ -10,7 +10,8 @@
 
 @interface TikaCollectionViewCell : UICollectionViewCell
 @property (nonatomic, copy) void (^UpAndDownBtnClick)(UIButton *btn);
-@property (nonatomic, copy) void (^questionCellClick)(NSIndexPath *indexPath, NSString *answer);
+@property (nonatomic, copy) void (^questionCellClick)(NSIndexPath *indexPath, BOOL isCorrect);
 @property (nonatomic, copy) NSString *questionStr;
 @property (nonatomic, strong) NSIndexPath *collectionIndexPath;
+@property (nonatomic, strong) QuestionsModel *questionsModel;
 @end

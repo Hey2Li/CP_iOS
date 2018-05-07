@@ -20,9 +20,48 @@
 @property (nonatomic, strong) ListenPlay *player;
 @property (nonatomic, strong) PracticeModeHeaderView *headerView;
 @property (nonatomic, strong) UICollectionView *tikaCollectionView;
+@property (nonatomic, strong) NSMutableArray *partModelArray;
+@property (nonatomic, strong) NSMutableArray *sectionsModelArray;
+@property (nonatomic, strong) NSMutableArray *passageModelArray;
+@property (nonatomic, strong) NSMutableArray *questionsModelArray;
+@property (nonatomic, strong) NSMutableArray *optionsModelArray;
+@property (nonatomic, strong) TestPaperModel *testPaperModel;
+@property (nonatomic, copy) NSString *paperSection;
+@property (nonatomic, assign) int correctInt;
+@property (nonatomic, assign) int NoCorrectInt;
 @end
 
 @implementation PracticeModeViewController
+- (NSMutableArray *)partModelArray{
+    if (!_partModelArray) {
+        _partModelArray = [NSMutableArray array];
+    }
+    return _partModelArray;
+}
+- (NSMutableArray *)sectionsModelArray{
+    if (!_sectionsModelArray) {
+        _sectionsModelArray = [NSMutableArray array];
+    }
+    return _sectionsModelArray;
+}
+-(NSMutableArray *)passageModelArray{
+    if (!_passageModelArray) {
+        _passageModelArray = [NSMutableArray array];
+    }
+    return _passageModelArray;
+}
+- (NSMutableArray *)questionsModelArray{
+    if (!_questionsModelArray) {
+        _questionsModelArray = [NSMutableArray array];
+    }
+    return _questionsModelArray;
+}
+- (NSMutableArray *)optionsModelArray{
+    if (!_optionsModelArray) {
+        _optionsModelArray = [NSMutableArray array];
+    }
+    return _optionsModelArray;
+}
 - (ListenPlay *)player{
     if (!_player) {
         NSString *className = NSStringFromClass([ListenPlay class]);
@@ -39,6 +78,48 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initWithView];
+    [self loadData];
+    _correctInt = 0;
+    _NoCorrectInt = 0;
+}
+- (void)loadData{
+    NSString *str = [[NSBundle mainBundle] pathForResource:@"CET-Template" ofType:@"json"];
+    NSData *data = [NSData dataWithContentsOfFile:str];
+    unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+    NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
+    NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:nil];
+    TestPaperModel *model = [TestPaperModel mj_objectWithKeyValues:dict];
+    _testPaperModel = model;
+    [self.partModelArray removeAllObjects];
+    [self.sectionsModelArray removeAllObjects];
+    [self.passageModelArray removeAllObjects];
+    [self.questionsModelArray removeAllObjects];
+    [self.optionsModelArray removeAllObjects];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        for (PartsModel *partModel in model.Parts) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.headerView.practiceModeTopTitleLb.text = partModel.PartType;
+            });
+            [self.partModelArray addObject:partModel];
+            for (SectionsModel *sectinsModel in partModel.Sections) {
+                _paperSection = sectinsModel.SectionTitle;
+                [self.sectionsModelArray addObject:sectinsModel];
+                for (PassageModel *passageModel in sectinsModel.Passage) {
+                    [self.passageModelArray addObject:passageModel];
+                    for (QuestionsModel *questionModel in passageModel.Questions) {
+                        [self.questionsModelArray addObject:questionModel];
+                        for (OptionsModel *optionsModel in questionModel.Options) {
+                            [self.optionsModelArray addObject:optionsModel]; 
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [self.tikaCollectionView reloadData];
+                            });
+                        }
+                    }
+                }
+            }
+        }
+    });
 }
 - (void)initWithView{
     [self.view addSubview:self.headerView];
@@ -89,8 +170,11 @@
     _isOpen = YES;
 }
 #pragma mark UICollectionViewDelegate
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    return self.passageModelArray.count;
+}
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return  4;
+    return  self.questionsModelArray.count;
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     return CGSizeMake(SCREEN_WIDTH, self.tikaCollectionView.bounds.size.height);
@@ -101,8 +185,11 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     PracticeModeTiKaCCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([PracticeModeTiKaCCell class]) forIndexPath:indexPath];
-    
-    cell.questionStr = [NSString stringWithFormat:@"这是第%ld题",indexPath.row + 1];
+    QuestionsModel *questionsModel = self.questionsModelArray[indexPath.row];
+    cell.questionsModel = questionsModel;
+    PassageModel *passageModel = self.passageModelArray[indexPath.section];
+    cell.questionStr = [NSString stringWithFormat:@"%@",passageModel.PassageDirection];
+    //cell 展开方法
     cell.UpAndDownBtnClick = ^(UIButton *btn) {
         if (_isOpen) {
             [UIView animateWithDuration:0.5 animations:^{
@@ -120,18 +207,34 @@
     };
     cell.collectionIndexPath = indexPath;
     WeakSelf
-    cell.questionCellClick = ^(NSIndexPath *cellIndexPath, NSString *answerStr) {
-        NSIndexPath *nextIndexPath = [NSIndexPath indexPathForItem:cellIndexPath.item + 1 inSection:0];
-        NSLog(@"indexPathrow+1 = %ld---indexPath.row%ld---%@",cellIndexPath.row + 1, cellIndexPath.row, answerStr);
-        if (cellIndexPath.row + 1 < 4) {
+    //cell tableview点击方法 isCorrect 是否正确 cellIndexPath collection cell 的indexPath
+    cell.questionCellClick = ^(NSIndexPath *cellIndexPath, BOOL isCorrect) {
+        NSIndexPath *nextIndexPath;
+        if (cellIndexPath.row == self.questionsModelArray.count && cellIndexPath.section < self.passageModelArray.count) {
+            nextIndexPath = [NSIndexPath indexPathForItem:cellIndexPath.item + 1 inSection:cellIndexPath.section];
+        }else{
+            nextIndexPath = [NSIndexPath indexPathForItem:cellIndexPath.item + 1 inSection:cellIndexPath.section];
+        }
+        questionsModel.isCorrect = isCorrect;
+        if (isCorrect) {
+            _correctInt++;
+        }else{
+            _NoCorrectInt++;
+        }
+        NSLog(@"indexPathrow+1 = %ld---indexPath.row%ld---",cellIndexPath.row + 1, cellIndexPath.row);
+        if (cellIndexPath.row + 1 < self.questionsModelArray.count) {
             [weakSelf.view layoutIfNeeded];
             [weakSelf.tikaCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
-        }else if (indexPath.row == 3){
+        }else if (cellIndexPath.row + 1 == self.questionsModelArray.count){
+            float correctFloat = _correctInt/(_correctInt + _NoCorrectInt);
             PMAnswerViewController *vc = [[PMAnswerViewController alloc]init];
+            vc.correct = [NSString stringWithFormat:@"%0.f",correctFloat * 100];
+            vc.paperName = _testPaperModel.PaperFullName;
+            vc.paperSection = _paperSection;
+            vc.questionsArray = self.questionsModelArray;
             [self.navigationController pushViewController:vc animated:YES];
         }
     };
-    //    cell.layer.masksToBounds = YES;
     return cell;
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
@@ -189,7 +292,14 @@
 //        [btn setTitle:@"click" forState:UIControlStateNormal];
 //        [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
 
-
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.player.player play];
+}
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self.player.player pause];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

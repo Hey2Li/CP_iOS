@@ -68,6 +68,6 @@
                                 @"contactInfo":contactInfo,
                                 };
 //    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/feedback/feedback",BaseURL]parameters:paramters complete:complete];
-    [manager UPLOADWithParameters:[NSString stringWithFormat:@"%@/client/public/feedback/feedback",BaseURL] parameters:paramters photoArray:files complete:complete];
+    [manager UPLOADWithParameters:[NSString stringWithFormat:@"%@/client/feedback/private/feedback",BaseURL] parameters:paramters photoArray:files complete:complete];
 }
 @end

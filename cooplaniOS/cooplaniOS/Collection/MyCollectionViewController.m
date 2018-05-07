@@ -14,6 +14,7 @@
 @end
 
 @implementation MyCollectionViewController
+
 - (UITableView *)myTableView{
     if (!_myTableView) {
         _myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];

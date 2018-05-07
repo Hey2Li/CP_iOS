@@ -20,10 +20,48 @@
 @property (nonatomic, strong) UITableView *questionTableView;
 @property (nonatomic, strong) TestModeBottomView *bottomView;
 @property (nonatomic, strong) SUPlayer *player;
+@property (nonatomic, strong) NSMutableArray *partModelArray;
+@property (nonatomic, strong) NSMutableArray *sectionsModelArray;
+@property (nonatomic, strong) NSMutableArray *passageModelArray;
+@property (nonatomic, strong) NSMutableArray *questionsModelArray;
+@property (nonatomic, strong) NSMutableArray *optionsModelArray;
+@property (nonatomic, strong) TestPaperModel *testPaperModel;
+@property (nonatomic, assign) int correctInt;
+@property (nonatomic, assign) int NoCorrectInt;
+@property (nonatomic, copy) NSString *paperSection;
 @end
 
 @implementation TestModeViewController
-
+- (NSMutableArray *)partModelArray{
+    if (!_partModelArray) {
+        _partModelArray = [NSMutableArray array];
+    }
+    return _partModelArray;
+}
+- (NSMutableArray *)sectionsModelArray{
+    if (!_sectionsModelArray) {
+        _sectionsModelArray = [NSMutableArray array];
+    }
+    return _sectionsModelArray;
+}
+-(NSMutableArray *)passageModelArray{
+    if (!_passageModelArray) {
+        _passageModelArray = [NSMutableArray array];
+    }
+    return _passageModelArray;
+}
+- (NSMutableArray *)questionsModelArray{
+    if (!_questionsModelArray) {
+        _questionsModelArray = [NSMutableArray array];
+    }
+    return _questionsModelArray;
+}
+- (NSMutableArray *)optionsModelArray{
+    if (!_optionsModelArray) {
+        _optionsModelArray = [NSMutableArray array];
+    }
+    return _optionsModelArray;
+}
 - (SUPlayer *)player{
     if (!_player) {
         NSURL *fileUrl = [[NSBundle mainBundle]URLForResource:@"2017年6月四级真题（一）" withExtension:@"MP3"];
@@ -70,6 +108,47 @@
     [super viewDidLoad];
     [self initWithView];
     [self.view setBackgroundColor:UIColorFromRGB(0xf7f7f7)];
+    [self loadData];
+    _correctInt = 0;
+    _NoCorrectInt = 0;
+}
+- (void)loadData{
+    NSString *str = [[NSBundle mainBundle] pathForResource:@"CET-Template" ofType:@"json"];
+    NSData *data = [NSData dataWithContentsOfFile:str];
+    unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+    NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
+    NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:nil];
+    TestPaperModel *model = [TestPaperModel mj_objectWithKeyValues:dict];
+    _testPaperModel = model;
+    [self.partModelArray removeAllObjects];
+    [self.sectionsModelArray removeAllObjects];
+    [self.passageModelArray removeAllObjects];
+    [self.questionsModelArray removeAllObjects];
+    [self.optionsModelArray removeAllObjects];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        for (PartsModel *partModel in model.Parts) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+            });
+            [self.partModelArray addObject:partModel];
+            for (SectionsModel *sectinsModel in partModel.Sections) {
+                _paperSection = sectinsModel.SectionTitle;
+                [self.sectionsModelArray addObject:sectinsModel];
+                for (PassageModel *passageModel in sectinsModel.Passage) {
+                    [self.passageModelArray addObject:passageModel];
+                    for (QuestionsModel *questionModel in passageModel.Questions) {
+                        [self.questionsModelArray addObject:questionModel];
+                        for (OptionsModel *optionsModel in questionModel.Options) {
+                            [self.optionsModelArray addObject:optionsModel];
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [self.tikaCollectionView reloadData];
+                            });
+                        }
+                    }
+                }
+            }
+        }
+    });
 }
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
@@ -139,8 +218,11 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 #pragma mark UICollectionViewDelegate
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    return self.passageModelArray.count;
+}
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return  4;
+    return  self.questionsModelArray.count;
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     return CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT/2 - 25);
@@ -151,18 +233,35 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     TikaCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TikaCollectionViewCell class]) forIndexPath:indexPath];
-  
-    cell.questionStr = [NSString stringWithFormat:@"这是第%ld题",indexPath.row + 1];
+    QuestionsModel *questionsModel = self.questionsModelArray[indexPath.row];
+    cell.questionsModel = questionsModel;
+    PassageModel *passageModel = self.passageModelArray[indexPath.section];
+    cell.questionStr = [NSString stringWithFormat:@"%@",passageModel.PassageDirection];
     cell.collectionIndexPath = indexPath;
     WeakSelf
-    cell.questionCellClick = ^(NSIndexPath *cellIndexPath, NSString *answerStr) {
-        NSIndexPath *nextIndexPath = [NSIndexPath indexPathForItem:cellIndexPath.item + 1 inSection:0];
-        NSLog(@"indexPathrow+1 = %ld---indexPath.row%ld---%@",cellIndexPath.row + 1, cellIndexPath.row, answerStr);
-        if (cellIndexPath.row + 1 < 4) {
+    cell.questionCellClick = ^(NSIndexPath *cellIndexPath, BOOL isCorrect) {
+        NSIndexPath *nextIndexPath;
+        if (cellIndexPath.row == self.questionsModelArray.count && cellIndexPath.section < self.passageModelArray.count) {
+            nextIndexPath = [NSIndexPath indexPathForItem:cellIndexPath.item + 1 inSection:cellIndexPath.section];
+        }else{
+            nextIndexPath = [NSIndexPath indexPathForItem:cellIndexPath.item + 1 inSection:cellIndexPath.section];
+        }
+        questionsModel.isCorrect = isCorrect;
+        if (isCorrect) {
+            _correctInt++;
+        }else{
+            _NoCorrectInt++;
+        }
+        if (cellIndexPath.row + 1 < self.questionsModelArray.count) {
             [weakSelf.view layoutIfNeeded];
             [weakSelf.tikaCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
-        }else if (indexPath.row == 3){
+        }else if (cellIndexPath.row + 1 == self.questionsModelArray.count){
+            float correctFloat = _correctInt/(_correctInt + _NoCorrectInt);
             AnswerViewController *vc = [[AnswerViewController alloc]init];
+            vc.correct = [NSString stringWithFormat:@"%0.f",correctFloat * 100];
+            vc.paperName = _testPaperModel.PaperFullName;
+            vc.paperSection = _paperSection;
+            vc.questionsArray = self.questionsModelArray;
             [self.navigationController pushViewController:vc animated:YES];
         }
     };

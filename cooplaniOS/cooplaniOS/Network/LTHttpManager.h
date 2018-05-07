@@ -55,5 +55,6 @@
  @param files 图片流
  @param complete block
  */
+
 + (void)feedbackWithUserId:(NSNumber *)user_id Type:(NSString *)type Info:(NSString *)info ContactInfo:(NSString *)contactInfo Files:(NSArray *)files Complete:(completeBlock)complete;
 @end

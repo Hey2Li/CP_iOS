@@ -14,7 +14,6 @@
 #import "ListenPaperViewController.h"
 #import "BannerCollectionViewCell.h"
 #import "PaperDetailViewController.h"
-#import "TestPaperModel.h"
 
 @interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -45,17 +44,6 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self setupLeftMenuButton];
     [self loadData];
-    NSString *jsonStr = [NSString stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"CET-Template" ofType:@"json"] encoding:0 error:nil];
-    NSData *jsonData = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
-    NSMutableDictionary *jsonDic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:nil];
-    NSLog(@"%@",jsonDic);
-    TestPaperModel *model = [TestPaperModel mj_objectWithKeyValues:jsonDic];
-    PartsModel *partModel = model.Parts[0];
-    SectionsModel *sectionModel= partModel.Sections[0];
-    PassageModel *passageModel = sectionModel.Passage[0];
-    QuestionsModel *questionsModel = passageModel.Questions[0];
-    OptionsModel *optionsModel = questionsModel.Options[0];
-    NSLog(@"%@,%@,%@,%@",model.Parts, partModel, optionsModel.Alphabet,optionsModel.Text);
 }
 - (void)loadData{
     [LTHttpManager FindAllBannerWithComplete:^(LTHttpResult result, NSString *message, id data) {
@@ -158,10 +146,36 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     BannerCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([BannerCollectionViewCell class]) forIndexPath:indexPath];
+    cell.bannerImageView.userInteractionEnabled = NO;
     if (self.bannerArray.count) {
         cell.imageUrl = self.bannerArray[indexPath.row][@"photoUrl"];
     }
     return cell;
+}
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@",self.bannerArray[indexPath.row][@"skipUrl"]]];
+    NSLog(@"%@",url);
+    if([[UIDevice currentDevice].systemVersion floatValue] >= 10.0){
+        if ([[UIApplication sharedApplication] respondsToSelector:@selector(openURL:options:completionHandler:)]) {
+            if (@available(iOS 10.0, *)) {
+                [[UIApplication sharedApplication] openURL:url options:@{}
+                                         completionHandler:^(BOOL success) {
+                                             NSLog(@"Open %d",success);
+                                         }];
+            } else {
+                // Fallback on earlier versions
+            }
+        } else {
+            BOOL success = [[UIApplication sharedApplication] openURL:url];
+            NSLog(@"Open  %d",success);
+        }
+        
+    } else{
+        bool can = [[UIApplication sharedApplication] canOpenURL:url];
+        if(can){
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    }
 }
 #pragma mark 导航栏
 - (void)initWithNavi{

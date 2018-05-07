@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface PMAnswerViewController : UIViewController
-
+@property (nonatomic, copy) NSString *correct;//正确率
+@property (nonatomic, strong) NSArray *questionsArray;
+@property (nonatomic, copy) NSString *paperName;//试卷题目
+@property (nonatomic, copy) NSString *paperSection;//试卷Section
 @end

@@ -10,6 +10,8 @@
 #import "AnswerTableViewCell.h"
 #import "answerModel.h"
 #import "AnswerHeadView.h"
+#import "PaperDetailViewController.h"
+#import "PracticeModeViewController.h"
 
 @interface PMAnswerViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -45,27 +47,43 @@
     [super viewDidLoad];
     self.title = @"考试成绩单";
     [self initWithView];
+    self.navigationItem.hidesBackButton = YES;
+    [self initWithNavi];
+}
+- (void)initWithNavi{
+    UIImage *image = [[UIImage imageNamed:@"back"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:image style:UIBarButtonItemStyleDone target:self action:@selector(back)];
+    self.navigationItem.leftItemsSupplementBackButton = YES;
+}
+- (void)back{
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[PaperDetailViewController class]]) {
+            PaperDetailViewController *revise = (PaperDetailViewController *)controller;
+            [self.navigationController popToViewController:revise animated:YES];
+        }
+    }
 }
 - (void)initWithView{
     [self.view addSubview:self.myTableView];
     [self.dataSourceArray removeAllObjects];
-    for (int i = 0; i < 3; i ++) {
-        answerModel *model = [[answerModel alloc]init];
-        model.yourAnswer = @"1";
-        model.correctAnswer = @"2";
-        model.questionNum = [NSString stringWithFormat:@"Q%d",i];
-        model.correct = @"70%";
-        model.answerDetail = @"【精析】事实细节题。新闻讲述了Addison卖柠檬水和画为生病的弟弟筹资的故事。新闻开门见山讲到，新墨西哥州9岁的女孩Addison已经为需要做心脏手术的弟弟筹集了500多美元。由此可知，女孩筹钱是为了给弟弟看病。";
-        model.isCorrect = i%2 ? YES : NO;
-        model.isSelected = NO;
-        [self.dataSourceArray addObject:model];
-    }
+//    for (int i = 0; i < self.questionsArray.count; i ++) {
+//        QuestionsModel *model = [[QuestionsModel alloc]init];
+//        model.yourAnswer = @"1";
+//        model.correctAnswer = @"2";
+//        model.questionNum = [NSString stringWithFormat:@"Q%d",i];
+//        model.correct = self.correct ? self.correct : @"100%";
+//        model.answerDetail = @"【精析】事实细节题。新闻讲述了Addison卖柠檬水和画为生病的弟弟筹资的故事。新闻开门见山讲到，新墨西哥州9岁的女孩Addison已经为需要做心脏手术的弟弟筹集了500多美元。由此可知，女孩筹钱是为了给弟弟看病。";
+//        model.isCorrect = i%2 ? YES : NO;
+//        model.isSelected = NO;
+//        [self.dataSourceArray addObject:model];
+//    }
     [self.myTableView reloadData];
     NSString *className = NSStringFromClass([AnswerHeadView class]);
     _headView = [[UINib nibWithNibName:className bundle:nil] instantiateWithOwner:nil options:nil].firstObject;
-    _headView.correctStr = @"70";
+    _headView.correctStr = self.correct;
+    _headView.paperDateLb.text = [self.paperName substringToIndex:7];
+    _headView.paperNameLb.text = [self.paperName substringFromIndex:7];
     self.myTableView.tableHeaderView = _headView;
-    
     UIButton *continueBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [continueBtn setTitle:@"继续" forState:UIControlStateNormal];
     [continueBtn setBackgroundColor:DRGBCOLOR];
@@ -80,7 +98,8 @@
     [continueBtn addTarget:self action:@selector(continueBtnClick:) forControlEvents:UIControlEventTouchUpInside];
 }
 - (void)continueBtnClick:(UIButton *)btn{
-    
+    PracticeModeViewController *vc = [[PracticeModeViewController alloc]init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma mark TableViewDataSource&Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -90,12 +109,11 @@
     if (section == 2) {
         return 0;
     }else{
-        return self.dataSourceArray.count;
+        return self.questionsArray.count;
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    answerModel *model = self.dataSourceArray[indexPath.row];
-    
+    QuestionsModel *model = self.questionsArray[indexPath.row];
     if (model.isSelected) {
         return self.myTableView.rowHeight;
     }else{
@@ -109,7 +127,7 @@
     UIView *headerView = [[UIView alloc]init];
     headerView.backgroundColor = UIColorFromRGB(0xf7f7f7);
     UILabel *sectionLb = [UILabel new];
-    sectionLb.text = @"Section A News Report One";
+    sectionLb.text = self.paperSection;
     sectionLb.font = [UIFont boldSystemFontOfSize:14];
     [headerView addSubview:sectionLb];
     [sectionLb mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -123,11 +141,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     AnswerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([AnswerTableViewCell class]) forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.model = self.dataSourceArray[indexPath.row];
+    cell.model = self.questionsArray[indexPath.row];
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    answerModel *model = self.dataSourceArray[indexPath.row];
+    QuestionsModel *model = self.questionsArray[indexPath.row];
     model.isSelected = !model.isSelected;
     [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:nil];
 }

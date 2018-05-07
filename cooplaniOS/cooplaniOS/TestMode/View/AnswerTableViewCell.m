@@ -17,7 +17,7 @@
     self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
-- (void)setModel:(answerModel *)model{
+- (void)setModel:(QuestionsModel *)model{
     _model = model;
     [self layoutIfNeeded];
     if (model.isSelected) {
@@ -59,10 +59,10 @@
 //    }else{
 //        self.cellHeight.constant = model.cellHeight = model.cellHeight;
 //    }
-    self.questionNameLb.text = model.questionNum;
-    self.CorrectLb.text = model.correct;
-    [self.yourAnswerBtn setTitle:model.yourAnswer forState:UIControlStateNormal];
-    [self.correctAnswerBtn setTitle:model.correctAnswer forState:UIControlStateNormal];
+    self.questionNameLb.text = [NSString stringWithFormat:@"Q%@",model.QuestionNo];
+//    self.CorrectLb.text = model.Explanation;//答错人数
+    self.correctAnswerLb.text = model.Answer;
+    self.youAnswerLb.text = model.youAnswer;
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
