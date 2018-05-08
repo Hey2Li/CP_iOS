@@ -14,6 +14,7 @@
 #import "HYWord.h"
 #import "TikaCollectionViewCell.h"
 #import "ListenTableViewCell.h"
+#import "FeedbackViewController.h"
 
 @interface ListenPaperViewController ()<UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
 @property (nonatomic, strong) CADisplayLink *timer;//界面刷新定时器
@@ -232,6 +233,7 @@
 - (void)stopRoll {
     [_timer invalidate];
     _timer = nil;
+    [self.playSongBtn setSelected:NO];
 }
 #pragma mark 歌词滚动
 - (void)scrollLyric{
@@ -249,6 +251,18 @@
             }
         }
     });
+}
+#pragma mark 单句收藏
+- (IBAction)collectionOneSentence:(UIButton *)sender {
+    ListenTableViewCell *cell = [self.lyricTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0]];
+    NSLog(@"%@",cell.listenLb.text);
+    SVProgressShowStuteText(@"收藏成功", YES);
+}
+#pragma mark 内容纠错
+- (IBAction)ContentError:(UIButton *)sender {
+    FeedbackViewController *vc = [[FeedbackViewController alloc]init];
+    [self.navigationController pushViewController:vc animated:YES];
+    [self.player pause];
 }
 #pragma mark 中英文切换
 - (IBAction)ENCNSwitch:(UIButton *)sender {
@@ -280,8 +294,8 @@
     _RateTag++;
     switch (_RateTag % 5) {
         case 0:
-            [sender setImage:[UIImage imageNamed:@"1.0"] forState:UIControlStateNormal];
-            [self.player setRate:1.0];
+            [sender setImage:[UIImage imageNamed:@"1.5"] forState:UIControlStateNormal];
+            [self.player setRate:1.5];
             break;
         case 1:
             [sender setImage:[UIImage imageNamed:@"0.5"] forState:UIControlStateNormal];
@@ -292,12 +306,12 @@
             [self.player setRate:0.8];
             break;
         case 3:
-            [sender setImage:[UIImage imageNamed:@"1.2"] forState:UIControlStateNormal];
-            [self.player setRate:1.2];
+            [sender setImage:[UIImage imageNamed:@"1.0"] forState:UIControlStateNormal];
+            [self.player setRate:1.0];
             break;
         case 4:
-            [sender setImage:[UIImage imageNamed:@"1.5"] forState:UIControlStateNormal];
-            [self.player setRate:1.5];
+            [sender setImage:[UIImage imageNamed:@"1.2"] forState:UIControlStateNormal];
+            [self.player setRate:1.2];
             break;
         default:
             break;

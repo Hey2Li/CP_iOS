@@ -45,12 +45,12 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"考试成绩单";
+    self.title = @"成绩单";
     [self initWithView];
-    self.navigationItem.hidesBackButton = YES;
     [self initWithNavi];
 }
 - (void)initWithNavi{
+    self.navigationItem.hidesBackButton = YES;
     UIImage *image = [[UIImage imageNamed:@"back"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:image style:UIBarButtonItemStyleDone target:self action:@selector(back)];
     self.navigationItem.leftItemsSupplementBackButton = YES;

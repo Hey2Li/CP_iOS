@@ -35,7 +35,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"考试成绩单";
+    self.title = @"成绩单";
     [self.view addSubview:self.myTableView];
     [self.myTableView reloadData];
     NSString *className = NSStringFromClass([AnswerHeadView class]);

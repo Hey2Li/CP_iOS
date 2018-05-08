@@ -163,8 +163,7 @@
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    UIViewController *VC;
-    VC = [[NoContentViewController alloc]init];
+    NoContentViewController *VC = [[NoContentViewController alloc]init];
     switch (indexPath.section) {
         case 0:
         {
@@ -197,10 +196,11 @@
             break;
         case 2:
         {
-            VC.title = @"我的下载";
+            MyDownloadViewController *vc = [[MyDownloadViewController alloc]init];
+            vc.title = @"我的下载";
             //拿到我们的ViewController，让它去push
             UINavigationController* nav = (UINavigationController*)self.mm_drawerController.centerViewController;
-            [nav pushViewController:VC animated:NO];
+            [nav pushViewController:vc animated:NO];
             //当我们push成功之后，关闭我们的抽屉
             [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
                 //设置打开抽屉模式为MMOpenDrawerGestureModeNone，也就是没有任何效果。

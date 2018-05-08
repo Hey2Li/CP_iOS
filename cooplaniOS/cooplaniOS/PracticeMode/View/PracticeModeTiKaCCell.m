@@ -34,7 +34,7 @@
             make.top.equalTo(self.mas_top).offset(20);
             make.bottom.equalTo(self.mas_bottom).offset(-20);
         }];
-        [backView.layer setCornerRadius:8];
+        [backView.layer setCornerRadius:12];
         [backView.layer setShadowOpacity:0.2];
         [backView.layer setShadowColor:[UIColor blackColor].CGColor];
         [backView.layer setShadowOffset:CGSizeMake(2, 2)];

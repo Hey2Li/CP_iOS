@@ -85,6 +85,7 @@
                     <constraint firstItem="qb4-6o-ZKt" firstAttribute="leading" secondItem="i0C-0i-Uv4" secondAttribute="trailing" constant="38" id="cpL-05-a2a"/>
                     <constraint firstItem="qb4-6o-ZKt" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="gS0-Ve-3Ro"/>
                     <constraint firstAttribute="trailing" secondItem="roy-bx-Ht0" secondAttribute="trailing" id="q8p-Ca-Epw"/>
+                    <constraint firstItem="Rse-IW-efj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="18" id="tAb-Ko-RIb"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>

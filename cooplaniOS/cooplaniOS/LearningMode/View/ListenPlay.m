@@ -13,6 +13,7 @@
 #import "HYWord.h"
 #import "TikaCollectionViewCell.h"
 #import "ListenTableViewCell.h"
+#import "FeedbackViewController.h"
 
 @interface ListenPlay ()<UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
 @property (nonatomic, strong) CADisplayLink *timer;//界面刷新定时器
@@ -180,6 +181,7 @@
 - (void)stopRoll {
     [_timer invalidate];
     _timer = nil;
+    [self.playSongBtn setSelected:NO];
 }
 - (IBAction)playSong:(UIButton *)sender {
     if (sender.selected) {
@@ -259,8 +261,8 @@
     _RateTag++;
     switch (_RateTag % 5) {
         case 0:
-            [sender setImage:[UIImage imageNamed:@"1.0"] forState:UIControlStateNormal];
-            [self.player setRate:1.0];
+            [sender setImage:[UIImage imageNamed:@"1.5"] forState:UIControlStateNormal];
+            [self.player setRate:1.5];
             break;
         case 1:
             [sender setImage:[UIImage imageNamed:@"0.5"] forState:UIControlStateNormal];
@@ -271,15 +273,27 @@
             [self.player setRate:0.8];
             break;
         case 3:
+            [sender setImage:[UIImage imageNamed:@"1.0"] forState:UIControlStateNormal];
+            [self.player setRate:1.0];
+            break;
+        case 4:
             [sender setImage:[UIImage imageNamed:@"1.2"] forState:UIControlStateNormal];
             [self.player setRate:1.2];
             break;
-        case 4:
-            [sender setImage:[UIImage imageNamed:@"1.5"] forState:UIControlStateNormal];
-            [self.player setRate:1.5];
-            break;
         default:
             break;
+    }
+}
+#pragma mark 单句收藏
+- (IBAction)collectionOneSentence:(UIButton *)sender {
+    ListenTableViewCell *cell = [self.lyricTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0]];
+    NSLog(@"%@",cell.listenLb.text);
+    SVProgressShowStuteText(@"收藏成功", YES);
+}
+#pragma mark 内容纠错
+- (IBAction)contentError:(UIButton *)sender {
+    if (self.contentError) {
+        self.contentError();
     }
 }
 #pragma mark 中英文切换

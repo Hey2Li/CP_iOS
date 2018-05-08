@@ -29,6 +29,7 @@
 @property (nonatomic, assign) int correctInt;
 @property (nonatomic, assign) int NoCorrectInt;
 @property (nonatomic, copy) NSString *paperSection;
+@property (nonatomic, strong) NSIndexPath *collectionIndexPath;
 @end
 
 @implementation TestModeViewController
@@ -111,6 +112,25 @@
     [self loadData];
     _correctInt = 0;
     _NoCorrectInt = 0;
+    [self initWithNavi];
+}
+- (void)initWithNavi{
+    self.navigationItem.hidesBackButton = YES;
+    UIImage *image = [[UIImage imageNamed:@"back"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:image style:UIBarButtonItemStyleDone target:self action:@selector(back)];
+    self.navigationItem.leftItemsSupplementBackButton = YES;
+}
+- (void)back{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确定退出" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    [alert addAction:sureAction];
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 - (void)loadData{
     NSString *str = [[NSBundle mainBundle] pathForResource:@"CET-Template" ofType:@"json"];
@@ -142,6 +162,7 @@
                             [self.optionsModelArray addObject:optionsModel];
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 [self.tikaCollectionView reloadData];
+                                [self.questionTableView reloadData];
                             });
                         }
                     }
@@ -210,7 +231,7 @@
     UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self.navigationController pushViewController:[[AnswerViewController alloc]init] animated:YES];
     }];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"退出" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         [alert dismissViewControllerAnimated:YES completion:nil];
     }];
     [alert addAction:sureAction];
@@ -219,10 +240,10 @@
 }
 #pragma mark UICollectionViewDelegate
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-    return self.passageModelArray.count;
+    return self.sectionsModelArray.count;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return  self.questionsModelArray.count;
+    return  2;
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     return CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT/2 - 25);
@@ -232,6 +253,7 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    _collectionIndexPath = indexPath;
     TikaCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TikaCollectionViewCell class]) forIndexPath:indexPath];
     QuestionsModel *questionsModel = self.questionsModelArray[indexPath.row];
     cell.questionsModel = questionsModel;
@@ -256,7 +278,7 @@
             [weakSelf.view layoutIfNeeded];
             [weakSelf.tikaCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
         }else if (cellIndexPath.row + 1 == self.questionsModelArray.count){
-            float correctFloat = _correctInt/(_correctInt + _NoCorrectInt);
+            float correctFloat = (float)_correctInt/(float)(_correctInt + _NoCorrectInt);
             AnswerViewController *vc = [[AnswerViewController alloc]init];
             vc.correct = [NSString stringWithFormat:@"%0.f",correctFloat * 100];
             vc.paperName = _testPaperModel.PaperFullName;
@@ -271,7 +293,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if (scrollView == self.tikaCollectionView) {
         int index = scrollView.contentOffset.x/SCREEN_WIDTH;
-        self.bottomView.questionIndexLb.text = [NSString stringWithFormat:@"%d/%@",index+1, @4];
+        self.bottomView.questionIndexLb.text = [NSString stringWithFormat:@"%d/%lu",index+1, self.questionsModelArray.count * self.sectionsModelArray.count];
     }
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -279,10 +301,17 @@
 }
 #pragma mark TableViewDataSource&Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 1;
+    return self.sectionsModelArray.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     QuestionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QuestionTableViewCell class])];
+    PartsModel *partsModel = self.partModelArray[0];
+    SectionsModel *sectionModel = self.sectionsModelArray[_collectionIndexPath.section];
+    cell.selectionStyle = NO;
+    cell.TopTitleLb.text = partsModel.PartType;
+    cell.sectionLb.text = [NSString stringWithFormat:@"%@\n%@",sectionModel.SectionTitle,sectionModel.SectionType];
+    NSLog(@"%@",sectionModel.SectionTitle);
+    cell.directionsLb.text = sectionModel.SectionDirection;
     return cell;
 }
 -(void)viewDidAppear:(BOOL)animated{
@@ -293,7 +322,7 @@
     UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self.player play];
     }];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"退出" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         [self.navigationController popViewControllerAnimated:YES];
     }];
     [alert addAction:sureAction];

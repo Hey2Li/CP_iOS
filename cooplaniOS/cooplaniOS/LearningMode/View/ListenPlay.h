@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *lyricTableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *otherViewBottom;
 @property (nonatomic, strong) SUPlayer *player;
+@property (nonatomic, copy) void (^contentError)();
 - (void)stopRoll;
 - (void)startRoll;
 @end

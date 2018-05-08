@@ -12,6 +12,7 @@
 #import "AnswerViewController.h"
 #import "PracticeModeTiKaCCell.h"
 #import "PMAnswerViewController.h"
+#import "FeedbackViewController.h"
 
 @interface PracticeModeViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) UISwipeGestureRecognizer *swipeDownGR;
@@ -129,7 +130,7 @@
         make.top.equalTo(self.view);
         make.height.equalTo(@86);
     }];
-
+    
     [self.view addSubview:self.player];
     [self.player mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view);
@@ -137,6 +138,13 @@
         make.top.equalTo(self.headerView.mas_bottom);
         make.bottom.equalTo(self.view);
     }];
+    WeakSelf
+    self.player.contentError = ^{
+        [weakSelf.player.player pause];
+        weakSelf.player.playSongBtn.selected = YES;
+        FeedbackViewController *vc = [[FeedbackViewController alloc]init];
+        [weakSelf.navigationController pushViewController:vc animated:YES];
+    };
     
     UICollectionViewFlowLayout *flowlayout = [[UICollectionViewFlowLayout alloc]init];
     flowlayout.minimumLineSpacing = 0;
@@ -226,7 +234,7 @@
             [weakSelf.view layoutIfNeeded];
             [weakSelf.tikaCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
         }else if (cellIndexPath.row + 1 == self.questionsModelArray.count){
-            float correctFloat = _correctInt/(_correctInt + _NoCorrectInt);
+            float correctFloat = (float)_correctInt/(float)(_correctInt + _NoCorrectInt);
             PMAnswerViewController *vc = [[PMAnswerViewController alloc]init];
             vc.correct = [NSString stringWithFormat:@"%0.f",correctFloat * 100];
             vc.paperName = _testPaperModel.PaperFullName;
@@ -239,7 +247,6 @@
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if (scrollView == self.tikaCollectionView) {
-        int index = scrollView.contentOffset.x/SCREEN_WIDTH;
     }
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -304,10 +311,10 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    [self.player.player stop];
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
     [self.player stopRoll];
+    [self.player.player pause];
 }
 /*
 #pragma mark - Navigation

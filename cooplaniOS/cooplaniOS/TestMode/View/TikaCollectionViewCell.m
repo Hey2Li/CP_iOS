@@ -28,12 +28,12 @@
         backView.backgroundColor = [UIColor whiteColor];
         [self addSubview:backView];
         [backView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.mas_left).offset(17);
-            make.right.equalTo(self.mas_right).offset(-17);
+            make.left.equalTo(self.mas_left).offset(20);
+            make.right.equalTo(self.mas_right).offset(-20);
             make.top.equalTo(self.mas_top).offset(10);
             make.bottom.equalTo(self.mas_bottom).offset(-10);
         }];
-        [backView.layer setCornerRadius:8];
+        [backView.layer setCornerRadius:12];
         [backView.layer setShadowOpacity:0.2];
         [backView.layer setShadowColor:[UIColor blackColor].CGColor];
         [backView.layer setShadowOffset:CGSizeMake(2, 2)];
@@ -91,6 +91,7 @@
     UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     cell.textLabel.textColor = UIColorFromRGB(0x666666);
     cell.textLabel.font = [UIFont systemFontOfSize:14];
+    cell.selectionStyle = NO;
     if (indexPath.row == 0) {
         cell.textLabel.text = [NSString stringWithFormat:@"Q%ld",self.collectionIndexPath.row + 1];
         cell.textLabel.textColor = UIColorFromRGB(0xBBBBBB);

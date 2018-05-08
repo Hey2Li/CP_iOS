@@ -49,6 +49,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="75" height="50"/>
                                     <state key="normal" image="collection-2"/>
                                     <state key="selected" image="single_favor_fill"/>
+                                    <connections>
+                                        <action selector="collectionOneSentence:" destination="-1" eventType="touchUpInside" id="8a5-bJ-XLU"/>
+                                    </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dzj-Hv-mhW">
                                     <rect key="frame" x="75" y="0.0" width="75" height="50"/>
@@ -71,6 +74,9 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VSa-xw-3nC">
                                     <rect key="frame" x="300" y="0.0" width="75" height="50"/>
                                     <state key="normal" image="correct"/>
+                                    <connections>
+                                        <action selector="ContentError:" destination="-1" eventType="touchUpInside" id="Afs-uR-CK7"/>
+                                    </connections>
                                 </button>
                             </subviews>
                         </stackView>
