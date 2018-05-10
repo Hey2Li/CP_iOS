@@ -21,7 +21,6 @@
     self.selectionStyle = NO;
 }
 - (IBAction)btnClick:(UIButton *)btn {
-    
     if (btn != _tagBtn) {
         btn.backgroundColor = DRGBCOLOR;
         _tagBtn.backgroundColor = UIColorFromRGB(0xF7F7F7);

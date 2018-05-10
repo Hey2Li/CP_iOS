@@ -46,7 +46,9 @@
     self.mm_drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
     self.mm_drawerController.closeDrawerGestureModeMask = MMCloseDrawerGestureModeNone;
     [self.player play];
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -82,6 +84,7 @@
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     [self stopRoll];
+    [self.player stop];
 }
 
 - (void)initWithView{
@@ -261,6 +264,7 @@
 #pragma mark 内容纠错
 - (IBAction)ContentError:(UIButton *)sender {
     FeedbackViewController *vc = [[FeedbackViewController alloc]init];
+    vc.errorType = 1;
     [self.navigationController pushViewController:vc animated:YES];
     [self.player pause];
 }
@@ -269,19 +273,19 @@
     _CNTag++;
     switch (_CNTag % 4) {
         case 0:
-            [sender setImage:[UIImage imageNamed:@"translations"] forState:UIControlStateNormal];
+            [sender setImage:[UIImage imageNamed:@"双语"] forState:UIControlStateNormal];
             self.backImageView.hidden = YES;
             break;
         case 1:
-            [sender setImage:[UIImage imageNamed:@"switch_En"] forState:UIControlStateNormal];
+            [sender setImage:[UIImage imageNamed:@"英文"] forState:UIControlStateNormal];
             self.backImageView.hidden = YES;
             break;
         case 2:
-            [sender setImage:[UIImage imageNamed:@"switch_Ch"] forState:UIControlStateNormal];
+            [sender setImage:[UIImage imageNamed:@"中文"] forState:UIControlStateNormal];
             self.backImageView.hidden = YES;
             break;
         case 3:
-            [sender setImage:[UIImage imageNamed:@"switch_no"] forState:UIControlStateNormal];
+            [sender setImage:[UIImage imageNamed:@"都没有"] forState:UIControlStateNormal];
             self.backImageView.hidden = NO;
         default:
             break;
@@ -541,6 +545,10 @@
 }
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
+    [self.player stop];
+    [self.player removeObserver:self forKeyPath:@"progress" context:nil];
+    [self.player removeObserver:self forKeyPath:@"duration" context:nil];
+    [self.player removeObserver:self forKeyPath:@"cacheProgress" context:nil];
 }
 /*
 #pragma mark - Navigation

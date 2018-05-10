@@ -13,4 +13,5 @@
 @property (weak, nonatomic) IBOutlet UIButton *productIdeasBtn;
 @property (weak, nonatomic) IBOutlet UIButton *contentErrorBtn;
 @property (nonatomic, copy) void (^feedbackTypeClick)(UIButton *btn);
+- (IBAction)btnClick:(UIButton *)btn;
 @end

@@ -118,7 +118,7 @@
                     _paperSection = sectinsModel.SectionTitle;
                     [self.sectionsModelArray addObject:sectinsModel];
                 }
-                modeSectionModel = self.sectionsModelArray[_mode];
+                modeSectionModel = self.sectionsModelArray[0];
                 for (PassageModel *passageModel in modeSectionModel.Passage) {
                     [self.questionsModelArray removeAllObjects];
                     for (QuestionsModel *questionModel in passageModel.Questions) {
@@ -197,6 +197,7 @@
         [weakSelf.player.player pause];
         weakSelf.player.playSongBtn.selected = YES;
         FeedbackViewController *vc = [[FeedbackViewController alloc]init];
+        vc.errorType = 1;
         [weakSelf.navigationController pushViewController:vc animated:YES];
     };
     
@@ -221,13 +222,13 @@
     collectionView.pagingEnabled = YES;
     collectionView.showsHorizontalScrollIndicator = NO;
     self.tikaCollectionView = collectionView;
-    self.swipeDownGR = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(SwipeGR:)];
-    [self.swipeDownGR setDirection:UISwipeGestureRecognizerDirectionDown];
-    [self.tikaCollectionView addGestureRecognizer:self.swipeDownGR];
-    
-    [self.swipeUpGR setDirection:UISwipeGestureRecognizerDirectionUp];
-    self.swipeUpGR = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(SwipeGR:)];
-    [self.tikaCollectionView addGestureRecognizer:self.swipeUpGR];
+//    self.swipeDownGR = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(SwipeGR:)];
+//    [self.swipeDownGR setDirection:UISwipeGestureRecognizerDirectionDown];
+//    [self.tikaCollectionView addGestureRecognizer:self.swipeDownGR];
+//
+//    [self.swipeUpGR setDirection:UISwipeGestureRecognizerDirectionUp];
+//    self.swipeUpGR = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(SwipeGR:)];
+//    [self.tikaCollectionView addGestureRecognizer:self.swipeUpGR];
     [self scrollViewDidScroll:collectionView];
     _isOpen = YES;
 }
@@ -368,59 +369,19 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
 }
-#pragma mark 手势操作
-- (void)SwipeGR:(UISwipeGestureRecognizer *)gr{
-    NSLog(@"%lu",gr.direction);
-    [self.view layoutIfNeeded];
-    if (gr.direction == UISwipeGestureRecognizerDirectionUp) {
-        [UIView animateWithDuration:0.5 animations:^{
-            [self.view layoutIfNeeded];
-//            self.tikaCollectionView.transform = CGAffineTransformIdentity;
-        }];
-        _isOpen = YES;
-    }
-    if (gr.direction == UISwipeGestureRecognizerDirectionDown) {
-        [UIView animateWithDuration:0.5 animations:^{
-            [self.view layoutIfNeeded];
-//            self.tikaCollectionView.transform = CGAffineTransformMakeTranslation(0, SCREEN_HEIGHT/3 + 50);
-        }];
-        _isOpen = NO;
-    }
-}
-- (void)panGr:(UIPanGestureRecognizer *)pan{
-    [self.view layoutIfNeeded];
-    if (_isOpen) {
-        [UIView animateWithDuration:0.5 animations:^{
-            [self.view layoutIfNeeded];
-//            self.tikaCollectionView.transform = CGAffineTransformMakeTranslation(0, SCREEN_HEIGHT/2);
-            _isOpen = !_isOpen;
-        }];
-    }else{
-        [UIView animateWithDuration:0.5 animations:^{
-            [self.view layoutIfNeeded];
-//            self.tikaCollectionView.transform = CGAffineTransformIdentity;
-            _isOpen = !_isOpen;
-        }];
-    }
-}
-//        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-//        btn.backgroundColor = [UIColor blackColor];
-//        [self addSubview:btn];
-//        [btn mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.left.equalTo(tableView.mas_left);
-//            make.right.equalTo(tableView.mas_right);
-//            make.top.equalTo(self.mas_top);
-//            make.bottom.equalTo(tableView.mas_top).offset(2);
-//        }];
-//        [btn setTitle:@"click" forState:UIControlStateNormal];
-//        [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.player.player play];
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
 }
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
     [self.player.player pause];
 }
 - (void)didReceiveMemoryWarning {

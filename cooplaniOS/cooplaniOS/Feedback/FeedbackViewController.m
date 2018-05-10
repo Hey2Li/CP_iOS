@@ -56,6 +56,7 @@
     [self.myTableView registerNib:[UINib nibWithNibName:@"FeedbackContentTableViewCell" bundle:nil] forCellReuseIdentifier:NSStringFromClass([FeedbackContentTableViewCell class])];
     [self.myTableView registerNib:[UINib nibWithNibName:@"FeedbackPhoneTableViewCell" bundle:nil] forCellReuseIdentifier:NSStringFromClass([FeedbackPhoneTableViewCell class])];
     [self.view bringSubviewToFront:self.submitBtn];
+    self.title = @"用户反馈";
 }
 - (void)submitClick:(UIButton *)btn{
     if (!self.feedbackType) {
@@ -133,6 +134,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         FeedbackTypeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FeedbackTypeTableViewCell class])];
+        if (_errorType) {
+            [cell btnClick:cell.contentErrorBtn];
+        }
         cell.feedbackTypeClick = ^(UIButton *btn) {
             self.feedbackType = btn.tag;
         };

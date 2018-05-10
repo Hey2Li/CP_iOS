@@ -27,7 +27,7 @@
                             <color key="titleColor" red="0.3994230329990387" green="0.3997485339641571" blue="0.39947354793548584" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                         <connections>
-                            <action selector="btnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="WQt-Eh-Qen"/>
+                            <action selector="btnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="j4T-Hq-1qr"/>
                         </connections>
                     </button>
                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WT3-YS-c1a">
@@ -42,7 +42,7 @@
                             <color key="titleColor" red="0.3994230329990387" green="0.3997485339641571" blue="0.39947354793548584" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                         <connections>
-                            <action selector="btnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="O8Q-QF-KzL"/>
+                            <action selector="btnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="6C3-yp-706"/>
                         </connections>
                     </button>
                     <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ia6-e8-DM0">
@@ -53,7 +53,7 @@
                             <color key="titleColor" red="0.3994230329990387" green="0.3997485339641571" blue="0.39947354793548584" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                         <connections>
-                            <action selector="btnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="tqz-3o-1KV"/>
+                            <action selector="btnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="5Ca-pC-dmh"/>
                         </connections>
                     </button>
                 </subviews>
@@ -72,9 +72,9 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
-                <outlet property="contentErrorBtn" destination="ia6-e8-DM0" id="Pag-DZ-4jr"/>
-                <outlet property="otherFeedbackBtn" destination="QyE-TI-WMh" id="QQu-o8-qxr"/>
-                <outlet property="productIdeasBtn" destination="WT3-YS-c1a" id="FRk-iY-YcF"/>
+                <outlet property="contentErrorBtn" destination="WT3-YS-c1a" id="pOW-7y-SsM"/>
+                <outlet property="otherFeedbackBtn" destination="ia6-e8-DM0" id="xjs-PR-vq0"/>
+                <outlet property="productIdeasBtn" destination="QyE-TI-WMh" id="71q-RV-NN7"/>
             </connections>
             <point key="canvasLocation" x="33.5" y="66.5"/>
         </tableViewCell>

@@ -177,6 +177,7 @@
                         for (OptionsModel *optionsModel in questionModel.Options) {
                             [self.optionsModelArray addObject:optionsModel];
                             dispatch_async(dispatch_get_main_queue(), ^{
+                                self.bottomView.questionIndexLb.text = [NSString stringWithFormat:@"1/%lu", self.itemCountArray.count];
                                 [self.tikaCollectionView reloadData];
                                 [self.questionTableView reloadData];
                             });
@@ -320,7 +321,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if (scrollView == self.tikaCollectionView) {
         int index = scrollView.contentOffset.x/SCREEN_WIDTH;
-        self.bottomView.questionIndexLb.text = [NSString stringWithFormat:@"%d/%lu",index+1, self.questionsModelArray.count * self.sectionsModelArray.count];
+        self.bottomView.questionIndexLb.text = [NSString stringWithFormat:@"%d/%lu",index+1, self.itemCountArray.count];
     }
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -357,8 +358,12 @@
     [alert addAction:cancelAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
-
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+}
 -(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
     self.navigationController.interactivePopGestureRecognizer.enabled = YES;
 }
 - (void)didReceiveMemoryWarning {

@@ -179,7 +179,7 @@
 }
 #pragma mark 导航栏
 - (void)initWithNavi{
-    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH/2, 44)];
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH-100, 44)];
     titleView.backgroundColor = DRGBCOLOR;
    
     BottomLabel *monthAndDayLb = [[BottomLabel alloc]init];
@@ -273,7 +273,10 @@
     [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
     [self.mm_drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
 }
-
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+}
 - (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

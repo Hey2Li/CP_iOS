@@ -55,7 +55,7 @@
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dzj-Hv-mhW">
                                     <rect key="frame" x="75" y="0.0" width="75" height="50"/>
-                                    <state key="normal" image="translations"/>
+                                    <state key="normal" image="双语"/>
                                     <connections>
                                         <action selector="ENCNSwitch:" destination="-1" eventType="touchUpInside" id="3KZ-cn-EG6"/>
                                     </connections>
@@ -208,6 +208,6 @@
         <image name="pause" width="48" height="48"/>
         <image name="play" width="48" height="48"/>
         <image name="single_favor_fill" width="44" height="44"/>
-        <image name="translations" width="44" height="44"/>
+        <image name="双语" width="44" height="44"/>
     </resources>
 </document>

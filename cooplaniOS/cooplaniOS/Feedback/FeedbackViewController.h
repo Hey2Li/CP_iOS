@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface FeedbackViewController : UIViewController
-
+@property (nonatomic, assign) NSInteger errorType;
 @end

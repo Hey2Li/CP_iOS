@@ -301,19 +301,19 @@
     _CNTag++;
     switch (_CNTag % 4) {
         case 0:
-            [sender setImage:[UIImage imageNamed:@"translations"] forState:UIControlStateNormal];
+            [sender setImage:[UIImage imageNamed:@"双语"] forState:UIControlStateNormal];
             self.backImageView.hidden = YES;
             break;
         case 1:
-            [sender setImage:[UIImage imageNamed:@"switch_En"] forState:UIControlStateNormal];
+            [sender setImage:[UIImage imageNamed:@"英文"] forState:UIControlStateNormal];
             self.backImageView.hidden = YES;
             break;
         case 2:
-            [sender setImage:[UIImage imageNamed:@"switch_Ch"] forState:UIControlStateNormal];
+            [sender setImage:[UIImage imageNamed:@"中文"] forState:UIControlStateNormal];
             self.backImageView.hidden = YES;
             break;
         case 3:
-            [sender setImage:[UIImage imageNamed:@"switch_no"] forState:UIControlStateNormal];
+            [sender setImage:[UIImage imageNamed:@"都没有"] forState:UIControlStateNormal];
             self.backImageView.hidden = NO;
         default:
             break;
