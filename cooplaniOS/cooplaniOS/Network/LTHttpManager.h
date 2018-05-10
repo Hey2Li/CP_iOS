@@ -57,4 +57,19 @@
  */
 
 + (void)feedbackWithUserId:(NSNumber *)user_id Type:(NSString *)type Info:(NSString *)info ContactInfo:(NSString *)contactInfo Files:(NSArray *)files Complete:(completeBlock)complete;
+
+/**
+ 第三方登录
+
+ @param openId 三方ID
+ @param identityType 登录方式微信（wx）
+ @param token 三方验证令牌
+ @param tokenTime token过期时间
+ @param headPortrait 头像路径
+ @param nickname 昵称
+ @param sex 性别
+ @param age 年龄
+ @param complete block
+ */
++ (void)thirdPartyLoginWithOpenId:(NSString *)openId IdentityType:(NSString *)identityType Token:(NSString *)token TokenTime:(NSString *)tokenTime HeadPortrait:(NSString *)headPortrait NickName:(NSString *)nickname Sex:(NSString *)sex age:(NSString *)age Complete:(completeBlock)complete;
 @end

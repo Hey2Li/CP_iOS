@@ -42,8 +42,9 @@
     [tableView registerNib:[UINib nibWithNibName:@"LeftViweTableViewCell" bundle:nil] forCellReuseIdentifier:NSStringFromClass([LeftViweTableViewCell class])];
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 160.0, 200)];
     headerView.backgroundColor = [UIColor whiteColor];
+    NSString *photoUrl = [USERDEFAULTS objectForKey:USER_PHOTO]?[USERDEFAULTS objectForKey:USER_PHOTO]:@"";
     UIButton *headerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [headerBtn setImage:[UIImage imageNamed:@"touxiang"] forState:UIControlStateNormal];
+    [headerBtn sd_setImageWithURL:[NSURL URLWithString:photoUrl] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"touxiang"]];
     [headerView addSubview:headerBtn];
     [headerBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(headerView);
@@ -54,11 +55,15 @@
     headerBtn.layer.masksToBounds = YES;
     headerBtn.layer.borderWidth = 2.0f;
     headerBtn.layer.borderColor = DRGBCOLOR.CGColor;
+    [headerBtn setEnabled:YES];
     [headerBtn addTarget:self action:@selector(headerBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [headerBtn addTarget:self action:@selector(preventFlicker:) forControlEvents:UIControlEventAllTouchEvents];
     self.headerBtn = headerBtn;
+    
+    
     UILabel *userNameLb = [[UILabel alloc]init];
-    NSString *phoneStr = [USERDEFAULTS objectForKey:USER_PHONE_KEY];
-    userNameLb.text =  phoneStr.length > 0 ? [USERDEFAULTS objectForKey:USER_PHONE_KEY] : @"请登录";
+    NSString *phoneStr = [USERDEFAULTS objectForKey:USER_PHONE_KEY] ? [USERDEFAULTS objectForKey:USER_PHONE_KEY] : [USERDEFAULTS objectForKey:USER_NICKNAME];
+    userNameLb.text =  phoneStr.length > 0 ? phoneStr : @"请登录";
     userNameLb.textAlignment = NSTextAlignmentCenter;
     [headerView addSubview:userNameLb];
     [userNameLb mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -71,7 +76,11 @@
     userNameLb.textColor = UIColorFromRGB(0x444444);
     self.userNameLb = userNameLb;
     tableView.tableHeaderView = headerView;
+    self.myTableView = tableView;
     [self.view addSubview:tableView];
+}
+- (void)preventFlicker:(UIButton *)button {
+    button.highlighted = NO;
 }
 - (void)headerBtnClick:(UIButton *)btn{
     if ([USERDEFAULTS objectForKey:USER_ID]) {
@@ -91,7 +100,7 @@
 }
 #pragma mark -- UITableViewDelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 6;
+    return [USERDEFAULTS objectForKey:USER_ID] ? 6:5;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 1;
@@ -248,6 +257,7 @@
                 [[NSUserDefaults standardUserDefaults]removePersistentDomainForName:appDomain];
                 [alert dismissViewControllerAnimated:YES completion:nil];
                 SVProgressShowStuteText(@"退出成功", YES);
+                [self.headerBtn setImage:[UIImage imageNamed:@"touxiang"] forState:UIControlStateNormal];
                 self.userNameLb.text = @"请登录";
                 [self.myTableView reloadData];
             }];

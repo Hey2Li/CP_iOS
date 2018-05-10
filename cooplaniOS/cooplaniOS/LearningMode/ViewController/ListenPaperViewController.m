@@ -46,6 +46,7 @@
     self.mm_drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
     self.mm_drawerController.closeDrawerGestureModeMask = MMCloseDrawerGestureModeNone;
     [self.player play];
+    [self.player pause];
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
 }
 
@@ -75,7 +76,6 @@
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }
-    [self.player pause];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -84,7 +84,7 @@
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     [self stopRoll];
-    [self.player stop];
+    [self.player pause];
 }
 
 - (void)initWithView{
@@ -266,7 +266,6 @@
     FeedbackViewController *vc = [[FeedbackViewController alloc]init];
     vc.errorType = 1;
     [self.navigationController pushViewController:vc animated:YES];
-    [self.player pause];
 }
 #pragma mark 中英文切换
 - (IBAction)ENCNSwitch:(UIButton *)sender {
@@ -545,7 +544,7 @@
 }
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
-    [self.player stop];
+//    [self.player stop];
     [self.player removeObserver:self forKeyPath:@"progress" context:nil];
     [self.player removeObserver:self forKeyPath:@"duration" context:nil];
     [self.player removeObserver:self forKeyPath:@"cacheProgress" context:nil];

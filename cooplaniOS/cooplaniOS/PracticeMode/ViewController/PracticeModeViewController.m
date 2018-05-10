@@ -372,6 +372,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.player.player play];
+    [self.player.player pause];
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
 }
 - (void)viewWillDisappear:(BOOL)animated{
@@ -382,7 +383,6 @@
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }
-    [self.player.player pause];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -392,7 +392,11 @@
     [super viewDidDisappear:animated];
     [self.player stopRoll];
     [self.player.player pause];
+    [self.player.player removeObserver:self forKeyPath:@"progress" context:nil];
+    [self.player.player removeObserver:self forKeyPath:@"duration" context:nil];
+    [self.player.player removeObserver:self forKeyPath:@"cacheProgress" context:nil];
 }
+
 /*
 #pragma mark - Navigation
 

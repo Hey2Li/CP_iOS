@@ -372,6 +372,9 @@
 }
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
+    [self.player removeObserver:self forKeyPath:@"progress" context:nil];
+    [self.player removeObserver:self forKeyPath:@"duration" context:nil];
+    [self.player removeObserver:self forKeyPath:@"cacheProgress" context:nil];
 }
 /*
 #pragma mark - Navigation
