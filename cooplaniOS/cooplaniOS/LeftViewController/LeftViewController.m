@@ -19,6 +19,7 @@
 @interface LeftViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
 @property (nonatomic, strong) UIButton *headerBtn;
+@property (nonatomic, strong) UILabel *userNameLb;
 @end
 
 @implementation LeftViewController
@@ -68,6 +69,7 @@
     }];
     userNameLb.font = [UIFont boldSystemFontOfSize:16];
     userNameLb.textColor = UIColorFromRGB(0x444444);
+    self.userNameLb = userNameLb;
     tableView.tableHeaderView = headerView;
     [self.view addSubview:tableView];
 }
@@ -243,8 +245,13 @@
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确定退出登录" message:nil preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 NSString*appDomain = [[NSBundle mainBundle]bundleIdentifier];
-                [[NSUserDefaults standardUserDefaults]removePersistentDomainForName:appDomain];            }];
-            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"退出" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+                [[NSUserDefaults standardUserDefaults]removePersistentDomainForName:appDomain];
+                [alert dismissViewControllerAnimated:YES completion:nil];
+                SVProgressShowStuteText(@"退出成功", YES);
+                self.userNameLb.text = @"请登录";
+                [self.myTableView reloadData];
+            }];
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
                 [alert dismissViewControllerAnimated:YES completion:nil];
             }];
             [alert addAction:sureAction];

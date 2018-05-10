@@ -178,11 +178,12 @@ NSAttributedString *returnNumAttr(NSString *str,NSInteger fontSize){
      * 电信号段正则表达式
      */
     NSString *CT_NUM = @"^1(3[3]|4[9]|53|7[037]|8[019])\\d{8}$";
+    NSString *regex = @"^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\\d{8}$";
     
     // 一个判断是否是手机号码的正则表达式
     NSString *pattern = [NSString stringWithFormat:@"(%@)|(%@)|(%@)",CM_NUM,CU_NUM,CT_NUM];
     
-    NSRegularExpression *regularExpression = [[NSRegularExpression alloc] initWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:nil];
+    NSRegularExpression *regularExpression = [[NSRegularExpression alloc] initWithPattern:regex options:NSRegularExpressionCaseInsensitive error:nil];
     
     NSString *mobile = [phoneNum stringByReplacingOccurrencesOfString:@" " withString:@""];
     if (mobile.length != 11) {

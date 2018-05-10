@@ -103,51 +103,73 @@
 }
 #pragma mark TableViewDataSource&Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
+    return self.questionsArray.count + 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (section == 2) {
+    if (section == self.questionsArray.count) {
         return 0;
     }else{
-        return self.questionsArray.count;
+        SectionsModel *model = self.questionsArray[section];//刷题模式只有有一个section
+        return model.Passage.count;
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    QuestionsModel *model = self.questionsArray[indexPath.row];
-    if (model.isSelected) {
-        return self.myTableView.rowHeight;
+    if (indexPath.section < self.questionsArray.count) {
+        SectionsModel *model = self.questionsArray[indexPath.section];
+        QuestionsModel *questionModel = model.Passage[indexPath.row];
+        if (questionModel.isSelected) {
+            return self.myTableView.rowHeight;
+        }else{
+            return 50;
+        }
     }else{
-        return 50;
+        return CGFLOAT_MIN;
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 40;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView *headerView = [[UIView alloc]init];
-    headerView.backgroundColor = UIColorFromRGB(0xf7f7f7);
-    UILabel *sectionLb = [UILabel new];
-    sectionLb.text = self.paperSection;
-    sectionLb.font = [UIFont boldSystemFontOfSize:14];
-    [headerView addSubview:sectionLb];
-    [sectionLb mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(headerView.mas_left).offset(15);
-        make.right.equalTo(headerView.mas_right).offset(10);
-        make.top.equalTo(headerView);
-        make.height.equalTo(@40);
-    }];
-    return headerView;
+    if (section < self.questionsArray.count) {
+        UIView *headerView = [[UIView alloc]init];
+        SectionsModel *model = self.questionsArray[section];
+        headerView.backgroundColor = UIColorFromRGB(0xf7f7f7);
+        UILabel *sectionLb = [UILabel new];
+        sectionLb.text = model.SectionTitle;
+        sectionLb.font = [UIFont boldSystemFontOfSize:14];
+        [headerView addSubview:sectionLb];
+        [sectionLb mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(headerView.mas_left).offset(15);
+            make.right.equalTo(headerView.mas_right).offset(10);
+            make.top.equalTo(headerView);
+            make.height.equalTo(@40);
+        }];
+        return headerView;
+    }else{
+        UIView *headerView = [[UIView alloc]init];
+        headerView.backgroundColor = [UIColor whiteColor];
+        return headerView;
+    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     AnswerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([AnswerTableViewCell class]) forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.model = self.questionsArray[indexPath.row];
+    if (indexPath.section < self.questionsArray.count) {
+        SectionsModel *model = self.questionsArray[indexPath.section];
+        QuestionsModel *questionModel = model.Passage[indexPath.row];
+        cell.model = questionModel;
+    }else{
+        
+    }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    QuestionsModel *model = self.questionsArray[indexPath.row];
-    model.isSelected = !model.isSelected;
-    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:nil];
+    if (indexPath.section < self.questionsArray.count) {
+        SectionsModel *model = self.questionsArray[indexPath.section];
+        QuestionsModel *questionModel = model.Passage[indexPath.row];
+        questionModel.isSelected = !questionModel.isSelected;
+        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:nil];
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

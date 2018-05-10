@@ -10,6 +10,7 @@
 #import "AnswerTableViewCell.h"
 #import "answerModel.h"
 #import "AnswerHeadView.h"
+#import "PaperDetailViewController.h"
 
 @interface AnswerViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -44,21 +45,38 @@
     _headView.paperDateLb.text = [self.paperName substringToIndex:7];
     _headView.paperNameLb.text = [self.paperName substringFromIndex:7];
     self.myTableView.tableHeaderView = _headView;
+    [self initWithNavi];
+}
+- (void)initWithNavi{
+    self.navigationItem.hidesBackButton = YES;
+    UIImage *image = [[UIImage imageNamed:@"back"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:image style:UIBarButtonItemStyleDone target:self action:@selector(back)];
+    self.navigationItem.leftItemsSupplementBackButton = YES;
+}
+- (void)back{
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[PaperDetailViewController class]]) {
+            PaperDetailViewController *revise = (PaperDetailViewController *)controller;
+            [self.navigationController popToViewController:revise animated:YES];
+        }
+    }
 }
 #pragma mark TableViewDataSource&Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
+    return self.questionsArray.count + 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (section == 2) {
+    if (section == self.questionsArray.count) {
         return 0;
     }else{
-        return self.questionsArray.count;
+        SectionsModel *model = self.questionsArray[section];
+        return model.Passage.count;
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    QuestionsModel *model = self.questionsArray[indexPath.row];
-    if (model.isSelected) {
+    SectionsModel *model = self.questionsArray[indexPath.section];
+    QuestionsModel *questionModel = model.Passage[indexPath.row];
+    if (questionModel.isSelected) {
         return self.myTableView.rowHeight;
     }else{
         return 50;
@@ -68,29 +86,37 @@
     return 40;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView *headerView = [[UIView alloc]init];
-    headerView.backgroundColor = UIColorFromRGB(0xf7f7f7);
-    UILabel *sectionLb = [UILabel new];
-    sectionLb.text = self.paperSection;
-    sectionLb.font = [UIFont boldSystemFontOfSize:14];
-    [headerView addSubview:sectionLb];
-    [sectionLb mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(headerView.mas_left).offset(15);
-        make.right.equalTo(headerView.mas_right).offset(10);
-        make.top.equalTo(headerView);
-        make.height.equalTo(@40);
-    }];
-    return headerView;
+    if (section < self.questionsArray.count) {
+        UIView *headerView = [[UIView alloc]init];
+        SectionsModel *model = self.questionsArray[section];
+        headerView.backgroundColor = UIColorFromRGB(0xf7f7f7);
+        UILabel *sectionLb = [UILabel new];
+        sectionLb.text = model.SectionTitle;
+        sectionLb.font = [UIFont boldSystemFontOfSize:14];
+        [headerView addSubview:sectionLb];
+        [sectionLb mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(headerView.mas_left).offset(15);
+            make.right.equalTo(headerView.mas_right).offset(10);
+            make.top.equalTo(headerView);
+            make.height.equalTo(@40);
+        }];
+        return headerView;
+    }else{
+        return nil;
+    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     AnswerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([AnswerTableViewCell class]) forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.model = self.questionsArray[indexPath.row];
+    SectionsModel *model = self.questionsArray[indexPath.section];
+    QuestionsModel *questionModel = model.Passage[indexPath.row];
+    cell.model = questionModel;
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    QuestionsModel *model = self.questionsArray[indexPath.row];
-    model.isSelected = !model.isSelected;
+    SectionsModel *model = self.questionsArray[indexPath.section];
+    QuestionsModel *questionModel = model.Passage[indexPath.row];
+    questionModel.isSelected = !questionModel.isSelected;
     [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:nil];
 }
 

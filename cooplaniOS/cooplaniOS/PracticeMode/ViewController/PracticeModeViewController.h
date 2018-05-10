@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface PracticeModeViewController : UIViewController
-
+@property (nonatomic, assign) NSInteger mode;//刷题类型
 @end

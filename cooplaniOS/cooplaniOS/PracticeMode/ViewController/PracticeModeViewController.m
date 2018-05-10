@@ -30,9 +30,19 @@
 @property (nonatomic, copy) NSString *paperSection;
 @property (nonatomic, assign) int correctInt;
 @property (nonatomic, assign) int NoCorrectInt;
+@property (nonatomic, strong) NSMutableArray *itemCountArray;
+@property (nonatomic, strong) SectionsModel *modeSectionModel;
 @end
 
 @implementation PracticeModeViewController
+@synthesize modeSectionModel;
+
+- (NSMutableArray *)itemCountArray{
+    if (!_itemCountArray) {
+        _itemCountArray = [NSMutableArray array];
+    }
+    return _itemCountArray;
+}
 - (NSMutableArray *)partModelArray{
     if (!_partModelArray) {
         _partModelArray = [NSMutableArray array];
@@ -103,22 +113,66 @@
                 self.headerView.practiceModeTopTitleLb.text = partModel.PartType;
             });
             [self.partModelArray addObject:partModel];
-            for (SectionsModel *sectinsModel in partModel.Sections) {
-                _paperSection = sectinsModel.SectionTitle;
-                [self.sectionsModelArray addObject:sectinsModel];
-                for (PassageModel *passageModel in sectinsModel.Passage) {
-                    [self.passageModelArray addObject:passageModel];
+            if (_mode < 3) {
+                for (SectionsModel *sectinsModel in partModel.Sections) {
+                    _paperSection = sectinsModel.SectionTitle;
+                    [self.sectionsModelArray addObject:sectinsModel];
+                }
+                modeSectionModel = self.sectionsModelArray[_mode];
+                for (PassageModel *passageModel in modeSectionModel.Passage) {
+                    [self.questionsModelArray removeAllObjects];
                     for (QuestionsModel *questionModel in passageModel.Questions) {
+                        questionModel.PassageId = passageModel.PassageId;
+                        questionModel.PassageAudioStartTime = passageModel.PassageAudioStartTime;
+                        questionModel.PassageAudioEndTime = passageModel.PassageAudioEndTime;
+                        questionModel.PassageDirection = passageModel.PassageDirection;
+                        questionModel.PassageDirectionAudioStartTime = passageModel.PassageDirectionAudioStartTime;
+                        questionModel.PassageDirectionAudioEndTime = passageModel.PassageDirectionAudioEndTime;
                         [self.questionsModelArray addObject:questionModel];
+                        [self.passageModelArray addObject:questionModel];
+                        [self.itemCountArray addObject:questionModel];
+                        passageModel.Questions = [NSMutableArray arrayWithArray:self.questionsModelArray];
                         for (OptionsModel *optionsModel in questionModel.Options) {
-                            [self.optionsModelArray addObject:optionsModel]; 
-                            dispatch_async(dispatch_get_main_queue(), ^{
-                                [self.tikaCollectionView reloadData];
-                            });
+                            [self.optionsModelArray addObject:optionsModel];
                         }
                     }
+                    modeSectionModel.Passage = [NSMutableArray arrayWithArray:self.passageModelArray];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.tikaCollectionView reloadData];
+                    });
                 }
+            }else if (_mode == 3){
+                [self.passageModelArray removeAllObjects];
+                for (SectionsModel *sectinsModel in partModel.Sections) {
+                    _paperSection = sectinsModel.SectionTitle;
+                    [self.sectionsModelArray addObject:sectinsModel];
+                    [self.passageModelArray removeAllObjects];
+                    for (PassageModel *passageModel in sectinsModel.Passage) {
+                        [self.questionsModelArray removeAllObjects];
+                        for (QuestionsModel *questionModel in passageModel.Questions) {
+                            questionModel.PassageId = passageModel.PassageId;
+                            questionModel.PassageAudioStartTime = passageModel.PassageAudioStartTime;
+                            questionModel.PassageAudioEndTime = passageModel.PassageAudioEndTime;
+                            questionModel.PassageDirection = passageModel.PassageDirection;
+                            questionModel.PassageDirectionAudioStartTime = passageModel.PassageDirectionAudioStartTime;
+                            questionModel.PassageDirectionAudioEndTime = passageModel.PassageDirectionAudioEndTime;
+                            [self.questionsModelArray addObject:questionModel];
+                            [self.passageModelArray addObject:questionModel];
+                            [self.itemCountArray addObject:questionModel];
+                            passageModel.Questions = [NSMutableArray arrayWithArray:self.questionsModelArray];
+                            for (OptionsModel *optionsModel in questionModel.Options) {
+                                [self.optionsModelArray addObject:optionsModel];
+                            }
+                        }
+                        sectinsModel.Passage = [NSMutableArray arrayWithArray:self.passageModelArray];
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self.tikaCollectionView reloadData];
+                        });
+                    }
+                }
+              
             }
+         
         }
     });
 }
@@ -179,10 +233,19 @@
 }
 #pragma mark UICollectionViewDelegate
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-    return self.passageModelArray.count;
+    if (_mode < 3) {
+        return 1;
+    }else{
+        return self.sectionsModelArray.count;
+    }
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return  self.questionsModelArray.count;
+    if (_mode < 3) {
+        return modeSectionModel.Passage.count;
+    }else{
+         SectionsModel *model = self.sectionsModelArray[section];
+        return model.Passage.count;
+    }
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     return CGSizeMake(SCREEN_WIDTH, self.tikaCollectionView.bounds.size.height);
@@ -193,10 +256,63 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     PracticeModeTiKaCCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([PracticeModeTiKaCCell class]) forIndexPath:indexPath];
-    QuestionsModel *questionsModel = self.questionsModelArray[indexPath.row];
+    if (_mode == 3) {
+        SectionsModel *sectionModel = self.sectionsModelArray[indexPath.section];
+        QuestionsModel *questionsModel = sectionModel.Passage[indexPath.row];
+        cell.questionsModel = questionsModel;
+        cell.questionStr = [NSString stringWithFormat:@"%@",questionsModel.PassageDirection];
+        cell.collectionIndexPath = indexPath;
+        //cell 展开方法
+        cell.UpAndDownBtnClick = ^(UIButton *btn) {
+            if (_isOpen) {
+                [UIView animateWithDuration:0.5 animations:^{
+                    self.tikaCollectionView.backgroundColor = [UIColor clearColor];
+                    self.tikaCollectionView.transform = CGAffineTransformMakeTranslation(0, SCREEN_HEIGHT/2);
+                }];
+                _isOpen = NO;
+            }else{
+                [UIView animateWithDuration:0.5 animations:^{
+                    self.tikaCollectionView.backgroundColor = UIColorFromRGB(0xf7f7f7);
+                    self.tikaCollectionView.transform = CGAffineTransformIdentity;
+                }];
+                _isOpen = YES;
+            }
+        };
+        WeakSelf
+        cell.questionCellClick = ^(NSIndexPath *cellIndexPath, BOOL isCorrect) {
+            NSIndexPath *nextIndexPath;
+            if (cellIndexPath.row == sectionModel.Passage.count - 1 && cellIndexPath.section < self.sectionsModelArray.count - 1) {
+                nextIndexPath = [NSIndexPath indexPathForItem:0 inSection:cellIndexPath.section + 1];
+                [weakSelf.tikaCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+            }else{
+                nextIndexPath = [NSIndexPath indexPathForItem:cellIndexPath.item + 1 inSection:cellIndexPath.section];
+            }
+            questionsModel.isCorrect = isCorrect;
+            if (isCorrect) {
+                _correctInt++;
+            }else{
+                _NoCorrectInt++;
+            }
+            if (cellIndexPath.row + 1 < sectionModel.Passage.count) {
+                [weakSelf.view layoutIfNeeded];
+                [weakSelf.tikaCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+            }else if (cellIndexPath.row + 1 == sectionModel.Passage.count && cellIndexPath.section == self.sectionsModelArray.count - 1){
+                float correctFloat = (float)_correctInt/(float)(_correctInt + _NoCorrectInt);
+                PMAnswerViewController *vc = [[PMAnswerViewController alloc]init];
+                vc.correct = [NSString stringWithFormat:@"%0.f",correctFloat * 100];
+                vc.paperName = _testPaperModel.PaperFullName;
+                vc.paperSection = _paperSection;
+                vc.questionsArray = self.sectionsModelArray;
+                vc.mode = self.mode;
+                [self.navigationController pushViewController:vc animated:YES];
+                  }
+        };
+        return cell;
+    }
+    QuestionsModel *questionsModel = modeSectionModel.Passage[indexPath.row];
     cell.questionsModel = questionsModel;
-    PassageModel *passageModel = self.passageModelArray[indexPath.section];
-    cell.questionStr = [NSString stringWithFormat:@"%@",passageModel.PassageDirection];
+    cell.questionStr = [NSString stringWithFormat:@"%@",questionsModel.PassageDirection];
+    cell.collectionIndexPath = indexPath;
     //cell 展开方法
     cell.UpAndDownBtnClick = ^(UIButton *btn) {
         if (_isOpen) {
@@ -213,12 +329,11 @@
             _isOpen = YES;
         }
     };
-    cell.collectionIndexPath = indexPath;
     WeakSelf
     //cell tableview点击方法 isCorrect 是否正确 cellIndexPath collection cell 的indexPath
     cell.questionCellClick = ^(NSIndexPath *cellIndexPath, BOOL isCorrect) {
         NSIndexPath *nextIndexPath;
-        if (cellIndexPath.row == self.questionsModelArray.count && cellIndexPath.section < self.passageModelArray.count) {
+        if (cellIndexPath.row == modeSectionModel.Passage.count - 1) {
             nextIndexPath = [NSIndexPath indexPathForItem:cellIndexPath.item + 1 inSection:cellIndexPath.section];
         }else{
             nextIndexPath = [NSIndexPath indexPathForItem:cellIndexPath.item + 1 inSection:cellIndexPath.section];
@@ -230,16 +345,17 @@
             _NoCorrectInt++;
         }
         NSLog(@"indexPathrow+1 = %ld---indexPath.row%ld---",cellIndexPath.row + 1, cellIndexPath.row);
-        if (cellIndexPath.row + 1 < self.questionsModelArray.count) {
+        if (cellIndexPath.row + 1 < modeSectionModel.Passage.count) {
             [weakSelf.view layoutIfNeeded];
             [weakSelf.tikaCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
-        }else if (cellIndexPath.row + 1 == self.questionsModelArray.count){
+        }else if (cellIndexPath.row + 1 == modeSectionModel.Passage.count){
             float correctFloat = (float)_correctInt/(float)(_correctInt + _NoCorrectInt);
             PMAnswerViewController *vc = [[PMAnswerViewController alloc]init];
-            vc.correct = [NSString stringWithFormat:@"%0.f",correctFloat * 100];
+            vc.correct = [NSString stringWithFormat:@"%0.f",correctFloat * 100 ];
             vc.paperName = _testPaperModel.PaperFullName;
             vc.paperSection = _paperSection;
-            vc.questionsArray = self.questionsModelArray;
+            vc.questionsArray = @[modeSectionModel];
+            vc.mode = self.mode;
             [self.navigationController pushViewController:vc animated:YES];
         }
     };

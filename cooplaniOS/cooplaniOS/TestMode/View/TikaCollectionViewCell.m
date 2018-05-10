@@ -93,7 +93,7 @@
     cell.textLabel.font = [UIFont systemFontOfSize:14];
     cell.selectionStyle = NO;
     if (indexPath.row == 0) {
-        cell.textLabel.text = [NSString stringWithFormat:@"Q%ld",self.collectionIndexPath.row + 1];
+        cell.textLabel.text = [NSString stringWithFormat:@"Q%@",_questionsModel.QuestionNo];
         cell.textLabel.textColor = UIColorFromRGB(0xBBBBBB);
     }else{
         OptionsModel *model = self.questionArray[indexPath.row - 1];

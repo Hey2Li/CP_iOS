@@ -30,9 +30,16 @@
 @property (nonatomic, assign) int NoCorrectInt;
 @property (nonatomic, copy) NSString *paperSection;
 @property (nonatomic, strong) NSIndexPath *collectionIndexPath;
+@property (nonatomic, strong) NSMutableArray *itemCountArray;
 @end
 
 @implementation TestModeViewController
+- (NSMutableArray *)itemCountArray{
+    if (!_itemCountArray) {
+        _itemCountArray = [NSMutableArray array];
+    }
+    return _itemCountArray;
+}
 - (NSMutableArray *)partModelArray{
     if (!_partModelArray) {
         _partModelArray = [NSMutableArray array];
@@ -146,18 +153,27 @@
     [self.passageModelArray removeAllObjects];
     [self.questionsModelArray removeAllObjects];
     [self.optionsModelArray removeAllObjects];
+    [self.itemCountArray removeAllObjects];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         for (PartsModel *partModel in model.Parts) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-            });
             [self.partModelArray addObject:partModel];
             for (SectionsModel *sectinsModel in partModel.Sections) {
                 _paperSection = sectinsModel.SectionTitle;
                 [self.sectionsModelArray addObject:sectinsModel];
+                [self.passageModelArray removeAllObjects];
                 for (PassageModel *passageModel in sectinsModel.Passage) {
-                    [self.passageModelArray addObject:passageModel];
+                    [self.questionsModelArray removeAllObjects];
                     for (QuestionsModel *questionModel in passageModel.Questions) {
+                        questionModel.PassageId = passageModel.PassageId;
+                        questionModel.PassageAudioStartTime = passageModel.PassageAudioStartTime;
+                        questionModel.PassageAudioEndTime = passageModel.PassageAudioEndTime;
+                        questionModel.PassageDirection = passageModel.PassageDirection;
+                        questionModel.PassageDirectionAudioStartTime = passageModel.PassageDirectionAudioStartTime;
+                        questionModel.PassageDirectionAudioEndTime = passageModel.PassageDirectionAudioEndTime;
                         [self.questionsModelArray addObject:questionModel];
+                        [self.passageModelArray addObject:questionModel];
+                        [self.itemCountArray addObject:questionModel];
+                        passageModel.Questions = [NSMutableArray arrayWithArray:self.questionsModelArray];
                         for (OptionsModel *optionsModel in questionModel.Options) {
                             [self.optionsModelArray addObject:optionsModel];
                             dispatch_async(dispatch_get_main_queue(), ^{
@@ -166,6 +182,7 @@
                             });
                         }
                     }
+                    sectinsModel.Passage = [NSMutableArray arrayWithArray:self.passageModelArray];
                 }
             }
         }
@@ -229,7 +246,13 @@
 - (void)donePaperClick:(UIButton *)btn{
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确定交卷" message:nil preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self.navigationController pushViewController:[[AnswerViewController alloc]init] animated:YES];
+        float correctFloat = (float)_correctInt/(float)(_correctInt + _NoCorrectInt);
+        AnswerViewController *vc = [[AnswerViewController alloc]init];
+        vc.correct = [NSString stringWithFormat:@"%0.f",isnan(correctFloat * 100)?0:correctFloat * 100];
+        vc.paperName = _testPaperModel.PaperFullName;
+        vc.paperSection = _paperSection;
+        vc.questionsArray = self.sectionsModelArray;
+        [self.navigationController pushViewController:vc animated:YES];
     }];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         [alert dismissViewControllerAnimated:YES completion:nil];
@@ -240,10 +263,13 @@
 }
 #pragma mark UICollectionViewDelegate
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    NSLog(@"%@",self.sectionsModelArray);
     return self.sectionsModelArray.count;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return  2;
+    SectionsModel *model = self.sectionsModelArray[section];
+    NSLog(@"%@",model.Passage);
+    return model.Passage.count;
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     return CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT/2 - 25);
@@ -253,18 +279,19 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    _collectionIndexPath = indexPath;
+    NSLog(@"%ld--%ld",(long)indexPath.row, indexPath.section);
     TikaCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TikaCollectionViewCell class]) forIndexPath:indexPath];
-    QuestionsModel *questionsModel = self.questionsModelArray[indexPath.row];
+    SectionsModel *sectionModel = self.sectionsModelArray[indexPath.section];
+    QuestionsModel *questionsModel = sectionModel.Passage[indexPath.row];
     cell.questionsModel = questionsModel;
-    PassageModel *passageModel = self.passageModelArray[indexPath.section];
-    cell.questionStr = [NSString stringWithFormat:@"%@",passageModel.PassageDirection];
+    cell.questionStr = [NSString stringWithFormat:@"%@",questionsModel.PassageDirection];
     cell.collectionIndexPath = indexPath;
     WeakSelf
     cell.questionCellClick = ^(NSIndexPath *cellIndexPath, BOOL isCorrect) {
         NSIndexPath *nextIndexPath;
-        if (cellIndexPath.row == self.questionsModelArray.count && cellIndexPath.section < self.passageModelArray.count) {
-            nextIndexPath = [NSIndexPath indexPathForItem:cellIndexPath.item + 1 inSection:cellIndexPath.section];
+        if (cellIndexPath.row == sectionModel.Passage.count - 1 && cellIndexPath.section < self.sectionsModelArray.count - 1) {
+            nextIndexPath = [NSIndexPath indexPathForItem:0 inSection:cellIndexPath.section + 1];
+            [weakSelf.tikaCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
         }else{
             nextIndexPath = [NSIndexPath indexPathForItem:cellIndexPath.item + 1 inSection:cellIndexPath.section];
         }
@@ -274,16 +301,16 @@
         }else{
             _NoCorrectInt++;
         }
-        if (cellIndexPath.row + 1 < self.questionsModelArray.count) {
+        if (cellIndexPath.row + 1 < sectionModel.Passage.count) {
             [weakSelf.view layoutIfNeeded];
             [weakSelf.tikaCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
-        }else if (cellIndexPath.row + 1 == self.questionsModelArray.count){
+        }else if (cellIndexPath.row + 1 == sectionModel.Passage.count && cellIndexPath.section == self.sectionsModelArray.count - 1){
             float correctFloat = (float)_correctInt/(float)(_correctInt + _NoCorrectInt);
             AnswerViewController *vc = [[AnswerViewController alloc]init];
-            vc.correct = [NSString stringWithFormat:@"%0.f",correctFloat * 100];
+            vc.correct = [NSString stringWithFormat:@"%0.f",correctFloat * 100 ? correctFloat * 100 : 0];
             vc.paperName = _testPaperModel.PaperFullName;
             vc.paperSection = _paperSection;
-            vc.questionsArray = self.questionsModelArray;
+            vc.questionsArray = self.sectionsModelArray;
             [self.navigationController pushViewController:vc animated:YES];
         }
     };
@@ -301,12 +328,13 @@
 }
 #pragma mark TableViewDataSource&Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.sectionsModelArray.count;
+    return 1;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     QuestionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QuestionTableViewCell class])];
     PartsModel *partsModel = self.partModelArray[0];
     SectionsModel *sectionModel = self.sectionsModelArray[_collectionIndexPath.section];
+    NSLog(@"%ld",(long)_collectionIndexPath.section);
     cell.selectionStyle = NO;
     cell.TopTitleLb.text = partsModel.PartType;
     cell.sectionLb.text = [NSString stringWithFormat:@"%@\n%@",sectionModel.SectionTitle,sectionModel.SectionType];

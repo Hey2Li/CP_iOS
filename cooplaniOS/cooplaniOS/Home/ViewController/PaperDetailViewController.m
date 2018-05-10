@@ -162,6 +162,10 @@
     [sectionBBtn addTarget:self action:@selector(selectedBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [sectionCBtn addTarget:self action:@selector(selectedBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [allSectionBtn addTarget:self action:@selector(selectedBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    sectionABtn.tag = 0;
+    sectionBBtn.tag = 1;
+    sectionCBtn.tag = 2;
+    allSectionBtn.tag = 3;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(maskTapClick:)];
     [maskView addGestureRecognizer:tap];
     self.keyWindow = keyWindow;
@@ -176,6 +180,7 @@
     [btn setTitleColor:UIColorFromRGB(0x666666) forState:UIControlStateSelected];
     [self.maskView removeFromSuperview];
     PracticeModeViewController *vc = [[PracticeModeViewController alloc]init];
+    vc.mode = btn.tag;
     vc.title = self.title;
     [self.navigationController pushViewController:vc animated:YES];
 }

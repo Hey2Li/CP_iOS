@@ -30,7 +30,7 @@
 @property (nonatomic, copy) NSString *SectionDirection;
 @property (nonatomic, copy) NSString *SectionDirectionAudioStartTime;
 @property (nonatomic, copy) NSString *SectionDirectionAudioEndTime;
-@property (nonatomic, strong) NSArray *Passage;
+@property (nonatomic, strong) NSMutableArray *Passage;
 @end
 
 @interface PassageModel: NSObject
@@ -40,10 +40,16 @@
 @property (nonatomic, copy) NSString *PassageDirection;
 @property (nonatomic, copy) NSString *PassageDirectionAudioStartTime;
 @property (nonatomic, copy) NSString *PassageDirectionAudioEndTime;
-@property (nonatomic, strong) NSArray *Questions;
+@property (nonatomic, strong) NSMutableArray *Questions;
 @end
 
 @interface QuestionsModel: NSObject
+@property (nonatomic, copy) NSString *PassageId;
+@property (nonatomic, copy) NSString *PassageAudioStartTime;
+@property (nonatomic, copy) NSString *PassageAudioEndTime;
+@property (nonatomic, copy) NSString *PassageDirection;
+@property (nonatomic, copy) NSString *PassageDirectionAudioStartTime;
+@property (nonatomic, copy) NSString *PassageDirectionAudioEndTime;
 @property (nonatomic, copy) NSString *QuestionNo;
 @property (nonatomic, copy) NSString *QuestionAudioStartTime;
 @property (nonatomic, copy) NSString *QuestionAudioEndTime;
