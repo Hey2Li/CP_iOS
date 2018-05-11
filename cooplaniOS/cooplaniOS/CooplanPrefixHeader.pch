@@ -27,12 +27,13 @@
 #import "PaperJSONKey.h"
 #import "UIView+YYAdd.h"
 #import "TestPaperModel.h"
+#import "JRDB.h"
 
 //-----------------color----------------------
 #define RGBCOLOR(r,g,b) [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:1]
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #define SUBJECT_COLOR RGBCOLOR(96,189,195)
-#define DRGBCOLOR UIColorFromRGB(0xFFDF00)
+#define DRGBCOLOR UIColorFromRGB(0xFFCE43)
 #define WORDCOLOR  [UIColor colorWithRed:((float)((0xFFDF00 & 0xFF0000) >> 16))/255.0 green:((float)((0xFFDF00 & 0xFF00) >> 8))/255.0 blue:((float)(0xFFDF00 & 0xFF))/255.0 alpha:0.3]
 #define USERDEFAULTS [NSUserDefaults standardUserDefaults]
 #define USER_CODE_KEY @"user_code"
@@ -43,6 +44,8 @@
 #define USER_PHOTO @"user_photo"
 #define USER_NICKNAME @"user_nickname"
 #define USER_SEX @"user_sex"
+#define IS_USER_ID [[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]
+
 //------------------------size--------------------------
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height

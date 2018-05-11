@@ -8,7 +8,7 @@
 
 #import "LTHTTPSessionManager.h"
 
-#define BaseURL @"http://app.cooplan.cn"
+#define BaseURL @"http://192.168.0.107:8080/cooplan-rest"
 @interface LTHttpManager : LTHTTPSessionManager
 
 
@@ -72,4 +72,14 @@
  @param complete block
  */
 + (void)thirdPartyLoginWithOpenId:(NSString *)openId IdentityType:(NSString *)identityType Token:(NSString *)token TokenTime:(NSString *)tokenTime HeadPortrait:(NSString *)headPortrait NickName:(NSString *)nickname Sex:(NSString *)sex age:(NSString *)age Complete:(completeBlock)complete;
+
+/**
+ 我的笔记收藏句子
+
+ @param userId 用户ID
+ @param sentenceEN 英文句子
+ @param sentenceCN 中文翻译
+ @param complete block
+ */
++ (void)collectionSectenceWithUserId:(NSString *)userId SectenceEN:(NSString *)sentenceEN SentenceCN:(NSString *)sentenceCN Complete:(completeBlock)complete;
 @end

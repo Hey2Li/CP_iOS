@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "collectionSentenceModel.h"
 
 @interface SentenceTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *englishSentenceLb;
 @property (weak, nonatomic) IBOutlet UILabel *chineseSentenceLb;
 @property (weak, nonatomic) IBOutlet UILabel *paperNameLb;
-
+@property (nonatomic, strong) collectionSentenceModel *model;
 @end

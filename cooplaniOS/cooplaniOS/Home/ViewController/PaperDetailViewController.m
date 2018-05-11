@@ -25,6 +25,7 @@
     // Do any additional setup after loading the view from its nib.
     [self.myTableView registerNib:[UINib nibWithNibName:@"PaperDetailTableViewCell" bundle:nil] forCellReuseIdentifier:NSStringFromClass([PaperDetailTableViewCell class])];
     self.myTableView.scrollEnabled = NO;
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
 }
 -(void)viewWillAppear:(BOOL)animated
 {

@@ -30,6 +30,7 @@
         _myTableView.dataSource = self;
         _myTableView.tableFooterView = [UIView new];
         _myTableView.backgroundColor = UIColorFromRGB(0xF7F7F7);
+        _myTableView.separatorStyle = NO;
     }
     return _myTableView;
 }
@@ -46,7 +47,7 @@
     }];
     [btn setBackgroundColor:DRGBCOLOR];
     [btn setTitle:@"提交反馈" forState:UIControlStateNormal];
-    [btn setTitleColor:UIColorFromRGB(0x666666) forState:UIControlStateNormal];
+    [btn setTitleColor:UIColorFromRGB(0xFFFFFF) forState:UIControlStateNormal];
     btn.titleLabel.font = [UIFont systemFontOfSize:14];
     [btn addTarget:self action:@selector(submitClick:) forControlEvents:UIControlEventTouchUpInside];
     self.submitBtn = btn;

@@ -17,10 +17,10 @@ typedef NS_ENUM(NSInteger, IPhoneType) {
     iPhone6PlusType
 };
 
-void SVProgressShow();
+void SVProgressShow(void);
 void SVProgressShowText(NSString *text);
 void SVProgressShowStuteText(NSString *text, BOOL isSucceed);//成功或失败用 0->失败
-void SVProgressHiden();
+void SVProgressHiden(void);
 
 + (NSArray *)dateArray;
 NSAttributedString *returnNumAttr(NSString *str,NSInteger fontSize);

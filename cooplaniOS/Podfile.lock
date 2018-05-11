@@ -14,7 +14,12 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
+  - FMDB (2.7.2):
+    - FMDB/standard (= 2.7.2)
+  - FMDB/standard (2.7.2)
   - IQKeyboardManager (3.3.7)
+  - JRDB (2.1.1):
+    - FMDB
   - Masonry (1.1.0)
   - MJExtension (3.0.13)
   - MJRefresh (3.1.15.3)
@@ -35,27 +40,28 @@ PODS:
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
-  - SVProgressHUD (2.1.2)
+  - SVProgressHUD (2.2.5)
   - TYAttributedLabel (2.6.6)
-  - TZImagePickerController (2.0.1)
+  - TZImagePickerController (2.1.1)
   - UMCCommon (1.5.0)
   - UMCSecurityPlugins (1.0.6)
-  - UMCShare/Core (6.9.0):
+  - UMCShare/Core (6.9.1):
     - UMCCommon
-  - UMCShare/Social/ReducedWeChat (6.9.0):
+  - UMCShare/Social/ReducedWeChat (6.9.1):
     - UMCCommon
     - UMCShare/Core
 
 DEPENDENCIES:
   - AFNetworking (~> 3.1.0)
   - IQKeyboardManager (~> 3.3.4)
+  - JRDB
   - Masonry (~> 1.0)
   - MJExtension (~> 3.0.7)
   - MJRefresh (~> 3.1.1)
   - MMDrawerController (~> 0.5.7)
   - SDCycleScrollView (~> 1.64)
   - SDWebImage (~> 3.8.2)
-  - SVProgressHUD (~> 2.1.2)
+  - SVProgressHUD (~> 2.2.5)
   - TYAttributedLabel (~> 2.6.2)
   - TZImagePickerController
   - UMCCommon
@@ -64,20 +70,22 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  FMDB: 6198a90e7b6900cfc046e6bc0ef6ebb7be9236aa
   IQKeyboardManager: 249c3946acf61345c18b038eb50863fe2793e3a8
+  JRDB: 3d39482c7314ee58e4c0a8617f131324ccabc214
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
   MJRefresh: b48380ae2b927b46c4ef000de9adb8dc748e1df7
   MMDrawerController: 7a4cf8e25596bf2434e03ce50d22a8608ddee6a1
   SDCycleScrollView: f72904c77698a7f93a41bcbbc2d78b073bf7326c
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
-  SVProgressHUD: c404a55d78acbeb7ebb78b76d3faf986475a6994
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   TYAttributedLabel: cb8fc910d97eb5224936d4f692a78e042af691b2
-  TZImagePickerController: 34ecb53af8c349964394407e42b6e54e22589ebe
+  TZImagePickerController: 788184b04158006b25ffdbccbb550bfc193e9d9c
   UMCCommon: 82d21f4bb9532a5472cc533bbd8ed48aff376a14
   UMCSecurityPlugins: 0831a08f3988f3cea9f1d3a7626cd9bee4fef150
-  UMCShare: 0c406a22c874fe6c9c97784a71db349e7fcea0eb
+  UMCShare: f8be567946c3aa68deefd03b0ffaa0710a3b07ea
 
-PODFILE CHECKSUM: 76fa317af3992cc22e2f14a296dd5601d7a45dc7
+PODFILE CHECKSUM: f94aaf62310ef6e77b8157b7cdfc9f4ec54387b7
 
 COCOAPODS: 1.4.0

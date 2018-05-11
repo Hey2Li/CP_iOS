@@ -9,5 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface collectionSentenceModel : NSObject
-
+@property (nonatomic, copy) NSString *sentenceEN;
+@property (nonatomic, copy) NSString *sentenceCN;
+@property (nonatomic, copy) NSString *paperName;
 @end

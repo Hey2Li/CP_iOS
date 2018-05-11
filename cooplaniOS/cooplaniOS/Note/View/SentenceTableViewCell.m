@@ -14,7 +14,12 @@
     [super awakeFromNib];
     // Initialization code
 }
-
+- (void)setModel:(collectionSentenceModel *)model{
+    _model = model;
+    _englishSentenceLb.text = model.sentenceEN;
+    _chineseSentenceLb.text = model.sentenceCN;
+    _paperNameLb.text = model.paperName;
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

@@ -97,4 +97,21 @@
                                 };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/user/thirdPartyLogin",BaseURL]parameters:paramters complete:complete];
 }
+/**
+ 我的笔记收藏句子
+ 
+ @param userId 用户ID
+ @param sentenceEN 英文句子
+ @param sentenceCN 中文翻译
+ @param complete block
+ */
++ (void)collectionSectenceWithUserId:(NSString *)userId SectenceEN:(NSString *)sentenceEN SentenceCN:(NSString *)sentenceCN Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [LTHTTPSessionManager new];
+    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+                                @"userId":userId,
+                                @"sentenceEN":sentenceEN,
+                                @"sentenceCN":sentenceCN,
+                                };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/SentenceNote/private/add",BaseURL]parameters:paramters complete:complete];
+}
 @end
