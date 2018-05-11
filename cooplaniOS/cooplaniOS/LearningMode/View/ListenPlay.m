@@ -14,6 +14,7 @@
 #import "TikaCollectionViewCell.h"
 #import "ListenTableViewCell.h"
 #import "FeedbackViewController.h"
+#import "collectionSentenceModel.h"
 
 @interface ListenPlay ()<UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
 @property (nonatomic, strong) CADisplayLink *timer;//界面刷新定时器
@@ -181,7 +182,6 @@
 - (void)stopRoll {
     [_timer invalidate];
     _timer = nil;
-    [self.playSongBtn setSelected:NO];
 }
 - (IBAction)playSong:(UIButton *)sender {
     if (sender.selected) {
@@ -287,8 +287,23 @@
 #pragma mark 单句收藏
 - (IBAction)collectionOneSentence:(UIButton *)sender {
     ListenTableViewCell *cell = [self.lyricTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0]];
-    NSLog(@"%@",cell.listenLb.text);
-    SVProgressShowStuteText(@"收藏成功", YES);
+    if (IS_USER_ID) {
+        NSArray *array = [cell.listenLb.text componentsSeparatedByString:@"\n"];
+        [LTHttpManager collectionSectenceWithUserId:IS_USER_ID SectenceEN:array.count ? array[0]:@"" SentenceCN:array.count > 1 ? array[1]:@"" Complete:^(LTHttpResult result, NSString *message, id data) {
+            if (result == LTHttpResultSuccess) {
+                collectionSentenceModel *model = [[collectionSentenceModel alloc]init];
+                model.sentenceEN = array.count ? array[0]:@"";
+                model.sentenceCN = array.count > 1 ? array[1]:@"";
+                model.paperName = self.paperName;
+                [model jr_save];
+                SVProgressShowStuteText(@"收藏成功", YES);
+            }else{
+                SVProgressShowStuteText(message, NO);
+            }
+        }];
+    }else{
+        SVProgressShowStuteText(@"请先登录", NO);
+    }
 }
 #pragma mark 内容纠错
 - (IBAction)contentError:(UIButton *)sender {
@@ -422,6 +437,9 @@
 }
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
+    [self.player removeObserver:self forKeyPath:@"progress" context:nil];
+    [self.player removeObserver:self forKeyPath:@"duration" context:nil];
+    [self.player removeObserver:self forKeyPath:@"cacheProgress" context:nil];
 }
 - (void)didMoveToWindow{
     [self stopRoll];

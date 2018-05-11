@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,7 +25,7 @@
                                 <constraint firstAttribute="height" constant="44" id="myo-j0-068"/>
                                 <constraint firstAttribute="width" constant="44" id="xLR-UI-Fvt"/>
                             </constraints>
-                            <state key="normal" image="backward"/>
+                            <state key="normal" image="上一句"/>
                             <connections>
                                 <action selector="upSong:" destination="iN0-l3-epB" eventType="touchUpInside" id="SpW-dR-r16"/>
                             </connections>
@@ -36,7 +36,7 @@
                                 <constraint firstAttribute="height" constant="48" id="1WF-ym-j6P"/>
                                 <constraint firstAttribute="width" constant="48" id="bUq-0Z-nqB"/>
                             </constraints>
-                            <state key="normal" image="play"/>
+                            <state key="normal" image="播放"/>
                             <state key="selected" image="pause"/>
                             <connections>
                                 <action selector="playSong:" destination="iN0-l3-epB" eventType="touchUpInside" id="Hao-vk-spR"/>
@@ -48,7 +48,7 @@
                                 <constraint firstAttribute="width" constant="44" id="e9j-Gl-dXr"/>
                                 <constraint firstAttribute="height" constant="44" id="kId-xr-csI"/>
                             </constraints>
-                            <state key="normal" image="forward"/>
+                            <state key="normal" image="下一句"/>
                             <connections>
                                 <action selector="downSong:" destination="iN0-l3-epB" eventType="touchUpInside" id="BoX-zv-jel"/>
                             </connections>
@@ -197,16 +197,16 @@
     <resources>
         <image name="1.0" width="44" height="44"/>
         <image name="Group 5 Copy" width="226" height="222"/>
-        <image name="backward" width="44" height="44"/>
         <image name="collection-2" width="44" height="44"/>
         <image name="correct" width="44" height="44"/>
         <image name="cycle" width="44" height="44"/>
-        <image name="forward" width="44" height="44"/>
-        <image name="more1" width="44" height="44"/>
-        <image name="more1_fill" width="44" height="44"/>
+        <image name="more1" width="22" height="6"/>
+        <image name="more1_fill" width="22" height="6"/>
         <image name="pause" width="48" height="48"/>
-        <image name="play" width="48" height="48"/>
         <image name="single_favor_fill" width="44" height="44"/>
+        <image name="上一句" width="22" height="17"/>
+        <image name="下一句" width="22" height="17"/>
         <image name="双语" width="44" height="44"/>
+        <image name="播放" width="48" height="48"/>
     </resources>
 </document>

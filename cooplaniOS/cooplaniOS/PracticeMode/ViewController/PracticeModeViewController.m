@@ -92,6 +92,7 @@
     [self loadData];
     _correctInt = 0;
     _NoCorrectInt = 0;
+    [self.player.player play];
 }
 - (void)loadData{
     NSString *str = [[NSBundle mainBundle] pathForResource:@"CET-Template" ofType:@"json"];
@@ -193,6 +194,7 @@
         make.bottom.equalTo(self.view);
     }];
     WeakSelf
+    self.player.paperName = self.title;
     self.player.contentError = ^{
         [weakSelf.player.player pause];
         weakSelf.player.playSongBtn.selected = YES;
@@ -222,13 +224,6 @@
     collectionView.pagingEnabled = YES;
     collectionView.showsHorizontalScrollIndicator = NO;
     self.tikaCollectionView = collectionView;
-//    self.swipeDownGR = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(SwipeGR:)];
-//    [self.swipeDownGR setDirection:UISwipeGestureRecognizerDirectionDown];
-//    [self.tikaCollectionView addGestureRecognizer:self.swipeDownGR];
-//
-//    [self.swipeUpGR setDirection:UISwipeGestureRecognizerDirectionUp];
-//    self.swipeUpGR = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(SwipeGR:)];
-//    [self.tikaCollectionView addGestureRecognizer:self.swipeUpGR];
     [self scrollViewDidScroll:collectionView];
     _isOpen = YES;
 }
@@ -371,8 +366,6 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.player.player play];
-    [self.player.player pause];
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
 }
 - (void)viewWillDisappear:(BOOL)animated{
@@ -383,6 +376,7 @@
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }
+    [self.player.player pause];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -392,9 +386,7 @@
     [super viewDidDisappear:animated];
     [self.player stopRoll];
     [self.player.player pause];
-    [self.player.player removeObserver:self forKeyPath:@"progress" context:nil];
-    [self.player.player removeObserver:self forKeyPath:@"duration" context:nil];
-    [self.player.player removeObserver:self forKeyPath:@"cacheProgress" context:nil];
+    [self.player.playSongBtn setSelected:NO];
 }
 
 /*

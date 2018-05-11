@@ -15,6 +15,7 @@
 #import "TikaCollectionViewCell.h"
 #import "ListenTableViewCell.h"
 #import "FeedbackViewController.h"
+#import "CollectionSentenceModel.h"
 
 @interface ListenPaperViewController ()<UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
 @property (nonatomic, strong) CADisplayLink *timer;//界面刷新定时器
@@ -40,42 +41,46 @@
 @synthesize lengthArray;
 @synthesize timeArray;
 
+- (SUPlayer *)player{
+    if (!_player) {
+        //网络
+        //    NSURL *url = [NSURL URLWithString:[self songURLList][self.songIndex]];
+        //本地
+        NSURL *fileUrl = [[NSBundle mainBundle]URLForResource:@"2017年6月四级真题（一）" withExtension:@"MP3"];
+        _player = [[SUPlayer alloc]initWithURL:fileUrl];
+        
+        [_player addObserver:self forKeyPath:@"progress" options:NSKeyValueObservingOptionNew context:nil];
+        [_player addObserver:self forKeyPath:@"duration" options:NSKeyValueObservingOptionNew context:nil];
+        [_player addObserver:self forKeyPath:@"cacheProgress" options:NSKeyValueObservingOptionNew context:nil];
+        [self.progressSlider addTarget:self action:@selector(changeProgress:) forControlEvents:UIControlEventTouchUpInside];
+        [self.progressSlider setValue:self.player.progress andTime:@"00:00/00:00" animated:YES];
+        self.timeLb.hidden = YES;
+    }
+    return _player;
+}
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.mm_drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
     self.mm_drawerController.closeDrawerGestureModeMask = MMCloseDrawerGestureModeNone;
-    [self.player play];
-    [self.player pause];
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
 }
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    //网络
-//    NSURL *url = [NSURL URLWithString:[self songURLList][self.songIndex]];
-    //本地
-    NSURL *fileUrl = [[NSBundle mainBundle]URLForResource:@"2017年6月四级真题（一）" withExtension:@"MP3"];
-    self.player = [[SUPlayer alloc]initWithURL:fileUrl];
-    
-    [self.player addObserver:self forKeyPath:@"progress" options:NSKeyValueObservingOptionNew context:nil];
-    [self.player addObserver:self forKeyPath:@"duration" options:NSKeyValueObservingOptionNew context:nil];
-    [self.player addObserver:self forKeyPath:@"cacheProgress" options:NSKeyValueObservingOptionNew context:nil];
-    [self.progressSlider addTarget:self action:@selector(changeProgress:) forControlEvents:UIControlEventTouchUpInside];
-    [self.progressSlider setValue:self.player.progress andTime:@"00:00/00:00" animated:YES];
-    self.timeLb.hidden = YES;
     _CNTag = 0;
     _RateTag = 0;
     [self initWithView];
     [self loadLongPress];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playFinished:) name:@"playFinished" object:nil];
+    [self.player play];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }
+    [self.player pause];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -85,6 +90,7 @@
     [super viewDidDisappear:animated];
     [self stopRoll];
     [self.player pause];
+    [self.playSongBtn setSelected:NO];
 }
 
 - (void)initWithView{
@@ -236,7 +242,6 @@
 - (void)stopRoll {
     [_timer invalidate];
     _timer = nil;
-    [self.playSongBtn setSelected:NO];
 }
 #pragma mark 歌词滚动
 - (void)scrollLyric{
@@ -258,8 +263,23 @@
 #pragma mark 单句收藏
 - (IBAction)collectionOneSentence:(UIButton *)sender {
     ListenTableViewCell *cell = [self.lyricTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0]];
-    NSLog(@"%@",cell.listenLb.text);
-    SVProgressShowStuteText(@"收藏成功", YES);
+    if (IS_USER_ID) {
+        NSArray *array = [cell.listenLb.text componentsSeparatedByString:@"\n"];
+        [LTHttpManager collectionSectenceWithUserId:IS_USER_ID SectenceEN:array.count ? array[0]:@"" SentenceCN:array.count > 1 ? array[1]:@"" Complete:^(LTHttpResult result, NSString *message, id data) {
+            if (result == LTHttpResultSuccess) {
+                collectionSentenceModel *model = [[collectionSentenceModel alloc]init];
+                model.sentenceEN = array.count ? array[0]:@"";
+                model.sentenceCN = array.count > 1 ? array[1]:@"";
+                model.paperName = self.title;
+                [model jr_save];
+                SVProgressShowStuteText(@"收藏成功", YES);
+            }else{
+                SVProgressShowStuteText(message, NO);
+            }
+        }];
+    }else{
+        SVProgressShowStuteText(@"请先登录", NO);
+    }
 }
 #pragma mark 内容纠错
 - (IBAction)ContentError:(UIButton *)sender {
@@ -543,11 +563,12 @@
     // Dispose of any resources that can be recreated.
 }
 - (void)dealloc{
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
-//    [self.player stop];
     [self.player removeObserver:self forKeyPath:@"progress" context:nil];
     [self.player removeObserver:self forKeyPath:@"duration" context:nil];
     [self.player removeObserver:self forKeyPath:@"cacheProgress" context:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+    [self.player stop];
+    [self stopRoll];
 }
 /*
 #pragma mark - Navigation
