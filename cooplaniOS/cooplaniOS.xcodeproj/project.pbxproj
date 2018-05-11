@@ -75,6 +75,7 @@
 		9BA08EBB209313B00026935E /* FeedbackContentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BA08EB9209313B00026935E /* FeedbackContentTableViewCell.xib */; };
 		9BA08EBF2093174A0026935E /* FeedbackPhoneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA08EBD2093174A0026935E /* FeedbackPhoneTableViewCell.m */; };
 		9BA08EC02093174A0026935E /* FeedbackPhoneTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BA08EBE2093174A0026935E /* FeedbackPhoneTableViewCell.xib */; };
+		9BA1CB5D20A5677D0093C37B /* collectionSentenceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1CB5C20A5677D0093C37B /* collectionSentenceModel.m */; };
 		9BB0A07E209C762C00089C4A /* TestPaperModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB0A07D209C762C00089C4A /* TestPaperModel.m */; };
 		9BB3E26320998A4400FDBE77 /* PracticeModeHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB3E26220998A4400FDBE77 /* PracticeModeHeaderView.m */; };
 		9BB3E26520998A6000FDBE77 /* PracticeModeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BB3E26420998A6000FDBE77 /* PracticeModeHeaderView.xib */; };
@@ -236,6 +237,8 @@
 		9BA08EBC2093174A0026935E /* FeedbackPhoneTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeedbackPhoneTableViewCell.h; sourceTree = "<group>"; };
 		9BA08EBD2093174A0026935E /* FeedbackPhoneTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeedbackPhoneTableViewCell.m; sourceTree = "<group>"; };
 		9BA08EBE2093174A0026935E /* FeedbackPhoneTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedbackPhoneTableViewCell.xib; sourceTree = "<group>"; };
+		9BA1CB5B20A5677D0093C37B /* collectionSentenceModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = collectionSentenceModel.h; sourceTree = "<group>"; };
+		9BA1CB5C20A5677D0093C37B /* collectionSentenceModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = collectionSentenceModel.m; sourceTree = "<group>"; };
 		9BB0A07C209C762C00089C4A /* TestPaperModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestPaperModel.h; sourceTree = "<group>"; };
 		9BB0A07D209C762C00089C4A /* TestPaperModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestPaperModel.m; sourceTree = "<group>"; };
 		9BB3E26120998A4400FDBE77 /* PracticeModeHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PracticeModeHeaderView.h; sourceTree = "<group>"; };
@@ -480,11 +483,9 @@
 		9B1D31C8207367D5007674CF /* Note */ = {
 			isa = PBXGroup;
 			children = (
-				9B1D31CC2073683A007674CF /* MyNoteViewController.h */,
-				9B1D31CD2073683A007674CF /* MyNoteViewController.m */,
-				9B32CB08209BF00300FCEED3 /* SentenceTableViewCell.h */,
-				9B32CB09209BF00300FCEED3 /* SentenceTableViewCell.m */,
-				9B32CB0A209BF00300FCEED3 /* SentenceTableViewCell.xib */,
+				9BA1CB5720A565100093C37B /* ViewController */,
+				9BA1CB5620A565060093C37B /* View */,
+				9BA1CB5520A564FE0093C37B /* Model */,
 			);
 			path = Note;
 			sourceTree = "<group>";
@@ -588,6 +589,34 @@
 				9BA08EBE2093174A0026935E /* FeedbackPhoneTableViewCell.xib */,
 			);
 			path = Feedback;
+			sourceTree = "<group>";
+		};
+		9BA1CB5520A564FE0093C37B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9BA1CB5B20A5677D0093C37B /* collectionSentenceModel.h */,
+				9BA1CB5C20A5677D0093C37B /* collectionSentenceModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		9BA1CB5620A565060093C37B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9B32CB08209BF00300FCEED3 /* SentenceTableViewCell.h */,
+				9B32CB09209BF00300FCEED3 /* SentenceTableViewCell.m */,
+				9B32CB0A209BF00300FCEED3 /* SentenceTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9BA1CB5720A565100093C37B /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				9B1D31CC2073683A007674CF /* MyNoteViewController.h */,
+				9B1D31CD2073683A007674CF /* MyNoteViewController.m */,
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		9BC1D6B220738393007D88EF /* Utils */ = {
@@ -1057,6 +1086,7 @@
 				9B3D02CF20847C5A005C923B /* PaperDetailTableViewCell.m in Sources */,
 				9BB0A07E209C762C00089C4A /* TestPaperModel.m in Sources */,
 				9B1EDCE42089C06D0033183F /* UIView+Toast.m in Sources */,
+				9BA1CB5D20A5677D0093C37B /* collectionSentenceModel.m in Sources */,
 				9B32CB0B209BF00300FCEED3 /* SentenceTableViewCell.m in Sources */,
 				9B3D02C62084468E005C923B /* SUPlayer.m in Sources */,
 				9B135CCF207CD8AA0040A883 /* LTHTTPSessionManager.m in Sources */,

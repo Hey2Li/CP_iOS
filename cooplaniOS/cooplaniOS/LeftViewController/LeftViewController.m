@@ -140,6 +140,7 @@
     UIView *view = [[UIView alloc]init];
     view.backgroundColor = DRGBCOLOR;
     cell.selectedBackgroundView = view;
+    cell.titleLb.font = [UIFont systemFontOfSize:14];
     switch (indexPath.section) {
         case 0:
             cell.titleLb.text = @"我的笔记";
@@ -164,7 +165,6 @@
         case 5:
             cell.titleLb.text = @"退出登录";
             cell.titleLb.textAlignment = NSTextAlignmentLeft;
-            cell.titleLb.font = [UIFont systemFontOfSize:14];
             cell.titleLb.textColor = UIColorFromRGB(0xFFFFFF);
             cell.contentView.backgroundColor = UIColorFromRGB(0xD76F67);
             cell.selectionStyle = NO;

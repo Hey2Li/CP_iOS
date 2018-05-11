@@ -87,7 +87,7 @@
     UIButton *continueBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [continueBtn setTitle:@"继续" forState:UIControlStateNormal];
     [continueBtn setBackgroundColor:DRGBCOLOR];
-    [continueBtn setTitleColor:UIColorFromRGB(0x666666) forState:UIControlStateNormal];
+    [continueBtn setTitleColor:UIColorFromRGB(0xFFFFFF) forState:UIControlStateNormal];
     [self.view addSubview:continueBtn];
     [continueBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view);
