@@ -251,22 +251,16 @@
             break;
         case 5:
         {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确定退出登录" message:nil preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"确定退出登录" sureBtn:@"确定" cancleBtn:@"取消"];
+            alertView.resultIndex = ^(NSInteger index) {
                 NSString*appDomain = [[NSBundle mainBundle]bundleIdentifier];
                 [[NSUserDefaults standardUserDefaults]removePersistentDomainForName:appDomain];
-                [alert dismissViewControllerAnimated:YES completion:nil];
                 SVProgressShowStuteText(@"退出成功", YES);
                 [self.headerBtn setImage:[UIImage imageNamed:@"touxiang"] forState:UIControlStateNormal];
                 self.userNameLb.text = @"请登录";
                 [self.myTableView reloadData];
-            }];
-            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-                [alert dismissViewControllerAnimated:YES completion:nil];
-            }];
-            [alert addAction:sureAction];
-            [alert addAction:cancelAction];
-            [self presentViewController:alert animated:YES completion:nil];
+            };
+            [alertView show];
         }
         default:
             break;

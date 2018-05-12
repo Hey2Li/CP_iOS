@@ -69,10 +69,14 @@
     }else if (indexPath.row == 1){
         [self selectMode];
     }else if (indexPath.row == 2){
-        TestModeViewController *vc = [[TestModeViewController alloc]init];
-        vc.title = self.title;
-        [self.maskView removeFromSuperview];
-        [self.navigationController pushViewController:vc animated:YES];
+        LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"模拟考场需要一鼓作气的完成准备好了吗？" sureBtn:@"准备好了！" cancleBtn:@"取消"];
+        alertView.resultIndex = ^(NSInteger index) {
+            TestModeViewController *vc = [[TestModeViewController alloc]init];
+            vc.title = self.title;
+            [self.maskView removeFromSuperview];
+            [self.navigationController pushViewController:vc animated:YES];
+        };
+        [alertView show];
     }else{
         SVProgressShowStuteText(@"暂未开放", NO);
     }

@@ -120,6 +120,7 @@
     _correctInt = 0;
     _NoCorrectInt = 0;
     [self initWithNavi];
+    [self.player play];
 }
 - (void)initWithNavi{
     self.navigationItem.hidesBackButton = YES;
@@ -244,9 +245,10 @@
     [self scrollViewDidScroll:collectionView];
  
 }
+#pragma mark -- 交卷
 - (void)donePaperClick:(UIButton *)btn{
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确定交卷" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"确定交卷" sureBtn:@"确定" cancleBtn:@"取消"];
+    alertView.resultIndex = ^(NSInteger index) {
         float correctFloat = (float)_correctInt/(float)(_correctInt + _NoCorrectInt);
         AnswerViewController *vc = [[AnswerViewController alloc]init];
         vc.correct = [NSString stringWithFormat:@"%0.f",isnan(correctFloat * 100)?0:correctFloat * 100];
@@ -254,13 +256,8 @@
         vc.paperSection = _paperSection;
         vc.questionsArray = self.sectionsModelArray;
         [self.navigationController pushViewController:vc animated:YES];
-    }];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-        [alert dismissViewControllerAnimated:YES completion:nil];
-    }];
-    [alert addAction:sureAction];
-    [alert addAction:cancelAction];
-    [self presentViewController:alert animated:YES completion:nil];
+    };
+    [alertView show];
 }
 #pragma mark UICollectionViewDelegate
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
@@ -347,16 +344,6 @@
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确定考试" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self.player play];
-    }];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }];
-    [alert addAction:sureAction];
-    [alert addAction:cancelAction];
-    [self presentViewController:alert animated:YES completion:nil];
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
