@@ -76,6 +76,7 @@
 		9BA08EBF2093174A0026935E /* FeedbackPhoneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA08EBD2093174A0026935E /* FeedbackPhoneTableViewCell.m */; };
 		9BA08EC02093174A0026935E /* FeedbackPhoneTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BA08EBE2093174A0026935E /* FeedbackPhoneTableViewCell.xib */; };
 		9BA1CB5D20A5677D0093C37B /* collectionSentenceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1CB5C20A5677D0093C37B /* collectionSentenceModel.m */; };
+		9BA1CB6320A6BD730093C37B /* LTAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1CB6220A6BD730093C37B /* LTAlertView.m */; };
 		9BB0A07E209C762C00089C4A /* TestPaperModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB0A07D209C762C00089C4A /* TestPaperModel.m */; };
 		9BB3E26320998A4400FDBE77 /* PracticeModeHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB3E26220998A4400FDBE77 /* PracticeModeHeaderView.m */; };
 		9BB3E26520998A6000FDBE77 /* PracticeModeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BB3E26420998A6000FDBE77 /* PracticeModeHeaderView.xib */; };
@@ -239,6 +240,8 @@
 		9BA08EBE2093174A0026935E /* FeedbackPhoneTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedbackPhoneTableViewCell.xib; sourceTree = "<group>"; };
 		9BA1CB5B20A5677D0093C37B /* collectionSentenceModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = collectionSentenceModel.h; sourceTree = "<group>"; };
 		9BA1CB5C20A5677D0093C37B /* collectionSentenceModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = collectionSentenceModel.m; sourceTree = "<group>"; };
+		9BA1CB6120A6BD730093C37B /* LTAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTAlertView.h; sourceTree = "<group>"; };
+		9BA1CB6220A6BD730093C37B /* LTAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTAlertView.m; sourceTree = "<group>"; };
 		9BB0A07C209C762C00089C4A /* TestPaperModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestPaperModel.h; sourceTree = "<group>"; };
 		9BB0A07D209C762C00089C4A /* TestPaperModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestPaperModel.m; sourceTree = "<group>"; };
 		9BB3E26120998A4400FDBE77 /* PracticeModeHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PracticeModeHeaderView.h; sourceTree = "<group>"; };
@@ -653,6 +656,8 @@
 				9B6FB85D207F3D7B00BC07F3 /* HYWord.m */,
 				9BB3E26C209AA60A00FDBE77 /* PaperJSONKey.h */,
 				9BB3E26D209AA60A00FDBE77 /* PaperJSONKey.m */,
+				9BA1CB6120A6BD730093C37B /* LTAlertView.h */,
+				9BA1CB6220A6BD730093C37B /* LTAlertView.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1113,6 +1118,7 @@
 				9B1D31D720736866007674CF /* MyDownloadViewController.m in Sources */,
 				9B4BB728207B6E910029015F /* SUResourceLoader.m in Sources */,
 				9BEA0A402071D9190026AF2C /* main.m in Sources */,
+				9BA1CB6320A6BD730093C37B /* LTAlertView.m in Sources */,
 				9B135CBB207C6B1D0040A883 /* UIImage+mask.m in Sources */,
 				9B4BB737207B6EDC0029015F /* NSString+SULoader.m in Sources */,
 				9BDFE0C4208833B500B59B3B /* LeftViweTableViewCell.m in Sources */,

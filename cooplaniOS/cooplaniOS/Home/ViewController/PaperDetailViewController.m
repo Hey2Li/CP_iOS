@@ -11,6 +11,7 @@
 #import "ListenPaperViewController.h"
 #import "TestModeViewController.h"
 #import "PracticeModeViewController.h"
+#import "UIImage+mask.h"
 
 @interface PaperDetailViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
@@ -113,7 +114,9 @@
     [sectionABtn setTitle:@"新闻题" forState:UIControlStateNormal];
     sectionABtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [sectionABtn setTitleColor:UIColorFromRGB(0xA4A4A4) forState:UIControlStateNormal];
-    [sectionABtn setBackgroundColor:UIColorFromRGB(0xf7f7f7)];
+    [sectionABtn setBackgroundImage:[UIImage imageWithColor:UIColorFromRGB(0xf7f7f7)] forState:UIControlStateNormal];
+    [sectionABtn setBackgroundImage:[UIImage imageWithColor:DRGBCOLOR] forState:UIControlStateHighlighted];
+    [sectionABtn.layer setMasksToBounds:YES];
     [sectionABtn.layer setCornerRadius:22.5f];
     [selectView addSubview:sectionABtn];
     [sectionABtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -129,6 +132,8 @@
     [sectionBBtn setTitleColor:UIColorFromRGB(0xA4A4A4) forState:UIControlStateNormal];
     [sectionBBtn setBackgroundColor:UIColorFromRGB(0xf7f7f7)];
     [sectionBBtn.layer setCornerRadius:22.5f];
+    [sectionBBtn setBackgroundImage:[UIImage imageWithColor:DRGBCOLOR] forState:UIControlStateHighlighted];
+    [sectionBBtn.layer setMasksToBounds:YES];
     [selectView addSubview:sectionBBtn];
     [sectionBBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(sectionABtn);
@@ -143,6 +148,8 @@
     [sectionCBtn setTitleColor:UIColorFromRGB(0xA4A4A4) forState:UIControlStateNormal];
     [sectionCBtn setBackgroundColor:UIColorFromRGB(0xf7f7f7)];
     [sectionCBtn.layer setCornerRadius:22.5f];
+    [sectionCBtn setBackgroundImage:[UIImage imageWithColor:DRGBCOLOR] forState:UIControlStateHighlighted];
+    [sectionCBtn.layer setMasksToBounds:YES];
     [selectView addSubview:sectionCBtn];
     [sectionCBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(sectionABtn);
@@ -157,6 +164,8 @@
     [allSectionBtn setTitleColor:UIColorFromRGB(0xA4A4A4) forState:UIControlStateNormal];
     [allSectionBtn setBackgroundColor:UIColorFromRGB(0xf7f7f7)];
     [allSectionBtn.layer setCornerRadius:22.5f];
+    [allSectionBtn setBackgroundImage:[UIImage imageWithColor:DRGBCOLOR] forState:UIControlStateHighlighted];
+    [allSectionBtn.layer setMasksToBounds:YES];
     [selectView addSubview:allSectionBtn];
     [allSectionBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.width.equalTo(sectionABtn);

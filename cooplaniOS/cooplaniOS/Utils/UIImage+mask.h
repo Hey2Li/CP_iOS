@@ -20,4 +20,7 @@
  */
 + (UIImage *)createOtherMerchantImage:(NSString *)str withBgImage:(UIImage *)image withFont:(CGFloat)fontSize withTextColor:(UIColor *)textColor;
 + (UIImage *)imageWithText:(NSString *)text fontSize:(CGFloat)fontsize size:(CGSize)size textColor:(UIColor *)textColor backgroundColor:(UIColor *)backgroundColor radius:(CGFloat)radius;
+
++ (UIImage*)imageWithColor:(UIColor*)color;
+
 @end
