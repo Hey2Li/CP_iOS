@@ -8,13 +8,21 @@
 
 #import "MyCollectionViewController.h"
 #import "MyCollectionPaperTableViewCell.h"
+#import "myCollectionModel.h"
 
 @interface MyCollectionViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
+@property (nonatomic, strong) NSMutableArray *dataArray;
 @end
 
 @implementation MyCollectionViewController
 
+- (NSMutableArray *)dataArray{
+    if (!_dataArray) {
+        _dataArray = [NSMutableArray array];
+    }
+    return _dataArray;
+}
 - (UITableView *)myTableView{
     if (!_myTableView) {
         _myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
@@ -27,13 +35,14 @@
 }
 #pragma mark UITableViewDegate&DataSource
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 2;
+    return self.dataArray.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 74;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     MyCollectionPaperTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([MyCollectionPaperTableViewCell class])];
+    cell.model = self.dataArray[indexPath.row];
     cell.selectionStyle = NO;
     return cell;
 }
@@ -58,8 +67,30 @@
     self.title = @"我的收藏";
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.myTableView];
+    [self loadData];
 }
-
+- (void)loadData{
+    if (IS_USER_ID) {
+        [LTHttpManager findAllCollectionTestPaperWithUserId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
+            if (LTHttpResultSuccess == result) {
+                [self.dataArray removeAllObjects];
+                dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                    for (NSDictionary *dict in data[@"responseData"]) {
+                        MyCollectionModel *model = [MyCollectionModel mj_objectWithKeyValues:dict];
+                        [self.dataArray addObject:model];
+                    }
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.myTableView reloadData];
+                    });
+                });
+            }else{
+                SVProgressShowStuteText(message, NO);
+            }
+        }];
+    }else{
+        SVProgressShowStuteText(@"请先登录", NO);
+    }
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

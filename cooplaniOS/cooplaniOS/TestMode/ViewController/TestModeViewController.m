@@ -127,18 +127,15 @@
     UIImage *image = [[UIImage imageNamed:@"back"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:image style:UIBarButtonItemStyleDone target:self action:@selector(back)];
     self.navigationItem.leftItemsSupplementBackButton = YES;
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
 }
+#pragma mark 返回
 - (void)back{
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"确定退出" message:nil preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"确定退出" sureBtn:@"确定" cancleBtn:@"取消"];
+    [alertView show];
+    alertView.resultIndex = ^(NSInteger index) {
         [self.navigationController popViewControllerAnimated:YES];
-    }];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-        
-    }];
-    [alert addAction:sureAction];
-    [alert addAction:cancelAction];
-    [self presentViewController:alert animated:YES completion:nil];
+    };
 }
 - (void)loadData{
     NSString *str = [[NSBundle mainBundle] pathForResource:@"CET-Template" ofType:@"json"];
@@ -284,6 +281,8 @@
     cell.questionsModel = questionsModel;
     cell.questionStr = [NSString stringWithFormat:@"%@",questionsModel.PassageDirection];
     cell.collectionIndexPath = indexPath;
+    _collectionIndexPath = indexPath;//监听滑到那个section
+    [self.questionTableView reloadData];
     WeakSelf
     cell.questionCellClick = ^(NSIndexPath *cellIndexPath, BOOL isCorrect) {
         NSIndexPath *nextIndexPath;
@@ -312,7 +311,6 @@
             [self.navigationController pushViewController:vc animated:YES];
         }
     };
-    //    cell.layer.masksToBounds = YES;
     return cell;
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{

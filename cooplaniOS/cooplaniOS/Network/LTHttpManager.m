@@ -9,16 +9,41 @@
 #import "LTHttpManager.h"
 
 @implementation LTHttpManager
+/**
+ 查看所有banner跳转页面
+ 
+ @param complete block
+ */
 + (void)FindAllBannerWithComplete:(completeBlock)complete{
-    LTHTTPSessionManager *manager = [LTHTTPSessionManager new];
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
     NSDictionary *paramters = @{@"version":[Tool getAppVersion]};
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/banner/findAllBanner",BaseURL] parameters:paramters complete:complete];
 }
+/**
+ 首页查看所有试卷
+ 
+ @param complete block
+ */
 + (void)FindAllWithComplete:(completeBlock)complete{
-    LTHTTPSessionManager *manager = [LTHTTPSessionManager new];
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
     NSDictionary *paramters = @{@"version":[Tool getAppVersion]};
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/testPaper/findAll",BaseURL]parameters:paramters complete:complete];
 }
+
+/**
+ 查询一张试卷的信息(首页点击试卷获取试卷)
+ 
+ @param ID 试卷的id
+ @param complete block
+ */
++ (void)findOneTestPaperWithID:(NSNumber *)ID Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+                                @"id":ID,
+                                };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/testPaper/findOne",BaseURL]parameters:paramters complete:complete];
+}
+
 /**
  用户登录+注册,使用验证码登录
  
@@ -27,7 +52,7 @@
  @param complete block
  */
 + (void)UserCodeLoginWithPhone:(NSString *)phone andCode:(NSString *)code Complete:(completeBlock)complete{
-    LTHTTPSessionManager *manager = [LTHTTPSessionManager new];
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
     NSDictionary *paramters = @{@"version":[Tool getAppVersion],
                                 @"phone":phone,
                                 @"code":code
@@ -43,7 +68,7 @@
  @param complete block
  */
 + (void)UserSMSCodeWithPhone:(NSString *)phone Complete:(completeBlock)complete{
-    LTHTTPSessionManager *manager = [LTHTTPSessionManager new];
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
     NSDictionary *paramters = @{@"version":[Tool getAppVersion],
                                 @"phone":phone,
                                 };
@@ -60,7 +85,7 @@
  @param complete block
  */
 + (void)feedbackWithUserId:(NSNumber *)user_id Type:(NSString *)type Info:(NSString *)info ContactInfo:(NSString *)contactInfo Files:(NSArray *)files Complete:(completeBlock)complete{
-    LTHTTPSessionManager *manager = [LTHTTPSessionManager new];
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
     NSDictionary *paramters = @{@"version":[Tool getAppVersion],
                                 @"userId":user_id,
                                 @"type":type,
@@ -84,7 +109,7 @@
  @param complete block
  */
 + (void)thirdPartyLoginWithOpenId:(NSString *)openId IdentityType:(NSString *)identityType Token:(NSString *)token TokenTime:(NSString *)tokenTime HeadPortrait:(NSString *)headPortrait NickName:(NSString *)nickname Sex:(NSString *)sex age:(NSString *)age Complete:(completeBlock)complete{
-    LTHTTPSessionManager *manager = [LTHTTPSessionManager new];
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
     NSDictionary *paramters = @{@"version":[Tool getAppVersion],
                                 @"openId":openId,
                                 @"identityType":identityType,
@@ -98,6 +123,17 @@
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/user/thirdPartyLogin",BaseURL]parameters:paramters complete:complete];
 }
 /**
+ 用户注销
+ 
+ @param complete block
+ */
++ (void)UserLoginOut:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters = @{@"version":[Tool getAppVersion]};
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/user/logout",BaseURL]parameters:paramters complete:complete];
+}
+
+/**
  我的笔记收藏句子
  
  @param userId 用户ID
@@ -105,13 +141,84 @@
  @param sentenceCN 中文翻译
  @param complete block
  */
-+ (void)collectionSectenceWithUserId:(NSString *)userId SectenceEN:(NSString *)sentenceEN SentenceCN:(NSString *)sentenceCN Complete:(completeBlock)complete{
-    LTHTTPSessionManager *manager = [LTHTTPSessionManager new];
++ (void)collectionSectenceWithUserId:(NSString *)userId SectenceEN:(NSString *)sentenceEN SentenceCN:(NSString *)sentenceCN TestPaperName:(NSString *)testPaperName Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
     NSDictionary *paramters = @{@"version":[Tool getAppVersion],
                                 @"userId":userId,
                                 @"sentenceEN":sentenceEN,
                                 @"sentenceCN":sentenceCN,
+                                @"testPaperName":testPaperName
                                 };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/SentenceNote/private/add",BaseURL]parameters:paramters complete:complete];
+}
+/**
+ 用户删除收藏句子笔记(用户登录后才可操作)
+ 
+ @param ID 收藏的句子id
+ @param complete block
+ */
++ (void)deleteSentenceNoteWithId:(NSNumber *)ID WithComplete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+                                @"id":ID,
+                                };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/SentenceNote/private/delete",BaseURL]parameters:paramters complete:complete];
+}
+
+/**
+ 用户以时间降序查询收藏的句子笔记(用户登录后才可操作)
+ 
+ @param userId 用户id
+ @param complete block
+ */
++ (void)findSectenceNoteWIthUserId:(NSNumber *)userId Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+                                @"userId":userId,
+                                };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/SentenceNote/private/find",BaseURL]parameters:paramters complete:complete];
+}
+
+/**
+ 用户收藏试卷(用户登录后才可操作)
+ 
+ @param user_id 用户id
+ @param testPaperId 试卷的id
+ @param complete block
+ */
++ (void)collectionTestPaperWithUserId:(NSNumber *)user_id TestPaperId:(NSNumber *)testPaperId Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+                                @"user_id":user_id,
+                                @"testPaperId":testPaperId
+                                };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/myCollect/private/add",BaseURL]parameters:paramters complete:complete];
+}
+
+/**
+ 用户删除收藏试卷(用户登录后才可操作)
+ 
+ @param ID 收藏表中的id
+ @param complete block
+ */
++ (void)deleteCollectionTestPaperWithId:(NSNumber *)ID Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+                                @"id":ID,
+                                };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/myCollect/private/add",BaseURL]parameters:paramters complete:complete];
+}
+
+/**
+ 用户查看所有收藏试卷(用户登录后才可操作)
+ 
+ @param userId 用户id
+ */
++ (void)findAllCollectionTestPaperWithUserId:(NSNumber *)userId Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+                                @"userId":userId
+                                };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/myCollect/private/find",BaseURL]parameters:paramters complete:complete];
 }
 @end

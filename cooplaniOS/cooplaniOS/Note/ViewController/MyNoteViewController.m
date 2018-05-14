@@ -13,10 +13,17 @@
 @interface MyNoteViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
 @property (strong, nonatomic) NSIndexPath* editingIndexPath;  //当前左滑cell的index，在代理方法中设置
-@property (nonatomic, strong) NSArray *sentenceArray;
+@property (nonatomic, strong) NSMutableArray *sentenceArray;
 @end
 
 @implementation MyNoteViewController
+
+- (NSMutableArray *)sentenceArray{
+    if (!_sentenceArray) {
+        _sentenceArray = [NSMutableArray array];
+    }
+    return _sentenceArray;
+}
 - (UITableView *)myTableView{
     if (!_myTableView) {
         _myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64) style:UITableViewStylePlain];
@@ -47,12 +54,18 @@
     return @"删除";
 }
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-    // 从数据源中删除
-//    [_data removeObjectAtIndex:indexPath.row];
-    // 从列表中删除
-//    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        
+        collectionSentenceModel *model = self.sentenceArray[indexPath.row];
+        [LTHttpManager deleteSentenceNoteWithId:[NSNumber numberWithInteger:model.ID] WithComplete:^(LTHttpResult result, NSString *message, id data) {
+            if (LTHttpResultSuccess == result) {
+                // 从数据源中删除
+                [self.sentenceArray removeObjectAtIndex:indexPath.row];
+                //     从列表中删除
+                [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            }else{
+                SVProgressShowStuteText(@"删除失败", NO);
+            }
+        }];
     }
 }
 - (void)viewDidLoad {
@@ -61,8 +74,29 @@
     self.title = @"我的笔记";
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.myTableView];
-    self.sentenceArray = [collectionSentenceModel jr_findAll];
-    [self.myTableView reloadData];
+//    self.sentenceArray = [collectionSentenceModel jr_findAll];
+//    [self.myTableView reloadData];
+    [self loadData];
+}
+- (void)loadData{
+    if (IS_USER_ID) {
+        [LTHttpManager findSectenceNoteWIthUserId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
+            NSArray *array = data[@"responseData"];
+            [self.sentenceArray removeAllObjects];
+            [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                    collectionSentenceModel *model = [collectionSentenceModel mj_objectWithKeyValues:obj];
+                    [self.sentenceArray addObject:model];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.myTableView reloadData];
+                    });
+                });
+               
+            }];
+        }];
+    }else{
+        SVProgressShowStuteText(@"请先登录", NO);
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

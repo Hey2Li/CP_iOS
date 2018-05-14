@@ -27,6 +27,14 @@
 + (void)FindAllWithComplete:(completeBlock)complete;
 
 /**
+ 查询一张试卷的信息(首页点击试卷获取试卷)
+ 
+ @param ID 试卷的id
+ @param complete block
+ */
++ (void)findOneTestPaperWithID:(NSNumber *)ID Complete:(completeBlock)complete;
+
+/**
  用户登录+注册,使用验证码登录
 
  @param phone 登录手机号
@@ -73,6 +81,14 @@
  */
 + (void)thirdPartyLoginWithOpenId:(NSString *)openId IdentityType:(NSString *)identityType Token:(NSString *)token TokenTime:(NSString *)tokenTime HeadPortrait:(NSString *)headPortrait NickName:(NSString *)nickname Sex:(NSString *)sex age:(NSString *)age Complete:(completeBlock)complete;
 
+
+/**
+ 用户注销
+
+ @param complete block
+ */
++ (void)UserLoginOut:(completeBlock)complete;
+
 /**
  我的笔记收藏句子
 
@@ -81,5 +97,48 @@
  @param sentenceCN 中文翻译
  @param complete block
  */
-+ (void)collectionSectenceWithUserId:(NSString *)userId SectenceEN:(NSString *)sentenceEN SentenceCN:(NSString *)sentenceCN Complete:(completeBlock)complete;
++ (void)collectionSectenceWithUserId:(NSString *)userId SectenceEN:(NSString *)sentenceEN SentenceCN:(NSString *)sentenceCN TestPaperName:(NSString *)testPaperName Complete:(completeBlock)complete;
+
+
+/**
+ 用户删除收藏句子笔记(用户登录后才可操作)
+
+ @param ID 收藏的句子id
+ @param complete block
+ */
++ (void)deleteSentenceNoteWithId:(NSNumber *)ID WithComplete:(completeBlock)complete;
+
+
+/**
+ 用户以时间降序查询收藏的句子笔记(用户登录后才可操作)
+
+ @param userId 用户id
+ @param complete block
+ */
++ (void)findSectenceNoteWIthUserId:(NSNumber *)userId Complete:(completeBlock)complete;
+/**
+ 用户收藏试卷(用户登录后才可操作)
+
+ @param user_id 用户id
+ @param testPaperId 试卷的id
+ @param complete block
+ */
++ (void)collectionTestPaperWithUserId:(NSNumber *)user_id TestPaperId:(NSNumber *)testPaperId Complete:(completeBlock)complete;
+
+
+/**
+ 用户删除收藏试卷(用户登录后才可操作)
+
+ @param ID 收藏表中的id
+ @param complete block
+ */
++ (void)deleteCollectionTestPaperWithId:(NSNumber *)ID Complete:(completeBlock)complete;
+
+
+/**
+ 用户查看所有收藏试卷(用户登录后才可操作)
+
+ @param userId 用户id
+ */
++ (void)findAllCollectionTestPaperWithUserId:(NSNumber *)userId Complete:(completeBlock)complete;
 @end

@@ -20,5 +20,9 @@
 
     // Configure the view for the selected state
 }
-
+- (void)setModel:(MyCollectionModel *)model{
+    _model = model;
+    _paperName.text = model.name;
+    
+}
 @end

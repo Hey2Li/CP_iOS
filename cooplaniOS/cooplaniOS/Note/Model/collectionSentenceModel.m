@@ -9,10 +9,15 @@
 #import "collectionSentenceModel.h"
 
 @implementation collectionSentenceModel
-- (instancetype)init{
-    if (self = [super init]) {
-        [[JRDBMgr shareInstance]registerClazz:[self class]];
-    }
-    return self;
+//- (instancetype)init{
+//    if (self = [super init]) {
+//        [[JRDBMgr shareInstance]registerClazz:[self class]];
+//    }
+//    return self;
+//}
++ (NSDictionary *)mj_replacedKeyFromPropertyName{
+    return @{@"ID":@"id",
+             @"paperName":@"testPaperName"
+             };
 }
 @end

@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MyCollectionModel.h"
 
 @interface MyCollectionPaperTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *paperImageView;
 @property (weak, nonatomic) IBOutlet UILabel *paperName;
 @property (weak, nonatomic) IBOutlet UILabel *fileSizeLb;
 @property (weak, nonatomic) IBOutlet UIButton *dowloadBtn;
+@property (nonatomic, strong) MyCollectionModel *model;
 @end

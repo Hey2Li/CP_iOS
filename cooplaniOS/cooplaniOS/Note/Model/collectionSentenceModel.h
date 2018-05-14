@@ -12,4 +12,5 @@
 @property (nonatomic, copy) NSString *sentenceEN;
 @property (nonatomic, copy) NSString *sentenceCN;
 @property (nonatomic, copy) NSString *paperName;
+@property (nonatomic, assign) NSInteger ID;
 @end
