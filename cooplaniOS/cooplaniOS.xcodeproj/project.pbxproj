@@ -77,6 +77,7 @@
 		9BA08EC02093174A0026935E /* FeedbackPhoneTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BA08EBE2093174A0026935E /* FeedbackPhoneTableViewCell.xib */; };
 		9BA1CB5D20A5677D0093C37B /* collectionSentenceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1CB5C20A5677D0093C37B /* collectionSentenceModel.m */; };
 		9BA1CB6320A6BD730093C37B /* LTAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1CB6220A6BD730093C37B /* LTAlertView.m */; };
+		9BA1CB6920A92A790093C37B /* MyCollectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1CB6820A92A790093C37B /* MyCollectionModel.m */; };
 		9BB0A07E209C762C00089C4A /* TestPaperModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB0A07D209C762C00089C4A /* TestPaperModel.m */; };
 		9BB3E26320998A4400FDBE77 /* PracticeModeHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB3E26220998A4400FDBE77 /* PracticeModeHeaderView.m */; };
 		9BB3E26520998A6000FDBE77 /* PracticeModeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BB3E26420998A6000FDBE77 /* PracticeModeHeaderView.xib */; };
@@ -242,6 +243,8 @@
 		9BA1CB5C20A5677D0093C37B /* collectionSentenceModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = collectionSentenceModel.m; sourceTree = "<group>"; };
 		9BA1CB6120A6BD730093C37B /* LTAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTAlertView.h; sourceTree = "<group>"; };
 		9BA1CB6220A6BD730093C37B /* LTAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTAlertView.m; sourceTree = "<group>"; };
+		9BA1CB6720A92A790093C37B /* MyCollectionModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyCollectionModel.h; sourceTree = "<group>"; };
+		9BA1CB6820A92A790093C37B /* MyCollectionModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyCollectionModel.m; sourceTree = "<group>"; };
 		9BB0A07C209C762C00089C4A /* TestPaperModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestPaperModel.h; sourceTree = "<group>"; };
 		9BB0A07D209C762C00089C4A /* TestPaperModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestPaperModel.m; sourceTree = "<group>"; };
 		9BB3E26120998A4400FDBE77 /* PracticeModeHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PracticeModeHeaderView.h; sourceTree = "<group>"; };
@@ -496,13 +499,9 @@
 		9B1D31C9207367E0007674CF /* Collection */ = {
 			isa = PBXGroup;
 			children = (
-				9B1EDCE52089CEAD0033183F /* NoContentViewController.h */,
-				9B1EDCE62089CEAD0033183F /* NoContentViewController.m */,
-				9B1D31CF20736846007674CF /* MyCollectionViewController.h */,
-				9B1D31D020736846007674CF /* MyCollectionViewController.m */,
-				9B32CB12209C25A500FCEED3 /* MyCollectionPaperTableViewCell.h */,
-				9B32CB13209C25A500FCEED3 /* MyCollectionPaperTableViewCell.m */,
-				9B32CB14209C25A500FCEED3 /* MyCollectionPaperTableViewCell.xib */,
+				9BA1CB6620A92A550093C37B /* Model */,
+				9BA1CB6520A92A500093C37B /* View */,
+				9BA1CB6420A92A3C0093C37B /* ViewController */,
 			);
 			path = Collection;
 			sourceTree = "<group>";
@@ -620,6 +619,36 @@
 				9B1D31CD2073683A007674CF /* MyNoteViewController.m */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		9BA1CB6420A92A3C0093C37B /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				9B1EDCE52089CEAD0033183F /* NoContentViewController.h */,
+				9B1EDCE62089CEAD0033183F /* NoContentViewController.m */,
+				9B1D31CF20736846007674CF /* MyCollectionViewController.h */,
+				9B1D31D020736846007674CF /* MyCollectionViewController.m */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		9BA1CB6520A92A500093C37B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9B32CB12209C25A500FCEED3 /* MyCollectionPaperTableViewCell.h */,
+				9B32CB13209C25A500FCEED3 /* MyCollectionPaperTableViewCell.m */,
+				9B32CB14209C25A500FCEED3 /* MyCollectionPaperTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9BA1CB6620A92A550093C37B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9BA1CB6720A92A790093C37B /* MyCollectionModel.h */,
+				9BA1CB6820A92A790093C37B /* MyCollectionModel.m */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		9BC1D6B220738393007D88EF /* Utils */ = {
@@ -1132,6 +1161,7 @@
 				9B6FB85F207F3D7B00BC07F3 /* HYWord.m in Sources */,
 				9B1D31BF20734891007674CF /* HomeViewController.m in Sources */,
 				9B3D02D520848878005C923B /* LoginViewController.m in Sources */,
+				9BA1CB6920A92A790093C37B /* MyCollectionModel.m in Sources */,
 				9BA08EB0209308440026935E /* FeedbackViewController.m in Sources */,
 				9BEA0A322071D9190026AF2C /* AppDelegate.m in Sources */,
 				9BB3E271209AD05600FDBE77 /* PMAnswerViewController.m in Sources */,
