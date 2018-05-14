@@ -34,6 +34,7 @@
 @property (nonatomic, copy)NSString *currentWord;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *otherVIewBottom;
 @property (nonatomic, assign) NSInteger lastIndex;
+@property (nonatomic, assign) BOOL lastPlaying;
 @end
 
 @implementation ListenPaperViewController
@@ -72,8 +73,12 @@
     _RateTag = 0;
     [self initWithView];
     [self loadLongPress];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playFinished:) name:@"playFinished" object:nil];
     [self.player play];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playFinished:) name:@"playFinished" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(listenPause) name:@"listenBackground" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(listenPlay) name:@"listenForeground" object:nil];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
+
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -92,7 +97,25 @@
     [self.player pause];
     [self.playSongBtn setSelected:NO];
 }
-
+- (void)listenPause{
+    NSLog(@"---%d",_lastPlaying ? 1:0);
+    _lastPlaying = [self.player isPlaying];
+    [self stopRoll];
+    [self.player pause];
+    [self.playSongBtn setSelected:NO];
+}
+- (void)listenPlay{
+    NSLog(@"---%d",_lastPlaying ? 1:0);
+    if (_lastPlaying) {
+        [self.playSongBtn setSelected:YES];
+        [self.player play];
+        [self startRoll];
+    }else{
+        [self stopRoll];
+        [self.player pause];
+        [self.playSongBtn setSelected:NO];
+    }
+}
 - (void)initWithView{
     self.lyricTableView.delegate = self;
     self.lyricTableView.dataSource = self;
@@ -265,13 +288,13 @@
     ListenTableViewCell *cell = [self.lyricTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0]];
     if (IS_USER_ID) {
         NSArray *array = [cell.listenLb.text componentsSeparatedByString:@"\n"];
-        [LTHttpManager collectionSectenceWithUserId:IS_USER_ID SectenceEN:array.count ? array[0]:@"" SentenceCN:array.count > 1 ? array[1]:@"" Complete:^(LTHttpResult result, NSString *message, id data) {
+        [LTHttpManager collectionSectenceWithUserId:IS_USER_ID SectenceEN:array.count ? array[0]:@"" SentenceCN:array.count > 1 ? array[1]:@"" TestPaperName:self.title Complete:^(LTHttpResult result, NSString *message, id data) {
             if (result == LTHttpResultSuccess) {
-                collectionSentenceModel *model = [[collectionSentenceModel alloc]init];
-                model.sentenceEN = array.count ? array[0]:@"";
-                model.sentenceCN = array.count > 1 ? array[1]:@"";
-                model.paperName = self.title;
-                [model jr_save];
+//                collectionSentenceModel *model = [[collectionSentenceModel alloc]init];
+//                model.sentenceEN = array.count ? array[0]:@"";
+//                model.sentenceCN = array.count > 1 ? array[1]:@"";
+//                model.paperName = self.title;
+//                [model jr_save];
                 SVProgressShowStuteText(@"收藏成功", YES);
             }else{
                 SVProgressShowStuteText(message, NO);
@@ -315,26 +338,29 @@
 #pragma mark 变速播放
 - (IBAction)RateWithPlay:(UIButton *)sender {
     _RateTag++;
-    switch (_RateTag % 5) {
+    switch (_RateTag % 6) {
         case 0:
-            [sender setImage:[UIImage imageNamed:@"1.5"] forState:UIControlStateNormal];
-            [self.player setRate:1.5];
-            break;
+            [sender setImage:[UIImage imageNamed:@"1.2"] forState:UIControlStateNormal];
+            [self.player setRate:1.2];
         case 1:
             [sender setImage:[UIImage imageNamed:@"0.5"] forState:UIControlStateNormal];
             [self.player setRate:0.5];
             break;
         case 2:
-            [sender setImage:[UIImage imageNamed:@"0.8"] forState:UIControlStateNormal];
-            [self.player setRate:0.8];
-            break;
-        case 3:
             [sender setImage:[UIImage imageNamed:@"1.0"] forState:UIControlStateNormal];
             [self.player setRate:1.0];
             break;
+        case 3:
+            [sender setImage:[UIImage imageNamed:@"1.5"] forState:UIControlStateNormal];
+            [self.player setRate:1.5];
+            break;
         case 4:
-            [sender setImage:[UIImage imageNamed:@"1.2"] forState:UIControlStateNormal];
-            [self.player setRate:1.2];
+            [sender setImage:[UIImage imageNamed:@"0.8"] forState:UIControlStateNormal];
+            [self.player setRate:0.8];
+            break;
+        case 5:
+            [sender setImage:[UIImage imageNamed:@"1.0"] forState:UIControlStateNormal];
+            [self.player setRate:1.0];
             break;
         default:
             break;
@@ -394,6 +420,7 @@
         });
       
     }
+    _lastPlaying = [self.player isPlaying];
 }
 #pragma mark 播放完成
 - (void)playFinished:(NSNotification *)notifi{

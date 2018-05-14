@@ -259,26 +259,29 @@
 #pragma mark 变速播放
 - (IBAction)roteWithPlay:(UIButton *)sender {
     _RateTag++;
-    switch (_RateTag % 5) {
+    switch (_RateTag % 6) {
         case 0:
-            [sender setImage:[UIImage imageNamed:@"1.5"] forState:UIControlStateNormal];
-            [self.player setRate:1.5];
-            break;
+            [sender setImage:[UIImage imageNamed:@"1.2"] forState:UIControlStateNormal];
+            [self.player setRate:1.2];
         case 1:
             [sender setImage:[UIImage imageNamed:@"0.5"] forState:UIControlStateNormal];
             [self.player setRate:0.5];
             break;
         case 2:
-            [sender setImage:[UIImage imageNamed:@"0.8"] forState:UIControlStateNormal];
-            [self.player setRate:0.8];
-            break;
-        case 3:
             [sender setImage:[UIImage imageNamed:@"1.0"] forState:UIControlStateNormal];
             [self.player setRate:1.0];
             break;
+        case 3:
+            [sender setImage:[UIImage imageNamed:@"1.5"] forState:UIControlStateNormal];
+            [self.player setRate:1.5];
+            break;
         case 4:
-            [sender setImage:[UIImage imageNamed:@"1.2"] forState:UIControlStateNormal];
-            [self.player setRate:1.2];
+            [sender setImage:[UIImage imageNamed:@"0.8"] forState:UIControlStateNormal];
+            [self.player setRate:0.8];
+            break;
+        case 5:
+            [sender setImage:[UIImage imageNamed:@"1.0"] forState:UIControlStateNormal];
+            [self.player setRate:1.0];
             break;
         default:
             break;
@@ -289,13 +292,13 @@
     ListenTableViewCell *cell = [self.lyricTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0]];
     if (IS_USER_ID) {
         NSArray *array = [cell.listenLb.text componentsSeparatedByString:@"\n"];
-        [LTHttpManager collectionSectenceWithUserId:IS_USER_ID SectenceEN:array.count ? array[0]:@"" SentenceCN:array.count > 1 ? array[1]:@"" Complete:^(LTHttpResult result, NSString *message, id data) {
+        [LTHttpManager collectionSectenceWithUserId:IS_USER_ID SectenceEN:array.count ? array[0]:@"" SentenceCN:array.count > 1 ? array[1]:@"" TestPaperName:self.paperName Complete:^(LTHttpResult result, NSString *message, id data) {
             if (result == LTHttpResultSuccess) {
-                collectionSentenceModel *model = [[collectionSentenceModel alloc]init];
-                model.sentenceEN = array.count ? array[0]:@"";
-                model.sentenceCN = array.count > 1 ? array[1]:@"";
-                model.paperName = self.paperName;
-                [model jr_save];
+//                collectionSentenceModel *model = [[collectionSentenceModel alloc]init];
+//                model.sentenceEN = array.count ? array[0]:@"";
+//                model.sentenceCN = array.count > 1 ? array[1]:@"";
+//                model.paperName = self.paperName;
+//                [model jr_save];
                 SVProgressShowStuteText(@"收藏成功", YES);
             }else{
                 SVProgressShowStuteText(message, NO);

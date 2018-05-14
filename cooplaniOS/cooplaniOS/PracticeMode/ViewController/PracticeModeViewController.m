@@ -32,6 +32,8 @@
 @property (nonatomic, assign) int NoCorrectInt;
 @property (nonatomic, strong) NSMutableArray *itemCountArray;
 @property (nonatomic, strong) SectionsModel *modeSectionModel;
+@property (nonatomic, strong) NSIndexPath *collectionIndexPath;
+@property (nonatomic, assign) BOOL lastPlaying;
 @end
 
 @implementation PracticeModeViewController
@@ -89,10 +91,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initWithView];
-    [self loadData];
+    [self loadData];   
     _correctInt = 0;
     _NoCorrectInt = 0;
     [self.player.player play];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(listenPause) name:@"listenBackground" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(listenPlay) name:@"listenForeground" object:nil];
 }
 - (void)loadData{
     NSString *str = [[NSBundle mainBundle] pathForResource:@"CET-Template" ofType:@"json"];
@@ -252,8 +257,12 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     PracticeModeTiKaCCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([PracticeModeTiKaCCell class]) forIndexPath:indexPath];
+    SectionsModel *sectionModel = self.sectionsModelArray[indexPath.section];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.headerView.practiceModeSubTitleLb.text = sectionModel.SectionTitle;
+    });
+    //监听滑到那个section
     if (_mode == 3) {
-        SectionsModel *sectionModel = self.sectionsModelArray[indexPath.section];
         QuestionsModel *questionsModel = sectionModel.Passage[indexPath.row];
         cell.questionsModel = questionsModel;
         cell.questionStr = [NSString stringWithFormat:@"%@",questionsModel.PassageDirection];
@@ -388,7 +397,25 @@
     [self.player.player pause];
     [self.player.playSongBtn setSelected:NO];
 }
-
+- (void)listenPause{
+    NSLog(@"---%d",_lastPlaying ? 1:0);
+    _lastPlaying = [self.player.player isPlaying];
+    [self.player stopRoll];
+    [self.player.player pause];
+    [self.player.playSongBtn setSelected:NO];
+}
+- (void)listenPlay{
+    NSLog(@"---%d",_lastPlaying ? 1:0);
+    if (_lastPlaying) {
+        [self.player.playSongBtn setSelected:YES];
+        [self.player.player play];
+        [self.player startRoll];
+    }else{
+        [self.player stopRoll];
+        [self.player.player pause];
+        [self.player.playSongBtn setSelected:NO];
+    }
+}
 /*
 #pragma mark - Navigation
 
