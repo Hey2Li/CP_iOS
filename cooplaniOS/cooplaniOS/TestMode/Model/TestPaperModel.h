@@ -59,10 +59,12 @@
 @property (nonatomic, assign) BOOL isCorrect;
 @property (nonatomic, assign) BOOL isSelected;
 @property (nonatomic, copy) NSString *youAnswer;
+@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 @end
 
 @interface OptionsModel: NSObject
 @property (nonatomic, copy) NSString *Alphabet;
 @property (nonatomic, copy) NSString *Text;
+@property (nonatomic, assign) BOOL isSelecteOption;
 @end
 

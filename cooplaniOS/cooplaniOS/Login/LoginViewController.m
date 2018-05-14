@@ -116,7 +116,7 @@
             NSLog(@"Wechat originalResponse: %@", resp.originalResponse);
             [LTHttpManager thirdPartyLoginWithOpenId:resp.openid IdentityType:@"wx" Token:resp.accessToken TokenTime:resp.refreshToken HeadPortrait:resp.iconurl NickName:resp.name Sex:resp.unionGender age:@"" Complete:^(LTHttpResult result, NSString *message, id data) {
                 if (result == LTHttpResultSuccess) {
-                    [[NSUserDefaults standardUserDefaults]setObject:data[@"responseData"][@"tpu"][@"id"] forKey:USER_ID];
+                    [[NSUserDefaults standardUserDefaults]setObject:data[@"responseData"][@"user"][@"id"] forKey:USER_ID];
                     [[NSUserDefaults standardUserDefaults]setObject:data[@"responseData"][@"tpu"][@"headPortrait"] forKey:USER_PHOTO];
                     [[NSUserDefaults standardUserDefaults]setObject:data[@"responseData"][@"tpu"][@"nickname"] forKey:USER_NICKNAME];
                     [[NSUserDefaults standardUserDefaults]setObject:data[@"responseData"][@"tpu"][@"sex"] forKey:USER_SEX];

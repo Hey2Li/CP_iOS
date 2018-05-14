@@ -141,4 +141,12 @@
  @param userId 用户id
  */
 + (void)findAllCollectionTestPaperWithUserId:(NSNumber *)userId Complete:(completeBlock)complete;
+
+/**
+ 默认登录 用户在关闭app再打开要重新验证
+
+ @param userId 用户id
+ @param complete block
+ */
++(void)UserDefaultLoginWithUserId:(NSNumber *)userId Complete:(completeBlock)complete;
 @end

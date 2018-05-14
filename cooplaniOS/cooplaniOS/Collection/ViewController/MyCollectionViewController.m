@@ -79,6 +79,9 @@
                         MyCollectionModel *model = [MyCollectionModel mj_objectWithKeyValues:dict];
                         [self.dataArray addObject:model];
                     }
+                    if (self.dataArray.count == 0) {
+                        SVProgressShowStuteText(@"暂无收藏", NO);
+                    }
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self.myTableView reloadData];
                     });

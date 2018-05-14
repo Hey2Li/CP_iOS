@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		311F8994694632DA35DB4797 /* libPods-cooplaniOSUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AE146AACEAF93206FD6086 /* libPods-cooplaniOSUITests.a */; };
+		9B016DCF20A976D70000FBFB /* NoHighlightedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B016DCE20A976D70000FBFB /* NoHighlightedTableViewCell.m */; };
 		9B135CBB207C6B1D0040A883 /* UIImage+mask.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B135CBA207C6B1D0040A883 /* UIImage+mask.m */; };
 		9B135CC1207C886A0040A883 /* UISlider+time.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B135CC0207C886A0040A883 /* UISlider+time.m */; };
 		9B135CCF207CD8AA0040A883 /* LTHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B135CCD207CD8AA0040A883 /* LTHTTPSessionManager.m */; };
@@ -122,6 +123,8 @@
 		14880E1BC0DACFA7A6535D1A /* Pods-cooplaniOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cooplaniOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-cooplaniOS/Pods-cooplaniOS.release.xcconfig"; sourceTree = "<group>"; };
 		91AE146AACEAF93206FD6086 /* libPods-cooplaniOSUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-cooplaniOSUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AB145F84570512990287D28 /* Pods-cooplaniOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cooplaniOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cooplaniOS/Pods-cooplaniOS.debug.xcconfig"; sourceTree = "<group>"; };
+		9B016DCD20A976D70000FBFB /* NoHighlightedTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoHighlightedTableViewCell.h; sourceTree = "<group>"; };
+		9B016DCE20A976D70000FBFB /* NoHighlightedTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoHighlightedTableViewCell.m; sourceTree = "<group>"; };
 		9B135CB9207C6B1D0040A883 /* UIImage+mask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+mask.h"; sourceTree = "<group>"; };
 		9B135CBA207C6B1D0040A883 /* UIImage+mask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+mask.m"; sourceTree = "<group>"; };
 		9B135CBF207C886A0040A883 /* UISlider+time.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UISlider+time.h"; sourceTree = "<group>"; };
@@ -400,6 +403,8 @@
 				9B16B09A2091CA2600094EE7 /* AnswerHeadView.h */,
 				9B16B09B2091CA2600094EE7 /* AnswerHeadView.m */,
 				9B16B0982091C7AE00094EE7 /* AnswerHeadView.xib */,
+				9B016DCD20A976D70000FBFB /* NoHighlightedTableViewCell.h */,
+				9B016DCE20A976D70000FBFB /* NoHighlightedTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1126,6 +1131,7 @@
 				9B135CCF207CD8AA0040A883 /* LTHTTPSessionManager.m in Sources */,
 				9B16B0932090623E00094EE7 /* QuestionTableViewCell.m in Sources */,
 				9BEA0A352071D9190026AF2C /* ViewController.m in Sources */,
+				9B016DCF20A976D70000FBFB /* NoHighlightedTableViewCell.m in Sources */,
 				9B4BB736207B6EDC0029015F /* NSURL+SULoader.m in Sources */,
 				9B1D31BC2073487F007674CF /* BaseViewController.m in Sources */,
 				9BA08EB52093120C0026935E /* FeedbackTypeTableViewCell.m in Sources */,

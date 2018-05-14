@@ -78,7 +78,7 @@ void SVProgressShowStuteText(NSString* text,BOOL isSucceed){
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
     [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
     [SVProgressHUD setFadeOutAnimationDuration:.2];
-    [SVProgressHUD setMinimumDismissTimeInterval:1.5];
+    [SVProgressHUD setMinimumDismissTimeInterval:0.5];
     if (isSucceed) {
         [SVProgressHUD showSuccessWithStatus:text];
     }else{

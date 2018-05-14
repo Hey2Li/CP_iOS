@@ -160,7 +160,7 @@
 + (void)deleteSentenceNoteWithId:(NSNumber *)ID WithComplete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
     NSDictionary *paramters = @{@"version":[Tool getAppVersion],
-                                @"id":ID,
+                                @"id":ID
                                 };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/SentenceNote/private/delete",BaseURL]parameters:paramters complete:complete];
 }
@@ -204,7 +204,7 @@
 + (void)deleteCollectionTestPaperWithId:(NSNumber *)ID Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
     NSDictionary *paramters = @{@"version":[Tool getAppVersion],
-                                @"id":ID,
+                                @"id":ID
                                 };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/myCollect/private/add",BaseURL]parameters:paramters complete:complete];
 }
@@ -220,5 +220,19 @@
                                 @"userId":userId
                                 };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/myCollect/private/find",BaseURL]parameters:paramters complete:complete];
+}
+
+/**
+ 默认登录 用户在关闭app再打开要重新验证
+ 
+ @param userId 用户id
+ @param complete block
+ */
++(void)UserDefaultLoginWithUserId:(NSNumber *)userId Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+                                @"userId":userId
+                                };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/user/defaulLogin",BaseURL]parameters:paramters complete:complete];
 }
 @end

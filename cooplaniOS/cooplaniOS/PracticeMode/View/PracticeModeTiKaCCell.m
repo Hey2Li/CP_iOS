@@ -8,20 +8,15 @@
 
 #import "PracticeModeTiKaCCell.h"
 #import "PaperJSONKey.h"
+#import "NoHighlightedTableViewCell.h"
 
 @interface PracticeModeTiKaCCell ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UILabel *questionLb;
-@property (nonatomic, strong) NSMutableArray *questionArray;
 @property (nonatomic, strong) UITableView *tableView;
 @end
 
 @implementation PracticeModeTiKaCCell
-- (NSMutableArray *)questionArray{
-    if (!_questionArray) {
-        _questionArray = [NSMutableArray array];
-    }
-    return _questionArray;
-}
+
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor clearColor];
@@ -54,6 +49,7 @@
         [tableView.layer setCornerRadius:8];
         tableView.backgroundColor = [UIColor whiteColor];
         tableView.tableFooterView = [UIView new];
+        [tableView registerClass:[NoHighlightedTableViewCell class] forCellReuseIdentifier:NSStringFromClass([NoHighlightedTableViewCell class])];
         self.tableView = tableView;
         
         UILabel *questionLb = [[UILabel alloc]init];
@@ -97,7 +93,7 @@
 }
 #pragma mark UITableViewDataSource&Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.questionArray.count + 1;
+    return _questionsModel.Options.count + 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
@@ -107,15 +103,22 @@
     }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    NoHighlightedTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([NoHighlightedTableViewCell class]) forIndexPath:indexPath];
     cell.textLabel.textColor = UIColorFromRGB(0x666666);
     cell.textLabel.font = [UIFont systemFontOfSize:14];
-    cell.selectionStyle = NO;
+    cell.selectionStyle = YES;
+    UIView *view = [[UIView alloc]init];
+    view.backgroundColor = DRGBCOLOR;
+    cell.selectedBackgroundView = view;
     if (indexPath.row == 0) {
         cell.textLabel.text = [NSString stringWithFormat:@"Q%ld",self.collectionIndexPath.row + 1];
         cell.textLabel.textColor = UIColorFromRGB(0xBBBBBB);
+        cell.selectionStyle = NO;
     }else{
-        OptionsModel *model = self.questionArray[indexPath.row - 1];
+        OptionsModel *model = _questionsModel.Options[indexPath.row - 1];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [cell setSelected:model.isSelecteOption animated:YES];
+        });
         cell.textLabel.text = [NSString stringWithFormat:@"%@.%@",model.Alphabet,model.Text];
     }
     return cell;
@@ -123,6 +126,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row > 0) {
         if (self.questionCellClick) {
+//            UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+//            cell.selected = YES;
             switch (indexPath.row) {
                 case 1:
                     NSLog(@"A");
@@ -147,16 +152,23 @@
                 default:
                     break;
             }
+            OptionsModel *model = _questionsModel.Options[indexPath.row - 1];
+            model.isSelecteOption = YES;
+            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                for (OptionsModel *otherModel in _questionsModel.Options) {
+                    if (otherModel != model) {
+                        otherModel.isSelecteOption = NO;
+                    }
+                }
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [tableView reloadData];
+                });
+            });
         }
     }
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 - (void)setQuestionsModel:(QuestionsModel *)questionsModel{
     _questionsModel = questionsModel;
-    [self.questionArray removeAllObjects];
-    for (OptionsModel *optionsModel in questionsModel.Options) {
-        [self.questionArray addObject:optionsModel];
-    }
     [self.tableView reloadData];
 }
 @end
