@@ -56,7 +56,8 @@
     //Player
     self.player = [AVPlayer playerWithPlayerItem:self.currentItem];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(audioSessionInterrupted:) name:AVAudioSessionInterruptionNotification object:nil];
-
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(routeChange:) name:AVAudioSessionRouteChangeNotification object:[AVAudioSession sharedInstance]];
+    
     //Observer
     [self addObserver];
     
@@ -126,14 +127,46 @@
     //通知类型
     NSDictionary * info = notification.userInfo;
     // AVAudioSessionInterruptionTypeBegan ==
+    NSLog(@"%@",info);
     if ([[info objectForKey:AVAudioSessionInterruptionTypeKey] integerValue] == 1) {
         [self.player pause];
     }else{
-        [self.player play];
+        if ([[info objectForKey:AVAudioSessionInterruptionOptionKey]integerValue] == 0) {
+            [self.player pause];
+        }else{
+            [self.player play];
+        }
     }
 }
 
-
+- (void)routeChange:(NSNotification *)notification {
+    NSDictionary *interuptionDict = notification.userInfo;
+    NSInteger roteChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
+    
+    switch (roteChangeReason) {
+        case AVAudioSessionRouteChangeReasonNewDeviceAvailable:
+            //插入耳机
+            NSLog(@"插入耳机");
+            if ([self isPlaying]) {
+                [self.player play];
+            }else{
+                [self.player pause];
+            }
+            break;
+            
+        case AVAudioSessionRouteChangeReasonOldDeviceUnavailable:
+            //拔出耳机
+            NSLog(@"拔出耳机");
+            if ([self isPlaying]) {
+                [self.player play];
+            }else{
+                [self.player pause];
+            }
+            break;
+            
+    }
+    
+}
 #pragma mark - KVO
 - (void)addObserver {
     AVPlayerItem * songItem = self.currentItem;

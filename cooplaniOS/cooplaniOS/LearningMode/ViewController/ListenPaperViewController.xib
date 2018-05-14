@@ -201,8 +201,8 @@
         <image name="collection-2" width="44" height="44"/>
         <image name="correct" width="44" height="44"/>
         <image name="cycle" width="44" height="44"/>
-        <image name="more1" width="44" height="44"/>
-        <image name="more1_fill" width="44" height="44"/>
+        <image name="more1" width="22" height="6"/>
+        <image name="more1_fill" width="22" height="6"/>
         <image name="pause" width="48" height="48"/>
         <image name="single_favor_fill" width="44" height="44"/>
         <image name="上一句" width="22" height="17"/>
