@@ -17,17 +17,27 @@
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
 @property (nonatomic, strong) UIWindow *keyWindow;
 @property (nonatomic, strong) UIView *maskView;
-@property (nonatomic, copy) NSString *downloadUrl;
+@property (nonatomic, copy) NSString *downloadVoiceUrl;
+@property (nonatomic, copy) NSString *downloadlrcUrl;
+@property (nonatomic, copy) NSString *downloadJsonUrl;
+@property (nonatomic, strong) DownloadFileModel *downloadModel;
 @end
 
 @implementation PaperDetailViewController
 
+//- (DownloadFileModel *)downloadModel{
+//    if (_downloadModel) {
+//        _downloadModel = [[DownloadFileModel alloc]init];
+//    }
+//    return _downloadModel;
+//}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self.myTableView registerNib:[UINib nibWithNibName:@"PaperDetailTableViewCell" bundle:nil] forCellReuseIdentifier:NSStringFromClass([PaperDetailTableViewCell class])];
     self.myTableView.scrollEnabled = NO;
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
+    self.downloadModel = [[DownloadFileModel alloc]init];
     [self loadData];
 }
 - (void)loadData{
@@ -40,7 +50,16 @@
     }
     [LTHttpManager findOneTestPaperWithID:self.onePaperModel.ID Complete:^(LTHttpResult result, NSString *message, id data) {
         self.paperDetailLb.text = data[@"responseData"][@"info"];
-        self.downloadUrl = data[@"responseData"][@"voiceUrl"];
+        self.downloadVoiceUrl = data[@"responseData"][@"voiceUrl"];
+        self.downloadlrcUrl = data[@"responseData"][@"lic"];
+        self.downloadJsonUrl = data[@"responseData"][@"testPaperUrl"];
+        self.downloadModel.testPaperId = data[@"responseData"][@"id"];
+        self.downloadModel.name = data[@"responseData"][@"name"];
+        self.downloadModel.info = data[@"responseData"][@"info"];
+        self.downloadModel.number = data[@"responseData"][@"number"];
+        [self.downloadModel jr_save];
+        [USERDEFAULTS setObject:self.downloadModel.testPaperId forKey:@"testPaperId"];
+        NSLog(@"%@",self.downloadModel);
     }];
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -81,6 +100,7 @@
     if (indexPath.row == 0) {
         ListenPaperViewController *vc = [[ListenPaperViewController alloc]init];
         vc.title = self.title;
+        vc.testPaperId = self.downloadModel.testPaperId;
         [self.navigationController pushViewController:vc animated:YES];
     }else if (indexPath.row == 1){
         [self selectMode];
@@ -89,6 +109,7 @@
         alertView.resultIndex = ^(NSInteger index) {
             TestModeViewController *vc = [[TestModeViewController alloc]init];
             vc.title = self.title;
+            vc.testPaperId = self.downloadModel.testPaperId;
             [self.maskView removeFromSuperview];
             [self.navigationController pushViewController:vc animated:YES];
         };
@@ -212,20 +233,38 @@
     PracticeModeViewController *vc = [[PracticeModeViewController alloc]init];
     vc.mode = btn.tag;
     vc.title = self.title;
+    vc.testPaperId = self.downloadModel.testPaperId;
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (IBAction)downloadPaper:(UIButton *)sender {
-    [LTHttpManager downloadURL:self.downloadUrl progress:^(NSProgress *downloadProgress) {
-        [SVProgressHUD showProgress:downloadProgress.fractionCompleted];
-        if (downloadProgress.completedUnitCount/downloadProgress.totalUnitCount == 1.0) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [SVProgressHUD dismiss];
-                SVProgressShowStuteText(@"下载成功", YES);
-            });
-        }
-    } destination:^(NSURL *targetPath) {
+    [LTHttpManager downloadURL:self.downloadJsonUrl progress:^(NSProgress *downloadProgress) {
         
-        NSLog(@"%@",targetPath);
+    } destination:^(NSURL *targetPath) {
+        NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+        NSString *fileName = [url lastPathComponent];
+        self.downloadModel.paperJsonName = fileName;
+        [self.downloadModel jr_updateColumns:@[@"paperJsonName"]];
+    } failure:^(NSError *error) {
+        
+    }];
+    [LTHttpManager downloadURL:self.downloadlrcUrl progress:^(NSProgress *downloadProgress) {
+        
+    } destination:^(NSURL *targetPath) {
+        NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+        NSString *fileName = [url lastPathComponent];
+        self.downloadModel.paperLrcName = fileName;
+        [self.downloadModel jr_updateColumns:@[@"paperLrcName"]];
+    } failure:^(NSError *error) {
+        
+    }];
+    [LTHttpManager downloadURL:self.downloadVoiceUrl progress:^(NSProgress *downloadProgress) {
+        
+    } destination:^(NSURL *targetPath) {
+        NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+        NSString *fileName = [url lastPathComponent];
+        self.downloadModel.paperVoiceName = fileName;
+        [self.downloadModel jr_updateColumns:@[@"paperVoiceName"]];
+        NSLog(@"%@",fileName);
     } failure:^(NSError *error) {
         
     }];

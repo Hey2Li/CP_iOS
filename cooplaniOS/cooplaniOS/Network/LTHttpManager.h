@@ -8,7 +8,7 @@
 
 #import "LTHTTPSessionManager.h"
 
-#define BaseURL @"http://app.cooplan.cn"
+#define BaseURL @"http://192.168.0.110:8080/cooplan-app"
 @interface LTHttpManager : LTHTTPSessionManager
 
 
@@ -24,7 +24,7 @@
 
  @param complete block
  */
-+ (void)FindAllWithComplete:(completeBlock)complete;
++ (void)FindAllWithUseId:(NSNumber *)userid Complete:(completeBlock)complete;
 
 /**
  查询一张试卷的信息(首页点击试卷获取试卷)
@@ -149,4 +149,13 @@
  @param complete block
  */
 +(void)UserDefaultLoginWithUserId:(NSNumber *)userId Complete:(completeBlock)complete;
+
+/**
+ *  下载文件
+ *
+ *  @param downloadURL  下载链接
+ *  @param success 请求结果
+ *  @param faliure 错误信息
+ */
++(void)downloadURL:(NSString *) downloadURL progress:(void (^)(NSProgress *downloadProgress))progress destination:(void (^)(NSURL *targetPath))destination failure:(void(^)(NSError *error))faliure;
 @end

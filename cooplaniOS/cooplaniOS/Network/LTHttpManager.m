@@ -272,6 +272,13 @@
         
         if (downloadProgress) {
             progress(downloadProgress);
+            [SVProgressHUD showProgress:downloadProgress.fractionCompleted];
+            if (downloadProgress.completedUnitCount/downloadProgress.totalUnitCount == 1.0) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [SVProgressHUD dismiss];
+                    SVProgressShowStuteText(@"下载成功", YES);
+                });
+            }
         }
         
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
@@ -280,7 +287,7 @@
         //拼接文件全路径
         NSString *fullpath = [caches stringByAppendingPathComponent:response.suggestedFilename];
         NSURL *filePathUrl = [NSURL fileURLWithPath:fullpath];
-        
+        NSLog(@"%@",filePathUrl);
         return filePathUrl;
         
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nonnull filePath, NSError * _Nonnull error) {

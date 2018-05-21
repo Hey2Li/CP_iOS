@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface TestModeViewController : UIViewController
-
+@property (nonatomic, copy) NSString *testPaperId;
 @end

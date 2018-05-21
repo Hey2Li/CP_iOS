@@ -16,4 +16,5 @@
 @property (weak, nonatomic) IBOutlet UISlider *progressSlider;
 @property (weak, nonatomic) IBOutlet UIView *otherView;
 @property (weak, nonatomic) IBOutlet UIImageView *backImageView;
+@property (nonatomic, copy) NSString *testPaperId;
 @end

@@ -100,60 +100,37 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(listenPlay) name:@"listenForeground" object:nil];
 }
 - (void)loadData{
-    NSString *str = [[NSBundle mainBundle] pathForResource:@"CET-Template" ofType:@"json"];
-    NSData *data = [NSData dataWithContentsOfFile:str];
-    unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-    NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
-    NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:nil];
-    TestPaperModel *model = [TestPaperModel mj_objectWithKeyValues:dict];
-    _testPaperModel = model;
-    [self.partModelArray removeAllObjects];
-    [self.sectionsModelArray removeAllObjects];
-    [self.passageModelArray removeAllObjects];
-    [self.questionsModelArray removeAllObjects];
-    [self.optionsModelArray removeAllObjects];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        for (PartsModel *partModel in model.Parts) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.headerView.practiceModeTopTitleLb.text = partModel.PartType;
-            });
-            [self.partModelArray addObject:partModel];
-            if (_mode < 3) {
-                for (SectionsModel *sectinsModel in partModel.Sections) {
-                    _paperSection = sectinsModel.SectionTitle;
-                    [self.sectionsModelArray addObject:sectinsModel];
-                }
-                modeSectionModel = self.sectionsModelArray[0];
-                for (PassageModel *passageModel in modeSectionModel.Passage) {
-                    [self.questionsModelArray removeAllObjects];
-                    for (QuestionsModel *questionModel in passageModel.Questions) {
-                        questionModel.PassageId = passageModel.PassageId;
-                        questionModel.PassageAudioStartTime = passageModel.PassageAudioStartTime;
-                        questionModel.PassageAudioEndTime = passageModel.PassageAudioEndTime;
-                        questionModel.PassageDirection = passageModel.PassageDirection;
-                        questionModel.PassageDirectionAudioStartTime = passageModel.PassageDirectionAudioStartTime;
-                        questionModel.PassageDirectionAudioEndTime = passageModel.PassageDirectionAudioEndTime;
-                        [self.questionsModelArray addObject:questionModel];
-                        [self.passageModelArray addObject:questionModel];
-                        [self.itemCountArray addObject:questionModel];
-                        passageModel.Questions = [NSMutableArray arrayWithArray:self.questionsModelArray];
-                        for (OptionsModel *optionsModel in questionModel.Options) {
-                            [self.optionsModelArray addObject:optionsModel];
-                        }
+    DownloadFileModel *model = [DownloadFileModel  jr_findByPrimaryKey:self.testPaperId];
+    NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *urlString = [model.paperJsonName stringByRemovingPercentEncoding];
+    NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:fullPath]) {
+        NSData *data = [NSData dataWithContentsOfFile:fullPath];
+        unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+        NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
+        NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:nil];
+        TestPaperModel *model = [TestPaperModel mj_objectWithKeyValues:dict];
+        _testPaperModel = model;
+        [self.partModelArray removeAllObjects];
+        [self.sectionsModelArray removeAllObjects];
+        [self.passageModelArray removeAllObjects];
+        [self.questionsModelArray removeAllObjects];
+        [self.optionsModelArray removeAllObjects];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            for (PartsModel *partModel in model.Parts) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.headerView.practiceModeTopTitleLb.text = partModel.PartType;
+                });
+                [self.partModelArray addObject:partModel];
+                if (_mode < 3) {
+                    for (SectionsModel *sectinsModel in partModel.Sections) {
+                        _paperSection = sectinsModel.SectionTitle;
+                        [self.sectionsModelArray addObject:sectinsModel];
                     }
-                    modeSectionModel.Passage = [NSMutableArray arrayWithArray:self.passageModelArray];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.tikaCollectionView reloadData];
-                    });
-                }
-            }else if (_mode == 3){
-                [self.passageModelArray removeAllObjects];
-                for (SectionsModel *sectinsModel in partModel.Sections) {
-                    _paperSection = sectinsModel.SectionTitle;
-                    [self.sectionsModelArray addObject:sectinsModel];
-                    [self.passageModelArray removeAllObjects];
-                    for (PassageModel *passageModel in sectinsModel.Passage) {
+                    modeSectionModel = self.sectionsModelArray[0];
+                    for (PassageModel *passageModel in modeSectionModel.Passage) {
                         [self.questionsModelArray removeAllObjects];
                         for (QuestionsModel *questionModel in passageModel.Questions) {
                             questionModel.PassageId = passageModel.PassageId;
@@ -170,17 +147,46 @@
                                 [self.optionsModelArray addObject:optionsModel];
                             }
                         }
-                        sectinsModel.Passage = [NSMutableArray arrayWithArray:self.passageModelArray];
+                        modeSectionModel.Passage = [NSMutableArray arrayWithArray:self.passageModelArray];
                         dispatch_async(dispatch_get_main_queue(), ^{
                             [self.tikaCollectionView reloadData];
                         });
                     }
+                }else if (_mode == 3){
+                    [self.passageModelArray removeAllObjects];
+                    for (SectionsModel *sectinsModel in partModel.Sections) {
+                        _paperSection = sectinsModel.SectionTitle;
+                        [self.sectionsModelArray addObject:sectinsModel];
+                        [self.passageModelArray removeAllObjects];
+                        for (PassageModel *passageModel in sectinsModel.Passage) {
+                            [self.questionsModelArray removeAllObjects];
+                            for (QuestionsModel *questionModel in passageModel.Questions) {
+                                questionModel.PassageId = passageModel.PassageId;
+                                questionModel.PassageAudioStartTime = passageModel.PassageAudioStartTime;
+                                questionModel.PassageAudioEndTime = passageModel.PassageAudioEndTime;
+                                questionModel.PassageDirection = passageModel.PassageDirection;
+                                questionModel.PassageDirectionAudioStartTime = passageModel.PassageDirectionAudioStartTime;
+                                questionModel.PassageDirectionAudioEndTime = passageModel.PassageDirectionAudioEndTime;
+                                [self.questionsModelArray addObject:questionModel];
+                                [self.passageModelArray addObject:questionModel];
+                                [self.itemCountArray addObject:questionModel];
+                                passageModel.Questions = [NSMutableArray arrayWithArray:self.questionsModelArray];
+                                for (OptionsModel *optionsModel in questionModel.Options) {
+                                    [self.optionsModelArray addObject:optionsModel];
+                                }
+                            }
+                            sectinsModel.Passage = [NSMutableArray arrayWithArray:self.passageModelArray];
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [self.tikaCollectionView reloadData];
+                            });
+                        }
+                    }
+                    
                 }
-              
+                
             }
-         
-        }
-    });
+        });
+    }
 }
 - (void)initWithView{
     [self.view addSubview:self.headerView];

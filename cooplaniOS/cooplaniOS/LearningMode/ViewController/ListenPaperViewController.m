@@ -47,15 +47,23 @@
         //网络
         //    NSURL *url = [NSURL URLWithString:[self songURLList][self.songIndex]];
         //本地
-        NSURL *fileUrl = [[NSBundle mainBundle]URLForResource:@"2017年6月四级真题（一）" withExtension:@"MP3"];
-        _player = [[SUPlayer alloc]initWithURL:fileUrl];
-        
-        [_player addObserver:self forKeyPath:@"progress" options:NSKeyValueObservingOptionNew context:nil];
-        [_player addObserver:self forKeyPath:@"duration" options:NSKeyValueObservingOptionNew context:nil];
-        [_player addObserver:self forKeyPath:@"cacheProgress" options:NSKeyValueObservingOptionNew context:nil];
-        [self.progressSlider addTarget:self action:@selector(changeProgress:) forControlEvents:UIControlEventTouchUpInside];
-        [self.progressSlider setValue:self.player.progress andTime:@"00:00/00:00" animated:YES];
-        self.timeLb.hidden = YES;
+        DownloadFileModel *model = [DownloadFileModel  jr_findByPrimaryKey:self.testPaperId];
+        NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+        NSString *urlString = [model.paperVoiceName stringByRemovingPercentEncoding];
+        NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
+        NSURL *fileUrl = [NSURL fileURLWithPath:fullPath];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if ([fileManager fileExistsAtPath:fullPath]) {
+            _player = [[SUPlayer alloc]initWithURL:fileUrl];
+            [_player addObserver:self forKeyPath:@"progress" options:NSKeyValueObservingOptionNew context:nil];
+            [_player addObserver:self forKeyPath:@"duration" options:NSKeyValueObservingOptionNew context:nil];
+            [_player addObserver:self forKeyPath:@"cacheProgress" options:NSKeyValueObservingOptionNew context:nil];
+            [self.progressSlider addTarget:self action:@selector(changeProgress:) forControlEvents:UIControlEventTouchUpInside];
+            [self.progressSlider setValue:self.player.progress andTime:@"00:00/00:00" animated:YES];
+            self.timeLb.hidden = YES;
+        }else{
+            SVProgressShowStuteText(@"请先下载资源", NO);
+        }
     }
     return _player;
 }
@@ -225,36 +233,40 @@
 }
 #pragma mark 解析歌词
 - (void)parseLrc{
-    NSURL *lyicUrl = [[NSBundle mainBundle]URLForResource:@"2017年6月四级真题（一）" withExtension:@"lrc"];
-    
-    NSString *lrcString = [[NSString alloc]initWithContentsOfURL:lyicUrl encoding:NSUTF8StringEncoding error:nil];
-    
-    lyricArray = [NSMutableArray array];
-    timeArray = [NSMutableArray array];
-    lengthArray = [NSMutableArray array];
-    
-    NSArray *lycArray = [lrcString componentsSeparatedByString:@"\n"];
-    [lycArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([obj hasPrefix:@"["]) {
-            NSRange starRange = [obj rangeOfString:@"["];
-            NSRange stopRange = [obj rangeOfString:@"]"];
-            NSString *timeString = [obj substringWithRange:NSMakeRange(starRange.location + 1, stopRange.location - starRange.location - 1)];
-            [timeArray addObject:timeString];
-            
-            NSString *minString = [timeString substringWithRange:NSMakeRange(0, 2)];
-            NSString *secString = [timeString substringWithRange:NSMakeRange(3, 2)];
-            NSString *mseString = [timeString substringWithRange:NSMakeRange(6, 2)];
-            
-            float timeLength = [minString floatValue] * 60 + [secString floatValue] + [mseString floatValue] / 1000;
-            [lengthArray  addObject:[NSString stringWithFormat:@"%.3f",timeLength]];
-            
-            NSString *lyricString  =[obj substringFromIndex:10];
-            [lyricArray addObject:lyricString];
-        }else{
-            NSString *lyricString = [NSString stringWithFormat:@"%@\n%@",lyricArray[lyricArray.count-1], obj];
-            [lyricArray replaceObjectAtIndex:lyricArray.count-1 withObject:lyricString];
-        }
-    }];
+    DownloadFileModel *model = [DownloadFileModel  jr_findByPrimaryKey:self.testPaperId];
+    NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *urlString = [model.paperLrcName stringByRemovingPercentEncoding];
+    NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:fullPath]) {
+        NSString *lrcString = [[NSString alloc]initWithContentsOfFile:fullPath encoding:NSUTF8StringEncoding error:nil];
+        lyricArray = [NSMutableArray array];
+        timeArray = [NSMutableArray array];
+        lengthArray = [NSMutableArray array];
+        
+        NSArray *lycArray = [lrcString componentsSeparatedByString:@"\n"];
+        [lycArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj hasPrefix:@"["]) {
+                NSRange starRange = [obj rangeOfString:@"["];
+                NSRange stopRange = [obj rangeOfString:@"]"];
+                NSString *timeString = [obj substringWithRange:NSMakeRange(starRange.location + 1, stopRange.location - starRange.location - 1)];
+                [timeArray addObject:timeString];
+                
+                NSString *minString = [timeString substringWithRange:NSMakeRange(0, 2)];
+                NSString *secString = [timeString substringWithRange:NSMakeRange(3, 2)];
+                NSString *mseString = [timeString substringWithRange:NSMakeRange(6, 2)];
+                
+                float timeLength = [minString floatValue] * 60 + [secString floatValue] + [mseString floatValue] / 1000;
+                [lengthArray  addObject:[NSString stringWithFormat:@"%.3f",timeLength]];
+                
+                NSString *lyricString  =[obj substringFromIndex:10];
+                [lyricArray addObject:lyricString];
+            }else{
+                NSString *lyricString = [NSString stringWithFormat:@"%@\n%@",lyricArray[lyricArray.count-1], obj];
+                [lyricArray replaceObjectAtIndex:lyricArray.count-1 withObject:lyricString];
+            }
+        }];
+    }
 }
 - (void)startRoll{
     if (_timer) return;
