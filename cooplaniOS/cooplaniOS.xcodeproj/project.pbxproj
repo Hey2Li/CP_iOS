@@ -46,7 +46,6 @@
 		9B32CB15209C25A500FCEED3 /* MyCollectionPaperTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B32CB13209C25A500FCEED3 /* MyCollectionPaperTableViewCell.m */; };
 		9B32CB16209C25A500FCEED3 /* MyCollectionPaperTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B32CB14209C25A500FCEED3 /* MyCollectionPaperTableViewCell.xib */; };
 		9B32CB19209C410700FCEED3 /* UIView+YYAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B32CB17209C410600FCEED3 /* UIView+YYAdd.m */; };
-		9B32CB1B209C4DF600FCEED3 /* CET-Template.json in Resources */ = {isa = PBXBuildFile; fileRef = 9B32CB1A209C4DF600FCEED3 /* CET-Template.json */; };
 		9B3D02C62084468E005C923B /* SUPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3D02C52084468E005C923B /* SUPlayer.m */; };
 		9B3D02CA20845338005C923B /* PaperDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3D02C820845338005C923B /* PaperDetailViewController.m */; };
 		9B3D02CB20845338005C923B /* PaperDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B3D02C920845338005C923B /* PaperDetailViewController.xib */; };
@@ -66,7 +65,7 @@
 		9B4BB72E207B6E9D0029015F /* SURequestTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4BB72C207B6E9D0029015F /* SURequestTask.m */; };
 		9B4BB736207B6EDC0029015F /* NSURL+SULoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4BB732207B6EDC0029015F /* NSURL+SULoader.m */; };
 		9B4BB737207B6EDC0029015F /* NSString+SULoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4BB735207B6EDC0029015F /* NSString+SULoader.m */; };
-		9B6FB859207F054C00BC07F3 /* 2017年6月四级真题（一）.lrc in Resources */ = {isa = PBXBuildFile; fileRef = 9B6FB858207F054C00BC07F3 /* 2017年6月四级真题（一）.lrc */; };
+		9B60C8D620B2B06B00373EA2 /* DownloadFileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B60C8D520B2B06A00373EA2 /* DownloadFileModel.m */; };
 		9B6FB85C207F3D2100BC07F3 /* UILabel+HYLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6FB85B207F3D2100BC07F3 /* UILabel+HYLabel.m */; };
 		9B6FB85F207F3D7B00BC07F3 /* HYWord.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6FB85D207F3D7B00BC07F3 /* HYWord.m */; };
 		9BA08EB0209308440026935E /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA08EAD209308440026935E /* FeedbackViewController.m */; };
@@ -88,7 +87,6 @@
 		9BC1D6DF207862A8007D88EF /* Tool.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC1D6DD207862A8007D88EF /* Tool.m */; };
 		9BDFE0C4208833B500B59B3B /* LeftViweTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDFE0C2208833B500B59B3B /* LeftViweTableViewCell.m */; };
 		9BDFE0C5208833B500B59B3B /* LeftViweTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BDFE0C3208833B500B59B3B /* LeftViweTableViewCell.xib */; };
-		9BDFE0C720883F6800B59B3B /* 2017年6月四级真题（一）.MP3 in Resources */ = {isa = PBXBuildFile; fileRef = 9BDFE0C620883F6800B59B3B /* 2017年6月四级真题（一）.MP3 */; };
 		9BEA0A322071D9190026AF2C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BEA0A312071D9190026AF2C /* AppDelegate.m */; };
 		9BEA0A352071D9190026AF2C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BEA0A342071D9190026AF2C /* ViewController.m */; };
 		9BEA0A382071D9190026AF2C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9BEA0A362071D9190026AF2C /* Main.storyboard */; };
@@ -192,7 +190,6 @@
 		9B32CB14209C25A500FCEED3 /* MyCollectionPaperTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyCollectionPaperTableViewCell.xib; sourceTree = "<group>"; };
 		9B32CB17209C410600FCEED3 /* UIView+YYAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+YYAdd.m"; sourceTree = "<group>"; };
 		9B32CB18209C410700FCEED3 /* UIView+YYAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+YYAdd.h"; sourceTree = "<group>"; };
-		9B32CB1A209C4DF600FCEED3 /* CET-Template.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "CET-Template.json"; sourceTree = "<group>"; };
 		9B3D02C52084468E005C923B /* SUPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SUPlayer.m; sourceTree = "<group>"; };
 		9B3D02C720845338005C923B /* PaperDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaperDetailViewController.h; sourceTree = "<group>"; };
 		9B3D02C820845338005C923B /* PaperDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaperDetailViewController.m; sourceTree = "<group>"; };
@@ -226,7 +223,8 @@
 		9B4BB733207B6EDC0029015F /* NSString+SULoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SULoader.h"; sourceTree = "<group>"; };
 		9B4BB734207B6EDC0029015F /* NSURL+SULoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+SULoader.h"; sourceTree = "<group>"; };
 		9B4BB735207B6EDC0029015F /* NSString+SULoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SULoader.m"; sourceTree = "<group>"; };
-		9B6FB858207F054C00BC07F3 /* 2017年6月四级真题（一）.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "2017年6月四级真题（一）.lrc"; sourceTree = "<group>"; };
+		9B60C8D420B2B06A00373EA2 /* DownloadFileModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DownloadFileModel.h; sourceTree = "<group>"; };
+		9B60C8D520B2B06A00373EA2 /* DownloadFileModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DownloadFileModel.m; sourceTree = "<group>"; };
 		9B6FB85A207F3D2100BC07F3 /* UILabel+HYLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+HYLabel.h"; sourceTree = "<group>"; };
 		9B6FB85B207F3D2100BC07F3 /* UILabel+HYLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+HYLabel.m"; sourceTree = "<group>"; };
 		9B6FB85D207F3D7B00BC07F3 /* HYWord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYWord.m; sourceTree = "<group>"; };
@@ -264,7 +262,6 @@
 		9BDFE0C1208833B500B59B3B /* LeftViweTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeftViweTableViewCell.h; sourceTree = "<group>"; };
 		9BDFE0C2208833B500B59B3B /* LeftViweTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeftViweTableViewCell.m; sourceTree = "<group>"; };
 		9BDFE0C3208833B500B59B3B /* LeftViweTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeftViweTableViewCell.xib; sourceTree = "<group>"; };
-		9BDFE0C620883F6800B59B3B /* 2017年6月四级真题（一）.MP3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "2017年6月四级真题（一）.MP3"; sourceTree = "<group>"; };
 		9BEA0A2D2071D9190026AF2C /* cooplaniOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cooplaniOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BEA0A302071D9190026AF2C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9BEA0A312071D9190026AF2C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -332,6 +329,8 @@
 			children = (
 				9B13AD662080885F0000C750 /* PaperModel.h */,
 				9B13AD672080885F0000C750 /* PaperModel.m */,
+				9B60C8D420B2B06A00373EA2 /* DownloadFileModel.h */,
+				9B60C8D520B2B06A00373EA2 /* DownloadFileModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -745,9 +744,6 @@
 				9BEA0A3E2071D9190026AF2C /* Info.plist */,
 				9BEA0A3F2071D9190026AF2C /* main.m */,
 				9B1D31C020734B78007674CF /* CooplanPrefixHeader.pch */,
-				9B32CB1A209C4DF600FCEED3 /* CET-Template.json */,
-				9B6FB858207F054C00BC07F3 /* 2017年6月四级真题（一）.lrc */,
-				9BDFE0C620883F6800B59B3B /* 2017年6月四级真题（一）.MP3 */,
 			);
 			path = cooplaniOS;
 			sourceTree = "<group>";
@@ -908,10 +904,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9B32CB1B209C4DF600FCEED3 /* CET-Template.json in Resources */,
 				9BA08EB62093120C0026935E /* FeedbackTypeTableViewCell.xib in Resources */,
 				9B16B078208D7DDE00094EE7 /* ListenPlay.xib in Resources */,
-				9B6FB859207F054C00BC07F3 /* 2017年6月四级真题（一）.lrc in Resources */,
 				9B16B0942090623E00094EE7 /* QuestionTableViewCell.xib in Resources */,
 				9B3D02D020847C5A005C923B /* PaperDetailTableViewCell.xib in Resources */,
 				9BDFE0C5208833B500B59B3B /* LeftViweTableViewCell.xib in Resources */,
@@ -930,7 +924,6 @@
 				9BEA0A382071D9190026AF2C /* Main.storyboard in Resources */,
 				9BA08EC02093174A0026935E /* FeedbackPhoneTableViewCell.xib in Resources */,
 				9B13AD6220807B8E0000C750 /* BannerCollectionViewCell.xib in Resources */,
-				9BDFE0C720883F6800B59B3B /* 2017年6月四级真题（一）.MP3 in Resources */,
 				9B32CB0C209BF00300FCEED3 /* SentenceTableViewCell.xib in Resources */,
 				9B4BB6FE2079A9FC0029015F /* HomeListenCell.xib in Resources */,
 			);
@@ -1128,6 +1121,7 @@
 				9BA1CB5D20A5677D0093C37B /* collectionSentenceModel.m in Sources */,
 				9B32CB0B209BF00300FCEED3 /* SentenceTableViewCell.m in Sources */,
 				9B3D02C62084468E005C923B /* SUPlayer.m in Sources */,
+				9B60C8D620B2B06B00373EA2 /* DownloadFileModel.m in Sources */,
 				9B135CCF207CD8AA0040A883 /* LTHTTPSessionManager.m in Sources */,
 				9B16B0932090623E00094EE7 /* QuestionTableViewCell.m in Sources */,
 				9BEA0A352071D9190026AF2C /* ViewController.m in Sources */,

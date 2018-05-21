@@ -25,4 +25,8 @@
     _paperName.text = model.name;
     
 }
+- (void)setDownloadModel:(DownloadFileModel *)downloadModel{
+    _downloadModel = downloadModel;
+    _paperName.text = downloadModel.name;
+}
 @end
