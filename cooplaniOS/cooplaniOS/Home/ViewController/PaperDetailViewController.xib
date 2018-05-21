@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PaperDetailViewController">
             <connections>
+                <outlet property="collectionImageView" destination="AKH-C8-p7P" id="6ho-hP-dQj"/>
+                <outlet property="collectionPaperBtn" destination="Kw3-87-YxJ" id="SzT-bi-TgD"/>
+                <outlet property="downloadPaperBtn" destination="vTi-NV-Kl9" id="4la-aR-T4D"/>
                 <outlet property="myTableView" destination="jx1-0b-e4D" id="VdS-DQ-ULe"/>
+                <outlet property="paperDetailLb" destination="wqi-Rp-EDu" id="iIL-kt-eGG"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -73,19 +77,39 @@
                                     <constraint firstAttribute="height" constant="44" id="EhK-TR-QSb"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vTi-NV-Kl9" userLabel="dowloadBtn">
+                                <rect key="frame" x="177" y="103" width="94" height="44"/>
+                                <connections>
+                                    <action selector="downloadPaper:" destination="-1" eventType="touchUpInside" id="lFf-b8-j0r"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kw3-87-YxJ" userLabel="collectionBtn">
+                                <rect key="frame" x="271" y="103" width="94" height="44"/>
+                                <connections>
+                                    <action selector="collectionBtn:" destination="-1" eventType="touchUpInside" id="GL2-rr-lUz"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.96854275465011597" green="0.96868163347244263" blue="0.96851235628128052" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="vTi-NV-Kl9" firstAttribute="bottom" secondItem="BHH-As-Re9" secondAttribute="bottom" id="2Fg-92-sOl"/>
+                            <constraint firstItem="pdj-eY-9h2" firstAttribute="trailing" secondItem="Kw3-87-YxJ" secondAttribute="trailing" id="2rR-ul-3QP"/>
                             <constraint firstItem="pdj-eY-9h2" firstAttribute="leading" secondItem="AKH-C8-p7P" secondAttribute="trailing" id="6ix-Q4-HAq"/>
                             <constraint firstItem="pdj-eY-9h2" firstAttribute="centerY" secondItem="AKH-C8-p7P" secondAttribute="centerY" id="8c8-qa-yh6"/>
                             <constraint firstItem="4pw-bd-8uq" firstAttribute="centerY" secondItem="BHH-As-Re9" secondAttribute="centerY" id="FYg-3f-zfZ"/>
+                            <constraint firstItem="vTi-NV-Kl9" firstAttribute="leading" secondItem="BHH-As-Re9" secondAttribute="leading" id="JT1-du-kF0"/>
                             <constraint firstItem="wqi-Rp-EDu" firstAttribute="leading" secondItem="flm-NP-zbn" secondAttribute="leading" constant="10" id="NKJ-kc-CVB"/>
+                            <constraint firstItem="vTi-NV-Kl9" firstAttribute="top" secondItem="BHH-As-Re9" secondAttribute="top" id="OPK-eg-CTu"/>
                             <constraint firstItem="pdj-eY-9h2" firstAttribute="centerY" secondItem="4pw-bd-8uq" secondAttribute="centerY" id="TxO-13-8ce"/>
                             <constraint firstItem="AKH-C8-p7P" firstAttribute="leading" secondItem="4pw-bd-8uq" secondAttribute="trailing" id="UCB-PA-K3c"/>
+                            <constraint firstItem="Kw3-87-YxJ" firstAttribute="bottom" secondItem="AKH-C8-p7P" secondAttribute="bottom" id="Unk-1S-Ehx"/>
                             <constraint firstItem="pdj-eY-9h2" firstAttribute="bottom" secondItem="flm-NP-zbn" secondAttribute="bottom" id="WfB-bw-RB3"/>
                             <constraint firstItem="wqi-Rp-EDu" firstAttribute="top" secondItem="flm-NP-zbn" secondAttribute="top" constant="5" id="Yf8-LY-lfH"/>
+                            <constraint firstItem="4pw-bd-8uq" firstAttribute="trailing" secondItem="vTi-NV-Kl9" secondAttribute="trailing" id="ZDY-0p-B4x"/>
                             <constraint firstItem="pdj-eY-9h2" firstAttribute="trailing" secondItem="flm-NP-zbn" secondAttribute="trailing" constant="-10" id="Zxr-O0-bBd"/>
                             <constraint firstItem="flm-NP-zbn" firstAttribute="trailing" secondItem="wqi-Rp-EDu" secondAttribute="trailing" constant="10" id="bMB-lp-77M"/>
+                            <constraint firstItem="Kw3-87-YxJ" firstAttribute="leading" secondItem="AKH-C8-p7P" secondAttribute="leading" id="lff-y8-Z5T"/>
+                            <constraint firstItem="Kw3-87-YxJ" firstAttribute="top" secondItem="AKH-C8-p7P" secondAttribute="top" id="tBq-vC-PLC"/>
                             <constraint firstItem="4pw-bd-8uq" firstAttribute="leading" secondItem="BHH-As-Re9" secondAttribute="trailing" id="zoR-Yh-IhS"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="flm-NP-zbn"/>

@@ -213,28 +213,8 @@ NSString *const kKeyModelList = @"modellist";
         }
     }];
 }
-/*
-- (NSURLSessionDownloadTask *)dowloadFileWithUrl:(NSString *)url complete:(completeDownloadBlock)complete{
-   return [self downloadTaskWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]] progress:^(NSProgress * _Nonnull downloadProgress) {
-        //
-        WeakSelf
-        NSOperationQueue* mainQueue = [NSOperationQueue mainQueue];
-        [mainQueue addOperationWithBlock:^{
-            // 下载进度
-            //            weakSelf.progressView.progress = 1.0 * downloadProgress.completedUnitCount / downloadProgress.totalUnitCount;
-            //            weakSelf.progressLabel.text = [NSString stringWithFormat:@"当前下载进度:%.2f%%",100.0 * downloadProgress.completedUnitCount / downloadProgress.totalUnitCount];
-        }];
-    } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
-        //
-        NSURL *path = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:nil];
-        return [path URLByAppendingPathComponent:@"英语听力2018/QQ_V5.4.01.dmg"];
-        
-    } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-        //
-        NSLog(@"%@,%@",response, filePath);
-        complete(response, [NSString stringWithFormat:@"%@",filePath], error);
-    }];
-}
+
+
 //
 //- (IBAction)downloadBtnClicked:(UIButton *)sender {
 //
@@ -285,5 +265,4 @@ NSString *const kKeyModelList = @"modellist";
 //    // 4. 开启下载任务
 //    [downloadTask resume];
 //}
-
 @end

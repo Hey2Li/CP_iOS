@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PaperModel.h"
 
 @interface PaperDetailViewController : UIViewController
-
+@property (weak, nonatomic) IBOutlet UILabel *paperDetailLb;
+@property (weak, nonatomic) IBOutlet UIButton *downloadPaperBtn;
+@property (weak, nonatomic) IBOutlet UIButton *collectionPaperBtn;
+@property (weak, nonatomic) IBOutlet UIImageView *collectionImageView;
+@property (nonatomic, strong) PaperModel *onePaperModel;
 @end

@@ -333,7 +333,7 @@
             break;
     }
     [self.lyricTableView reloadData];
-    [self.lyricTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+    [self.lyricTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0] animated:NO scrollPosition:UITableViewScrollPositionMiddle];
 }
 #pragma mark 变速播放
 - (IBAction)RateWithPlay:(UIButton *)sender {

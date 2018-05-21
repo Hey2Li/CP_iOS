@@ -17,7 +17,7 @@ typedef enum{
 } LTHttpResult;
 
 typedef void(^completeBlock)(LTHttpResult result, NSString *message, id data);
-//typedef void(^completeDownloadBlock)(NSURLResponse *response, NSString *filePath, NSError error);
+typedef void(^completeDownloadBlock)(NSURLResponse *response, NSString *filePath, NSError* error);
 
 @interface LTHTTPSessionManager : AFHTTPSessionManager
 
@@ -41,5 +41,7 @@ typedef void(^completeBlock)(LTHttpResult result, NSString *message, id data);
                                     parameters:(id)parameters
                                     photoArray:(NSArray *)photoArray
                                       complete:(completeBlock)complete;
+- (NSURLSessionDownloadTask *)dowloadFileWithUrl:(NSString *)url
+                                        complete:(completeDownloadBlock)complete;
 
 @end

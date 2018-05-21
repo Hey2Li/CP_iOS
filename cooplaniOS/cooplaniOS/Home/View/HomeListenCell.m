@@ -32,11 +32,35 @@
 }
 - (IBAction)collectionClick:(UIButton *)sender {
     if (sender.tag == 1) {
-        sender.selected = NO;
-        sender.tag = 0;
+        if (IS_USER_ID) {
+            [LTHttpManager deleteCollectionTestPaperWithId:_Model.ID Complete:^(LTHttpResult result, NSString *message, id data) {
+                if (LTHttpResultSuccess == result) {
+                    SVProgressShowStuteText(@"取消收藏成功", YES);
+                    sender.selected = NO;
+                    sender.tag = 0;
+                    _Model.collection = @"0";
+                }else{
+                    SVProgressShowStuteText(message, NO);
+                }
+            }];
+        }else{
+            SVProgressShowStuteText(@"请先登录", NO);
+        }
     }else if (sender.tag == 0){
-        sender.selected = YES;
-        sender.tag = 1;
+        if (IS_USER_ID) {
+            [LTHttpManager collectionTestPaperWithUserId:IS_USER_ID TestPaperId:_Model.ID Complete:^(LTHttpResult result, NSString *message, id data) {
+                if (LTHttpResultSuccess == result) {
+                    sender.selected = YES;
+                    sender.tag = 1;
+                    _Model.collection = @"1";
+                    SVProgressShowStuteText(@"收藏成功", YES);
+                }else{
+                    SVProgressShowStuteText(message, NO);
+                }
+            }];
+        }else{
+            SVProgressShowStuteText(@"请先登录", NO);
+        }
     }
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -50,8 +74,10 @@
     self.detailLabel.text = [NSString stringWithFormat:@"%@",Model.info];
     if ([Model.collection isEqualToString:@"1"]) {
         self.collectionBtn.tag = 1;
+        self.collectionBtn.selected = YES;
         [self.collectionBtn setImage:[UIImage imageNamed:@"collection_fill"] forState:UIControlStateSelected];
     }else if ([Model.collection isEqualToString:@"0"]){
+        self.collectionBtn.selected = NO;
          [self.collectionBtn setImage:[UIImage imageNamed:@"collection"] forState:UIControlStateNormal];
         self.collectionBtn.tag = 0;
     }

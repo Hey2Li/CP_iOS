@@ -869,7 +869,7 @@
 				TargetAttributes = {
 					9BEA0A2C2071D9190026AF2C = {
 						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					9BEA0A442071D9190026AF2C = {
 						CreatedOnToolsVersion = 9.2;
@@ -1339,15 +1339,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5VFC77CT8S;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = PA4XLQ53KY;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/cooplaniOS/CooplanPrefixHeader.pch";
 				INFOPLIST_FILE = cooplaniOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.cooplan.cooplaniOS;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cooplan.devecooplaniOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "ca20687b-d62e-449f-be21-1e66e8793c4b";
+				PROVISIONING_PROFILE_SPECIFIER = "酷学听力开发";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1358,15 +1360,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5VFC77CT8S;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = PA4XLQ53KY;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/cooplaniOS/CooplanPrefixHeader.pch";
 				INFOPLIST_FILE = cooplaniOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.cooplan.cooplaniOS;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cooplan.devecooplaniOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "1de37099-a571-469f-afb9-9b9dacb83c8a";
+				PROVISIONING_PROFILE_SPECIFIER = "酷学听力开发";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

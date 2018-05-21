@@ -44,6 +44,10 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self setupLeftMenuButton];
     [self loadData];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reloadTableView) name:@"homereloaddata" object:nil];
+}
+- (void)reloadTableView{
+    [self.myTableView reloadData];
 }
 - (void)loadData{
     [LTHttpManager FindAllBannerWithComplete:^(LTHttpResult result, NSString *message, id data) {
@@ -54,7 +58,7 @@
                 
             }
         }];
-    [LTHttpManager FindAllWithComplete:^(LTHttpResult result, NSString *message, id data) {
+    [LTHttpManager FindAllWithUseId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
         if (result == LTHttpResultSuccess) {
             NSArray *array = data[@"responseData"];
             NSMutableDictionary *muDict = [NSMutableDictionary dictionary];
@@ -223,8 +227,7 @@
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-//    return self.paperMutableArray.count;
-    return 10;
+    return self.paperMutableArray.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 88;
@@ -256,15 +259,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     HomeListenCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HOMELISTEN"];
     cell.backgroundColor = UIColorFromRGB(0xF7F7F7);
-//    cell.Model = self.paperMutableArray[indexPath.row];
+    cell.Model = self.paperMutableArray[indexPath.row];
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    ListenPaperViewController *vc = [[ListenPaperViewController alloc]init];
-//    [self.navigationController pushViewController:vc animated:YES];
     HomeListenCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     PaperDetailViewController *vc = [PaperDetailViewController new];
     vc.title = cell.TitleLabel.text;
+    vc.onePaperModel = self.paperMutableArray[indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (void) viewDidAppear:(BOOL)animated{
