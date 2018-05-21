@@ -12,9 +12,16 @@
 
 @interface MyDownloadViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
+@property (nonatomic, strong) NSMutableArray *downloadArray;
 @end
 
 @implementation MyDownloadViewController
+- (NSMutableArray *)downloadArray{
+    if (!_downloadArray) {
+        _downloadArray = [NSMutableArray array];
+    }
+    return _downloadArray;
+}
 - (UITableView *)myTableView{
     if (!_myTableView) {
         _myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
@@ -31,12 +38,14 @@
     self.title = @"我的下载";
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.myTableView];
+    self.downloadArray = [NSMutableArray arrayWithArray:[DownloadFileModel jr_findAll]];
+    [self.myTableView reloadData];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 2;
+    return self.downloadArray.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 74;
@@ -74,6 +83,7 @@
     MyCollectionPaperTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([MyCollectionPaperTableViewCell class])];
     [cell.dowloadBtn setImage:[UIImage imageNamed:@"更多"] forState:UIControlStateNormal];
     cell.selectionStyle = NO;
+    cell.downloadModel = self.downloadArray[indexPath.row];
     return cell;
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -93,6 +103,8 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     PaperDetailViewController *vc = [[PaperDetailViewController alloc]init];
+    DownloadFileModel *model = self.downloadArray[indexPath.row];
+    vc.ID = model.testPaperId;
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)didReceiveMemoryWarning {
