@@ -66,6 +66,7 @@
 		9B4BB736207B6EDC0029015F /* NSURL+SULoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4BB732207B6EDC0029015F /* NSURL+SULoader.m */; };
 		9B4BB737207B6EDC0029015F /* NSString+SULoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4BB735207B6EDC0029015F /* NSString+SULoader.m */; };
 		9B60C8D620B2B06B00373EA2 /* DownloadFileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B60C8D520B2B06A00373EA2 /* DownloadFileModel.m */; };
+		9B60C8D920B3B2C000373EA2 /* NSString+FileSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B60C8D820B3B2C000373EA2 /* NSString+FileSize.m */; };
 		9B6FB85C207F3D2100BC07F3 /* UILabel+HYLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6FB85B207F3D2100BC07F3 /* UILabel+HYLabel.m */; };
 		9B6FB85F207F3D7B00BC07F3 /* HYWord.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6FB85D207F3D7B00BC07F3 /* HYWord.m */; };
 		9BA08EB0209308440026935E /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA08EAD209308440026935E /* FeedbackViewController.m */; };
@@ -225,6 +226,8 @@
 		9B4BB735207B6EDC0029015F /* NSString+SULoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SULoader.m"; sourceTree = "<group>"; };
 		9B60C8D420B2B06A00373EA2 /* DownloadFileModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DownloadFileModel.h; sourceTree = "<group>"; };
 		9B60C8D520B2B06A00373EA2 /* DownloadFileModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DownloadFileModel.m; sourceTree = "<group>"; };
+		9B60C8D720B3B2C000373EA2 /* NSString+FileSize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+FileSize.h"; sourceTree = "<group>"; };
+		9B60C8D820B3B2C000373EA2 /* NSString+FileSize.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+FileSize.m"; sourceTree = "<group>"; };
 		9B6FB85A207F3D2100BC07F3 /* UILabel+HYLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+HYLabel.h"; sourceTree = "<group>"; };
 		9B6FB85B207F3D2100BC07F3 /* UILabel+HYLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+HYLabel.m"; sourceTree = "<group>"; };
 		9B6FB85D207F3D7B00BC07F3 /* HYWord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYWord.m; sourceTree = "<group>"; };
@@ -691,6 +694,8 @@
 				9BB3E26D209AA60A00FDBE77 /* PaperJSONKey.m */,
 				9BA1CB6120A6BD730093C37B /* LTAlertView.h */,
 				9BA1CB6220A6BD730093C37B /* LTAlertView.m */,
+				9B60C8D720B3B2C000373EA2 /* NSString+FileSize.h */,
+				9B60C8D820B3B2C000373EA2 /* NSString+FileSize.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1118,6 +1123,7 @@
 				9B3D02CF20847C5A005C923B /* PaperDetailTableViewCell.m in Sources */,
 				9BB0A07E209C762C00089C4A /* TestPaperModel.m in Sources */,
 				9B1EDCE42089C06D0033183F /* UIView+Toast.m in Sources */,
+				9B60C8D920B3B2C000373EA2 /* NSString+FileSize.m in Sources */,
 				9BA1CB5D20A5677D0093C37B /* collectionSentenceModel.m in Sources */,
 				9B32CB0B209BF00300FCEED3 /* SentenceTableViewCell.m in Sources */,
 				9B3D02C62084468E005C923B /* SUPlayer.m in Sources */,

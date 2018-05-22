@@ -9,6 +9,7 @@
 #import "MyDownloadViewController.h"
 #import "MyCollectionPaperTableViewCell.h"
 #import "PaperDetailViewController.h"
+#import "NSString+FileSize.h"
 
 @interface MyDownloadViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -83,7 +84,11 @@
     MyCollectionPaperTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([MyCollectionPaperTableViewCell class])];
     [cell.dowloadBtn setImage:[UIImage imageNamed:@"更多"] forState:UIControlStateNormal];
     cell.selectionStyle = NO;
-    cell.downloadModel = self.downloadArray[indexPath.row];
+    DownloadFileModel *model = self.downloadArray[indexPath.row];
+    cell.downloadModel = model;
+    NSString *path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *filePath = [NSString stringWithFormat:@"%@/%@",path,model.paperVoiceName];
+    cell.fileSizeLb.text = filePath.fileSize;
     return cell;
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -107,6 +112,7 @@
     vc.ID = model.testPaperId;
     [self.navigationController pushViewController:vc animated:YES];
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
