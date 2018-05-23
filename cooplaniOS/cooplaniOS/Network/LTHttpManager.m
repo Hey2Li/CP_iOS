@@ -272,13 +272,6 @@
         
         if (downloadProgress) {
             progress(downloadProgress);
-            [SVProgressHUD showProgress:downloadProgress.fractionCompleted];
-            if (downloadProgress.completedUnitCount/downloadProgress.totalUnitCount == 1.0) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [SVProgressHUD dismiss];
-                    SVProgressShowStuteText(@"下载成功", YES);
-                });
-            }
         }
         
     } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
@@ -307,5 +300,33 @@
     //3.启动任务
     [downloadTask resume];
 }
+/**
+ 获得错题比例
+ 
+ @param json json字符串
+ @param complete block
+ */
++(void)questionMistakesWithJsonString:(NSString *)json Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+                                @"mistakes":json
+                                };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/ios/mistakes/private/find",BaseURL]parameters:paramters complete:complete];
+}
 
+/**
+ 展示单张试卷信息
+ 
+ @param userId 用户ID
+ @param testPaperId 试卷ID
+ @param complete block
+ */
++(void)findOneTestPaperInfoWithUserId:(NSNumber *)userId TestPaperId:(NSNumber *)testPaperId Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+                                @"userId":userId ? userId : @"",
+                                @"testPaperId":testPaperId
+                                };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/testPaper/findOneInfo",BaseURL]parameters:paramters complete:complete];
+}
 @end

@@ -85,6 +85,7 @@
             [_player addObserver:self forKeyPath:@"cacheProgress" options:NSKeyValueObservingOptionNew context:nil];
         }else{
             SVProgressShowStuteText(@"请先下载资源", NO);
+            [self.navigationController popViewControllerAnimated:YES];
         }
     }
     return _player;
@@ -198,6 +199,31 @@
                         sectinsModel.Passage = [NSMutableArray arrayWithArray:self.passageModelArray];
                     }
                 }
+                __block NSArray *array;
+                NSMutableArray *questionAndArray = [NSMutableArray array];
+                for (SectionsModel *secModel in self.sectionsModelArray) {
+                    for (QuestionsModel *quesModel in secModel.Passage) {
+                        NSString *question = quesModel.QuestionNo;
+                        NSString *paperId = _testPaperModel.PaperSerialNumber;
+                        NSDictionary *dict = @{@"testPaperNum":paperId,@"topicNum":question};
+                        [questionAndArray addObject:dict];
+                    }
+                }
+                [LTHttpManager questionMistakesWithJsonString:[self arrayToJSONString:questionAndArray] Complete:^(LTHttpResult result, NSString *message, id data) {
+                    if (LTHttpResultSuccess == result) {
+                        array = data[@"responseData"];
+                        int q = 0;
+                        if (q < array.count) {
+                            for (SectionsModel *sectinsModel in self.sectionsModelArray) {
+                                for (QuestionsModel *questionModel in sectinsModel.Passage) {
+                                    questionModel.correctStr = array[q][@"ratio"];
+                                    q++;
+                                }
+                            }
+                        }
+                    }
+                }];
+
             }
         });
     }
@@ -328,12 +354,29 @@
     };
     return cell;
 }
+- (NSString *)arrayToJSONString:(NSArray *)array
+
+{
+    
+    NSError *error = nil;
+    //    NSMutableArray *muArray = [NSMutableArray array];
+    //    for (NSString *userId in array) {
+    //        [muArray addObject:[NSString stringWithFormat:@"\"%@\"", userId]];
+    //    }
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:array options:NSJSONWritingPrettyPrinted error:&error];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    //    NSString *jsonTemp = [jsonString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    //    NSString *jsonResult = [jsonTemp stringByReplacingOccurrencesOfString:@" " withString:@""];
+    //    NSLog(@"json array is: %@", jsonResult);
+    return jsonString;
+}
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if (scrollView == self.tikaCollectionView) {
         int index = scrollView.contentOffset.x/SCREEN_WIDTH;
         self.bottomView.questionIndexLb.text = [NSString stringWithFormat:@"%d/%lu",index+1, self.itemCountArray.count];
     }
 }
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
    
 }

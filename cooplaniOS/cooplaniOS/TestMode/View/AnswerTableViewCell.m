@@ -60,7 +60,7 @@
 //        self.cellHeight.constant = model.cellHeight = model.cellHeight;
 //    }
     self.questionNameLb.text = [NSString stringWithFormat:@"Q%@",model.QuestionNo];
-    self.CorrectLb.text = [NSString stringWithFormat:@"%u%%的人答错了",(arc4random() % 60) + 10];//答错人数
+    self.CorrectLb.text = [NSString stringWithFormat:@"%@%%的人答错了",model.correctStr];//答错人数
     self.correctAnswerLb.text = model.Answer;
     self.youAnswerLb.text = model.youAnswer;
 }

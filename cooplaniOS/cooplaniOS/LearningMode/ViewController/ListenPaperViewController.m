@@ -63,6 +63,7 @@
             self.timeLb.hidden = YES;
         }else{
             SVProgressShowStuteText(@"请先下载资源", NO);
+            [self.navigationController popViewControllerAnimated:YES];
         }
     }
     return _player;

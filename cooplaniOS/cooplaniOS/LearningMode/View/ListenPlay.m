@@ -73,6 +73,7 @@
         [self.progressSlider setValue:self.player.progress andTime:@"00:00/00:00" animated:YES];
     }else{
         SVProgressShowStuteText(@"请先下载资源", NO);
+        return;
     }
     
    

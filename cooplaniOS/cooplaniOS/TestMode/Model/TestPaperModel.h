@@ -60,6 +60,7 @@
 @property (nonatomic, assign) BOOL isSelected;
 @property (nonatomic, copy) NSString *youAnswer;
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
+@property (nonatomic, copy) NSString *correctStr;
 @end
 
 @interface OptionsModel: NSObject

@@ -8,7 +8,7 @@
 
 #import "LTHTTPSessionManager.h"
 
-#define BaseURL @"http://192.168.0.110:8080/cooplan-app"
+#define BaseURL @"http://192.168.0.101:8080/cooplan-app"
 @interface LTHttpManager : LTHTTPSessionManager
 
 
@@ -158,4 +158,22 @@
  *  @param faliure 错误信息
  */
 +(void)downloadURL:(NSString *) downloadURL progress:(void (^)(NSProgress *downloadProgress))progress destination:(void (^)(NSURL *targetPath))destination failure:(void(^)(NSError *error))faliure;
+
+/**
+ 获得错题比例
+
+ @param json json字符串
+ @param complete block
+ */
++(void)questionMistakesWithJsonString:(NSString *)json Complete:(completeBlock)complete;
+
+
+/**
+ 展示单张试卷信息
+
+ @param userId 用户ID
+ @param testPaperId 试卷ID
+ @param complete block
+ */
++(void)findOneTestPaperInfoWithUserId:(NSNumber *)userId TestPaperId:(NSNumber *)testPaperId Complete:(completeBlock)complete;
 @end

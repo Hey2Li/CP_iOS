@@ -10,6 +10,7 @@
 #import "MyCollectionPaperTableViewCell.h"
 #import "PaperDetailViewController.h"
 #import "NSString+FileSize.h"
+#import "PaperModel.h"
 
 @interface MyDownloadViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -39,7 +40,32 @@
     self.title = @"我的下载";
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.myTableView];
-    self.downloadArray = [NSMutableArray arrayWithArray:[DownloadFileModel jr_findAll]];
+    NSArray<DownloadFileModel *> *list = J_Select(DownloadFileModel).Where(@"paperVoiceName").list;
+    list = J_Select(DownloadFileModel).Where(@"paperVoiceName").list;
+    self.downloadArray = [NSMutableArray arrayWithArray:list];
+    [self.myTableView reloadData];
+    NSArray *array = [DownloadFileModel jr_findAll];
+//    unsigned int count;
+    for (int i = 0; i < list.count; i ++) {
+        DownloadFileModel *model = self.downloadArray[i];
+        NSLog(@"%@,%@",[model jr_primaryKeyValue],model);
+    }
+    for (int i = 0; i < array.count; i ++) {
+        DownloadFileModel *model = array[i];
+        NSLog(@"%@,%@",[model jr_primaryKeyValue],model);
+    }
+//    if (self.downloadArray.count > 0) {
+//        objc_property_t *props = class_copyPropertyList([model class], &count);
+//        NSMutableArray *marray = [NSMutableArray array];
+//        for (int i = 0; i < count; i++) {
+//            objc_property_t property = props[i];
+//            const char *cName = property_getName(property);
+//            NSString *name = [NSString stringWithCString:cName encoding:NSUTF8StringEncoding];
+//            id propertyValue = [model valueForKey:(NSString *)name];
+//            NSLog(@"%@:%@",name,propertyValue);
+//            [marray addObject:name];
+//        }
+//    }
     [self.myTableView reloadData];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -98,19 +124,32 @@
     return @"删除";
 }
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-    // 从数据源中删除
-    //    [_data removeObjectAtIndex:indexPath.row];
-    // 从列表中删除
-    //    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        
+        DownloadFileModel *model = [self.downloadArray objectAtIndex:indexPath.row];
+        BOOL result = J_Delete(model).Recursive(YES).updateResult;
+        if (result) {
+            SVProgressShowStuteText(@"删除成功", YES);
+        }
+        // 从数据源中删除
+        [self.downloadArray removeObjectAtIndex:indexPath.row];
+        // 从列表中删除
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     PaperDetailViewController *vc = [[PaperDetailViewController alloc]init];
     DownloadFileModel *model = self.downloadArray[indexPath.row];
-    vc.ID = model.testPaperId;
-    [self.navigationController pushViewController:vc animated:YES];
+    [LTHttpManager findOneTestPaperInfoWithUserId:IS_USER_ID ? IS_USER_ID : @"" TestPaperId:@([model.testPaperId integerValue]) Complete:^(LTHttpResult result, NSString *message, id data) {
+        if (LTHttpResultSuccess == result) {
+            NSMutableDictionary *muDict = [NSMutableDictionary dictionaryWithDictionary:data[@"responseData"][@"tp"]];
+            [muDict addEntriesFromDictionary:@{@"collection":data[@"responseData"][@"type"]}];
+            PaperModel *onePaperModel = [PaperModel mj_objectWithKeyValues:muDict];
+            vc.onePaperModel = onePaperModel;      
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }];
+    
 }
 
 - (void)didReceiveMemoryWarning {
