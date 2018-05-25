@@ -323,7 +323,8 @@
             }
         }];
     }else{
-        SVProgressShowStuteText(@"请先登录", NO);
+        LoginViewController *vc = [[LoginViewController alloc]init];
+        [self.viewController.navigationController pushViewController:vc animated:YES];
     }
 }
 #pragma mark 内容纠错

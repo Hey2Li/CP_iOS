@@ -38,12 +38,7 @@
     self.myTableView.scrollEnabled = NO;
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
     self.downloadModel = [[DownloadFileModel alloc]init];
-    if (!_type) {
-        [self loadData];
-    }else{
-        self.onePaperModel.ID = @([_type integerValue]);
-        [self loadData];
-    }
+    [self loadData];
 }
 - (void)loadData{
     if ([self.onePaperModel.collection isEqualToString:@"0"]) {
@@ -123,25 +118,34 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0) {
-        ListenPaperViewController *vc = [[ListenPaperViewController alloc]init];
-        vc.title = self.title;
-        vc.testPaperId = self.downloadModel.testPaperId;
-        [self.navigationController pushViewController:vc animated:YES];
-    }else if (indexPath.row == 1){
-        [self selectMode];
-    }else if (indexPath.row == 2){
-        LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"模拟考场需要一鼓作气的完成准备好了吗？" sureBtn:@"准备好了！" cancleBtn:@"取消"];
-        alertView.resultIndex = ^(NSInteger index) {
-            TestModeViewController *vc = [[TestModeViewController alloc]init];
+    NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    DownloadFileModel *dowModel = [DownloadFileModel jr_findByPrimaryKey:self.onePaperModel.ID];
+    NSString *urlString = [dowModel.paperVoiceName stringByRemovingPercentEncoding];
+    NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:fullPath]) {
+        if (indexPath.row == 0) {
+            ListenPaperViewController *vc = [[ListenPaperViewController alloc]init];
             vc.title = self.title;
             vc.testPaperId = self.downloadModel.testPaperId;
-            [self.maskView removeFromSuperview];
             [self.navigationController pushViewController:vc animated:YES];
-        };
-        [alertView show];
+        }else if (indexPath.row == 1){
+            [self selectMode];
+        }else if (indexPath.row == 2){
+            LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"模拟考场需要一鼓作气的完成准备好了吗？" sureBtn:@"准备好了！" cancleBtn:@"取消"];
+            alertView.resultIndex = ^(NSInteger index) {
+                TestModeViewController *vc = [[TestModeViewController alloc]init];
+                vc.title = self.title;
+                vc.testPaperId = self.downloadModel.testPaperId;
+                [self.maskView removeFromSuperview];
+                [self.navigationController pushViewController:vc animated:YES];
+            };
+            [alertView show];
+        }else{
+            SVProgressShowStuteText(@"暂未开放", NO);
+        }
     }else{
-        SVProgressShowStuteText(@"暂未开放", NO);
+        SVProgressShowStuteText(@"请先下载资源", NO);
     }
 }
 - (void)selectMode{
@@ -308,7 +312,8 @@
                 }
             }];
         }else{
-            SVProgressShowStuteText(@"请先登录", NO);
+            LoginViewController *vc = [[LoginViewController alloc]init];
+            [self.navigationController pushViewController:vc animated:YES];
         }
     }else if (sender.tag == 10){
         if (IS_USER_ID) {
@@ -325,7 +330,8 @@
                 }
             }];
         }else{
-            SVProgressShowStuteText(@"请先登录", NO);
+            LoginViewController *vc = [[LoginViewController alloc]init];
+            [self.navigationController pushViewController:vc animated:YES];
         }
     }
 }

@@ -8,7 +8,7 @@
 
 #import "LTHTTPSessionManager.h"
 
-#define BaseURL @"http://192.168.0.101:8080/cooplan-app"
+#define BaseURL @"http://app.cooplan.cn"
 @interface LTHttpManager : LTHTTPSessionManager
 
 
@@ -176,4 +176,13 @@
  @param complete block
  */
 +(void)findOneTestPaperInfoWithUserId:(NSNumber *)userId TestPaperId:(NSNumber *)testPaperId Complete:(completeBlock)complete;
+
+
+/**
+ 使用金山查询单词
+
+ @param word 单词
+ @param complete block
+ */
++ (void)searchWordWithWord:(NSString *)word Complete:(completeBlock)complete;
 @end

@@ -73,7 +73,8 @@
 //        return;
 //    }
     if (![USERDEFAULTS objectForKey:USER_ID]) {
-        SVProgressShowStuteText(@"请先登录", NO);
+        LoginViewController *vc = [[LoginViewController alloc]init];
+            [self.navigationController pushViewController:vc animated:YES];
         return;
     }
     [LTHttpManager feedbackWithUserId:[USERDEFAULTS objectForKey:USER_ID] Type:[NSString stringWithFormat:@"%ld",(long)self.feedbackType] Info:self.feedbackContent ContactInfo:self.userContact ? self.userContact : @"" Files:self.imageDataArray Complete:^(LTHttpResult result, NSString *message, id data) {

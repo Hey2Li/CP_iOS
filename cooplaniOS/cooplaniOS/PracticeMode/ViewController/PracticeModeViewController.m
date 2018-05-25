@@ -125,11 +125,9 @@
                 });
                 [self.partModelArray addObject:partModel];
                 if (_mode < 3) {
-                    for (SectionsModel *sectinsModel in partModel.Sections) {
-                        _paperSection = sectinsModel.SectionTitle;
-                        [self.sectionsModelArray addObject:sectinsModel];
-                    }
+                    [self.sectionsModelArray addObject:partModel.Sections[_mode < partModel.Sections.count ? _mode : partModel.Sections.count - 1 ]];
                     modeSectionModel = self.sectionsModelArray[0];
+                    _paperSection = modeSectionModel.SectionTitle;
                     for (PassageModel *passageModel in modeSectionModel.Passage) {
                         [self.questionsModelArray removeAllObjects];
                         for (QuestionsModel *questionModel in passageModel.Questions) {
@@ -185,8 +183,17 @@
                 }
                 __block NSArray *array;
                 NSMutableArray *questionAndArray = [NSMutableArray array];
-                for (SectionsModel *secModel in self.sectionsModelArray) {
-                    for (QuestionsModel *quesModel in secModel.Passage) {
+                if (_mode == 3) {
+                    for (SectionsModel *secModel in self.sectionsModelArray) {
+                        for (QuestionsModel *quesModel in secModel.Passage) {
+                            NSString *question = quesModel.QuestionNo;
+                            NSString *paperId = _testPaperModel.PaperSerialNumber;
+                            NSDictionary *dict = @{@"testPaperNum":paperId,@"topicNum":question};
+                            [questionAndArray addObject:dict];
+                        }
+                    }
+                }else{
+                    SectionsModel *secModel = self.sectionsModelArray[0];                       for (QuestionsModel *quesModel in secModel.Passage) {
                         NSString *question = quesModel.QuestionNo;
                         NSString *paperId = _testPaperModel.PaperSerialNumber;
                         NSDictionary *dict = @{@"testPaperNum":paperId,@"topicNum":question};
@@ -198,7 +205,15 @@
                         array = data[@"responseData"];
                         int q = 0;
                         if (q < array.count) {
-                            for (SectionsModel *sectinsModel in self.sectionsModelArray) {
+                            if (_mode == 3) {
+                                for (SectionsModel *sectinsModel in self.sectionsModelArray) {
+                                    for (QuestionsModel *questionModel in sectinsModel.Passage) {
+                                        questionModel.correctStr = array[q][@"ratio"];
+                                        q++;
+                                    }
+                                }
+                            }else{
+                                SectionsModel *sectinsModel = self.sectionsModelArray[0];
                                 for (QuestionsModel *questionModel in sectinsModel.Passage) {
                                     questionModel.correctStr = array[q][@"ratio"];
                                     q++;
@@ -350,12 +365,12 @@
                 float correctFloat = (float)_correctInt/(float)(_correctInt + _NoCorrectInt);
                 PMAnswerViewController *vc = [[PMAnswerViewController alloc]init];
                 vc.correct = [NSString stringWithFormat:@"%0.f",correctFloat * 100];
+                vc.testPaperId = self.testPaperId;
                 vc.paperName = _testPaperModel.PaperFullName;
                 vc.paperSection = _paperSection;
                 vc.questionsArray = self.sectionsModelArray;
                 vc.mode = self.mode;
-                [self.navigationController pushViewController:vc animated:YES];
-                  }
+                [self.navigationController pushViewController:vc animated:YES];              }
         };
         return cell;
     }
@@ -404,6 +419,7 @@
             vc.correct = [NSString stringWithFormat:@"%0.f",correctFloat * 100 ];
             vc.paperName = _testPaperModel.PaperFullName;
             vc.paperSection = _paperSection;
+            vc.testPaperId = self.testPaperId;
             vc.questionsArray = @[modeSectionModel];
             vc.mode = self.mode;
             [self.navigationController pushViewController:vc animated:YES];

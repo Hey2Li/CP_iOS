@@ -258,6 +258,7 @@
                 SVProgressShowStuteText(@"退出成功", YES);
                 [self.headerBtn setImage:[UIImage imageNamed:@"touxiang"] forState:UIControlStateNormal];
                 self.userNameLb.text = @"请登录";
+                 [[NSNotificationCenter defaultCenter]postNotificationName:@"homereloaddata" object:nil];
                 [self.myTableView reloadData];
             };
             [alertView show];

@@ -329,4 +329,18 @@
                                 };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/testPaper/findOneInfo",BaseURL]parameters:paramters complete:complete];
 }
+
+/**
+ 使用金山查询单词
+ 
+ @param word 单词
+ @param complete block
+ */
++ (void)searchWordWithWord:(NSString *)word Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+                                @"word":word
+                                };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/ios/word/public/search",BaseURL]parameters:paramters complete:complete];
+}
 @end

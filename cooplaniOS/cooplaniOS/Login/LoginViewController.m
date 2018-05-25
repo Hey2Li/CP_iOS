@@ -10,11 +10,17 @@
 #import "LoginNextViewController.h"
 #import "TYAttributedLabel.h"
 #import <UMShare/UMShare.h>
+#import "BaseViewController.h"
+#import "HomeViewController.h"
+#import "LeftViewController.h"
+#import "MMDrawerController.h"
+#import "MMDrawerVisualState.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *phoneTF;
 @property (weak, nonatomic) IBOutlet UIButton *nextStepBtn;
 @property (nonatomic, copy) NSString *StringCount;
+@property(nonatomic,strong) MMDrawerController * drawerController;
 @end
 
 @implementation LoginViewController
@@ -121,7 +127,26 @@
                     [[NSUserDefaults standardUserDefaults]setObject:data[@"responseData"][@"tpu"][@"nickname"] forKey:USER_NICKNAME];
                     [[NSUserDefaults standardUserDefaults]setObject:data[@"responseData"][@"tpu"][@"sex"] forKey:USER_SEX];
                     [[NSUserDefaults standardUserDefaults] synchronize];
-                    [self.navigationController popViewControllerAnimated:YES];
+                    //初始化控制器
+                    UIViewController *centerVC = [[HomeViewController alloc]init];
+                    UIViewController *leftVC = [[LeftViewController alloc]init];
+                    
+                    //初始化导航控制器
+                    BaseViewController *centerNvaVC = [[BaseViewController alloc]initWithRootViewController:centerVC];
+                    
+                    //使用MMDrawerController
+                    self.drawerController = [[MMDrawerController alloc]initWithCenterViewController:centerNvaVC leftDrawerViewController:leftVC];
+                    //设置打开/关闭抽屉的手势
+                    self.drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModePanningCenterView;
+                    self.drawerController.closeDrawerGestureModeMask =MMCloseDrawerGestureModeAll;
+                    //设置左右两边抽屉显示的多少
+                    self.drawerController.maximumLeftDrawerWidth = 160.0;
+                    self.drawerController.shouldStretchDrawer = YES;
+                    [leftVC setRestorationIdentifier:@"MMExampleLeftNavigationControllerRestorationKey"];
+                    [self.drawerController setDrawerVisualStateBlock:[MMDrawerVisualState slideAndScaleVisualStateBlock]];
+                    self.drawerController.view.backgroundColor = [UIColor whiteColor];
+                    self.drawerController.centerViewController.view.backgroundColor = [UIColor whiteColor];
+                    [self presentViewController:self.drawerController animated:YES completion:nil];
                 }else{
                     [self.view makeToast:message];    
                 }

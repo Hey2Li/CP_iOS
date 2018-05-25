@@ -47,7 +47,7 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reloadTableView) name:@"homereloaddata" object:nil];
 }
 - (void)reloadTableView{
-    [self.myTableView reloadData];
+    [self loadData];
 }
 - (void)loadData{
     [LTHttpManager FindAllBannerWithComplete:^(LTHttpResult result, NSString *message, id data) {
@@ -190,7 +190,7 @@
     monthAndDayLb.verticalAlignment = 2;
     monthAndDayLb.font = [UIFont systemFontOfSize:14 weight:18];
     monthAndDayLb.textColor = [UIColor blackColor];
-    monthAndDayLb.text = [NSString stringWithFormat:@"%@ %@",[Tool dateArray][2],[Tool dateArray][1]];
+    monthAndDayLb.text = [NSString stringWithFormat:@"%@th %@",[Tool dateArray][2],[Tool dateArray][1]];
     UIFont *font = [UIFont systemFontOfSize:14 weight:18];
     // 根据字体得到NSString的尺寸
     CGSize size = [monthAndDayLb.text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:font,NSFontAttributeName,nil]];

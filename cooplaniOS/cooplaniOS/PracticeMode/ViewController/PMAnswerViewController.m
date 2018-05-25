@@ -97,8 +97,10 @@
     }];
     [continueBtn addTarget:self action:@selector(continueBtnClick:) forControlEvents:UIControlEventTouchUpInside];
 }
+#pragma mark 继续
 - (void)continueBtnClick:(UIButton *)btn{
     PracticeModeViewController *vc = [[PracticeModeViewController alloc]init];
+    vc.testPaperId = self.testPaperId;
     [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma mark TableViewDataSource&Delegate
