@@ -339,8 +339,59 @@
 + (void)searchWordWithWord:(NSString *)word Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
     NSDictionary *paramters = @{@"version":[Tool getAppVersion],
-                                @"word":word
+                                @"word":word,
+                                @"userId":IS_USER_ID
                                 };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/ios/word/public/search",BaseURL]parameters:paramters complete:complete];
+}
+
+/**
+ 用户收藏单词
+ 
+ @param userId 用户ID
+ @param word 单词
+ @param translate 解释
+ @param complete block
+ */
++ (void)addWordsWithUserId:(NSNumber *)userId Word:(NSString *)word Tranlate:(NSString *)translate Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+                                @"userId":userId,
+                                @"word":word,
+                                @"translate":translate
+                                };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/ios/words/private/add",BaseURL]parameters:paramters complete:complete];
+}
+
+
+/**
+ 查找所有收藏有单词
+ 
+ @param userId 用户ID
+ @param complete block
+ */
++ (void)findWordsWithUserId:(NSNumber *)userId Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+                                @"userId":userId
+                                };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/ios/words/private/find",BaseURL]parameters:paramters complete:complete];
+}
+
+
+/**
+ 用户删除收藏的单词
+ 
+ @param userId 用户id
+ @param word word
+ @param complete block
+ */
++ (void)removeWordsWithUseId:(NSNumber *)userId Word:(NSString *)word Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+                                @"userId":userId,
+                                @"word":word
+                                };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/ios/words/private/remove",BaseURL]parameters:paramters complete:complete];
 }
 @end

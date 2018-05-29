@@ -30,6 +30,7 @@
 		9B16B0972091B63900094EE7 /* answerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B16B0962091B63900094EE7 /* answerModel.m */; };
 		9B16B0992091C7AE00094EE7 /* AnswerHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B16B0982091C7AE00094EE7 /* AnswerHeadView.xib */; };
 		9B16B09C2091CA2600094EE7 /* AnswerHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B16B09B2091CA2600094EE7 /* AnswerHeadView.m */; };
+		9B1A5B1820BBAC4500DA21A6 /* CheckWordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1A5B1720BBAC4500DA21A6 /* CheckWordView.m */; };
 		9B1D31BC2073487F007674CF /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1D31BB2073487F007674CF /* BaseViewController.m */; };
 		9B1D31BF20734891007674CF /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1D31BE20734891007674CF /* HomeViewController.m */; };
 		9B1D31C320735804007674CF /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1D31C220735804007674CF /* LeftViewController.m */; };
@@ -161,6 +162,8 @@
 		9B16B0982091C7AE00094EE7 /* AnswerHeadView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnswerHeadView.xib; sourceTree = "<group>"; };
 		9B16B09A2091CA2600094EE7 /* AnswerHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnswerHeadView.h; sourceTree = "<group>"; };
 		9B16B09B2091CA2600094EE7 /* AnswerHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnswerHeadView.m; sourceTree = "<group>"; };
+		9B1A5B1620BBAC4500DA21A6 /* CheckWordView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CheckWordView.h; sourceTree = "<group>"; };
+		9B1A5B1720BBAC4500DA21A6 /* CheckWordView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CheckWordView.m; sourceTree = "<group>"; };
 		9B1D31BA2073487F007674CF /* BaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		9B1D31BB2073487F007674CF /* BaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		9B1D31BD20734891007674CF /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
@@ -347,6 +350,8 @@
 				9B16B074208D7DC900094EE7 /* ListenPlay.h */,
 				9B16B075208D7DC900094EE7 /* ListenPlay.m */,
 				9B16B077208D7DDE00094EE7 /* ListenPlay.xib */,
+				9B1A5B1620BBAC4500DA21A6 /* CheckWordView.h */,
+				9B1A5B1720BBAC4500DA21A6 /* CheckWordView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1141,6 +1146,7 @@
 				9B13AD682080885F0000C750 /* PaperModel.m in Sources */,
 				9B16B09C2091CA2600094EE7 /* AnswerHeadView.m in Sources */,
 				9B4BB6FD2079A9FC0029015F /* HomeListenCell.m in Sources */,
+				9B1A5B1820BBAC4500DA21A6 /* CheckWordView.m in Sources */,
 				9B32CB15209C25A500FCEED3 /* MyCollectionPaperTableViewCell.m in Sources */,
 				9B3D02CA20845338005C923B /* PaperDetailViewController.m in Sources */,
 				9B3D02DA208488A3005C923B /* LoginNextViewController.m in Sources */,

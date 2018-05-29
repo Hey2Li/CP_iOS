@@ -112,13 +112,13 @@
         return 0;
     }else{
         SectionsModel *model = self.questionsArray[section];//刷题模式只有有一个section
-        return model.Passage.count;
+        return model.Passages.count;
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section < self.questionsArray.count) {
         SectionsModel *model = self.questionsArray[indexPath.section];
-        QuestionsModel *questionModel = model.Passage[indexPath.row];
+        QuestionsModel *questionModel = model.Passages[indexPath.row];
         if (questionModel.isSelected) {
             return self.myTableView.rowHeight;
         }else{
@@ -158,7 +158,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (indexPath.section < self.questionsArray.count) {
         SectionsModel *model = self.questionsArray[indexPath.section];
-        QuestionsModel *questionModel = model.Passage[indexPath.row];
+        QuestionsModel *questionModel = model.Passages[indexPath.row];
         cell.model = questionModel;
     }else{
         
@@ -168,7 +168,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section < self.questionsArray.count) {
         SectionsModel *model = self.questionsArray[indexPath.section];
-        QuestionsModel *questionModel = model.Passage[indexPath.row];
+        QuestionsModel *questionModel = model.Passages[indexPath.row];
         questionModel.isSelected = !questionModel.isSelected;
         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:nil];
     }

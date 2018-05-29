@@ -12,6 +12,17 @@
 + (NSDictionary *)mj_objectClassInArray{
     return @{@"Parts":@"PartsModel"};
 }
++ (NSDictionary *)mj_replacedKeyFromPropertyName
+{
+    return @{
+             // 模型属性: JSON key, MJExtension 会自动将 JSON 的 key 替换为你模型中需要的属性
+             @"PaperSerialNumber":@"Properties.PaperSerialNumber",
+             @"PaperFullName":@"Properties.PaperFullName",
+             @"PaperAudioName":@"Properties.PaperAudioName",
+             @"TimeLimit":@"Properties.TimeLimit",
+             @"Version":@"Properties.Version"
+             };
+}
 @end
 
 @implementation PartsModel
@@ -22,7 +33,7 @@
 
 @implementation SectionsModel
 + (NSDictionary *)mj_objectClassInArray{
-    return @{@"Passage":@"PassageModel"};
+    return @{@"Passages":@"PassageModel"};
 }
 @end
 

@@ -48,4 +48,6 @@ NSAttributedString *returnNumAttr(NSString *str,NSInteger fontSize);
 + (CGFloat)layoutForAlliPhoneWidth:(CGFloat)width;
 
 + (NSString *)getAppVersion;
++ (NSString *)arrayToJSONString:(NSArray *)array;
+
 @end

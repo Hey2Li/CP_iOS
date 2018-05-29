@@ -242,5 +242,20 @@ NSAttributedString *returnNumAttr(NSString *str,NSInteger fontSize){
     NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
     return app_Version;
 }
++ (NSString *)arrayToJSONString:(NSArray *)array
 
+{
+    
+    NSError *error = nil;
+    //    NSMutableArray *muArray = [NSMutableArray array];
+    //    for (NSString *userId in array) {
+    //        [muArray addObject:[NSString stringWithFormat:@"\"%@\"", userId]];
+    //    }
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:array options:NSJSONWritingPrettyPrinted error:&error];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    //    NSString *jsonTemp = [jsonString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    //    NSString *jsonResult = [jsonTemp stringByReplacingOccurrencesOfString:@" " withString:@""];
+    //    NSLog(@"json array is: %@", jsonResult);
+    return jsonString;
+}
 @end

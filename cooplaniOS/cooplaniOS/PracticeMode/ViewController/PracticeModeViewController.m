@@ -107,10 +107,10 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if ([fileManager fileExistsAtPath:fullPath]) {
         NSData *data = [NSData dataWithContentsOfFile:fullPath];
-        unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-        NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
-        NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:nil];
+//        unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+//        NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
+//        NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
         TestPaperModel *model = [TestPaperModel mj_objectWithKeyValues:dict];
         _testPaperModel = model;
         [self.partModelArray removeAllObjects];
@@ -128,7 +128,7 @@
                     [self.sectionsModelArray addObject:partModel.Sections[_mode < partModel.Sections.count ? _mode : partModel.Sections.count - 1 ]];
                     modeSectionModel = self.sectionsModelArray[0];
                     _paperSection = modeSectionModel.SectionTitle;
-                    for (PassageModel *passageModel in modeSectionModel.Passage) {
+                    for (PassageModel *passageModel in modeSectionModel.Passages) {
                         [self.questionsModelArray removeAllObjects];
                         for (QuestionsModel *questionModel in passageModel.Questions) {
                             questionModel.PassageId = passageModel.PassageId;
@@ -145,7 +145,7 @@
                                 [self.optionsModelArray addObject:optionsModel];
                             }
                         }
-                        modeSectionModel.Passage = [NSMutableArray arrayWithArray:self.passageModelArray];
+                        modeSectionModel.Passages = [NSMutableArray arrayWithArray:self.passageModelArray];
                         dispatch_async(dispatch_get_main_queue(), ^{
                             [self.tikaCollectionView reloadData];
                         });
@@ -156,7 +156,7 @@
                         _paperSection = sectinsModel.SectionTitle;
                         [self.sectionsModelArray addObject:sectinsModel];
                         [self.passageModelArray removeAllObjects];
-                        for (PassageModel *passageModel in sectinsModel.Passage) {
+                        for (PassageModel *passageModel in sectinsModel.Passages) {
                             [self.questionsModelArray removeAllObjects];
                             for (QuestionsModel *questionModel in passageModel.Questions) {
                                 questionModel.PassageId = passageModel.PassageId;
@@ -173,7 +173,7 @@
                                     [self.optionsModelArray addObject:optionsModel];
                                 }
                             }
-                            sectinsModel.Passage = [NSMutableArray arrayWithArray:self.passageModelArray];
+                            sectinsModel.Passages = [NSMutableArray arrayWithArray:self.passageModelArray];
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 [self.tikaCollectionView reloadData];
                             });
@@ -185,7 +185,7 @@
                 NSMutableArray *questionAndArray = [NSMutableArray array];
                 if (_mode == 3) {
                     for (SectionsModel *secModel in self.sectionsModelArray) {
-                        for (QuestionsModel *quesModel in secModel.Passage) {
+                        for (QuestionsModel *quesModel in secModel.Passages) {
                             NSString *question = quesModel.QuestionNo;
                             NSString *paperId = _testPaperModel.PaperSerialNumber;
                             NSDictionary *dict = @{@"testPaperNum":paperId,@"topicNum":question};
@@ -193,7 +193,7 @@
                         }
                     }
                 }else{
-                    SectionsModel *secModel = self.sectionsModelArray[0];                       for (QuestionsModel *quesModel in secModel.Passage) {
+                    SectionsModel *secModel = self.sectionsModelArray[0];                       for (QuestionsModel *quesModel in secModel.Passages) {
                         NSString *question = quesModel.QuestionNo;
                         NSString *paperId = _testPaperModel.PaperSerialNumber;
                         NSDictionary *dict = @{@"testPaperNum":paperId,@"topicNum":question};
@@ -207,14 +207,14 @@
                         if (q < array.count) {
                             if (_mode == 3) {
                                 for (SectionsModel *sectinsModel in self.sectionsModelArray) {
-                                    for (QuestionsModel *questionModel in sectinsModel.Passage) {
+                                    for (QuestionsModel *questionModel in sectinsModel.Passages) {
                                         questionModel.correctStr = array[q][@"ratio"];
                                         q++;
                                     }
                                 }
                             }else{
                                 SectionsModel *sectinsModel = self.sectionsModelArray[0];
-                                for (QuestionsModel *questionModel in sectinsModel.Passage) {
+                                for (QuestionsModel *questionModel in sectinsModel.Passages) {
                                     questionModel.correctStr = array[q][@"ratio"];
                                     q++;
                                 }
@@ -302,10 +302,10 @@
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     if (_mode < 3) {
-        return modeSectionModel.Passage.count;
+        return modeSectionModel.Passages.count;
     }else{
          SectionsModel *model = self.sectionsModelArray[section];
-        return model.Passage.count;
+        return model.Passages.count;
     }
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -323,7 +323,7 @@
     });
     //监听滑到那个section
     if (_mode == 3) {
-        QuestionsModel *questionsModel = sectionModel.Passage[indexPath.row];
+        QuestionsModel *questionsModel = sectionModel.Passages[indexPath.row];
         cell.questionsModel = questionsModel;
         cell.questionStr = [NSString stringWithFormat:@"%@",questionsModel.PassageDirection];
         cell.collectionIndexPath = indexPath;
@@ -346,7 +346,7 @@
         WeakSelf
         cell.questionCellClick = ^(NSIndexPath *cellIndexPath, BOOL isCorrect) {
             NSIndexPath *nextIndexPath;
-            if (cellIndexPath.row == sectionModel.Passage.count - 1 && cellIndexPath.section < self.sectionsModelArray.count - 1) {
+            if (cellIndexPath.row == sectionModel.Passages.count - 1 && cellIndexPath.section < self.sectionsModelArray.count - 1) {
                 nextIndexPath = [NSIndexPath indexPathForItem:0 inSection:cellIndexPath.section + 1];
                 [weakSelf.tikaCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
             }else{
@@ -358,10 +358,10 @@
             }else{
                 _NoCorrectInt++;
             }
-            if (cellIndexPath.row + 1 < sectionModel.Passage.count) {
+            if (cellIndexPath.row + 1 < sectionModel.Passages.count) {
                 [weakSelf.view layoutIfNeeded];
                 [weakSelf.tikaCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
-            }else if (cellIndexPath.row + 1 == sectionModel.Passage.count && cellIndexPath.section == self.sectionsModelArray.count - 1){
+            }else if (cellIndexPath.row + 1 == sectionModel.Passages.count && cellIndexPath.section == self.sectionsModelArray.count - 1){
                 float correctFloat = (float)_correctInt/(float)(_correctInt + _NoCorrectInt);
                 PMAnswerViewController *vc = [[PMAnswerViewController alloc]init];
                 vc.correct = [NSString stringWithFormat:@"%0.f",correctFloat * 100];
@@ -374,7 +374,7 @@
         };
         return cell;
     }
-    QuestionsModel *questionsModel = modeSectionModel.Passage[indexPath.row];
+    QuestionsModel *questionsModel = modeSectionModel.Passages[indexPath.row];
     cell.questionsModel = questionsModel;
     cell.questionStr = [NSString stringWithFormat:@"%@",questionsModel.PassageDirection];
     cell.collectionIndexPath = indexPath;
@@ -398,7 +398,7 @@
     //cell tableview点击方法 isCorrect 是否正确 cellIndexPath collection cell 的indexPath
     cell.questionCellClick = ^(NSIndexPath *cellIndexPath, BOOL isCorrect) {
         NSIndexPath *nextIndexPath;
-        if (cellIndexPath.row == modeSectionModel.Passage.count - 1) {
+        if (cellIndexPath.row == modeSectionModel.Passages.count - 1) {
             nextIndexPath = [NSIndexPath indexPathForItem:cellIndexPath.item + 1 inSection:cellIndexPath.section];
         }else{
             nextIndexPath = [NSIndexPath indexPathForItem:cellIndexPath.item + 1 inSection:cellIndexPath.section];
@@ -410,10 +410,10 @@
             _NoCorrectInt++;
         }
         NSLog(@"indexPathrow+1 = %ld---indexPath.row%ld---",cellIndexPath.row + 1, cellIndexPath.row);
-        if (cellIndexPath.row + 1 < modeSectionModel.Passage.count) {
+        if (cellIndexPath.row + 1 < modeSectionModel.Passages.count) {
             [weakSelf.view layoutIfNeeded];
             [weakSelf.tikaCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
-        }else if (cellIndexPath.row + 1 == modeSectionModel.Passage.count){
+        }else if (cellIndexPath.row + 1 == modeSectionModel.Passages.count){
             float correctFloat = (float)_correctInt/(float)(_correctInt + _NoCorrectInt);
             PMAnswerViewController *vc = [[PMAnswerViewController alloc]init];
             vc.correct = [NSString stringWithFormat:@"%0.f",correctFloat * 100 ];

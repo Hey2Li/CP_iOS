@@ -155,10 +155,10 @@
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if ([fileManager fileExistsAtPath:fullPath]) {
         NSData *data = [NSData dataWithContentsOfFile:fullPath];
-        unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-        NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
-        NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:nil];
+//        unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+//        NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
+//        NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
         TestPaperModel *model = [TestPaperModel mj_objectWithKeyValues:dict];
         _testPaperModel = model;
         [self.partModelArray removeAllObjects];
@@ -174,7 +174,7 @@
                     _paperSection = sectinsModel.SectionTitle;
                     [self.sectionsModelArray addObject:sectinsModel];
                     [self.passageModelArray removeAllObjects];
-                    for (PassageModel *passageModel in sectinsModel.Passage) {
+                    for (PassageModel *passageModel in sectinsModel.Passages) {
                         [self.questionsModelArray removeAllObjects];
                         for (QuestionsModel *questionModel in passageModel.Questions) {
                             questionModel.PassageId = passageModel.PassageId;
@@ -196,13 +196,13 @@
                                 });
                             }
                         }
-                        sectinsModel.Passage = [NSMutableArray arrayWithArray:self.passageModelArray];
+                        sectinsModel.Passages = [NSMutableArray arrayWithArray:self.passageModelArray];
                     }
                 }
                 __block NSArray *array;
                 NSMutableArray *questionAndArray = [NSMutableArray array];
                 for (SectionsModel *secModel in self.sectionsModelArray) {
-                    for (QuestionsModel *quesModel in secModel.Passage) {
+                    for (QuestionsModel *quesModel in secModel.Passages) {
                         NSString *question = quesModel.QuestionNo;
                         NSString *paperId = _testPaperModel.PaperSerialNumber;
                         NSDictionary *dict = @{@"testPaperNum":paperId,@"topicNum":question};
@@ -215,7 +215,7 @@
                         int q = 0;
                         if (q < array.count) {
                             for (SectionsModel *sectinsModel in self.sectionsModelArray) {
-                                for (QuestionsModel *questionModel in sectinsModel.Passage) {
+                                for (QuestionsModel *questionModel in sectinsModel.Passages) {
                                     questionModel.correctStr = array[q][@"ratio"];
                                     q++;
                                 }
@@ -304,8 +304,8 @@
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     SectionsModel *model = self.sectionsModelArray[section];
-    NSLog(@"%@",model.Passage);
-    return model.Passage.count;
+    NSLog(@"%@",model.Passages);
+    return model.Passages.count;
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     return CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT/2 - 25);
@@ -318,7 +318,7 @@
     NSLog(@"%ld--%ld",(long)indexPath.row, indexPath.section);
     TikaCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TikaCollectionViewCell class]) forIndexPath:indexPath];
     SectionsModel *sectionModel = self.sectionsModelArray[indexPath.section];
-    QuestionsModel *questionsModel = sectionModel.Passage[indexPath.row];
+    QuestionsModel *questionsModel = sectionModel.Passages[indexPath.row];
     cell.questionsModel = questionsModel;
     cell.questionStr = [NSString stringWithFormat:@"%@",questionsModel.PassageDirection];
     cell.collectionIndexPath = indexPath;
@@ -327,7 +327,7 @@
     WeakSelf
     cell.questionCellClick = ^(NSIndexPath *cellIndexPath, BOOL isCorrect) {
         NSIndexPath *nextIndexPath;
-        if (cellIndexPath.row == sectionModel.Passage.count - 1 && cellIndexPath.section < self.sectionsModelArray.count - 1) {
+        if (cellIndexPath.row == sectionModel.Passages.count - 1 && cellIndexPath.section < self.sectionsModelArray.count - 1) {
             nextIndexPath = [NSIndexPath indexPathForItem:0 inSection:cellIndexPath.section + 1];
             [weakSelf.tikaCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
         }else{
@@ -339,10 +339,10 @@
         }else{
             _NoCorrectInt++;
         }
-        if (cellIndexPath.row + 1 < sectionModel.Passage.count) {
+        if (cellIndexPath.row + 1 < sectionModel.Passages.count) {
             [weakSelf.view layoutIfNeeded];
             [weakSelf.tikaCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
-        }else if (cellIndexPath.row + 1 == sectionModel.Passage.count && cellIndexPath.section == self.sectionsModelArray.count - 1){
+        }else if (cellIndexPath.row + 1 == sectionModel.Passages.count && cellIndexPath.section == self.sectionsModelArray.count - 1){
             float correctFloat = (float)_correctInt/(float)(_correctInt + _NoCorrectInt);
             AnswerViewController *vc = [[AnswerViewController alloc]init];
             vc.correct = [NSString stringWithFormat:@"%0.f",correctFloat * 100 ? correctFloat * 100 : 0];

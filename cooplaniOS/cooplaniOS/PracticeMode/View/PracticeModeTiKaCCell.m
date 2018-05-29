@@ -119,8 +119,10 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [cell setSelected:model.isSelecteOption animated:YES];
         });
+        cell.textLabel.numberOfLines = 2;
         cell.textLabel.text = [NSString stringWithFormat:@"%@.%@",model.Alphabet,model.Text];
     }
+
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

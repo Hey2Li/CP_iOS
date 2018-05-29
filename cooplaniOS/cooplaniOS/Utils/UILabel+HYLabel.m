@@ -44,7 +44,7 @@
         }
         state=0;
         //计算至 ( 结束 因为数据 ( 后边是汉字
-        if (*fun == '(') {
+        if (*fun == '\n') {
             break;
         }
         NSString *letterStr = [NSString stringWithFormat:@"%c", *fun];

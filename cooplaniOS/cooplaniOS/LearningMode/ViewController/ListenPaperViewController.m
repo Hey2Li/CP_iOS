@@ -16,6 +16,7 @@
 #import "ListenTableViewCell.h"
 #import "FeedbackViewController.h"
 #import "CollectionSentenceModel.h"
+#import "CheckWordView.h"
 
 @interface ListenPaperViewController ()<UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
 @property (nonatomic, strong) CADisplayLink *timer;//界面刷新定时器
@@ -35,6 +36,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *otherVIewBottom;
 @property (nonatomic, assign) NSInteger lastIndex;
 @property (nonatomic, assign) BOOL lastPlaying;
+@property (nonatomic, strong) CheckWordView *checkWordView;
 @end
 
 @implementation ListenPaperViewController
@@ -42,6 +44,12 @@
 @synthesize lengthArray;
 @synthesize timeArray;
 
+- (CheckWordView *)checkWordView{
+    if (!_checkWordView) {
+        _checkWordView = [[CheckWordView alloc]initWithFrame:CGRectMake(0, 0, 214, SCREEN_WIDTH)];
+    }
+    return _checkWordView;
+}
 - (SUPlayer *)player{
     if (!_player) {
         //网络
@@ -87,9 +95,17 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(listenPause) name:@"listenBackground" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(listenPlay) name:@"listenForeground" object:nil];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
-
+    //添加手势
+    
+    UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(event:)];
+    //将手势添加到需要相应的view中去
+    [_lyricTableView addGestureRecognizer:tapGesture];
+    //选择触发事件的方式（默认单机触发）
+    [tapGesture setNumberOfTapsRequired:1];
 }
-
+- (void)event:(UITapGestureRecognizer *)tap{
+    self.wordView.hidden = YES;
+}
 -(void)viewDidAppear:(BOOL)animated{
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
@@ -175,6 +191,13 @@
             //获取cell 及其label上的单词
             [self wordsOnCell:point];
             if (self.wordView.isHidden == NO) {
+                [self.view addSubview:self.checkWordView];
+                self.checkWordView.word = self.currentWord;
+                [self.checkWordView mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.bottom.equalTo(self.view.mas_bottom);
+                    make.width.equalTo(self.view.mas_width);
+                    make.height.equalTo(@214);
+                }];
                 //调用查词方法
                 NSLog(@"%@",self.currentWord);
             }
@@ -203,12 +226,14 @@
         CGRect frame = hyword.frame;
         frame.origin.x += cell.frame.origin.x + 14;
         frame.origin.y += cell.frame.origin.y + 6;
-        frame.size.height += 2;
-        frame.size.width += 2;
+//        frame.size.height += 2;
+        frame.size.width += 4;
+        NSLog(@"%@",hyword.wordString);
             if ([self pointInRectangle:frame point:point]) {
             self.wordView.hidden = NO;
             self.wordView.frame = frame;
-            self.wordView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:.8 alpha:.5];;
+            [self.wordView.layer setCornerRadius:2];
+            self.wordView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:.8 alpha:.5];
             [self.lyricTableView addSubview:self.wordView];
             self.currentWord = hyword.wordString;
             return;
@@ -314,7 +339,8 @@
             }
         }];
     }else{
-        SVProgressShowStuteText(@"请先登录", NO);
+        LoginViewController *vc = [[LoginViewController alloc]init];
+            [self.navigationController pushViewController:vc animated:YES];
     }
 }
 #pragma mark 内容纠错

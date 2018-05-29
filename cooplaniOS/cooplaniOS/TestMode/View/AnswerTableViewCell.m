@@ -63,6 +63,7 @@
     self.CorrectLb.text = [NSString stringWithFormat:@"%@的人答错了",model.correctStr];//答错人数
     self.correctAnswerLb.text = model.Answer;
     self.youAnswerLb.text = model.youAnswer;
+    self.answerDetailLb.text = model.Explanation;
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

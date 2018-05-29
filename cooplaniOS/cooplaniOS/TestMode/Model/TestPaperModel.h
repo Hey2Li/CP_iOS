@@ -30,7 +30,7 @@
 @property (nonatomic, copy) NSString *SectionDirection;
 @property (nonatomic, copy) NSString *SectionDirectionAudioStartTime;
 @property (nonatomic, copy) NSString *SectionDirectionAudioEndTime;
-@property (nonatomic, strong) NSMutableArray *Passage;
+@property (nonatomic, strong) NSMutableArray *Passages;
 @end
 
 @interface PassageModel: NSObject

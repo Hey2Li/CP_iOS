@@ -70,12 +70,12 @@
         return 0;
     }else{
         SectionsModel *model = self.questionsArray[section];
-        return model.Passage.count;
+        return model.Passages.count;
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     SectionsModel *model = self.questionsArray[indexPath.section];
-    QuestionsModel *questionModel = model.Passage[indexPath.row];
+    QuestionsModel *questionModel = model.Passages[indexPath.row];
     if (questionModel.isSelected) {
         return self.myTableView.rowHeight;
     }else{
@@ -109,13 +109,13 @@
     AnswerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([AnswerTableViewCell class]) forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     SectionsModel *model = self.questionsArray[indexPath.section];
-    QuestionsModel *questionModel = model.Passage[indexPath.row];
+    QuestionsModel *questionModel = model.Passages[indexPath.row];
     cell.model = questionModel;
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     SectionsModel *model = self.questionsArray[indexPath.section];
-    QuestionsModel *questionModel = model.Passage[indexPath.row];
+    QuestionsModel *questionModel = model.Passages[indexPath.row];
     questionModel.isSelected = !questionModel.isSelected;
     [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:nil];
 }

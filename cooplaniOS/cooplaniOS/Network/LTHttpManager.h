@@ -8,7 +8,8 @@
 
 #import "LTHTTPSessionManager.h"
 
-#define BaseURL @"http://app.cooplan.cn"
+#define BaseURL @"http://192.168.0.101:8080/cooplan-app"
+//app.cooplan.cn
 @interface LTHttpManager : LTHTTPSessionManager
 
 
@@ -185,4 +186,34 @@
  @param complete block
  */
 + (void)searchWordWithWord:(NSString *)word Complete:(completeBlock)complete;
+
+
+/**
+ 用户收藏单词
+
+ @param userId 用户ID
+ @param word 单词
+ @param translate 解释
+ @param complete block
+ */
++ (void)addWordsWithUserId:(NSNumber *)userId Word:(NSString *)word Tranlate:(NSString *)translate Complete:(completeBlock)complete;
+
+
+/**
+ 查找所有收藏有单词
+
+ @param userId 用户ID
+ @param complete block
+ */
++ (void)findWordsWithUserId:(NSNumber *)userId Complete:(completeBlock)complete;
+
+
+/**
+ 用户删除收藏的单词
+ 
+ @param userId 用户id
+ @param word word
+ @param complete block
+ */
++ (void)removeWordsWithUseId:(NSNumber *)userId Word:(NSString *)word Complete:(completeBlock)complete;
 @end
