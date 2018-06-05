@@ -340,7 +340,7 @@
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
     NSDictionary *paramters = @{@"version":[Tool getAppVersion],
                                 @"word":word,
-                                @"userId":IS_USER_ID
+                                @"userId":IS_USER_ID ? IS_USER_ID : @""
                                 };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/ios/word/public/search",BaseURL]parameters:paramters complete:complete];
 }
@@ -351,14 +351,18 @@
  @param userId 用户ID
  @param word 单词
  @param translate 解释
+ @param ph_en_mp3 英式音标mp3音频地址
+ @param ph_am_mp3 美式音标mp3音频地址
  @param complete block
  */
-+ (void)addWordsWithUserId:(NSNumber *)userId Word:(NSString *)word Tranlate:(NSString *)translate Complete:(completeBlock)complete{
++ (void)addWordsWithUserId:(NSNumber *)userId Word:(NSString *)word Tranlate:(NSString *)translate Ph_en_mp3:(NSString *)ph_en_mp3 Ph_am_mp3:(NSString *)ph_am_mp3 Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
     NSDictionary *paramters = @{@"version":[Tool getAppVersion],
                                 @"userId":userId,
                                 @"word":word,
-                                @"translate":translate
+                                @"translate":translate,
+                                @"ph_en_mp3":ph_en_mp3,
+                                @"ph_am_mp3":ph_am_mp3
                                 };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/ios/words/private/add",BaseURL]parameters:paramters complete:complete];
 }

@@ -20,19 +20,36 @@
             fun++;
             state=1;
         }
+     
+        if ((((*fun>=48) && (*fun <= 57)) || *fun == '\'')&&(*fun)!='\0') {
+            world[i++] = *fun;
+            fun++;
+            state=1;
+        }
         //处理完当前单词
         if(1 == state){
             world[i] = '\0';
             HYWord *hyword = [HYWord new];
             hyword.wordString = [NSString stringWithUTF8String:world];
             CGSize wordSize   = [hyword.wordString sizeWithAttributes:@{NSFontAttributeName:label.font}];
-
+          
             //处理计算最后一个单词与符号是连在一起换到下一行的问题
             NSString *letterStr = [NSString stringWithFormat:@"%c", *(fun)];
             CGSize letterSize   = [letterStr sizeWithAttributes:@{NSFontAttributeName:label.font}];
             if ([letterStr isEqualToString:@" "]) {
                 letterSize.width = 0;
             }
+//            if (wordSize.width < 24.7 && nums != 1 ) {
+//                if (point.x + wordSize.width + 29 > label.bounds.size.width) {
+//                    point.x = 0;
+//                    point.y += wordSize.height;
+//                }
+//            }else{
+//                if (point.x + wordSize.width + letterSize.width > label.bounds.size.width) {
+//                    point.x = 0;
+//                    point.y += wordSize.height;
+//                }
+//            }
             if (point.x + wordSize.width + letterSize.width > label.bounds.size.width) {
                 point.x = 0;
                 point.y += wordSize.height;
@@ -50,9 +67,21 @@
         NSString *letterStr = [NSString stringWithFormat:@"%c", *fun];
         CGSize letterSize   = [letterStr sizeWithAttributes:@{NSFontAttributeName:label.font}];
         //非英文字符符号累加宽
-        point.x += letterSize.width;
+        if (point.x + letterSize.width > label.bounds.size.width) {
+            point.x = 0;
+            point.y += letterSize.height;
+        }else{
+            point.x += letterSize.width;
+        }
+        NSLog(@"pointx:%f,letter.width:%f,word:%s",point.x, letterSize.width, world);
     }
     return [array copy];
 }
-
+- (BOOL)isNum:(NSString *)checkedNumString {
+    checkedNumString = [checkedNumString stringByTrimmingCharactersInSet:[NSCharacterSet decimalDigitCharacterSet]];
+    if(checkedNumString.length > 0) {
+        return NO;
+    }
+    return YES;
+}
 @end

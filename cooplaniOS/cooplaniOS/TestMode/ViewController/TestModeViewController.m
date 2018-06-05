@@ -158,7 +158,8 @@
 //        unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
 //        NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
 //        NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        NSError *error;
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
         TestPaperModel *model = [TestPaperModel mj_objectWithKeyValues:dict];
         _testPaperModel = model;
         [self.partModelArray removeAllObjects];

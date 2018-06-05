@@ -95,6 +95,7 @@
         cell.textLabel.textColor = UIColorFromRGB(0xBBBBBB);
         cell.selectionStyle = NO;
     }else{
+        cell.textLabel.numberOfLines = 2;
         cell.selectionStyle = YES;
         OptionsModel *model = _questionsModel.Options[indexPath.row - 1];
         dispatch_async(dispatch_get_main_queue(), ^{

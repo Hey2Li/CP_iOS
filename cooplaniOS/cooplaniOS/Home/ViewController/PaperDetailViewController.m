@@ -312,8 +312,12 @@
                 }
             }];
         }else{
-            LoginViewController *vc = [[LoginViewController alloc]init];
-            [self.navigationController pushViewController:vc animated:YES];
+            LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"请先登录" sureBtn:@"去登录" cancleBtn:@"取消"];
+            [alertView show];
+            alertView.resultIndex = ^(NSInteger index) {
+                LoginViewController *vc = [[LoginViewController alloc]init];
+                [self.navigationController pushViewController:vc animated:YES];
+            };
         }
     }else if (sender.tag == 10){
         if (IS_USER_ID) {
@@ -330,8 +334,12 @@
                 }
             }];
         }else{
-            LoginViewController *vc = [[LoginViewController alloc]init];
-            [self.navigationController pushViewController:vc animated:YES];
+            LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"请先登录" sureBtn:@"去登录" cancleBtn:@"取消"];
+            [alertView show];
+            alertView.resultIndex = ^(NSInteger index) {
+                LoginViewController *vc = [[LoginViewController alloc]init];
+                [self.navigationController pushViewController:vc animated:YES];
+            };
         }
     }
 }

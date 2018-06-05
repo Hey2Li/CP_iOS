@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface MyNoteViewController : UIViewController
-
+@property (nonatomic, assign) BOOL switchType;
 @end

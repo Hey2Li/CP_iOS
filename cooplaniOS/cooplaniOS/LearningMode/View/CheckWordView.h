@@ -10,4 +10,5 @@
 
 @interface CheckWordView : UIView
 @property (nonatomic, copy) NSString *word;
+@property (nonatomic, copy) void (^closeBlock)(void);
 @end

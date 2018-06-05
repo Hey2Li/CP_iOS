@@ -1,4 +1,4 @@
-//
+  //
 //  ListenPaperViewController.m
 //  cooplaniOS
 //
@@ -163,7 +163,7 @@
 - (void)loadLongPress{
     //添加长按手势
     UILongPressGestureRecognizer * longPressGr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressToDo:)];
-    longPressGr.minimumPressDuration = .5;
+    longPressGr.minimumPressDuration = .2;
     [self.lyricTableView addGestureRecognizer:longPressGr];
 }
 //长按的方法
@@ -173,7 +173,7 @@
         case UIGestureRecognizerStateBegan:
         {
             CGPoint point = [gesture locationInView:self.lyricTableView];
-            //获取cell 及其label上的单词
+//            获取cell 及其label上的单词
             [self wordsOnCell:point];
             break;
         }
@@ -198,6 +198,10 @@
                     make.width.equalTo(self.view.mas_width);
                     make.height.equalTo(@214);
                 }];
+                WeakSelf
+                self.checkWordView.closeBlock = ^{
+                    weakSelf.wordView.hidden = YES;
+                };
                 //调用查词方法
                 NSLog(@"%@",self.currentWord);
             }
@@ -228,7 +232,6 @@
         frame.origin.y += cell.frame.origin.y + 6;
 //        frame.size.height += 2;
         frame.size.width += 4;
-        NSLog(@"%@",hyword.wordString);
             if ([self pointInRectangle:frame point:point]) {
             self.wordView.hidden = NO;
             self.wordView.frame = frame;
@@ -339,8 +342,12 @@
             }
         }];
     }else{
-        LoginViewController *vc = [[LoginViewController alloc]init];
+        LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"请先登录" sureBtn:@"去登录" cancleBtn:@"取消"];
+        [alertView show];
+        alertView.resultIndex = ^(NSInteger index) {
+            LoginViewController *vc = [[LoginViewController alloc]init];
             [self.navigationController pushViewController:vc animated:YES];
+        };
     }
 }
 #pragma mark 内容纠错
@@ -590,6 +597,8 @@
     ListenTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ListenTableViewCell class]) forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.listenLb.textAlignment = NSTextAlignmentLeft;
+    cell.listenLb.lineBreakMode = NSLineBreakByWordWrapping;
+    cell.listenLb.preferredMaxLayoutWidth = cell.listenLb.width;
     cell.backgroundColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1/1.0];
      NSString *lrc = lyricArray[indexPath.row];
     NSLog(@"%d",_CNTag);

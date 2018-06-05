@@ -7,6 +7,8 @@
 //
 
 #import "CheckWordView.h"
+#import <AVKit/AVKit.h>
+#import "DictionaryViewController.h"
 
 @interface CheckWordView()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UILabel *wordLabel;
@@ -20,9 +22,18 @@
 @property (nonatomic, strong) UIButton *closeBtn;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSArray *dataArray;
+@property (nonatomic, strong) AVPlayer *player;
+@property (nonatomic, strong) NSDictionary *partsDict;
 @end
 @implementation CheckWordView
 
+- (AVPlayer *)player {
+    if (_player == nil) {
+        _player = [[AVPlayer alloc] init];
+        _player.volume = 1.0; // 默认最大音量
+    }
+    return _player;
+}
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -121,7 +132,7 @@
             make.left.equalTo(_wordLabel);
             make.height.equalTo(@20);
             make.width.equalTo(@100);
-            make.bottom.equalTo(self.mas_bottom).offset(-16);
+            make.bottom.equalTo(self.mas_bottom).offset(-10);
         }];
         [_detailBtn setTitle:@"查看详细释义" forState:UIControlStateNormal];
         [_detailBtn setTitleColor:UIColorFromRGB(0x666666) forState:UIControlStateNormal];
@@ -157,7 +168,7 @@
         [self addSubview:_closeBtn];
         [_closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(self.mas_right).offset(-15);
-            make.bottom.equalTo(self.mas_bottom).offset(-16);
+            make.bottom.equalTo(self.mas_bottom).offset(-10);
             make.height.equalTo(@18);
             make.width.equalTo(@50);
         }];
@@ -170,8 +181,21 @@
         [_addWordBtn addTarget:self action:@selector(addWordClick:) forControlEvents:UIControlEventTouchUpInside];
         
         [_detailBtn addTarget:self action:@selector(toViewDetail:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [_sayAnBtn addTarget:self action:@selector(sayAnBtn:) forControlEvents:UIControlEventTouchUpInside];
+        [_sayEnBtn addTarget:self action:@selector(sayEnBtn:) forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
+}
+- (void)sayAnBtn:(UIButton *)btn{
+    AVPlayerItem *item = [[AVPlayerItem alloc]initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",_partsDict[@"ph_am_mp3"]]]];
+    [self.player replaceCurrentItemWithPlayerItem:item];
+    [self.player play];
+}
+- (void)sayEnBtn:(UIButton *)btn{
+    AVPlayerItem *item = [[AVPlayerItem alloc]initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",_partsDict[@"ph_en_mp3"]]]];
+    [self.player replaceCurrentItemWithPlayerItem:item];
+    [self.player play];
 }
 - (void)setWord:(NSString *)word{
     _word = word;
@@ -190,45 +214,68 @@
                     [_addWordBtn setSelected:YES];
                 }
                 NSDictionary *parts = array[0];
+                _partsDict = parts;
                 _anVoiceLb.text = parts[@"ph_am"];
                 _enVoiceLb.text = parts[@"ph_en"];
+                if ([parts[@"ph_am_mp3"] isEqualToString:@""]) {
+                    _sayEnBtn.hidden = YES;
+                    _sayAnBtn.hidden = YES;
+                }else{
+                    _sayEnBtn.hidden = NO;
+                    _sayAnBtn.hidden = NO;
+                }
                 self.dataArray = parts[@"parts"];
                 [_tableView reloadData];
             }else{
-                
+                //
             }
         }];
     }];
 }
+#pragma mark 添加生词
 - (void)addWordClick:(UIButton *)btn{
-    btn.selected = !btn.selected;
-    if (btn.selected) {
-        [LTHttpManager addWordsWithUserId:IS_USER_ID Word:_word Tranlate:[Tool arrayToJSONString:self.dataArray] Complete:^(LTHttpResult result, NSString *message, id data) {
-            if (LTHttpResultSuccess == result) {
-                [_addWordBtn.layer setBorderColor:UIColorFromRGB(0xCCCCCC).CGColor];
-                SVProgressShowStuteText(@"添加成功", YES);
-            }else{
-                
-            }
-        }];
+    if (IS_USER_ID) {
+        btn.selected = !btn.selected;
+        if (btn.selected) {
+            [LTHttpManager addWordsWithUserId:IS_USER_ID Word:_word Tranlate:[Tool arrayToJSONString:self.dataArray] Ph_en_mp3:_partsDict[@"ph_en_mp3"] Ph_am_mp3:_partsDict[@"ph_am_mp3"] Complete:^(LTHttpResult result, NSString *message, id data) {
+                if (LTHttpResultSuccess == result) {
+                    [_addWordBtn.layer setBorderColor:UIColorFromRGB(0xCCCCCC).CGColor];
+                    SVProgressShowStuteText(@"添加成功", YES);
+                }else{
+                    
+                }
+            }];
+        }else{
+            [LTHttpManager removeWordsWithUseId:IS_USER_ID Word:_word Complete:^(LTHttpResult result, NSString *message, id data) {
+                if (LTHttpResultSuccess == result) {
+                    [_addWordBtn.layer setBorderColor:UIColorFromRGB(0xffce43).CGColor];
+                    SVProgressShowStuteText(@"取消成功", YES);
+                }
+            }];
+        }
     }else{
-        [LTHttpManager removeWordsWithUseId:IS_USER_ID Word:_word Complete:^(LTHttpResult result, NSString *message, id data) {
-            if (LTHttpResultSuccess == result) {
-                [_addWordBtn.layer setBorderColor:UIColorFromRGB(0xffce43).CGColor];
-                SVProgressShowStuteText(@"取消成功", YES);
-            }
-        }];
+        LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"请先登录" sureBtn:@"去登录" cancleBtn:@"取消"];
+        [alertView show];
+        alertView.resultIndex = ^(NSInteger index) {
+            LoginViewController *vc = [[LoginViewController alloc]init];
+            [self.viewController.navigationController pushViewController:vc animated:YES];
+        };
     }
 }
 - (void)closeClick:(UIButton *)btn{
     [UIView animateWithDuration:0.2 animations:^{
         self.transform = CGAffineTransformMakeTranslation(0, 214);
     } completion:^(BOOL finished) {
+        if (self.closeBlock) {
+            self.closeBlock();
+        }
         [self removeFromSuperview];
     }];
 }
 - (void)toViewDetail:(UIButton *)btn{
-    
+    DictionaryViewController *vc = [[DictionaryViewController alloc]init];
+    vc.word = _word;
+    [self.viewController.navigationController pushViewController:vc animated:YES];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.dataArray.count;

@@ -8,7 +8,7 @@
 
 #import "LTHTTPSessionManager.h"
 
-#define BaseURL @"http://192.168.0.101:8080/cooplan-app"
+#define BaseURL @"http://192.168.0.46:8080/cooplan-app"
 //app.cooplan.cn
 @interface LTHttpManager : LTHTTPSessionManager
 
@@ -194,9 +194,11 @@
  @param userId 用户ID
  @param word 单词
  @param translate 解释
+ @param ph_en_mp3 英式音标mp3音频地址
+ @param ph_am_mp3 美式音标mp3音频地址
  @param complete block
  */
-+ (void)addWordsWithUserId:(NSNumber *)userId Word:(NSString *)word Tranlate:(NSString *)translate Complete:(completeBlock)complete;
++ (void)addWordsWithUserId:(NSNumber *)userId Word:(NSString *)word Tranlate:(NSString *)translate Ph_en_mp3:(NSString *)ph_en_mp3 Ph_am_mp3:(NSString *)ph_am_mp3 Complete:(completeBlock)complete;
 
 
 /**

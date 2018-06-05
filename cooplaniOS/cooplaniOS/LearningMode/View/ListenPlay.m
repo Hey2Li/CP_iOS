@@ -15,6 +15,7 @@
 #import "ListenTableViewCell.h"
 #import "FeedbackViewController.h"
 #import "collectionSentenceModel.h"
+#import "CheckWordView.h"
 
 @interface ListenPlay ()<UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
 @property (nonatomic, strong) CADisplayLink *timer;//界面刷新定时器
@@ -33,6 +34,7 @@
 @property (nonatomic, strong) UIView *wordView;
 @property (nonatomic, copy)NSString *currentWord;
 @property (nonatomic, assign) NSInteger lastIndex;
+@property (nonatomic, strong) CheckWordView *checkWordView;
 @end
 
 @implementation ListenPlay
@@ -46,6 +48,12 @@
     // Drawing code
 }
 */
+- (CheckWordView *)checkWordView{
+    if (!_checkWordView) {
+        _checkWordView = [[CheckWordView alloc]initWithFrame:CGRectMake(0, 0, 214, SCREEN_WIDTH)];
+    }
+    return _checkWordView;
+}
 - (void)awakeFromNib{
     [super awakeFromNib];
     [self initView];
@@ -89,7 +97,7 @@
     self.lyricTableView.showsVerticalScrollIndicator = NO;
     [self.lyricTableView registerNib:[UINib nibWithNibName:@"ListenTableViewCell" bundle:nil] forCellReuseIdentifier:NSStringFromClass([ListenTableViewCell class])];
     self.lyricTableView.backgroundColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1/1.0];
-    
+    [self loadLongPress];
     
     [self bringSubviewToFront:self.bottomView];
     [self bringSubviewToFront:self.otherView];
@@ -273,6 +281,108 @@
             [self layoutIfNeeded];
         }];
     }
+}
+#pragma mark 查词
+- (void)loadLongPress{
+    //添加长按手势
+    UILongPressGestureRecognizer * longPressGr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressToDo:)];
+    longPressGr.minimumPressDuration = .5;
+    [self.lyricTableView addGestureRecognizer:longPressGr];
+}
+//长按的方法
+-(void)longPressToDo:(UILongPressGestureRecognizer *)gesture
+{
+    switch (gesture.state) {
+        case UIGestureRecognizerStateBegan:
+        {
+            CGPoint point = [gesture locationInView:self.lyricTableView];
+            //获取cell 及其label上的单词
+            [self wordsOnCell:point];
+            break;
+        }
+        case UIGestureRecognizerStateChanged:
+        {
+            CGPoint point = [gesture locationInView:self.lyricTableView];
+            
+            //获取cell 及其label上的单词
+            [self wordsOnCell:point];
+        }
+            break;
+        case UIGestureRecognizerStateEnded:
+        {
+            CGPoint point = [gesture locationInView:self.lyricTableView];
+            //获取cell 及其label上的单词
+            [self wordsOnCell:point];
+            if (self.wordView.isHidden == NO) {
+                [self addSubview:self.checkWordView];
+                self.checkWordView.word = self.currentWord;
+                [self.checkWordView mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.bottom.equalTo(self.mas_bottom);
+                    make.width.equalTo(self.mas_width);
+                    make.height.equalTo(@214);
+                }];
+                WeakSelf
+                self.checkWordView.closeBlock = ^{
+                    weakSelf.wordView.hidden = YES;
+                };
+                //调用查词方法
+                NSLog(@"%@",self.currentWord);
+            }
+            break;
+        }
+        default:
+            break;
+    }
+}
+- (UIView *)wordView
+{
+    if (!_wordView) {
+        _wordView = [[UIView alloc] init];
+    }
+    return _wordView;
+}
+- (void)wordsOnCell:(CGPoint)point
+{
+    NSIndexPath * indexPath = [self.lyricTableView indexPathForRowAtPoint:point];
+    if(indexPath == nil)
+        return ;
+    ListenTableViewCell *cell = [self.lyricTableView cellForRowAtIndexPath:indexPath];
+    //这个方法会提供 单词的 相对父视图的位置
+    NSArray *strArray = [UILabel cuttingStringInLabel:cell.listenLb];
+    for (HYWord *hyword in strArray) {
+        CGRect frame = hyword.frame;
+        frame.origin.x += cell.frame.origin.x + 14;
+        frame.origin.y += cell.frame.origin.y + 6;
+        //        frame.size.height += 2;
+        frame.size.width += 4;
+        NSLog(@"%@",hyword.wordString);
+        if ([self pointInRectangle:frame point:point]) {
+            self.wordView.hidden = NO;
+            self.wordView.frame = frame;
+            [self.wordView.layer setCornerRadius:2];
+            self.wordView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:.8 alpha:.5];
+            [self.lyricTableView addSubview:self.wordView];
+            self.currentWord = hyword.wordString;
+            return;
+        }
+    }
+    self.wordView.hidden = YES;
+}
+//判断点在矩形内
+- (BOOL) pointInRectangle:(CGRect )rech point:(CGPoint)clickPoint
+{
+    if (clickPoint.x > rech.origin.x && clickPoint.x < (rech.origin.x + rech.size.width) && clickPoint.y > rech.origin.y  &&  clickPoint.y < (rech.origin.y + rech.size.height)) {
+        return YES;
+    }
+    return NO;
+}
+
+#pragma mark GestureRecgnizerdelegate
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
+    if ([gestureRecognizer isKindOfClass:[UISwipeGestureRecognizer class]] && [touch.view isKindOfClass:[UICollectionView class]]) {
+        return YES;
+    }
+    return NO;
 }
 #pragma mark 变速播放
 - (IBAction)roteWithPlay:(UIButton *)sender {

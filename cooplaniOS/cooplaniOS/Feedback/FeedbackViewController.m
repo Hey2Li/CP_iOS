@@ -73,8 +73,12 @@
 //        return;
 //    }
     if (![USERDEFAULTS objectForKey:USER_ID]) {
-        LoginViewController *vc = [[LoginViewController alloc]init];
+        LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"请先登录" sureBtn:@"去登录" cancleBtn:@"取消"];
+        [alertView show];
+        alertView.resultIndex = ^(NSInteger index) {
+            LoginViewController *vc = [[LoginViewController alloc]init];
             [self.navigationController pushViewController:vc animated:YES];
+        };
         return;
     }
     [LTHttpManager feedbackWithUserId:[USERDEFAULTS objectForKey:USER_ID] Type:[NSString stringWithFormat:@"%ld",(long)self.feedbackType] Info:self.feedbackContent ContactInfo:self.userContact ? self.userContact : @"" Files:self.imageDataArray Complete:^(LTHttpResult result, NSString *message, id data) {
