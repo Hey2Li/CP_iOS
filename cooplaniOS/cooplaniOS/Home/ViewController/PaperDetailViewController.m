@@ -267,6 +267,7 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (IBAction)downloadPaper:(UIButton *)sender {
+    sender.enabled = NO;
     DownloadFileModel *model = [DownloadFileModel jr_findByPrimaryKey:self.downloadModel.testPaperId];
     NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
     NSString *urlString = [model.paperVoiceName stringByRemovingPercentEncoding];
@@ -282,6 +283,7 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [SVProgressHUD dismiss];
                     SVProgressShowStuteText(@"下载成功", YES);
+                    sender.enabled = YES;
                 });
             }
         } destination:^(NSURL *targetPath) {
@@ -292,6 +294,7 @@
             NSLog(@"%@",fileName);
         } failure:^(NSError *error) {
             SVProgressShowStuteText(@"下载失败请重新下载", NO);
+            sender.enabled = YES;
         }];
     }
 }
