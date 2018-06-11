@@ -16,5 +16,7 @@
 @property (nonatomic, copy) NSString *word;
 @property (nonatomic, copy) NSString *ph_am_mp3;
 @property (nonatomic, copy) NSString *ph_en_mp3;
+@property (nonatomic, copy) NSString *ph_am;
+@property (nonatomic, copy) NSString *ph_en;
 @property (nonatomic, assign) BOOL isOpen;
 @end

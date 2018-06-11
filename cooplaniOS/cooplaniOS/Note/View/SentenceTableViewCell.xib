@@ -21,7 +21,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rTg-m7-Ib5">
-                        <rect key="frame" x="32" y="21" width="320" height="94.5"/>
+                        <rect key="frame" x="32" y="19" width="320" height="96.5"/>
                         <string key="text">A 9-year-old girl in New Mexico has raised more than $500 for her little brother who needs heart surgery in Houston, Texas this July. </string>
                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                         <color key="textColor" red="0.39942303299999998" green="0.39974853399999999" blue="0.3994735479" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -34,7 +34,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2017年12月 大学英语四级考试真题（一）" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g0H-A0-4mF">
-                        <rect key="frame" x="168.5" y="181" width="190.5" height="19"/>
+                        <rect key="frame" x="167.5" y="187" width="190.5" height="19"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="19" id="45M-L5-Of3"/>
                         </constraints>
@@ -43,10 +43,10 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ho4-ZL-vSN">
-                        <rect key="frame" x="0.0" y="215.5" width="384" height="1"/>
+                        <rect key="frame" x="0.0" y="214.5" width="384" height="2"/>
                         <color key="backgroundColor" red="0.96912556886672974" green="0.96985918283462524" blue="0.96923929452896118" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="0.80000000000000004" id="Fy5-k1-iHg"/>
+                            <constraint firstAttribute="height" constant="2" id="Fy5-k1-iHg"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.64346855879999998" green="0.64396888019999998" blue="0.64354604479999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -56,15 +56,15 @@
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="ho4-ZL-vSN" secondAttribute="trailing" id="5gQ-nO-hBH"/>
                     <constraint firstItem="rTg-m7-Ib5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="16" id="82t-ns-Rg7"/>
-                    <constraint firstItem="g0H-A0-4mF" firstAttribute="top" secondItem="57T-bJ-7eP" secondAttribute="bottom" constant="10" id="Du2-GW-WJy"/>
+                    <constraint firstItem="g0H-A0-4mF" firstAttribute="top" secondItem="57T-bJ-7eP" secondAttribute="bottom" constant="16" id="Du2-GW-WJy"/>
                     <constraint firstItem="57T-bJ-7eP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="16" id="FCu-vy-XT5"/>
                     <constraint firstAttribute="trailingMargin" secondItem="rTg-m7-Ib5" secondAttribute="trailing" constant="16" id="KS6-eh-oKl"/>
-                    <constraint firstItem="rTg-m7-Ib5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="RPG-c4-3ln"/>
+                    <constraint firstItem="rTg-m7-Ib5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="8" id="RPG-c4-3ln"/>
                     <constraint firstAttribute="trailingMargin" secondItem="57T-bJ-7eP" secondAttribute="trailing" constant="16" id="UbM-W6-Cca"/>
                     <constraint firstAttribute="bottom" secondItem="ho4-ZL-vSN" secondAttribute="bottom" id="WCo-vz-zO7"/>
                     <constraint firstItem="57T-bJ-7eP" firstAttribute="top" secondItem="rTg-m7-Ib5" secondAttribute="bottom" constant="5" id="gCM-Fw-MSS"/>
                     <constraint firstItem="ho4-ZL-vSN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="nib-CA-Gpb"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="g0H-A0-4mF" secondAttribute="trailing" constant="9" id="wkM-La-8R2"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="g0H-A0-4mF" secondAttribute="trailing" constant="10" id="wkM-La-8R2"/>
                     <constraint firstAttribute="bottomMargin" secondItem="57T-bJ-7eP" secondAttribute="bottom" constant="35" id="zxr-19-uI6"/>
                 </constraints>
             </tableViewCellContentView>

@@ -44,8 +44,9 @@
     }
     NSDictionary *parts = array[0];
     
-    self.amLb.text = parts[@"ph_am"];
-    self.enLb.text = parts[@"ph_en"];
+    self.amLb.text = [NSString stringWithFormat:@"美[%@]",parts[@"ph_am"]];
+    self.enLb.text = [NSString stringWithFormat:@"英[%@]",parts[@"ph_en"]];
+
     _partsDict = parts;
     if ([parts[@"ph_am_mp3"] isEqualToString:@""]) {
         self.sayAmBtn.hidden = YES;
@@ -74,7 +75,7 @@
     if (IS_USER_ID) {
         btn.selected = !btn.selected;
         if (btn.selected) {
-            [LTHttpManager addWordsWithUserId:IS_USER_ID Word:_model[@"word_name"] Tranlate:[Tool arrayToJSONString:self.wordExplainArray] Ph_en_mp3:_partsDict[@"ph_en_mp3"] Ph_am_mp3:_partsDict[@"ph_am_mp3"] Complete:^(LTHttpResult result, NSString *message, id data) {
+            [LTHttpManager addWordsWithUserId:IS_USER_ID Word:_model[@"word_name"] Tranlate:[Tool arrayToJSONString:self.wordExplainArray] Ph_en_mp3:_partsDict[@"ph_en_mp3"] Ph_am_mp3:_partsDict[@"ph_am_mp3"] Ph_am:_partsDict[@"ph_am"] Ph_en:_partsDict[@"ph_en"] Complete:^(LTHttpResult result, NSString *message, id data) {
                 if (LTHttpResultSuccess == result) {
                     SVProgressShowStuteText(@"添加成功", YES);
                     [self.addDictionaryBtn setSelected:YES];

@@ -99,7 +99,7 @@
         [_sayEnBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(_enVoiceLb.mas_right).offset(5);
             make.height.equalTo(_enVoiceLb);
-            make.width.equalTo(@20);
+            make.width.equalTo(@30);
             make.centerY.equalTo(_enVoiceLb.mas_centerY);
         }];
         [_sayEnBtn setImage:[UIImage imageNamed:@"播放-橙色"] forState:UIControlStateNormal];
@@ -121,7 +121,7 @@
         [_sayAnBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(_anVoiceLb.mas_right).offset(5);
             make.height.equalTo(_anVoiceLb);
-            make.width.equalTo(@20);
+            make.width.equalTo(@30);
             make.centerY.equalTo(_anVoiceLb.mas_centerY);
         }];
         [_sayAnBtn setImage:[UIImage imageNamed:@"播放-橙色"] forState:UIControlStateNormal];
@@ -215,8 +215,8 @@
                 }
                 NSDictionary *parts = array[0];
                 _partsDict = parts;
-                _anVoiceLb.text = parts[@"ph_am"];
-                _enVoiceLb.text = parts[@"ph_en"];
+                _anVoiceLb.text = [NSString stringWithFormat:@"美[%@]",parts[@"ph_am"]];
+                _enVoiceLb.text = [NSString stringWithFormat:@"英[%@]",parts[@"ph_en"]];
                 if ([parts[@"ph_am_mp3"] isEqualToString:@""]) {
                     _sayEnBtn.hidden = YES;
                     _sayAnBtn.hidden = YES;
@@ -237,7 +237,7 @@
     if (IS_USER_ID) {
         btn.selected = !btn.selected;
         if (btn.selected) {
-            [LTHttpManager addWordsWithUserId:IS_USER_ID Word:_word Tranlate:[Tool arrayToJSONString:self.dataArray] Ph_en_mp3:_partsDict[@"ph_en_mp3"] Ph_am_mp3:_partsDict[@"ph_am_mp3"] Complete:^(LTHttpResult result, NSString *message, id data) {
+            [LTHttpManager addWordsWithUserId:IS_USER_ID Word:_word Tranlate:[Tool arrayToJSONString:self.dataArray] Ph_en_mp3:_partsDict[@"ph_en_mp3"] Ph_am_mp3:_partsDict[@"ph_am_mp3"] Ph_am:_partsDict[@"ph_am"] Ph_en:_partsDict[@"ph_en"] Complete:^(LTHttpResult result, NSString *message, id data) {
                 if (LTHttpResultSuccess == result) {
                     [_addWordBtn.layer setBorderColor:UIColorFromRGB(0xCCCCCC).CGColor];
                     SVProgressShowStuteText(@"添加成功", YES);

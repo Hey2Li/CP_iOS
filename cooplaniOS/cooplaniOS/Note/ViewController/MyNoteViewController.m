@@ -47,19 +47,19 @@
 }
 - (UITableView *)wordTableView{
     if (!_wordTableView) {
-        _wordTableView = [[UITableView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64) style:UITableViewStylePlain];
+        _wordTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 2, SCREEN_WIDTH, SCREEN_HEIGHT - 64) style:UITableViewStylePlain];
         _wordTableView.delegate = self;
         _wordTableView.dataSource = self;
         _wordTableView.separatorStyle = NO;
         [_wordTableView registerNib:[UINib nibWithNibName:NSStringFromClass([WordTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([WordTableViewCell class])];
-        _myTableView.estimatedRowHeight = 90.0f;
-        _myTableView.rowHeight = UITableViewAutomaticDimension;
+        _wordTableView.estimatedRowHeight = 67.0f;
+        _wordTableView.rowHeight = UITableViewAutomaticDimension;
     }
     return _wordTableView;
 }
 - (UITableView *)myTableView{
     if (!_myTableView) {
-        _myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64) style:UITableViewStylePlain];
+        _myTableView = [[UITableView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH, 2, SCREEN_WIDTH, SCREEN_HEIGHT - 64) style:UITableViewStylePlain];
         _myTableView.delegate = self;
         _myTableView.dataSource = self;
         _myTableView.separatorStyle = NO;
@@ -70,6 +70,17 @@
     return _myTableView;
 }
 #pragma mark UITableViewDegate&DataSource
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 2;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView *view = [[UIView alloc]init];
+    view.backgroundColor = UIColorFromRGB(0xEEEEEE);
+    return view;
+}
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (tableView == self.myTableView) {
         return self.sentenceArray.count;
@@ -81,6 +92,7 @@
     if (tableView == self.wordTableView) {
         collectionWordModel *model = self.wordArray[indexPath.row];
         if (model.isOpen) {
+            NSLog(@"%f",self.wordTableView.rowHeight);
             return self.wordTableView.rowHeight;
         }else{
             return 67;
@@ -172,8 +184,8 @@
     self.mySwitch.layer.shadowOpacity = 0.3;//不透明度
     self.mySwitch.layer.shadowRadius = 2.0;//半径
     self.mySwitch.layer.masksToBounds = NO;
-    self.mySwitch.leftString = @"句子";
-    self.mySwitch.rightString = @"单词";
+    self.mySwitch.leftString = @"单词";
+    self.mySwitch.rightString = @"句子";
     self.mySwitch.backgroundColor = [UIColor whiteColor];
     self.mySwitch.selectColor = DRGBCOLOR;
     self.mySwitch.unselectColor = UIColorFromRGB(0xDCDCDC);
@@ -186,7 +198,7 @@
     [self.mySwitch setTextFont:[UIFont fontWithName:@"Helvetica-Bold" size:15]];
     WeakSelf
     self.mySwitch.block = ^(BOOL state) {
-        //yes 单词  no 句子
+        //yes句子  no 单词 
         if (state) {
             [UIView animateWithDuration:0.3 animations:^{
                 weakSelf.scrollView.contentOffset = CGPointMake(SCREEN_WIDTH, 0);

@@ -353,16 +353,20 @@
  @param translate 解释
  @param ph_en_mp3 英式音标mp3音频地址
  @param ph_am_mp3 美式音标mp3音频地址
+ @param ph_en     英式音标
+ @param ph_am     美式音标
  @param complete block
  */
-+ (void)addWordsWithUserId:(NSNumber *)userId Word:(NSString *)word Tranlate:(NSString *)translate Ph_en_mp3:(NSString *)ph_en_mp3 Ph_am_mp3:(NSString *)ph_am_mp3 Complete:(completeBlock)complete{
++ (void)addWordsWithUserId:(NSNumber *)userId Word:(NSString *)word Tranlate:(NSString *)translate Ph_en_mp3:(NSString *)ph_en_mp3 Ph_am_mp3:(NSString *)ph_am_mp3 Ph_am:(NSString *)ph_am Ph_en:(NSString *)ph_en Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
     NSDictionary *paramters = @{@"version":[Tool getAppVersion],
                                 @"userId":userId,
                                 @"word":word,
                                 @"translate":translate,
                                 @"ph_en_mp3":ph_en_mp3,
-                                @"ph_am_mp3":ph_am_mp3
+                                @"ph_am_mp3":ph_am_mp3,
+                                @"ph_en":ph_en,
+                                @"ph_am":ph_am
                                 };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/ios/words/private/add",BaseURL]parameters:paramters complete:complete];
 }

@@ -20,4 +20,13 @@
 @property (nonatomic, strong) collectionWordModel *model;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (nonatomic, copy) void (^cellIsOpenBlock)(void);
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *amBtnTopHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *amBtnHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *amSayBtnHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *enLbHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *enSayHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *explainTopHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *explainBottomHeight;
+
 @end

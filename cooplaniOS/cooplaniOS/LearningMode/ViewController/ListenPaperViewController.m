@@ -433,7 +433,7 @@
                 }
             }
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.lyricTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+                [self.lyricTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0] animated:NO scrollPosition:UITableViewScrollPositionMiddle];
                 NSLog(@"scrollLyric/currentIndex%ld",(long)_currentIndex);
             });
         });
@@ -460,7 +460,7 @@
                 }
             }
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.lyricTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+                [self.lyricTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0] animated:NO scrollPosition:UITableViewScrollPositionMiddle];
                 NSLog(@"scrollLyric/currentIndex%ld",(long)_currentIndex);
             });
         });
@@ -529,7 +529,7 @@
         [self.player play];
         [self startRoll];
         [_lyricTableView reloadData];
-        [_lyricTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+        [_lyricTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0] animated:NO scrollPosition:UITableViewScrollPositionMiddle];
 //        NSArray *reloadRows = @[[NSIndexPath indexPathForRow:_currentIndex inSection:0],[NSIndexPath indexPathForRow:_lastIndex inSection:0]];
 //        [self.lyricTableView reloadRowsAtIndexPaths:reloadRows withRowAnimation:UITableViewRowAnimationNone];
 //        [self.lyricTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
@@ -558,7 +558,7 @@
         [self startRoll];
 
         [_lyricTableView reloadData];
-        [_lyricTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+        [_lyricTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0] animated:NO scrollPosition:UITableViewScrollPositionMiddle];
         NSLog(@"currentIndex%ld",(long)_currentIndex);
     }
 }
@@ -595,12 +595,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     ListenTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ListenTableViewCell class]) forIndexPath:indexPath];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.selectionStyle = UITableViewCellSelectionStyleDefault;
     cell.listenLb.textAlignment = NSTextAlignmentLeft;
     cell.listenLb.lineBreakMode = NSLineBreakByWordWrapping;
     cell.listenLb.preferredMaxLayoutWidth = cell.listenLb.width;
     cell.backgroundColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1/1.0];
-     NSString *lrc = lyricArray[indexPath.row];
+    NSString *lrc = lyricArray[indexPath.row];
     NSLog(@"%d",_CNTag);
     if ([lrc containsString:@"/"]) {
         NSArray *array = [lrc componentsSeparatedByString:@"/"];
@@ -631,8 +631,10 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     _currentIndex = (int)indexPath.row;
+    NSString *str = lyricArray[indexPath.row];
+    NSString *str1 = timeArray[indexPath.row];
+    NSLog(@"%@%@",str,str1);
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

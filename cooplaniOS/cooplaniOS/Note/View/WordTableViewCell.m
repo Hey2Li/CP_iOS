@@ -41,6 +41,8 @@
     NSData *nsData=[model.translate dataUsingEncoding:NSUTF8StringEncoding];
     NSArray *childArray = [NSJSONSerialization JSONObjectWithData:nsData options:kNilOptions error:nil];
     _allDetailStr = @"";
+    _enLb.text = [NSString stringWithFormat:@"英[%@]",model.ph_en];
+    _amLb.text = [NSString stringWithFormat:@"美[%@]",model.ph_am];
     if (childArray.count > 0) {
         [childArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             
@@ -55,11 +57,25 @@
     }
     [self layoutIfNeeded];
     if (_model.isOpen) {
+        [self layoutIfNeeded];
         self.bottomView.hidden = NO;
-        [self layoutIfNeeded];
+        self.amBtnHeight.constant = 20;
+        self.amBtnTopHeight.constant = 20;
+        self.amSayBtnHeight.constant = 30;
+        self.enLbHeight.constant = 20;
+        self.enSayHeight.constant = 30;
+        self.explainTopHeight.constant = 10;
+        self.explainBottomHeight.constant = 5;
     }else{
-        self.bottomView.hidden = YES;
         [self layoutIfNeeded];
+        self.bottomView.hidden = YES;
+        self.amBtnHeight.constant = 0;
+        self.amBtnTopHeight.constant = 0;
+        self.amSayBtnHeight.constant = 0;
+        self.enLbHeight.constant = 0;
+        self.enSayHeight.constant = 0;
+        self.explainTopHeight.constant = 0;
+        self.explainBottomHeight.constant = 0;
     }
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
