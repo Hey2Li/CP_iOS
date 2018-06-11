@@ -15,6 +15,7 @@
 #import "LoginViewController.h"
 #import <KeyboardManager.h>
 #import <UMShare/UMShare.h>
+#import <AVFoundation/AVFoundation.h>
 
 #define USHARE_DEMO_APPKEY @"5861e5daf5ade41326001eab"
 
@@ -72,7 +73,9 @@
     // U-Share 平台设置
     [self configUSharePlatforms];
     [self confitUShareSettings];
-    
+    AVAudioSession *avSession = [AVAudioSession sharedInstance];
+    [avSession setCategory:AVAudioSessionCategoryPlayback error:nil];
+    [avSession setActive:YES error:nil];
     return YES;
 }
 - (void)confitUShareSettings
