@@ -19,7 +19,7 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     if (selected) {
-        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc]initWithString:_listenLb.text attributes:@{NSBackgroundColorAttributeName:WORDCOLOR}];
+        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc]initWithString:_listenLb.text attributes:@{NSBackgroundColorAttributeName:UIColorFromRGB(0xFFCE43)}];
         _listenLb.attributedText = attrString;
     }else{
         NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc]initWithString:_listenLb.text attributes:@{NSBackgroundColorAttributeName:UIColorFromRGB(0xf7f7f7)}];
@@ -29,7 +29,7 @@
 }
 - (void)setListenLb:(UILabel *)listenLb{
     _listenLb = listenLb;
-    _listenLb.attributedText = [self changeSpaceForLabel:listenLb.text withLineSpace:15 WordSpace:5];
+    _listenLb.attributedText = [self changeSpaceForLabel:listenLb.text withLineSpace:15 WordSpace:50];
     [_listenLb sizeToFit];
 }
 -(NSAttributedString *)getAttributedStringWithString:(NSString *)string lineSpace:(CGFloat)lineSpace {

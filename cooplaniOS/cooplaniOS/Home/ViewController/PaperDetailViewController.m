@@ -20,6 +20,8 @@
 @property (nonatomic, copy) NSString *downloadVoiceUrl;
 @property (nonatomic, copy) NSString *downloadlrcUrl;
 @property (nonatomic, copy) NSString *downloadJsonUrl;
+@property (weak, nonatomic) IBOutlet UIButton *downloadNameBtn;
+@property (weak, nonatomic) IBOutlet UIImageView *downloadImageView;
 @property (nonatomic, strong) DownloadFileModel *downloadModel;
 @end
 
@@ -39,6 +41,16 @@
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
     self.downloadModel = [[DownloadFileModel alloc]init];
     [self loadData];
+    if ([self PaperIsDownloaded]) {
+        self.downloadImageView.image = [UIImage imageNamed:@"downloaded"];
+        [self.downloadNameBtn setTitle:@"已下载" forState:UIControlStateNormal];
+        self.downloadPaperBtn.enabled = NO;
+    }else{
+        self.downloadImageView.image = [UIImage imageNamed:@"download"];
+        self.downloadPaperBtn.enabled = YES;
+        [self.downloadNameBtn setTitle:@"下载资源" forState:UIControlStateNormal];
+
+    }
 }
 - (void)loadData{
     if ([self.onePaperModel.collection isEqualToString:@"0"]) {
@@ -118,12 +130,7 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-    DownloadFileModel *dowModel = [DownloadFileModel jr_findByPrimaryKey:self.onePaperModel.ID];
-    NSString *urlString = [dowModel.paperVoiceName stringByRemovingPercentEncoding];
-    NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if ([fileManager fileExistsAtPath:fullPath]) {
+    if ([self PaperIsDownloaded]) {
         if (indexPath.row == 0) {
             ListenPaperViewController *vc = [[ListenPaperViewController alloc]init];
             vc.title = self.title;
@@ -148,6 +155,16 @@
         SVProgressShowStuteText(@"请先下载资源", NO);
     }
 }
+#pragma mark 是否下载
+- (BOOL)PaperIsDownloaded{
+    NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    DownloadFileModel *dowModel = [DownloadFileModel jr_findByPrimaryKey:self.onePaperModel.ID];
+    NSString *urlString = [dowModel.paperVoiceName stringByRemovingPercentEncoding];
+    NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    return [fileManager fileExistsAtPath:fullPath];
+}
+#pragma mark 刷题模式选择练习模式
 - (void)selectMode{
     UIView *maskView = [[UIView alloc]initWithFrame:[UIScreen mainScreen].bounds];
     UIWindow *keyWindow = [[UIApplication sharedApplication]keyWindow];
@@ -266,6 +283,7 @@
     vc.testPaperId = self.downloadModel.testPaperId;
     [self.navigationController pushViewController:vc animated:YES];
 }
+#pragma mark 下载试卷
 - (IBAction)downloadPaper:(UIButton *)sender {
     sender.enabled = NO;
     DownloadFileModel *model = [DownloadFileModel jr_findByPrimaryKey:self.downloadModel.testPaperId];
@@ -283,7 +301,8 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [SVProgressHUD dismiss];
                     SVProgressShowStuteText(@"下载成功", YES);
-                    sender.enabled = YES;
+                    self.downloadImageView.image = [UIImage imageNamed:@"downloaded"];
+                    sender.enabled = NO;
                 });
             }
         } destination:^(NSURL *targetPath) {

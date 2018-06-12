@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -186,6 +186,7 @@
                 <outlet property="bottomView" destination="zRV-AN-fzV" id="W9T-aK-RmD"/>
                 <outlet property="downSongBtn" destination="dGf-Jw-ONC" id="1Ii-yf-Z7x"/>
                 <outlet property="lyricTableView" destination="S5U-S9-xiJ" id="LUc-HG-OJK"/>
+                <outlet property="moreBtn" destination="iqf-PH-X3O" id="3NX-9A-v6b"/>
                 <outlet property="otherView" destination="b3z-Te-PYA" id="QcO-nm-ols"/>
                 <outlet property="otherViewBottom" destination="Gjj-Ue-y2M" id="p5Q-mp-bUj"/>
                 <outlet property="playSongBtn" destination="whO-8a-jJW" id="28R-23-2kp"/>

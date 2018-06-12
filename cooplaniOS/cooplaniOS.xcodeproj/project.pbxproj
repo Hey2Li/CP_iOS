@@ -47,6 +47,8 @@
 		9B32CB15209C25A500FCEED3 /* MyCollectionPaperTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B32CB13209C25A500FCEED3 /* MyCollectionPaperTableViewCell.m */; };
 		9B32CB16209C25A500FCEED3 /* MyCollectionPaperTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B32CB14209C25A500FCEED3 /* MyCollectionPaperTableViewCell.xib */; };
 		9B32CB19209C410700FCEED3 /* UIView+YYAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B32CB17209C410600FCEED3 /* UIView+YYAdd.m */; };
+		9B3CF25D20CE779800A52E14 /* ProgressImgView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3CF25C20CE779800A52E14 /* ProgressImgView.m */; };
+		9B3CF26020CFA65C00A52E14 /* CHMagnifierView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3CF25E20CFA65C00A52E14 /* CHMagnifierView.m */; };
 		9B3D02C62084468E005C923B /* SUPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3D02C52084468E005C923B /* SUPlayer.m */; };
 		9B3D02CA20845338005C923B /* PaperDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3D02C820845338005C923B /* PaperDetailViewController.m */; };
 		9B3D02CB20845338005C923B /* PaperDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B3D02C920845338005C923B /* PaperDetailViewController.xib */; };
@@ -201,6 +203,10 @@
 		9B32CB14209C25A500FCEED3 /* MyCollectionPaperTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyCollectionPaperTableViewCell.xib; sourceTree = "<group>"; };
 		9B32CB17209C410600FCEED3 /* UIView+YYAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+YYAdd.m"; sourceTree = "<group>"; };
 		9B32CB18209C410700FCEED3 /* UIView+YYAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+YYAdd.h"; sourceTree = "<group>"; };
+		9B3CF25B20CE779800A52E14 /* ProgressImgView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProgressImgView.h; sourceTree = "<group>"; };
+		9B3CF25C20CE779800A52E14 /* ProgressImgView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProgressImgView.m; sourceTree = "<group>"; };
+		9B3CF25E20CFA65C00A52E14 /* CHMagnifierView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHMagnifierView.m; sourceTree = "<group>"; };
+		9B3CF25F20CFA65C00A52E14 /* CHMagnifierView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHMagnifierView.h; sourceTree = "<group>"; };
 		9B3D02C52084468E005C923B /* SUPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SUPlayer.m; sourceTree = "<group>"; };
 		9B3D02C720845338005C923B /* PaperDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaperDetailViewController.h; sourceTree = "<group>"; };
 		9B3D02C820845338005C923B /* PaperDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaperDetailViewController.m; sourceTree = "<group>"; };
@@ -580,6 +586,8 @@
 				9B3D02CC20847C5A005C923B /* PaperDetailTableViewCell.h */,
 				9B3D02CD20847C5A005C923B /* PaperDetailTableViewCell.m */,
 				9B3D02CE20847C5A005C923B /* PaperDetailTableViewCell.xib */,
+				9B3CF25B20CE779800A52E14 /* ProgressImgView.h */,
+				9B3CF25C20CE779800A52E14 /* ProgressImgView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -695,6 +703,8 @@
 		9BC1D6B220738393007D88EF /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				9B3CF25F20CFA65C00A52E14 /* CHMagnifierView.h */,
+				9B3CF25E20CFA65C00A52E14 /* CHMagnifierView.m */,
 				9B32CB18209C410700FCEED3 /* UIView+YYAdd.h */,
 				9B32CB17209C410600FCEED3 /* UIView+YYAdd.m */,
 				9B1EDCE22089C06C0033183F /* UIView+Toast.h */,
@@ -1185,6 +1195,7 @@
 				9B1A5B1820BBAC4500DA21A6 /* CheckWordView.m in Sources */,
 				9B32CB15209C25A500FCEED3 /* MyCollectionPaperTableViewCell.m in Sources */,
 				9B3D02CA20845338005C923B /* PaperDetailViewController.m in Sources */,
+				9B3CF26020CFA65C00A52E14 /* CHMagnifierView.m in Sources */,
 				9B3D02DA208488A3005C923B /* LoginNextViewController.m in Sources */,
 				9B16B0972091B63900094EE7 /* answerModel.m in Sources */,
 				9B32CB19209C410700FCEED3 /* UIView+YYAdd.m in Sources */,
@@ -1212,6 +1223,7 @@
 				9B1D31BF20734891007674CF /* HomeViewController.m in Sources */,
 				9B3D02D520848878005C923B /* LoginViewController.m in Sources */,
 				9BA1CB6920A92A790093C37B /* MyCollectionModel.m in Sources */,
+				9B3CF25D20CE779800A52E14 /* ProgressImgView.m in Sources */,
 				9BA08EB0209308440026935E /* FeedbackViewController.m in Sources */,
 				9BEA0A322071D9190026AF2C /* AppDelegate.m in Sources */,
 				9BB3E271209AD05600FDBE77 /* PMAnswerViewController.m in Sources */,

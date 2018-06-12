@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (weak, nonatomic) IBOutlet UITableView *lyricTableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *otherViewBottom;
+@property (weak, nonatomic) IBOutlet UIButton *moreBtn;
 @property (nonatomic, strong) SUPlayer *player;
 @property (nonatomic, copy) NSString *paperName;
 @property (nonatomic, copy) void (^contentError)(void);

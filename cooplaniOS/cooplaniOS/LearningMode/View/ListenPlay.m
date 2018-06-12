@@ -35,6 +35,7 @@
 @property (nonatomic, copy)NSString *currentWord;
 @property (nonatomic, assign) NSInteger lastIndex;
 @property (nonatomic, strong) CheckWordView *checkWordView;
+@property (nonatomic, strong) UILabel *wordLabel;
 @end
 
 @implementation ListenPlay
@@ -48,6 +49,15 @@
     // Drawing code
 }
 */
+#pragma mark -lazy
+- (UILabel *)wordLabel{
+    if (!_wordLabel) {
+        _wordLabel = [[UILabel alloc]init];
+        _wordLabel.backgroundColor = UIColorFromRGB(0x688FD2);
+        _wordLabel.font = [UIFont fontWithName:@".System-Light " size:17.0];
+    }
+    return _wordLabel;
+}
 - (CheckWordView *)checkWordView{
     if (!_checkWordView) {
         _checkWordView = [[CheckWordView alloc]initWithFrame:CGRectMake(0, 0, 214, SCREEN_WIDTH)];
@@ -105,6 +115,7 @@
     [self parseLrc];
     self.backImageView.hidden = YES;
     [self bringSubviewToFront:self.backImageView];
+    [self moreBtn:self.moreBtn];
 }
 #pragma mark 播放器相关
 - (void)changeProgress:(UISlider *)slider {
@@ -303,7 +314,6 @@
         case UIGestureRecognizerStateChanged:
         {
             CGPoint point = [gesture locationInView:self.lyricTableView];
-            
             //获取cell 及其label上的单词
             [self wordsOnCell:point];
         }
@@ -313,7 +323,7 @@
             CGPoint point = [gesture locationInView:self.lyricTableView];
             //获取cell 及其label上的单词
             [self wordsOnCell:point];
-            if (self.wordView.isHidden == NO) {
+            if (self.wordLabel.isHidden == NO) {
                 [self addSubview:self.checkWordView];
                 self.checkWordView.word = self.currentWord;
                 [self.checkWordView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -323,7 +333,7 @@
                 }];
                 WeakSelf
                 self.checkWordView.closeBlock = ^{
-                    weakSelf.wordView.hidden = YES;
+                    weakSelf.wordLabel.hidden = YES;
                 };
                 //调用查词方法
                 NSLog(@"%@",self.currentWord);
@@ -352,21 +362,23 @@
     for (HYWord *hyword in strArray) {
         CGRect frame = hyword.frame;
         frame.origin.x += cell.frame.origin.x + 14;
-        frame.origin.y += cell.frame.origin.y + 6;
-        //        frame.size.height += 2;
+        frame.origin.y += cell.frame.origin.y + 3;
+        frame.size.height += 4;
         frame.size.width += 4;
         NSLog(@"%@",hyword.wordString);
         if ([self pointInRectangle:frame point:point]) {
-            self.wordView.hidden = NO;
-            self.wordView.frame = frame;
-            [self.wordView.layer setCornerRadius:2];
-            self.wordView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:.8 alpha:.5];
-            [self.lyricTableView addSubview:self.wordView];
+            self.wordLabel.hidden = NO;
+            self.wordLabel.frame = frame;
+            [self.wordLabel setTextColor:[UIColor whiteColor]];
+            self.wordLabel.text = hyword.wordString;
+            [self.wordLabel.layer setCornerRadius:2];
+            [self.wordLabel.layer setMasksToBounds:YES];
             self.currentWord = hyword.wordString;
+            [self.lyricTableView addSubview:self.wordLabel];
             return;
         }
     }
-    self.wordView.hidden = YES;
+    self.wordLabel.hidden = YES;
 }
 //判断点在矩形内
 - (BOOL) pointInRectangle:(CGRect )rech point:(CGPoint)clickPoint
@@ -537,6 +549,11 @@
     cell.backgroundColor = [UIColor colorWithRed:247/255.0 green:247/255.0 blue:247/255.0 alpha:1/1.0];
     NSString *lrc = lyricArray[indexPath.row];
     NSLog(@"%d",_CNTag);
+    if ([lrc containsString:@"\r"]) {
+        lrc = [lrc stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];  //去除掉首尾的空白字符和换行字符
+        lrc = [lrc stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+        lrc = [lrc stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    }
     if ([lrc containsString:@"/"]) {
         NSArray *array = [lrc componentsSeparatedByString:@"/"];
         switch (_CNTag % 4) {
