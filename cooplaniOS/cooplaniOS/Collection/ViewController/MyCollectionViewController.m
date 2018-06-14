@@ -53,12 +53,21 @@
     return @"删除";
 }
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-    // 从数据源中删除
-    //    [_data removeObjectAtIndex:indexPath.row];
-    // 从列表中删除
-    //    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        
+        MyCollectionModel *model = self.dataArray[indexPath.row];
+        [LTHttpManager deleteCollectionTestPaperWithId:@(model.testPaperId) Complete:^(LTHttpResult result, NSString *message, id data) {
+            if (LTHttpResultSuccess == result) {
+                // 从数据源中删除
+                //    [_data removeObjectAtIndex:indexPath.row];
+                [self.dataArray removeObjectAtIndex:indexPath.row];
+                // 从列表中删除
+                [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"homereloaddata" object:nil];
+                SVProgressShowStuteText(@"取消成功", YES);
+            }else{
+                SVProgressShowStuteText(@"取消失败", NO);
+            }
+        }];
     }
 }
 - (void)viewDidLoad {

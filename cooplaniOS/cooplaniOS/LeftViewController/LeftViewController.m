@@ -75,6 +75,15 @@
     userNameLb.font = [UIFont boldSystemFontOfSize:16];
     userNameLb.textColor = UIColorFromRGB(0x444444);
     self.userNameLb = userNameLb;
+    UIButton *btn= [UIButton buttonWithType:UIButtonTypeCustom];
+    [headerView addSubview:btn];
+    [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(userNameLb);
+        make.right.equalTo(userNameLb);
+        make.top.equalTo(userNameLb);
+        make.bottom.equalTo(userNameLb);
+    }];
+    [btn addTarget:self action:@selector(headerBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     tableView.tableHeaderView = headerView;
     self.myTableView = tableView;
     [self.view addSubview:tableView];

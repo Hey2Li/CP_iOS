@@ -292,6 +292,8 @@
     NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if ([fileManager fileExistsAtPath:fullPath]) {
+        self.downloadImageView.image = [UIImage imageNamed:@"downloaded"];
+        sender.enabled = NO;
         SVProgressShowStuteText(@"您已经下载过了", NO);
         return;
     }else{

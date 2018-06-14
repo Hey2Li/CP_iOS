@@ -89,7 +89,7 @@
         [_enVoiceLb mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(lineLabel.mas_bottom).offset(9);
             make.height.equalTo(@20);
-            make.left.equalTo(_wordLabel);
+            make.left.equalTo(_wordLabel.mas_left);
         }];
         _enVoiceLb.textColor = UIColorFromRGB(0xa4a4a4);
         _enVoiceLb.font = [UIFont systemFontOfSize:14];
@@ -111,7 +111,6 @@
             make.top.equalTo(_enVoiceLb);
             make.height.equalTo(_enVoiceLb);
             make.left.equalTo(self.mas_centerX);
-            make.width.equalTo(_enVoiceLb);
         }];
         _anVoiceLb.textColor = UIColorFromRGB(0xa4a4a4);
         _anVoiceLb.font = [UIFont systemFontOfSize:14];
@@ -158,7 +157,7 @@
         _tableView.separatorStyle = NO;
         [self addSubview:_tableView];
         [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(_wordLabel);
+            make.left.equalTo(self);
             make.right.equalTo(self.mas_right).offset(-17);
             make.top.equalTo(_anVoiceLb.mas_bottom).offset(2);
             make.bottom.equalTo(_detailBtn.mas_top).offset(-2);
@@ -184,8 +183,20 @@
         
         [_sayAnBtn addTarget:self action:@selector(sayAnBtn:) forControlEvents:UIControlEventTouchUpInside];
         [_sayEnBtn addTarget:self action:@selector(sayEnBtn:) forControlEvents:UIControlEventTouchUpInside];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(addwordToDictionary:) name:@"addWordToDictionary" object:nil];
     }
     return self;
+}
+- (void)addwordToDictionary:(NSNotification *)nifi{
+    if ([nifi.object isKindOfClass:[NSString class]]) {
+        if ([nifi.object isEqualToString:@"1"]) {
+            _addWordBtn.selected = YES;
+            [_addWordBtn.layer setBorderColor:UIColorFromRGB(0xCCCCCC).CGColor];
+        }else{
+            _addWordBtn.selected = NO;
+            [_addWordBtn.layer setBorderColor:UIColorFromRGB(0xffce43).CGColor];
+        }
+    }
 }
 - (void)sayAnBtn:(UIButton *)btn{
     AVPlayerItem *item = [[AVPlayerItem alloc]initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",_partsDict[@"ph_am_mp3"]]]];
@@ -215,8 +226,12 @@
                 }
                 NSDictionary *parts = array[0];
                 _partsDict = parts;
-                _anVoiceLb.text = [NSString stringWithFormat:@"美[%@]",parts[@"ph_am"]];
-                _enVoiceLb.text = [NSString stringWithFormat:@"英[%@]",parts[@"ph_en"]];
+                NSString *enStr = parts[@"ph_en"];
+                enStr = [enStr stringByReplacingOccurrencesOfString:@" " withString:@""];
+                NSString *amStr = parts[@"ph_am"];
+                amStr = [amStr stringByReplacingOccurrencesOfString:@" " withString:@""];
+                _anVoiceLb.text = [NSString stringWithFormat:@"美[%@]",amStr];
+                _enVoiceLb.text = [NSString stringWithFormat:@"英[%@]",enStr];
                 if ([parts[@"ph_am_mp3"] isEqualToString:@""]) {
                     _sayEnBtn.hidden = YES;
                     _sayAnBtn.hidden = YES;

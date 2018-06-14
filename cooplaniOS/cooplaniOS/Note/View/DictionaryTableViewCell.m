@@ -91,6 +91,7 @@
                 }
             }];
         }
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"addWordToDictionary" object:btn.selected ? @"1" : @"0"];
     }else{
         LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"请先登录" sureBtn:@"去登录" cancleBtn:@"取消"];
         [alertView show];
@@ -110,5 +111,7 @@
     [self.player replaceCurrentItemWithPlayerItem:item];
     [self.player play];
 }
-
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
 @end

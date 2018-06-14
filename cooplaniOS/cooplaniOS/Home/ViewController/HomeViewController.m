@@ -53,9 +53,13 @@
     [LTHttpManager FindAllBannerWithComplete:^(LTHttpResult result, NSString *message, id data) {
             if (result == LTHttpResultSuccess) {
                 self.bannerArray = data[@"responseData"];
+                [USERDEFAULTS setObject:[NSKeyedArchiver archivedDataWithRootObject:self.bannerArray]forKey:@"bannerData"];
                 [self.myCollectionView reloadData];
             }else{
-                
+                self.bannerArray = [NSKeyedUnarchiver unarchiveObjectWithData:[USERDEFAULTS objectForKey:@"bannerData"]];
+                if (self.bannerArray.count > 0) {
+                    [self.myCollectionView reloadData];
+                }
             }
         }];
     [LTHttpManager FindAllWithUseId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
@@ -69,9 +73,15 @@
                 PaperModel *model = [PaperModel mj_objectWithKeyValues:muDict];
                 [self.paperMutableArray addObject:model];
             }
+            [USERDEFAULTS setObject:[NSKeyedArchiver archivedDataWithRootObject:self.paperMutableArray]forKey:@"homeData"];
             [self.myTableView reloadData];
         }else{
-            
+            [self.paperMutableArray removeAllObjects];
+            NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithData:[USERDEFAULTS objectForKey:@"homeData"]];
+            if (array.count) {
+                self.paperMutableArray = [NSMutableArray arrayWithArray:array];
+                [self.myTableView reloadData];
+            }
         }
     }];
 }

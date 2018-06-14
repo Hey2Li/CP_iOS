@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface PaperModel : NSObject
+@interface PaperModel : NSObject<NSCoding>
 
 /**
  试卷名称
