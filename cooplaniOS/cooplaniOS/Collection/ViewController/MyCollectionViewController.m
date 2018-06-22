@@ -9,6 +9,7 @@
 #import "MyCollectionViewController.h"
 #import "MyCollectionPaperTableViewCell.h"
 #import "myCollectionModel.h"
+#import "PaperDetailViewController.h"
 
 @interface MyCollectionViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -44,6 +45,9 @@
     MyCollectionPaperTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([MyCollectionPaperTableViewCell class])];
     cell.model = self.dataArray[indexPath.row];
     cell.selectionStyle = NO;
+    cell.reloadData = ^{
+        [tableView reloadData];
+    };
     return cell;
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -70,6 +74,21 @@
         }];
     }
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    MyCollectionModel *model = self.dataArray[indexPath.row];
+    PaperDetailViewController *vc = [[PaperDetailViewController alloc]init];
+    [LTHttpManager findOneTestPaperInfoWithUserId:IS_USER_ID ? IS_USER_ID : @"" TestPaperId:@(model.testPaperId) Complete:^(LTHttpResult result, NSString *message, id data) {
+        if (LTHttpResultSuccess == result) {
+            NSMutableDictionary *muDict = [NSMutableDictionary dictionaryWithDictionary:data[@"responseData"][@"tp"]];
+            [muDict addEntriesFromDictionary:@{@"collection":data[@"responseData"][@"type"]}];
+            PaperModel *onePaperModel = [PaperModel mj_objectWithKeyValues:muDict];
+            MyCollectionPaperTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+            vc.title = cell.paperName.text;
+            vc.onePaperModel = onePaperModel;
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -77,6 +96,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.myTableView];
     [self loadData];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loadData) name:@"reloadCollection" object:nil];
 }
 - (void)loadData{
     if (IS_USER_ID) {
@@ -112,7 +132,9 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
 /*
 #pragma mark - Navigation
 
