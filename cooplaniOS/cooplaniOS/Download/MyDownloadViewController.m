@@ -42,9 +42,9 @@
     [self.view addSubview:self.myTableView];
     NSArray<DownloadFileModel *> *list = J_Select(DownloadFileModel).Where(@"paperVoiceName").list;
     list = J_Select(DownloadFileModel).Where(@"paperVoiceName").list;
-    self.downloadArray = [NSMutableArray arrayWithArray:list];
     [self.myTableView reloadData];
     NSArray *array = [DownloadFileModel jr_findAll];
+    self.downloadArray = [NSMutableArray arrayWithArray:list];
 //    unsigned int count;
     for (int i = 0; i < list.count; i ++) {
         DownloadFileModel *model = self.downloadArray[i];
@@ -145,8 +145,19 @@
             NSMutableDictionary *muDict = [NSMutableDictionary dictionaryWithDictionary:data[@"responseData"][@"tp"]];
             [muDict addEntriesFromDictionary:@{@"collection":data[@"responseData"][@"type"]}];
             PaperModel *onePaperModel = [PaperModel mj_objectWithKeyValues:muDict];
-            vc.onePaperModel = onePaperModel;      
+            vc.onePaperModel = onePaperModel;
+            vc.title = onePaperModel.name;
             [self.navigationController pushViewController:vc animated:YES];
+        }else{
+            NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithData:[USERDEFAULTS objectForKey:@"homeData"]];
+            [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                PaperModel *pmodel = (PaperModel *)obj;
+                if ([[NSString stringWithFormat:@"%@",pmodel.ID] isEqualToString:model.testPaperId]) {
+                    vc.onePaperModel = pmodel;
+                     vc.title = pmodel.name;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+            }];
         }
     }];
     

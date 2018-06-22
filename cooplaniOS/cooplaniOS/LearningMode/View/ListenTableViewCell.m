@@ -19,7 +19,7 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     if (selected) {
-        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc]initWithString:_listenLb.text attributes:@{NSBackgroundColorAttributeName:UIColorFromRGB(0xFFCE43)}];
+        NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc]initWithString:_listenLb.text attributes:@{NSBackgroundColorAttributeName:WORDCOLOR(0xFFCE43)}];
         _listenLb.attributedText = attrString;
     }else{
         NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc]initWithString:_listenLb.text attributes:@{NSBackgroundColorAttributeName:UIColorFromRGB(0xf7f7f7)}];

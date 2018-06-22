@@ -59,15 +59,20 @@
 //    }else{
 //        self.cellHeight.constant = model.cellHeight = model.cellHeight;
 //    }
+    NSString *isHaveNet = [USERDEFAULTS objectForKey:@"isHaveNet"];
     self.questionNameLb.text = [NSString stringWithFormat:@"Q%@",model.QuestionNo];
-    self.CorrectLb.text = [NSString stringWithFormat:@"%@的人答错了",model.correctStr];//答错人数
+    if ([isHaveNet isEqualToString:@"1"]) {
+        self.CorrectLb.text = [NSString stringWithFormat:@"%@的人答错了",model.correctStr];//答错人
+    }else{
+        self.CorrectLb.text = @"%0的人答错了";//答错人数
+    }
+    
     self.correctAnswerLb.text = model.Answer;
     self.youAnswerLb.text = model.youAnswer;
     self.answerDetailLb.text = model.Explanation;
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
     // Configure the view for the selected state
 }
 
