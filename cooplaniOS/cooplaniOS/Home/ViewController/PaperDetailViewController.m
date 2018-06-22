@@ -61,38 +61,47 @@
         self.collectionPaperBtn.tag = 11;
     }
     [LTHttpManager findOneTestPaperWithID:self.onePaperModel.ID Complete:^(LTHttpResult result, NSString *message, id data) {
-        self.paperDetailLb.text = data[@"responseData"][@"info"];
-        self.downloadVoiceUrl = data[@"responseData"][@"voiceUrl"];
-        self.downloadlrcUrl = data[@"responseData"][@"lic"];
-        self.downloadJsonUrl = data[@"responseData"][@"testPaperUrl"];
-        self.downloadModel.testPaperId = data[@"responseData"][@"id"];
-        self.downloadModel.name = data[@"responseData"][@"name"];
-        self.downloadModel.info = data[@"responseData"][@"info"];
-        self.downloadModel.number = data[@"responseData"][@"number"];
-        [USERDEFAULTS setObject:self.downloadModel.testPaperId forKey:@"testPaperId"];
-        [LTHttpManager downloadURL:self.downloadJsonUrl progress:^(NSProgress *downloadProgress) {
+        if (LTHttpResultSuccess == result) {
+            self.paperDetailLb.text = data[@"responseData"][@"info"];
+            self.downloadVoiceUrl = data[@"responseData"][@"voiceUrl"];
+            self.downloadlrcUrl = data[@"responseData"][@"lic"];
+            self.downloadJsonUrl = data[@"responseData"][@"testPaperUrl"];
+            self.downloadModel.testPaperId = data[@"responseData"][@"id"];
+            self.downloadModel.name = data[@"responseData"][@"name"];
+            self.downloadModel.info = data[@"responseData"][@"info"];
+            self.downloadModel.number = data[@"responseData"][@"number"];
+            DownloadFileModel *model = [DownloadFileModel jr_findByPrimaryKey:self.downloadModel.testPaperId];
+            if (model.paperVoiceName == nil || [model.paperVoiceName isEqualToString:@""]) {
+                self.downloadModel.paperVoiceName = self.downloadVoiceUrl;
+                J_Update(self.downloadModel).Columns(@[@"paperVoiceName"]).updateResult;
+            }
+            [USERDEFAULTS setObject:self.downloadModel.testPaperId forKey:@"testPaperId"];
+            [LTHttpManager downloadURL:self.downloadJsonUrl progress:^(NSProgress *downloadProgress) {
+                
+            } destination:^(NSURL *targetPath) {
+                NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                NSString *fileName = [url lastPathComponent];
+                self.downloadModel.paperJsonName = fileName;
+                J_Update(self.downloadModel).Columns(@[@"paperJsonName"]).updateResult;
+            } failure:^(NSError *error) {
+                
+            }];
+            [LTHttpManager downloadURL:self.downloadlrcUrl progress:^(NSProgress *downloadProgress) {
+                
+            } destination:^(NSURL *targetPath) {
+                NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                NSString *fileName = [url lastPathComponent];
+                self.downloadModel.paperLrcName = fileName;
+                J_Update(self.downloadModel).Columns(@[@"paperLrcName"]).updateResult;
+            } failure:^(NSError *error) {
+                
+            }];
+            J_Insert(self.downloadModel).updateResult;
             
-        } destination:^(NSURL *targetPath) {
-            NSString *url = [NSString stringWithFormat:@"%@",targetPath];
-            NSString *fileName = [url lastPathComponent];
-            self.downloadModel.paperJsonName = fileName;
-            J_Update(self.downloadModel).Columns(@[@"paperJsonName"]).updateResult;
-        } failure:^(NSError *error) {
-            
-        }];
-        [LTHttpManager downloadURL:self.downloadlrcUrl progress:^(NSProgress *downloadProgress) {
-            
-        } destination:^(NSURL *targetPath) {
-            NSString *url = [NSString stringWithFormat:@"%@",targetPath];
-            NSString *fileName = [url lastPathComponent];
-            self.downloadModel.paperLrcName = fileName;
-            J_Update(self.downloadModel).Columns(@[@"paperLrcName"]).updateResult;
-        } failure:^(NSError *error) {
-            
-        }];
-        J_Insert(self.downloadModel).updateResult;
-
-        NSLog(@"%@",self.downloadModel);
+            NSLog(@"%@",self.downloadModel);
+        }else{
+            [USERDEFAULTS setObject:self.onePaperModel.ID forKey:@"testPaperId"];
+        }
     }];
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -130,11 +139,11 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([self PaperIsDownloaded]) {
+    if (1) {
         if (indexPath.row == 0) {
             ListenPaperViewController *vc = [[ListenPaperViewController alloc]init];
             vc.title = self.title;
-            vc.testPaperId = self.downloadModel.testPaperId;
+            vc.testPaperId = [NSString stringWithFormat:@"%@",self.onePaperModel.ID];
             [self.navigationController pushViewController:vc animated:YES];
         }else if (indexPath.row == 1){
             [self selectMode];
@@ -143,7 +152,7 @@
             alertView.resultIndex = ^(NSInteger index) {
                 TestModeViewController *vc = [[TestModeViewController alloc]init];
                 vc.title = self.title;
-                vc.testPaperId = self.downloadModel.testPaperId;
+                vc.testPaperId = [NSString stringWithFormat:@"%@",self.onePaperModel.ID];
                 [self.maskView removeFromSuperview];
                 [self.navigationController pushViewController:vc animated:YES];
             };
@@ -280,7 +289,7 @@
     PracticeModeViewController *vc = [[PracticeModeViewController alloc]init];
     vc.mode = btn.tag;
     vc.title = self.title;
-    vc.testPaperId = self.downloadModel.testPaperId;
+    vc.testPaperId = [NSString stringWithFormat:@"%@",self.onePaperModel.ID];
     [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma mark 下载试卷
@@ -304,7 +313,9 @@
                     [SVProgressHUD dismiss];
                     SVProgressShowStuteText(@"下载成功", YES);
                     self.downloadImageView.image = [UIImage imageNamed:@"downloaded"];
+                    [self.downloadNameBtn setTitle:@"已下载" forState:UIControlStateNormal];
                     sender.enabled = NO;
+                    [[NSNotificationCenter defaultCenter]postNotificationName:@"reloadCollection" object:nil];
                 });
             }
         } destination:^(NSURL *targetPath) {
