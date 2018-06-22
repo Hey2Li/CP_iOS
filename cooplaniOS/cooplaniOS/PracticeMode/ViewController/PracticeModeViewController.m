@@ -34,6 +34,7 @@
 @property (nonatomic, strong) SectionsModel *modeSectionModel;
 @property (nonatomic, strong) NSIndexPath *collectionIndexPath;
 @property (nonatomic, assign) BOOL lastPlaying;
+@property (nonatomic, assign) BOOL isFinish;//判断听力是否完成
 @end
 
 @implementation PracticeModeViewController
@@ -98,6 +99,7 @@
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(listenPause) name:@"listenBackground" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(listenPlay) name:@"listenForeground" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playFinished:) name:@"playFinished" object:nil];
 }
 - (void)loadData{
     DownloadFileModel *model = [DownloadFileModel  jr_findByPrimaryKey:self.testPaperId];
@@ -145,6 +147,7 @@
                                 [self.optionsModelArray addObject:optionsModel];
                             }
                         }
+                        _NoCorrectInt += self.questionsModelArray.count;
                         modeSectionModel.Passages = [NSMutableArray arrayWithArray:self.passageModelArray];
                         dispatch_async(dispatch_get_main_queue(), ^{
                             [self.tikaCollectionView reloadData];
@@ -173,6 +176,7 @@
                                     [self.optionsModelArray addObject:optionsModel];
                                 }
                             }
+                            _NoCorrectInt += self.questionsModelArray.count;
                             sectinsModel.Passages = [NSMutableArray arrayWithArray:self.passageModelArray];
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 [self.tikaCollectionView reloadData];
@@ -226,10 +230,7 @@
         });
     }
 }
-- (NSString *)arrayToJSONString:(NSArray *)array
-
-{
-    
+- (NSString *)arrayToJSONString:(NSArray *)array{
     NSError *error = nil;
     //    NSMutableArray *muArray = [NSMutableArray array];
     //    for (NSString *userId in array) {
@@ -291,6 +292,10 @@
     self.tikaCollectionView = collectionView;
     [self scrollViewDidScroll:collectionView];
     _isOpen = YES;
+}
+#pragma mark 播放完成
+- (void)playFinished:(NSNotification *)notifi{
+    _isFinish = YES;
 }
 #pragma mark UICollectionViewDelegate
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
@@ -355,22 +360,37 @@
             questionsModel.isCorrect = isCorrect;
             if (isCorrect) {
                 _correctInt++;
-            }else{
-                _NoCorrectInt++;
             }
             if (cellIndexPath.row + 1 < sectionModel.Passages.count) {
                 [weakSelf.view layoutIfNeeded];
                 [weakSelf.tikaCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
             }else if (cellIndexPath.row + 1 == sectionModel.Passages.count && cellIndexPath.section == self.sectionsModelArray.count - 1){
-                float correctFloat = (float)_correctInt/(float)(_correctInt + _NoCorrectInt);
-                PMAnswerViewController *vc = [[PMAnswerViewController alloc]init];
-                vc.correct = [NSString stringWithFormat:@"%0.f",correctFloat * 100];
-                vc.testPaperId = self.testPaperId;
-                vc.paperName = _testPaperModel.PaperFullName;
-                vc.paperSection = _paperSection;
-                vc.questionsArray = self.sectionsModelArray;
-                vc.mode = self.mode;
-                [self.navigationController pushViewController:vc animated:YES];              }
+                if (_isFinish) {
+                    float correctFloat = (float)_correctInt/(float)(_NoCorrectInt);
+                    PMAnswerViewController *vc = [[PMAnswerViewController alloc]init];
+                    vc.correct = [NSString stringWithFormat:@"%0.f",correctFloat * 100];
+                    vc.testPaperId = self.testPaperId;
+                    vc.paperName = _testPaperModel.PaperFullName;
+                    vc.paperSection = _paperSection;
+                    vc.questionsArray = self.sectionsModelArray;
+                    vc.mode = self.mode;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }else{
+                    LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"听力还在进行中，确定交卷吗" sureBtn:@"交卷" cancleBtn:@"再检查下" ];
+                    finishView.resultIndex = ^(NSInteger index) {
+                        float correctFloat = (float)_correctInt/(float)(_NoCorrectInt);
+                        PMAnswerViewController *vc = [[PMAnswerViewController alloc]init];
+                        vc.correct = [NSString stringWithFormat:@"%0.f",correctFloat * 100];
+                        vc.testPaperId = self.testPaperId;
+                        vc.paperName = _testPaperModel.PaperFullName;
+                        vc.paperSection = _paperSection;
+                        vc.questionsArray = self.sectionsModelArray;
+                        vc.mode = self.mode;
+                        [self.navigationController pushViewController:vc animated:YES];
+                    };
+                    [finishView show];
+                }
+            }
         };
         return cell;
     }
@@ -406,23 +426,37 @@
         questionsModel.isCorrect = isCorrect;
         if (isCorrect) {
             _correctInt++;
-        }else{
-            _NoCorrectInt++;
         }
         NSLog(@"indexPathrow+1 = %ld---indexPath.row%ld---",cellIndexPath.row + 1, cellIndexPath.row);
         if (cellIndexPath.row + 1 < modeSectionModel.Passages.count) {
             [weakSelf.view layoutIfNeeded];
             [weakSelf.tikaCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
         }else if (cellIndexPath.row + 1 == modeSectionModel.Passages.count){
-            float correctFloat = (float)_correctInt/(float)(_correctInt + _NoCorrectInt);
-            PMAnswerViewController *vc = [[PMAnswerViewController alloc]init];
-            vc.correct = [NSString stringWithFormat:@"%0.f",correctFloat * 100 ];
-            vc.paperName = _testPaperModel.PaperFullName;
-            vc.paperSection = _paperSection;
-            vc.testPaperId = self.testPaperId;
-            vc.questionsArray = @[modeSectionModel];
-            vc.mode = self.mode;
-            [self.navigationController pushViewController:vc animated:YES];
+            if (_isFinish) {
+                float correctFloat = (float)_correctInt/(float)(_NoCorrectInt);
+                PMAnswerViewController *vc = [[PMAnswerViewController alloc]init];
+                vc.correct = [NSString stringWithFormat:@"%0.f",correctFloat * 100 ];
+                vc.paperName = _testPaperModel.PaperFullName;
+                vc.paperSection = _paperSection;
+                vc.testPaperId = self.testPaperId;
+                vc.questionsArray = @[modeSectionModel];
+                vc.mode = self.mode;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else{
+                LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"听力还在进行中，确定交卷吗" sureBtn:@"交卷" cancleBtn:@"再检查下" ];
+                finishView.resultIndex = ^(NSInteger index) {
+                    float correctFloat = (float)_correctInt/(float)(_NoCorrectInt);
+                    PMAnswerViewController *vc = [[PMAnswerViewController alloc]init];
+                    vc.correct = [NSString stringWithFormat:@"%0.f",correctFloat * 100 ];
+                    vc.paperName = _testPaperModel.PaperFullName;
+                    vc.paperSection = _paperSection;
+                    vc.testPaperId = self.testPaperId;
+                    vc.questionsArray = @[modeSectionModel];
+                    vc.mode = self.mode;
+                    [self.navigationController pushViewController:vc animated:YES];
+                };
+                [finishView show];
+            }
         }
     };
     return cell;
@@ -443,9 +477,9 @@
 }
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-    }
+//    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+//        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+//    }
     [self.player.player pause];
 }
 - (void)didReceiveMemoryWarning {
@@ -476,6 +510,9 @@
         [self.player.player pause];
         [self.player.playSongBtn setSelected:NO];
     }
+}
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 /*
 #pragma mark - Navigation

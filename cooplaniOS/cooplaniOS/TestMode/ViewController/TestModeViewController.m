@@ -31,6 +31,7 @@
 @property (nonatomic, copy) NSString *paperSection;
 @property (nonatomic, strong) NSIndexPath *collectionIndexPath;
 @property (nonatomic, strong) NSMutableArray *itemCountArray;
+@property (nonatomic, assign) BOOL isFinish;//判断听力是否结束
 @end
 
 @implementation TestModeViewController
@@ -75,17 +76,24 @@
         DownloadFileModel *model = [DownloadFileModel  jr_findByPrimaryKey:self.testPaperId];
         NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
         NSString *urlString = [model.paperVoiceName stringByRemovingPercentEncoding];
-        NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
-        NSURL *fileUrl = [NSURL fileURLWithPath:fullPath];
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        if ([fileManager fileExistsAtPath:fullPath]) {
-            _player = [[SUPlayer alloc]initWithURL:fileUrl];
+        if ([urlString hasPrefix:@"http"]) {
+            _player = [[SUPlayer alloc]initWithURL:[NSURL URLWithString:model.paperVoiceName]];
             [_player addObserver:self forKeyPath:@"progress" options:NSKeyValueObservingOptionNew context:nil];
             [_player addObserver:self forKeyPath:@"duration" options:NSKeyValueObservingOptionNew context:nil];
             [_player addObserver:self forKeyPath:@"cacheProgress" options:NSKeyValueObservingOptionNew context:nil];
         }else{
-            SVProgressShowStuteText(@"请先下载资源", NO);
-            [self.navigationController popViewControllerAnimated:YES];
+            NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
+            NSURL *fileUrl = [NSURL fileURLWithPath:fullPath];
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            if ([fileManager fileExistsAtPath:fullPath]) {
+                _player = [[SUPlayer alloc]initWithURL:fileUrl];
+                [_player addObserver:self forKeyPath:@"progress" options:NSKeyValueObservingOptionNew context:nil];
+                [_player addObserver:self forKeyPath:@"duration" options:NSKeyValueObservingOptionNew context:nil];
+                [_player addObserver:self forKeyPath:@"cacheProgress" options:NSKeyValueObservingOptionNew context:nil];
+            }else{
+                SVProgressShowStuteText(@"请先下载资源", NO);
+                [self.navigationController popViewControllerAnimated:YES];
+            }
         }
     }
     return _player;
@@ -131,6 +139,7 @@
     _NoCorrectInt = 0;
     [self initWithNavi];
     [self.player play];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playFinished:) name:@"playFinished" object:nil];
 }
 - (void)initWithNavi{
     self.navigationItem.hidesBackButton = YES;
@@ -168,6 +177,7 @@
         [self.questionsModelArray removeAllObjects];
         [self.optionsModelArray removeAllObjects];
         [self.itemCountArray removeAllObjects];
+        _NoCorrectInt = 0;
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             for (PartsModel *partModel in model.Parts) {
                 [self.partModelArray addObject:partModel];
@@ -197,6 +207,7 @@
                                 });
                             }
                         }
+                        _NoCorrectInt += self.questionsModelArray.count;
                         sectinsModel.Passages = [NSMutableArray arrayWithArray:self.passageModelArray];
                     }
                 }
@@ -235,6 +246,7 @@
 }
 #pragma mark 播放完成
 - (void)playFinished:(NSNotification *)notifi{
+    _isFinish = YES;
     [self.player seekToTime:0];
 }
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
@@ -288,7 +300,7 @@
 - (void)donePaperClick:(UIButton *)btn{
     LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"确定交卷" sureBtn:@"确定" cancleBtn:@"取消"];
     alertView.resultIndex = ^(NSInteger index) {
-        float correctFloat = (float)_correctInt/(float)(_correctInt + _NoCorrectInt);
+        float correctFloat = (float)_correctInt/(float)(_NoCorrectInt);
         AnswerViewController *vc = [[AnswerViewController alloc]init];
         vc.correct = [NSString stringWithFormat:@"%0.f",isnan(correctFloat * 100)?0:correctFloat * 100];
         vc.paperName = _testPaperModel.PaperFullName;
@@ -337,20 +349,32 @@
         questionsModel.isCorrect = isCorrect;
         if (isCorrect) {
             _correctInt++;
-        }else{
-            _NoCorrectInt++;
         }
         if (cellIndexPath.row + 1 < sectionModel.Passages.count) {
             [weakSelf.view layoutIfNeeded];
             [weakSelf.tikaCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
         }else if (cellIndexPath.row + 1 == sectionModel.Passages.count && cellIndexPath.section == self.sectionsModelArray.count - 1){
-            float correctFloat = (float)_correctInt/(float)(_correctInt + _NoCorrectInt);
-            AnswerViewController *vc = [[AnswerViewController alloc]init];
-            vc.correct = [NSString stringWithFormat:@"%0.f",correctFloat * 100 ? correctFloat * 100 : 0];
-            vc.paperName = _testPaperModel.PaperFullName;
-            vc.paperSection = _paperSection;
-            vc.questionsArray = self.sectionsModelArray;
-            [self.navigationController pushViewController:vc animated:YES];
+            if (_isFinish) {
+                float correctFloat = (float)_correctInt/(float)(_NoCorrectInt);
+                AnswerViewController *vc = [[AnswerViewController alloc]init];
+                vc.correct = [NSString stringWithFormat:@"%0.f",correctFloat * 100 ? correctFloat * 100 : 0];
+                vc.paperName = _testPaperModel.PaperFullName;
+                vc.paperSection = _paperSection;
+                vc.questionsArray = self.sectionsModelArray;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else{
+                LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"听力还在进行中，确定交卷吗" sureBtn:@"交卷" cancleBtn:@"再检查下" ];
+                finishView.resultIndex = ^(NSInteger index) {
+                    float correctFloat = (float)_correctInt/(float)(_NoCorrectInt);
+                    AnswerViewController *vc = [[AnswerViewController alloc]init];
+                    vc.correct = [NSString stringWithFormat:@"%0.f",correctFloat * 100 ? correctFloat * 100 : 0];
+                    vc.paperName = _testPaperModel.PaperFullName;
+                    vc.paperSection = _paperSection;
+                    vc.questionsArray = self.sectionsModelArray;
+                    [self.navigationController pushViewController:vc animated:YES];
+                };
+                [finishView show];
+            }
         }
     };
     return cell;
