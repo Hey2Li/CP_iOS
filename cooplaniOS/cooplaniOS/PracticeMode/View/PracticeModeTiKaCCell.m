@@ -39,6 +39,7 @@
         tableView.delegate = self;
         tableView.dataSource = self;
         tableView.scrollEnabled = NO;
+        tableView.separatorStyle = NO;
         [backView addSubview:tableView];
         [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(backView.mas_left);
@@ -58,6 +59,7 @@
         questionLb.textColor = UIColorFromRGB(0x666666);
         questionLb.font = [UIFont boldSystemFontOfSize:14];
         tableView.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 80)];
+        [tableView.tableHeaderView setBackgroundColor:[UIColor whiteColor]];
         [tableView.tableHeaderView addSubview:questionLb];
         [questionLb mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(backView).offset(20);
@@ -97,9 +99,9 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
-        return [Tool layoutForAlliPhoneHeight:60];
+        return [Tool layoutForAlliPhoneHeight:40];
     }else{
-        return [Tool layoutForAlliPhoneHeight:45];
+        return [Tool layoutForAlliPhoneHeight:50];
     }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -115,12 +117,21 @@
         cell.textLabel.textColor = UIColorFromRGB(0xBBBBBB);
         cell.selectionStyle = NO;
     }else{
+        UILabel *label = [UILabel new];
+        [cell addSubview:label];
+        [label mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(cell);
+            make.right.equalTo(cell);
+            make.bottom.equalTo(cell.mas_bottom).offset(-1);
+            make.height.equalTo(@1);
+        }];
+        label.backgroundColor = UIColorFromRGB(0xE9E9E9);
         OptionsModel *model = _questionsModel.Options[indexPath.row - 1];
         dispatch_async(dispatch_get_main_queue(), ^{
             [cell setSelected:model.isSelecteOption animated:YES];
         });
         cell.textLabel.numberOfLines = 2;
-        cell.textLabel.text = [NSString stringWithFormat:@"%@.%@",model.Alphabet,model.Text];
+        cell.textLabel.text = [NSString stringWithFormat:@"%@. %@",model.Alphabet,model.Text];
     }
 
     return cell;

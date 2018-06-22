@@ -44,6 +44,7 @@
             make.top.equalTo(backView.mas_top);
             make.bottom.equalTo(backView.mas_bottom);
         }];
+        tableView.separatorStyle = NO;
         [tableView.layer setCornerRadius:8];
         tableView.backgroundColor = [UIColor whiteColor];
         tableView.tableFooterView = [UIView new];
@@ -55,13 +56,15 @@
         questionLb.numberOfLines = 2;
         questionLb.textColor = UIColorFromRGB(0x666666);
         questionLb.font = [UIFont boldSystemFontOfSize:14];
+        questionLb.backgroundColor = [UIColor whiteColor];
         tableView.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 60)];
+        tableView.tableHeaderView.backgroundColor = [UIColor whiteColor];
         [tableView.tableHeaderView addSubview:questionLb];
         [questionLb mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(backView).offset(20);
-            make.right.equalTo(backView).offset(-20);
+            make.left.equalTo(tableView.tableHeaderView).offset(20);
+            make.right.equalTo(tableView.tableHeaderView).offset(-20);
             make.height.equalTo(@60);
-            make.top.equalTo(backView);
+            make.top.equalTo(tableView.tableHeaderView);
         }];
         self.questionLb = questionLb;
     }
@@ -81,7 +84,7 @@
     return _questionsModel.Options.count + 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 45;
+    return 50;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NoHighlightedTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([NoHighlightedTableViewCell class]) forIndexPath:indexPath];
@@ -95,13 +98,22 @@
         cell.textLabel.textColor = UIColorFromRGB(0xBBBBBB);
         cell.selectionStyle = NO;
     }else{
+        UILabel *label = [UILabel new];
+        [cell addSubview:label];
+        [label mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(cell);
+            make.right.equalTo(cell);
+            make.bottom.equalTo(cell.mas_bottom).offset(-1);
+            make.height.equalTo(@1);
+        }];
+        label.backgroundColor = UIColorFromRGB(0xE9E9E9);
         cell.textLabel.numberOfLines = 2;
         cell.selectionStyle = YES;
         OptionsModel *model = _questionsModel.Options[indexPath.row - 1];
         dispatch_async(dispatch_get_main_queue(), ^{
             [cell setSelected:model.isSelecteOption animated:YES];
         });
-        cell.textLabel.text = [NSString stringWithFormat:@"%@.%@",model.Alphabet,model.Text];
+        cell.textLabel.text = [NSString stringWithFormat:@"%@.  %@",model.Alphabet,model.Text];
     }
     return cell;
 }
