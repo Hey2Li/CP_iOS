@@ -79,22 +79,30 @@
     DownloadFileModel *model = [DownloadFileModel  jr_findByPrimaryKey:testPaperId];
     NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
     NSString *urlString = [model.paperVoiceName stringByRemovingPercentEncoding];
-    NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
-    NSURL *fileUrl = [NSURL fileURLWithPath:fullPath];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if ([fileManager fileExistsAtPath:fullPath]) {
-        self.player = [[SUPlayer alloc]initWithURL:fileUrl];
-        [self.player addObserver:self forKeyPath:@"progress" options:NSKeyValueObservingOptionNew context:nil];
-        [self.player addObserver:self forKeyPath:@"duration" options:NSKeyValueObservingOptionNew context:nil];
-        [self.player addObserver:self forKeyPath:@"cacheProgress" options:NSKeyValueObservingOptionNew context:nil];
+   
+    if ([urlString hasPrefix:@"http"]) {
+        _player = [[SUPlayer alloc]initWithURL:[NSURL URLWithString:model.paperVoiceName]];
+        [_player addObserver:self forKeyPath:@"progress" options:NSKeyValueObservingOptionNew context:nil];
+        [_player addObserver:self forKeyPath:@"duration" options:NSKeyValueObservingOptionNew context:nil];
+        [_player addObserver:self forKeyPath:@"cacheProgress" options:NSKeyValueObservingOptionNew context:nil];
         [self.progressSlider addTarget:self action:@selector(changeProgress:) forControlEvents:UIControlEventTouchUpInside];
         [self.progressSlider setValue:self.player.progress andTime:@"00:00/00:00" animated:YES];
     }else{
-        SVProgressShowStuteText(@"请先下载资源", NO);
-        return;
+        NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
+        NSURL *fileUrl = [NSURL fileURLWithPath:fullPath];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if ([fileManager fileExistsAtPath:fullPath]) {
+            self.player = [[SUPlayer alloc]initWithURL:fileUrl];
+            [self.player addObserver:self forKeyPath:@"progress" options:NSKeyValueObservingOptionNew context:nil];
+            [self.player addObserver:self forKeyPath:@"duration" options:NSKeyValueObservingOptionNew context:nil];
+            [self.player addObserver:self forKeyPath:@"cacheProgress" options:NSKeyValueObservingOptionNew context:nil];
+            [self.progressSlider addTarget:self action:@selector(changeProgress:) forControlEvents:UIControlEventTouchUpInside];
+            [self.progressSlider setValue:self.player.progress andTime:@"00:00/00:00" animated:YES];
+        }else{
+            SVProgressShowStuteText(@"请先下载资源", NO);
+            return;
+        }
     }
-    
-   
     _isOpen = YES;
     _CNTag = 0;
     _RateTag = 0;
@@ -115,7 +123,6 @@
     [self parseLrc];
     self.backImageView.hidden = YES;
     [self bringSubviewToFront:self.backImageView];
-    [self moreBtn:self.moreBtn];
 }
 #pragma mark 播放器相关
 - (void)changeProgress:(UISlider *)slider {

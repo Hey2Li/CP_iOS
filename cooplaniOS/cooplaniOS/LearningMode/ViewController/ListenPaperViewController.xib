@@ -46,34 +46,30 @@
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="ENb-BM-yfi">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gym-VS-o3h">
-                                    <rect key="frame" x="0.0" y="0.0" width="75" height="50"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gym-VS-o3h" userLabel="单句收藏">
+                                    <rect key="frame" x="0.0" y="0.0" width="94" height="50"/>
                                     <state key="normal" image="collection-2"/>
                                     <state key="selected" image="single_favor_fill"/>
                                     <connections>
                                         <action selector="collectionOneSentence:" destination="-1" eventType="touchUpInside" id="8a5-bJ-XLU"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dzj-Hv-mhW">
-                                    <rect key="frame" x="75" y="0.0" width="75" height="50"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dzj-Hv-mhW" userLabel="译文切换">
+                                    <rect key="frame" x="94" y="0.0" width="93.5" height="50"/>
                                     <state key="normal" image="双语"/>
                                     <connections>
                                         <action selector="ENCNSwitch:" destination="-1" eventType="touchUpInside" id="3KZ-cn-EG6"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gnB-Bc-qhw">
-                                    <rect key="frame" x="150" y="0.0" width="75" height="50"/>
-                                    <state key="normal" image="cycle"/>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1MM-3P-0Dl">
-                                    <rect key="frame" x="225" y="0.0" width="75" height="50"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1MM-3P-0Dl" userLabel="倍速播放">
+                                    <rect key="frame" x="187.5" y="0.0" width="94" height="50"/>
                                     <state key="normal" image="1.0"/>
                                     <connections>
                                         <action selector="RateWithPlay:" destination="-1" eventType="touchUpInside" id="6Ff-0j-yiq"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VSa-xw-3nC">
-                                    <rect key="frame" x="300" y="0.0" width="75" height="50"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VSa-xw-3nC" userLabel="内容纠错">
+                                    <rect key="frame" x="281.5" y="0.0" width="93.5" height="50"/>
                                     <state key="normal" image="correct"/>
                                     <connections>
                                         <action selector="ContentError:" destination="-1" eventType="touchUpInside" id="Afs-uR-CK7"/>
@@ -131,7 +127,7 @@
                                 <action selector="downSong:" destination="-1" eventType="touchUpInside" id="kVX-sR-yC5"/>
                             </connections>
                         </button>
-                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="2te-Ja-r1v">
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="2te-Ja-r1v" customClass="playSlider">
                             <rect key="frame" x="8" y="-8" width="359" height="31"/>
                             <color key="minimumTrackTintColor" red="1" green="0.87446427345275879" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <color key="maximumTrackTintColor" red="0.29016751050949097" green="0.29021432995796204" blue="0.2901572585105896" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -201,7 +197,6 @@
         <image name="Group 5 Copy" width="226" height="222"/>
         <image name="collection-2" width="44" height="44"/>
         <image name="correct" width="44" height="44"/>
-        <image name="cycle" width="44" height="44"/>
         <image name="more1" width="22" height="6"/>
         <image name="more1_fill" width="22" height="6"/>
         <image name="pause" width="48" height="48"/>

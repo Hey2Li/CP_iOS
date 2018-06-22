@@ -19,7 +19,7 @@
 #import "CheckWordView.h"
 #import "CHMagnifierView.h"
 
-@interface ListenPaperViewController ()<UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
+@interface ListenPaperViewController ()<UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, UIGestureRecognizerDelegate>
 @property (nonatomic, strong) CADisplayLink *timer;//界面刷新定时器
 @property (nonatomic, strong) SUPlayer *player;
 @property (nonatomic, assign) NSInteger songIndex;
@@ -78,23 +78,38 @@
         DownloadFileModel *model = [DownloadFileModel  jr_findByPrimaryKey:self.testPaperId];
         NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
         NSString *urlString = [model.paperVoiceName stringByRemovingPercentEncoding];
-        NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
-        NSURL *fileUrl = [NSURL fileURLWithPath:fullPath];
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        if ([fileManager fileExistsAtPath:fullPath]) {
-            _player = [[SUPlayer alloc]initWithURL:fileUrl];
+        if ([urlString hasPrefix:@"http"]) {
+            _player = [[SUPlayer alloc]initWithURL:[NSURL URLWithString:model.paperVoiceName]];
             [_player addObserver:self forKeyPath:@"progress" options:NSKeyValueObservingOptionNew context:nil];
             [_player addObserver:self forKeyPath:@"duration" options:NSKeyValueObservingOptionNew context:nil];
             [_player addObserver:self forKeyPath:@"cacheProgress" options:NSKeyValueObservingOptionNew context:nil];
             [self.progressSlider addTarget:self action:@selector(changeProgress:) forControlEvents:UIControlEventTouchUpInside];
             [self.progressSlider setValue:self.player.progress andTime:@"00:00/00:00" animated:YES];
-            self.timeLb.hidden = YES;
         }else{
-            SVProgressShowStuteText(@"请先下载资源", NO);
-            [self.navigationController popViewControllerAnimated:YES];
+            NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
+            NSURL *fileUrl = [NSURL fileURLWithPath:fullPath];
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            if ([fileManager fileExistsAtPath:fullPath]) {
+                _player = [[SUPlayer alloc]initWithURL:fileUrl];
+                [_player addObserver:self forKeyPath:@"progress" options:NSKeyValueObservingOptionNew context:nil];
+                [_player addObserver:self forKeyPath:@"duration" options:NSKeyValueObservingOptionNew context:nil];
+                [_player addObserver:self forKeyPath:@"cacheProgress" options:NSKeyValueObservingOptionNew context:nil];
+                [self.progressSlider addTarget:self action:@selector(changeProgress:) forControlEvents:UIControlEventTouchUpInside];
+                [self.progressSlider setValue:self.player.progress andTime:@"00:00/00:00" animated:YES];
+                self.timeLb.hidden = YES;
+            }else{
+                SVProgressShowStuteText(@"请先下载资源", NO);
+                [self.navigationController popViewControllerAnimated:YES];
+            }
         }
     }
     return _player;
+}
+- (void)cacheSuccess{
+    SVProgressHiden();
+    SVProgressShowStuteText(@"缓存完成", YES);
+
+    self.timeLb.hidden = YES;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -111,6 +126,7 @@
     [self initWithView];
     [self loadLongPress];
     [self.player play];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(cacheSuccess) name:@"cacheSuccess" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playFinished:) name:@"playFinished" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(listenPause) name:@"listenBackground" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(listenPlay) name:@"listenForeground" object:nil];
@@ -122,20 +138,24 @@
     [_lyricTableView addGestureRecognizer:tapGesture];
     //选择触发事件的方式（默认单机触发）
     [tapGesture setNumberOfTapsRequired:1];
-    [self moreBtnClick:self.moreBtn];
 }
 - (void)event:(UITapGestureRecognizer *)tap{
     self.wordLabel.hidden = YES;
 }
 -(void)viewDidAppear:(BOOL)animated{
-    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-    }
     [self.player pause];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
-    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+    NSArray *gestureArray = self.navigationController.view.gestureRecognizers;//获取所有的手势
+    
+    //当是侧滑手势的时候设置panGestureRecognizer需要UIScreenEdgePanGestureRecognizer失效才生效即可
+    for (UIGestureRecognizer *gesture in gestureArray) {
+        if ([gesture isKindOfClass:[UISlider class]]) {
+        }else{
+            self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+        }
+    }
 }
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
@@ -298,6 +318,11 @@
     if ([gestureRecognizer isKindOfClass:[UISwipeGestureRecognizer class]] && [touch.view isKindOfClass:[UICollectionView class]]) {
         return YES;
     }
+    if ([gestureRecognizer.view isKindOfClass:[UISlider class]]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }else{
+        self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+    }
     return NO;
 }
 #pragma mark 解析歌词
@@ -455,6 +480,11 @@
 
 #pragma mark 播放器相关
 - (void)changeProgress:(UISlider *)slider {
+//    DownloadFileModel *model = [DownloadFileModel  jr_findByPrimaryKey:self.testPaperId];
+//    NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+//    NSString *urlString = [model.paperVoiceName stringByRemovingPercentEncoding];
+//    NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
     if ([self.player isPlaying]) {
         [self.player pause];
         float seekTime = self.player.duration * slider.value;
@@ -504,9 +534,17 @@
                 NSLog(@"scrollLyric/currentIndex%ld",(long)_currentIndex);
             });
         });
-      
+        
     }
     _lastPlaying = [self.player isPlaying];
+//    if (![self.player currentItemCacheState] || [fileManager fileExistsAtPath:fullPath]) {
+//        
+//    }else{
+//        if (![fileManager fileExistsAtPath:fullPath]) {
+//            SVProgressShowStuteText(@"滑动播放需要先下载哟~", NO);
+//            return;
+//        }
+//    }
 }
 #pragma mark 播放完成
 - (void)playFinished:(NSNotification *)notifi{
