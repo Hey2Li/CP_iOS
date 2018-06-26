@@ -75,6 +75,7 @@
 		9B60C8D920B3B2C000373EA2 /* NSString+FileSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B60C8D820B3B2C000373EA2 /* NSString+FileSize.m */; };
 		9B6FB85C207F3D2100BC07F3 /* UILabel+HYLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6FB85B207F3D2100BC07F3 /* UILabel+HYLabel.m */; };
 		9B6FB85F207F3D7B00BC07F3 /* HYWord.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6FB85D207F3D7B00BC07F3 /* HYWord.m */; };
+		9B892A2220E1DF7100B0D5E5 /* LTDownloadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B892A2120E1DF7100B0D5E5 /* LTDownloadView.m */; };
 		9BA08EB0209308440026935E /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA08EAD209308440026935E /* FeedbackViewController.m */; };
 		9BA08EB52093120C0026935E /* FeedbackTypeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA08EB32093120C0026935E /* FeedbackTypeTableViewCell.m */; };
 		9BA08EB62093120C0026935E /* FeedbackTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BA08EB42093120C0026935E /* FeedbackTypeTableViewCell.xib */; };
@@ -254,6 +255,8 @@
 		9B6FB85B207F3D2100BC07F3 /* UILabel+HYLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+HYLabel.m"; sourceTree = "<group>"; };
 		9B6FB85D207F3D7B00BC07F3 /* HYWord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYWord.m; sourceTree = "<group>"; };
 		9B6FB85E207F3D7B00BC07F3 /* HYWord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYWord.h; sourceTree = "<group>"; };
+		9B892A2020E1DF7100B0D5E5 /* LTDownloadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTDownloadView.h; sourceTree = "<group>"; };
+		9B892A2120E1DF7100B0D5E5 /* LTDownloadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTDownloadView.m; sourceTree = "<group>"; };
 		9BA08EAD209308440026935E /* FeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackViewController.m; sourceTree = "<group>"; };
 		9BA08EAE209308440026935E /* FeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackViewController.h; sourceTree = "<group>"; };
 		9BA08EB22093120C0026935E /* FeedbackTypeTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeedbackTypeTableViewCell.h; sourceTree = "<group>"; };
@@ -743,6 +746,8 @@
 				9BB3E26D209AA60A00FDBE77 /* PaperJSONKey.m */,
 				9BA1CB6120A6BD730093C37B /* LTAlertView.h */,
 				9BA1CB6220A6BD730093C37B /* LTAlertView.m */,
+				9B892A2020E1DF7100B0D5E5 /* LTDownloadView.h */,
+				9B892A2120E1DF7100B0D5E5 /* LTDownloadView.m */,
 				9B60C8D720B3B2C000373EA2 /* NSString+FileSize.h */,
 				9B60C8D820B3B2C000373EA2 /* NSString+FileSize.m */,
 				9BC4157F20C4ECA0002851E6 /* WZSwitch.h */,
@@ -1194,6 +1199,7 @@
 				9B16B073208D781F00094EE7 /* TestModeViewController.m in Sources */,
 				9B135CD2207CD96C0040A883 /* LTHttpManager.m in Sources */,
 				9B13AD682080885F0000C750 /* PaperModel.m in Sources */,
+				9B892A2220E1DF7100B0D5E5 /* LTDownloadView.m in Sources */,
 				9B16B09C2091CA2600094EE7 /* AnswerHeadView.m in Sources */,
 				9B4BB6FD2079A9FC0029015F /* HomeListenCell.m in Sources */,
 				9B1A5B1820BBAC4500DA21A6 /* CheckWordView.m in Sources */,
@@ -1410,7 +1416,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cooplan.devecooplaniOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "da59fe17-4eab-4726-bb97-b8d342009f2b";
+				PROVISIONING_PROFILE = "51ca8fcd-49b3-4a68-9a5b-290973f742dc";
 				PROVISIONING_PROFILE_SPECIFIER = "酷学听力开发";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1431,7 +1437,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.cooplan.devecooplaniOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "da59fe17-4eab-4726-bb97-b8d342009f2b";
+				PROVISIONING_PROFILE = "51ca8fcd-49b3-4a68-9a5b-290973f742dc";
 				PROVISIONING_PROFILE_SPECIFIER = "酷学听力开发";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
