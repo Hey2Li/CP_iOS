@@ -85,6 +85,10 @@ void SVProgressShowStuteText(NSString* text,BOOL isSucceed){
         [SVProgressHUD showErrorWithStatus:text];
     }
 }
+void SVProgressShowProgress(float progress){
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
+    [SVProgressHUD showProgress:progress];
+}
 void SVProgressHiden(){
     [SVProgressHUD dismiss];
 }
