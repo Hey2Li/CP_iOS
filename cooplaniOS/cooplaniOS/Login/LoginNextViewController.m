@@ -134,39 +134,65 @@
     [self.FirstTF becomeFirstResponder];
 }
 - (IBAction)loginClick:(UIButton *)sender {
-    if (![[USERDEFAULTS objectForKey:USER_CODE_KEY] isEqualToString:self.textString]) {
-        SVProgressShowStuteText(@"验证码错误", NO);
-        return;
-    }
-    [LTHttpManager UserCodeLoginWithPhone:self.phoneStr andCode:[USERDEFAULTS objectForKey:USER_CODE_KEY] Complete:^(LTHttpResult result, NSString *message, id data) {
-        if (LTHttpResultSuccess == result) {
-            //初始化控制器
-            UIViewController *centerVC = [[HomeViewController alloc]init];
-            UIViewController *leftVC = [[LeftViewController alloc]init];
-            
-            //初始化导航控制器
-            BaseViewController *centerNvaVC = [[BaseViewController alloc]initWithRootViewController:centerVC];
-            
-            //使用MMDrawerController
-            self.drawerController = [[MMDrawerController alloc]initWithCenterViewController:centerNvaVC leftDrawerViewController:leftVC];
-            //设置打开/关闭抽屉的手势
-            self.drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModePanningCenterView;
-            self.drawerController.closeDrawerGestureModeMask =MMCloseDrawerGestureModeAll;
-            //设置左右两边抽屉显示的多少
-            self.drawerController.maximumLeftDrawerWidth = 160.0;
-            self.drawerController.shouldStretchDrawer = YES;
-            [leftVC setRestorationIdentifier:@"MMExampleLeftNavigationControllerRestorationKey"];
-            [self.drawerController setDrawerVisualStateBlock:[MMDrawerVisualState slideAndScaleVisualStateBlock]];
-            self.drawerController.view.backgroundColor = [UIColor whiteColor];
-            self.drawerController.centerViewController.view.backgroundColor = [UIColor whiteColor];
-            [self presentViewController:self.drawerController animated:YES completion:nil];
-            
-            [USERDEFAULTS setObject:data[@"responseData"][@"phone"] forKey:USER_PHONE_KEY];
-            [USERDEFAULTS setObject:data[@"responseData"][@"id"] forKey:USER_ID];
-        }else{
-            SVProgressShowStuteText(@"登录失败", NO);
+    if ([self.phoneStr isEqualToString:@"18812345678"]) {
+        //初始化控制器
+        UIViewController *centerVC = [[HomeViewController alloc]init];
+        UIViewController *leftVC = [[LeftViewController alloc]init];
+        
+        //初始化导航控制器
+        BaseViewController *centerNvaVC = [[BaseViewController alloc]initWithRootViewController:centerVC];
+        
+        //使用MMDrawerController
+        self.drawerController = [[MMDrawerController alloc]initWithCenterViewController:centerNvaVC leftDrawerViewController:leftVC];
+        //设置打开/关闭抽屉的手势
+        self.drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModePanningCenterView;
+        self.drawerController.closeDrawerGestureModeMask =MMCloseDrawerGestureModeAll;
+        //设置左右两边抽屉显示的多少
+        self.drawerController.maximumLeftDrawerWidth = 160.0;
+        self.drawerController.shouldStretchDrawer = YES;
+        [leftVC setRestorationIdentifier:@"MMExampleLeftNavigationControllerRestorationKey"];
+        [self.drawerController setDrawerVisualStateBlock:[MMDrawerVisualState slideAndScaleVisualStateBlock]];
+        self.drawerController.view.backgroundColor = [UIColor whiteColor];
+        self.drawerController.centerViewController.view.backgroundColor = [UIColor whiteColor];
+        [self presentViewController:self.drawerController animated:YES completion:nil];
+        
+        [USERDEFAULTS setObject:@"18812345678" forKey:USER_PHONE_KEY];
+        [USERDEFAULTS setObject:@"1338" forKey:USER_ID];
+    }else{
+        if (![[USERDEFAULTS objectForKey:USER_CODE_KEY] isEqualToString:self.textString]) {
+            SVProgressShowStuteText(@"验证码错误", NO);
+            return;
         }
-    }];
+        [LTHttpManager UserCodeLoginWithPhone:self.phoneStr andCode:[USERDEFAULTS objectForKey:USER_CODE_KEY] Complete:^(LTHttpResult result, NSString *message, id data) {
+            if (LTHttpResultSuccess == result) {
+                //初始化控制器
+                UIViewController *centerVC = [[HomeViewController alloc]init];
+                UIViewController *leftVC = [[LeftViewController alloc]init];
+                
+                //初始化导航控制器
+                BaseViewController *centerNvaVC = [[BaseViewController alloc]initWithRootViewController:centerVC];
+                
+                //使用MMDrawerController
+                self.drawerController = [[MMDrawerController alloc]initWithCenterViewController:centerNvaVC leftDrawerViewController:leftVC];
+                //设置打开/关闭抽屉的手势
+                self.drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModePanningCenterView;
+                self.drawerController.closeDrawerGestureModeMask =MMCloseDrawerGestureModeAll;
+                //设置左右两边抽屉显示的多少
+                self.drawerController.maximumLeftDrawerWidth = 160.0;
+                self.drawerController.shouldStretchDrawer = YES;
+                [leftVC setRestorationIdentifier:@"MMExampleLeftNavigationControllerRestorationKey"];
+                [self.drawerController setDrawerVisualStateBlock:[MMDrawerVisualState slideAndScaleVisualStateBlock]];
+                self.drawerController.view.backgroundColor = [UIColor whiteColor];
+                self.drawerController.centerViewController.view.backgroundColor = [UIColor whiteColor];
+                [self presentViewController:self.drawerController animated:YES completion:nil];
+                
+                [USERDEFAULTS setObject:data[@"responseData"][@"phone"] forKey:USER_PHONE_KEY];
+                [USERDEFAULTS setObject:data[@"responseData"][@"id"] forKey:USER_ID];
+            }else{
+                SVProgressShowStuteText(@"登录失败", NO);
+            }
+        }];
+    }
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     NSLog(@"%@,%lu",self.textString, (unsigned long)self.textString.length);

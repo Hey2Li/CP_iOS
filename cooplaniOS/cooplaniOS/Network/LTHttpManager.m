@@ -245,11 +245,11 @@
  *  @param success 请求结果
  *  @param faliure 错误信息
  */
-+(void)downloadURL:(NSString *) downloadURL progress:(void (^)(NSProgress *downloadProgress))progress destination:(void (^)(NSURL *targetPath))destination failure:(void(^)(NSError *error))faliure{
++(NSURLSessionDownloadTask *)downloadURL:(NSString *) downloadURL progress:(void (^)(NSProgress *downloadProgress))progress destination:(void (^)(NSURL *targetPath))destination failure:(void(^)(NSError *error))faliure{
     
     
     //1.创建管理者
-    AFHTTPSessionManager *manage  = [AFHTTPSessionManager manager];
+    LTHTTPSessionManager *manage  = [LTHTTPSessionManager manager];
     
     //2.下载文件
     /*
@@ -284,21 +284,16 @@
         return filePathUrl;
         
     } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nonnull filePath, NSError * _Nonnull error) {
-        
-        
         if (error) {
             faliure(error);
         }
-        
-        
         if(filePath){
-            
             destination(filePath);
         }
     }];
-    
     //3.启动任务
     [downloadTask resume];
+    return downloadTask;
 }
 /**
  获得错题比例

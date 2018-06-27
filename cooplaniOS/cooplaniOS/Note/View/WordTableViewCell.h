@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *allDetailLb;
 @property (nonatomic, strong) collectionWordModel *model;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
+@property (weak, nonatomic) IBOutlet UIButton *arrowsBtn;
 @property (nonatomic, copy) void (^cellIsOpenBlock)(void);
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *amBtnTopHeight;

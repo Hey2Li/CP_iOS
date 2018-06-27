@@ -12,6 +12,7 @@
 #import "TestModeViewController.h"
 #import "PracticeModeViewController.h"
 #import "UIImage+mask.h"
+#import "LTDownloadView.h"
 
 @interface PaperDetailViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
@@ -23,6 +24,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *downloadNameBtn;
 @property (weak, nonatomic) IBOutlet UIImageView *downloadImageView;
 @property (nonatomic, strong) DownloadFileModel *downloadModel;
+@property (nonatomic, strong) LTDownloadView *downloadView;
+@property (nonatomic, copy) NSString *voiceSize;
+@property (nonatomic, strong) NSURLSessionDownloadTask *downloadTask;
 @end
 
 @implementation PaperDetailViewController
@@ -35,6 +39,7 @@
 //}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"试卷详情";
     // Do any additional setup after loading the view from its nib.
     [self.myTableView registerNib:[UINib nibWithNibName:@"PaperDetailTableViewCell" bundle:nil] forCellReuseIdentifier:NSStringFromClass([PaperDetailTableViewCell class])];
     self.myTableView.scrollEnabled = NO;
@@ -45,11 +50,14 @@
         self.downloadImageView.image = [UIImage imageNamed:@"downloaded"];
         [self.downloadNameBtn setTitle:@"已下载" forState:UIControlStateNormal];
         self.downloadPaperBtn.enabled = NO;
+        self.downloadImageView.hidden = YES;
+        self.downloadNameBtn.hidden = YES;
     }else{
         self.downloadImageView.image = [UIImage imageNamed:@"download"];
         self.downloadPaperBtn.enabled = YES;
+        self.downloadImageView.hidden = NO;
+        self.downloadNameBtn.hidden = NO;
         [self.downloadNameBtn setTitle:@"下载资源" forState:UIControlStateNormal];
-
     }
 }
 - (void)loadData{
@@ -70,6 +78,7 @@
             self.downloadModel.name = data[@"responseData"][@"name"];
             self.downloadModel.info = data[@"responseData"][@"info"];
             self.downloadModel.number = data[@"responseData"][@"number"];
+            self.voiceSize = data[@"responseData"][@"size"];
             DownloadFileModel *model = [DownloadFileModel jr_findByPrimaryKey:self.downloadModel.testPaperId];
             if (model.paperVoiceName == nil || [model.paperVoiceName isEqualToString:@""]) {
                 self.downloadModel.paperVoiceName = self.downloadVoiceUrl;
@@ -134,34 +143,28 @@
         cell.titleLb.text = @"真题练习";
     }else if (indexPath.row == 2){
         cell.modeImageView.image = [UIImage imageNamed:@"testmode"];
-        cell.titleLb.text = @"模拟考场";
+        cell.titleLb.text = @"模拟考试";
     }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (1) {
-        if (indexPath.row == 0) {
-            ListenPaperViewController *vc = [[ListenPaperViewController alloc]init];
-            vc.title = self.title;
+    if (indexPath.row == 0) {
+        ListenPaperViewController *vc = [[ListenPaperViewController alloc]init];
+        vc.title = self.nextTitle;
+        vc.testPaperId = [NSString stringWithFormat:@"%@",self.onePaperModel.ID];
+        [self.navigationController pushViewController:vc animated:YES];
+    }else if (indexPath.row == 1){
+        [self selectMode];
+    }else if (indexPath.row == 2){
+        LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"模拟考场需要一鼓作气的完成准备好了吗？" sureBtn:@"准备好了！" cancleBtn:@"取消"];
+        alertView.resultIndex = ^(NSInteger index) {
+            TestModeViewController *vc = [[TestModeViewController alloc]init];
+            vc.title = self.nextTitle;
             vc.testPaperId = [NSString stringWithFormat:@"%@",self.onePaperModel.ID];
+            [self.maskView removeFromSuperview];
             [self.navigationController pushViewController:vc animated:YES];
-        }else if (indexPath.row == 1){
-            [self selectMode];
-        }else if (indexPath.row == 2){
-            LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"模拟考场需要一鼓作气的完成准备好了吗？" sureBtn:@"准备好了！" cancleBtn:@"取消"];
-            alertView.resultIndex = ^(NSInteger index) {
-                TestModeViewController *vc = [[TestModeViewController alloc]init];
-                vc.title = self.title;
-                vc.testPaperId = [NSString stringWithFormat:@"%@",self.onePaperModel.ID];
-                [self.maskView removeFromSuperview];
-                [self.navigationController pushViewController:vc animated:YES];
-            };
-            [alertView show];
-        }else{
-            SVProgressShowStuteText(@"暂未开放", NO);
-        }
-    }else{
-        SVProgressShowStuteText(@"请先下载资源", NO);
+        };
+        [alertView show];
     }
 }
 #pragma mark 是否下载
@@ -288,47 +291,60 @@
     [self.maskView removeFromSuperview];
     PracticeModeViewController *vc = [[PracticeModeViewController alloc]init];
     vc.mode = btn.tag;
-    vc.title = self.title;
+    vc.title = self.nextTitle;
     vc.testPaperId = [NSString stringWithFormat:@"%@",self.onePaperModel.ID];
     [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma mark 下载试卷
 - (IBAction)downloadPaper:(UIButton *)sender {
-    sender.enabled = NO;
-    DownloadFileModel *model = [DownloadFileModel jr_findByPrimaryKey:self.downloadModel.testPaperId];
-    NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *urlString = [model.paperVoiceName stringByRemovingPercentEncoding];
-    NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if ([fileManager fileExistsAtPath:fullPath]) {
-        self.downloadImageView.image = [UIImage imageNamed:@"downloaded"];
-        sender.enabled = NO;
-        SVProgressShowStuteText(@"您已经下载过了", NO);
-        return;
-    }else{
-        [LTHttpManager downloadURL:self.downloadVoiceUrl progress:^(NSProgress *downloadProgress) {
-            [SVProgressHUD showProgress:downloadProgress.fractionCompleted];
-            if (downloadProgress.completedUnitCount/downloadProgress.totalUnitCount == 1.0) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [SVProgressHUD dismiss];
-                    SVProgressShowStuteText(@"下载成功", YES);
-                    self.downloadImageView.image = [UIImage imageNamed:@"downloaded"];
-                    [self.downloadNameBtn setTitle:@"已下载" forState:UIControlStateNormal];
-                    sender.enabled = NO;
-                    [[NSNotificationCenter defaultCenter]postNotificationName:@"reloadCollection" object:nil];
-                });
+    self.downloadView = [[LTDownloadView alloc]initWithTitle:@"是否下载此资源" sureBtn:@"立即下载" fileSize:self.voiceSize];
+    [self.downloadView show];
+    __block PaperDetailViewController *blockSelf = self;
+    self.downloadView.resultIndex = ^(NSInteger index) {
+        if (index == 2000) {
+            sender.enabled = NO;
+            DownloadFileModel *model = [DownloadFileModel jr_findByPrimaryKey:blockSelf.downloadModel.testPaperId];
+            NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+            NSString *urlString = [model.paperVoiceName stringByRemovingPercentEncoding];
+            NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            if ([fileManager fileExistsAtPath:fullPath]) {
+                blockSelf.downloadImageView.image = [UIImage imageNamed:@"downloaded"];
+                sender.enabled = NO;
+                SVProgressShowStuteText(@"您已经下载过了", NO);
+                return;
+            }else{
+               blockSelf.downloadTask = [LTHttpManager downloadURL:blockSelf.downloadVoiceUrl progress:^(NSProgress *downloadProgress) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [blockSelf.downloadView.progressView setProgress:downloadProgress.fractionCompleted];
+                        blockSelf.downloadView.progressLb.text = [NSString stringWithFormat:@"%.1f%%",downloadProgress.fractionCompleted * 100];
+                    });
+                    if (downloadProgress.completedUnitCount/downloadProgress.totalUnitCount == 1.0) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [blockSelf.downloadView dismiss];
+                            SVProgressShowStuteText(@"下载成功", YES);
+                            blockSelf.downloadImageView.image = [UIImage imageNamed:@"downloaded"];
+                            [blockSelf.downloadNameBtn setTitle:@"已下载" forState:UIControlStateNormal];
+                            sender.enabled = NO;
+                            blockSelf.downloadImageView.hidden = YES;
+                            blockSelf.downloadNameBtn.hidden = YES;
+                            [[NSNotificationCenter defaultCenter]postNotificationName:@"reloadCollection" object:nil];
+                        });
+                    }
+                } destination:^(NSURL *targetPath) {
+                    NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                    NSString *fileName = [url lastPathComponent];
+                    blockSelf.downloadModel.paperVoiceName = fileName;
+                    J_Update(blockSelf.downloadModel).Columns(@[@"paperVoiceName"]).updateResult;
+                    NSLog(@"%@",fileName);
+                } failure:^(NSError *error) {
+                    sender.enabled = YES;
+                }];
             }
-        } destination:^(NSURL *targetPath) {
-            NSString *url = [NSString stringWithFormat:@"%@",targetPath];
-            NSString *fileName = [url lastPathComponent];
-            self.downloadModel.paperVoiceName = fileName;
-            J_Update(self.downloadModel).Columns(@[@"paperVoiceName"]).updateResult;
-            NSLog(@"%@",fileName);
-        } failure:^(NSError *error) {
-            SVProgressShowStuteText(@"下载失败请重新下载", NO);
-            sender.enabled = YES;
-        }];
-    }
+        }else{
+            [blockSelf.downloadTask cancel];;
+        }
+    };
 }
 
 - (IBAction)collectionBtn:(UIButton *)sender {

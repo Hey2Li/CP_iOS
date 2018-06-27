@@ -408,27 +408,28 @@
     _RateTag++;
     switch (_RateTag % 6) {
         case 0:
-            [sender setImage:[UIImage imageNamed:@"1.2"] forState:UIControlStateNormal];
-            [self.player setRate:1.2];
+            [sender setImage:[UIImage imageNamed:@"1.0"] forState:UIControlStateNormal];
+            [self.player setRate:1.0];
+            break;
         case 1:
             [sender setImage:[UIImage imageNamed:@"0.5"] forState:UIControlStateNormal];
             [self.player setRate:0.5];
             break;
         case 2:
-            [sender setImage:[UIImage imageNamed:@"1.0"] forState:UIControlStateNormal];
-            [self.player setRate:1.0];
-            break;
-        case 3:
-            [sender setImage:[UIImage imageNamed:@"1.5"] forState:UIControlStateNormal];
-            [self.player setRate:1.5];
-            break;
-        case 4:
             [sender setImage:[UIImage imageNamed:@"0.8"] forState:UIControlStateNormal];
             [self.player setRate:0.8];
             break;
-        case 5:
+        case 3:
             [sender setImage:[UIImage imageNamed:@"1.0"] forState:UIControlStateNormal];
             [self.player setRate:1.0];
+            break;
+        case 4:
+            [sender setImage:[UIImage imageNamed:@"1.2"] forState:UIControlStateNormal];
+            [self.player setRate:1.2];
+            break;
+        case 5:
+            [sender setImage:[UIImage imageNamed:@"1.5"] forState:UIControlStateNormal];
+            [self.player setRate:1.5];
             break;
         default:
             break;

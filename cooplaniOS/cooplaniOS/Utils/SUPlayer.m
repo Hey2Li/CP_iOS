@@ -38,6 +38,7 @@
         if (cacheFilePath) {
             NSURL * url = [NSURL fileURLWithPath:cacheFilePath];
             self.currentItem = [AVPlayerItem playerItemWithURL:url];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"cacheSuccess" object:nil];
             NSLog(@"有缓存，播放缓存文件");
         }else {
             //没有缓存播放网络文件

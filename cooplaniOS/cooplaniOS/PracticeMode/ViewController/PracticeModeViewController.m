@@ -103,6 +103,7 @@
 }
 - (void)loadData{
     DownloadFileModel *model = [DownloadFileModel  jr_findByPrimaryKey:self.testPaperId];
+    self.title = model.name;
     NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
     NSString *urlString = [model.paperJsonName stringByRemovingPercentEncoding];
     NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
@@ -265,6 +266,7 @@
         [weakSelf.player.player pause];
         weakSelf.player.playSongBtn.selected = YES;
         FeedbackViewController *vc = [[FeedbackViewController alloc]init];
+        vc.feedbackType = 2;
         vc.errorType = 1;
         [weakSelf.navigationController pushViewController:vc animated:YES];
     };

@@ -54,7 +54,7 @@
                             </connections>
                         </button>
                         <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="xGe-0v-xxU">
-                            <rect key="frame" x="8" y="-8" width="359" height="31"/>
+                            <rect key="frame" x="18" y="-8" width="339" height="31"/>
                             <color key="minimumTrackTintColor" red="1" green="0.8744642735" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <color key="maximumTrackTintColor" red="0.2901675105" green="0.29021433000000002" blue="0.29015725850000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </slider>
@@ -77,8 +77,8 @@
                         <constraint firstItem="whO-8a-jJW" firstAttribute="centerY" secondItem="zRV-AN-fzV" secondAttribute="centerY" id="0rQ-oS-4JR"/>
                         <constraint firstItem="dGf-Jw-ONC" firstAttribute="leading" secondItem="whO-8a-jJW" secondAttribute="trailing" constant="50" id="2wP-Ql-Map"/>
                         <constraint firstItem="whO-8a-jJW" firstAttribute="centerX" secondItem="zRV-AN-fzV" secondAttribute="centerX" id="3q7-o3-5j4"/>
-                        <constraint firstAttribute="trailing" secondItem="xGe-0v-xxU" secondAttribute="trailing" constant="10" id="6Qi-5y-Y2n"/>
-                        <constraint firstItem="xGe-0v-xxU" firstAttribute="leading" secondItem="zRV-AN-fzV" secondAttribute="leading" constant="10" id="GFl-8s-si6"/>
+                        <constraint firstAttribute="trailing" secondItem="xGe-0v-xxU" secondAttribute="trailing" constant="20" id="6Qi-5y-Y2n"/>
+                        <constraint firstItem="xGe-0v-xxU" firstAttribute="leading" secondItem="zRV-AN-fzV" secondAttribute="leading" constant="20" id="GFl-8s-si6"/>
                         <constraint firstAttribute="height" constant="120" id="HJu-VE-1wb"/>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="120" id="Q67-YV-vkh"/>
                         <constraint firstItem="qB8-1V-RcJ" firstAttribute="centerY" secondItem="zRV-AN-fzV" secondAttribute="centerY" id="Yco-0l-eGt"/>

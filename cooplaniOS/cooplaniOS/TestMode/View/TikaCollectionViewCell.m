@@ -44,7 +44,7 @@
             make.top.equalTo(backView.mas_top);
             make.bottom.equalTo(backView.mas_bottom);
         }];
-        tableView.separatorStyle = NO;
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [tableView.layer setCornerRadius:8];
         tableView.backgroundColor = [UIColor whiteColor];
         tableView.tableFooterView = [UIView new];

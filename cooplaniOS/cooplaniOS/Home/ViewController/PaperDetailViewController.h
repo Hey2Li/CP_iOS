@@ -15,4 +15,5 @@
 @property (weak, nonatomic) IBOutlet UIButton *collectionPaperBtn;
 @property (weak, nonatomic) IBOutlet UIImageView *collectionImageView;
 @property (nonatomic, strong) PaperModel *onePaperModel;
+@property (nonatomic, copy) NSString *nextTitle;
 @end

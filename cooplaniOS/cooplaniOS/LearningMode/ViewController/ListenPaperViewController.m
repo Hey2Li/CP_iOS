@@ -19,7 +19,7 @@
 #import "CheckWordView.h"
 #import "CHMagnifierView.h"
 
-@interface ListenPaperViewController ()<UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, UIGestureRecognizerDelegate>
+@interface ListenPaperViewController ()<UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
 @property (nonatomic, strong) CADisplayLink *timer;//界面刷新定时器
 @property (nonatomic, strong) SUPlayer *player;
 @property (nonatomic, assign) NSInteger songIndex;
@@ -107,7 +107,7 @@
 }
 - (void)cacheSuccess{
     SVProgressHiden();
-    SVProgressShowStuteText(@"缓存完成", YES);
+//    SVProgressShowStuteText(@"缓存完成", YES);
 
     self.timeLb.hidden = YES;
 }
@@ -144,18 +144,6 @@
 }
 -(void)viewDidAppear:(BOOL)animated{
     [self.player pause];
-}
-
--(void)viewWillDisappear:(BOOL)animated{
-    NSArray *gestureArray = self.navigationController.view.gestureRecognizers;//获取所有的手势
-    
-    //当是侧滑手势的时候设置panGestureRecognizer需要UIScreenEdgePanGestureRecognizer失效才生效即可
-    for (UIGestureRecognizer *gesture in gestureArray) {
-        if ([gesture isKindOfClass:[UISlider class]]) {
-        }else{
-            self.navigationController.interactivePopGestureRecognizer.enabled = YES;
-        }
-    }
 }
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
@@ -318,11 +306,9 @@
     if ([gestureRecognizer isKindOfClass:[UISwipeGestureRecognizer class]] && [touch.view isKindOfClass:[UICollectionView class]]) {
         return YES;
     }
-    if ([gestureRecognizer.view isKindOfClass:[UISlider class]]) {
-        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-    }else{
-        self.navigationController.interactivePopGestureRecognizer.enabled = YES;
-    }
+//    if ([touch.view isKindOfClass:[UISlider class]]) {
+//        return NO;
+//    }
     return NO;
 }
 #pragma mark 解析歌词
@@ -418,6 +404,7 @@
 #pragma mark 内容纠错
 - (IBAction)ContentError:(UIButton *)sender {
     FeedbackViewController *vc = [[FeedbackViewController alloc]init];
+    vc.feedbackType = 2;
     vc.errorType = 1;
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -451,27 +438,28 @@
     _RateTag++;
     switch (_RateTag % 6) {
         case 0:
-            [sender setImage:[UIImage imageNamed:@"1.2"] forState:UIControlStateNormal];
-            [self.player setRate:1.2];
+            [sender setImage:[UIImage imageNamed:@"1.0"] forState:UIControlStateNormal];
+            [self.player setRate:1.0];
+            break;
         case 1:
             [sender setImage:[UIImage imageNamed:@"0.5"] forState:UIControlStateNormal];
             [self.player setRate:0.5];
             break;
         case 2:
-            [sender setImage:[UIImage imageNamed:@"1.0"] forState:UIControlStateNormal];
-            [self.player setRate:1.0];
-            break;
-        case 3:
-            [sender setImage:[UIImage imageNamed:@"1.5"] forState:UIControlStateNormal];
-            [self.player setRate:1.5];
-            break;
-        case 4:
             [sender setImage:[UIImage imageNamed:@"0.8"] forState:UIControlStateNormal];
             [self.player setRate:0.8];
             break;
-        case 5:
+        case 3:
             [sender setImage:[UIImage imageNamed:@"1.0"] forState:UIControlStateNormal];
             [self.player setRate:1.0];
+            break;
+        case 4:
+            [sender setImage:[UIImage imageNamed:@"1.2"] forState:UIControlStateNormal];
+            [self.player setRate:1.2];
+            break;
+        case 5:
+            [sender setImage:[UIImage imageNamed:@"1.5"] forState:UIControlStateNormal];
+            [self.player setRate:1.5];
             break;
         default:
             break;

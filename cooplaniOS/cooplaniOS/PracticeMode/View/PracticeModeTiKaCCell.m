@@ -19,7 +19,7 @@
 
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = UIColorFromRGB(0xf7f7f7);
         UIView *backView = [[UIView alloc]init];
         backView.backgroundColor = [UIColor whiteColor];
         [self addSubview:backView];
@@ -38,8 +38,6 @@
         UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 0, 0) style:UITableViewStylePlain];
         tableView.delegate = self;
         tableView.dataSource = self;
-        tableView.scrollEnabled = NO;
-        tableView.separatorStyle = NO;
         [backView addSubview:tableView];
         [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(backView.mas_left);
@@ -47,6 +45,8 @@
             make.top.equalTo(self.mas_top).offset(30);
             make.bottom.equalTo(backView.mas_bottom);
         }];
+        tableView.scrollEnabled = NO;
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [tableView.layer setCornerRadius:8];
         tableView.backgroundColor = [UIColor whiteColor];
         tableView.tableFooterView = [UIView new];
@@ -70,6 +70,7 @@
         self.questionLb = questionLb;
         
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        
         btn.backgroundColor = [UIColor whiteColor];
         [self addSubview:btn];
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -78,7 +79,8 @@
             make.top.equalTo(tableView.mas_top);
             make.height.equalTo(@30);
         }];
-        [btn setImage:[UIImage imageNamed:@"Group 3"] forState:UIControlStateNormal];
+        [btn setImage:[UIImage imageNamed:@"向下"] forState:UIControlStateNormal];
+        [btn setImage:[UIImage imageNamed:@"向上"] forState:UIControlStateSelected];
         [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
@@ -91,6 +93,7 @@
 - (void)btnClick:(UIButton *)btn{
     if (self.UpAndDownBtnClick) {
         self.UpAndDownBtnClick(btn);
+        btn.selected = !btn.selected;
     }
 }
 #pragma mark UITableViewDataSource&Delegate
@@ -98,17 +101,13 @@
     return _questionsModel.Options.count + 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0) {
-        return [Tool layoutForAlliPhoneHeight:40];
-    }else{
-        return [Tool layoutForAlliPhoneHeight:50];
-    }
+    return 50;
+
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NoHighlightedTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([NoHighlightedTableViewCell class]) forIndexPath:indexPath];
     cell.textLabel.textColor = UIColorFromRGB(0x666666);
     cell.textLabel.font = [UIFont systemFontOfSize:14];
-    cell.selectionStyle = YES;
     UIView *view = [[UIView alloc]init];
     view.backgroundColor = DRGBCOLOR;
     cell.selectedBackgroundView = view;
@@ -130,6 +129,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [cell setSelected:model.isSelecteOption animated:YES];
         });
+        cell.selectionStyle = YES;
         cell.textLabel.numberOfLines = 2;
         cell.textLabel.text = [NSString stringWithFormat:@"%@. %@",model.Alphabet,model.Text];
     }

@@ -123,6 +123,55 @@
         collectionWordModel *model = self.wordArray[indexPath.row];
         model.isOpen = !model.isOpen;
         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:nil];
+        if (model.isOpen) {
+            WordTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+            cell.arrowsBtn.transform = CGAffineTransformMakeRotation(M_PI/2);
+        }else{
+            WordTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+            cell.arrowsBtn.transform = CGAffineTransformMakeRotation(M_PI/2*4);
+        }
+    }
+}
+//允许 Menu菜单
+- (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (tableView == self.wordTableView) {
+        return NO;
+    }
+    return YES;
+}
+- (BOOL)tableView:(UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender{
+    if (tableView == self.wordTableView) {
+        return NO;
+    }
+    // 设置只能复制
+    if (action == @selector(cut:)){
+        return NO;
+    }
+    else if(action == @selector(copy:)){
+        return YES;
+    }
+    else if(action == @selector(paste:)){
+        return NO;
+    }
+    else if(action == @selector(select:)){
+        return NO;
+    }
+    else if(action == @selector(selectAll:)){
+        return NO;
+    }
+    else{
+        return [super canPerformAction:action withSender:sender];
+    }
+}
+- (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
+{
+    if (tableView == self.wordTableView) {
+        return;
+    }
+    SentenceTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if (action == @selector(copy:)) {
+        [UIPasteboard generalPasteboard].string = [NSString stringWithFormat:@"%@\n%@",cell.englishSentenceLb.text, cell.chineseSentenceLb.text];
     }
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{

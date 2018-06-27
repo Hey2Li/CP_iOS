@@ -101,6 +101,10 @@
 - (void)continueBtnClick:(UIButton *)btn{
     PracticeModeViewController *vc = [[PracticeModeViewController alloc]init];
     vc.testPaperId = self.testPaperId;
+    if (self.mode < 3) {
+        self.mode++;
+    }
+    vc.mode = self.mode;
     [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma mark TableViewDataSource&Delegate

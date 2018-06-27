@@ -47,6 +47,9 @@
     NSString * cacheFilePath = [NSString stringWithFormat:@"%@/%@", cacheFolderPath, name];
     BOOL success = [[NSFileManager defaultManager] copyItemAtPath:[NSString tempFilePath] toPath:cacheFilePath error:nil];
     NSLog(@"cache file : %@", success ? @"success" : @"fail");
+    if (success) {
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"cacheSuccess" object:nil];
+    }
 }
 
 + (NSString *)cacheFileExistsWithURL:(NSURL *)url {
@@ -61,5 +64,7 @@
     NSFileManager * manager = [NSFileManager defaultManager];
     return [manager removeItemAtPath:[NSString cacheFolderPath] error:nil];
 }
-
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
 @end

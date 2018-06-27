@@ -35,7 +35,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wqi-Rp-EDu">
-                                <rect key="frame" x="10" y="5" width="355" height="100"/>
+                                <rect key="frame" x="16" y="5" width="349" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="myy-Rt-QNc"/>
                                 </constraints>
@@ -100,7 +100,7 @@
                             <constraint firstItem="pdj-eY-9h2" firstAttribute="centerY" secondItem="AKH-C8-p7P" secondAttribute="centerY" id="8c8-qa-yh6"/>
                             <constraint firstItem="4pw-bd-8uq" firstAttribute="centerY" secondItem="BHH-As-Re9" secondAttribute="centerY" id="FYg-3f-zfZ"/>
                             <constraint firstItem="vTi-NV-Kl9" firstAttribute="leading" secondItem="BHH-As-Re9" secondAttribute="leading" id="JT1-du-kF0"/>
-                            <constraint firstItem="wqi-Rp-EDu" firstAttribute="leading" secondItem="flm-NP-zbn" secondAttribute="leading" constant="10" id="NKJ-kc-CVB"/>
+                            <constraint firstItem="wqi-Rp-EDu" firstAttribute="leading" secondItem="flm-NP-zbn" secondAttribute="leading" constant="16" id="NKJ-kc-CVB"/>
                             <constraint firstItem="vTi-NV-Kl9" firstAttribute="top" secondItem="BHH-As-Re9" secondAttribute="top" id="OPK-eg-CTu"/>
                             <constraint firstItem="pdj-eY-9h2" firstAttribute="centerY" secondItem="4pw-bd-8uq" secondAttribute="centerY" id="TxO-13-8ce"/>
                             <constraint firstItem="AKH-C8-p7P" firstAttribute="leading" secondItem="4pw-bd-8uq" secondAttribute="trailing" id="UCB-PA-K3c"/>

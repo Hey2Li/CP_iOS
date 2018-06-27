@@ -17,7 +17,6 @@
 @property (nonatomic, strong) UIButton *submitBtn;
 @property (nonatomic, strong) NSArray *imageDataArray;
 @property (nonatomic, copy) NSString *userContact;
-@property (nonatomic, assign) NSInteger feedbackType;
 @property (nonatomic, copy) NSString *feedbackContent;
 @end
 

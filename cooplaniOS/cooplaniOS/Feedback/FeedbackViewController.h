@@ -10,4 +10,5 @@
 
 @interface FeedbackViewController : UIViewController
 @property (nonatomic, assign) NSInteger errorType;
+@property (nonatomic, assign) NSInteger feedbackType;
 @end

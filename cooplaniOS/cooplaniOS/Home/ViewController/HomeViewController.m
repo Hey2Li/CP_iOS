@@ -275,7 +275,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     HomeListenCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     PaperDetailViewController *vc = [PaperDetailViewController new];
-    vc.title = cell.TitleLabel.text;
+    vc.nextTitle = cell.TitleLabel.text;
     vc.onePaperModel = self.paperMutableArray[indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];
 }

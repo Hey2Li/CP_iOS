@@ -146,7 +146,7 @@
             [muDict addEntriesFromDictionary:@{@"collection":data[@"responseData"][@"type"]}];
             PaperModel *onePaperModel = [PaperModel mj_objectWithKeyValues:muDict];
             vc.onePaperModel = onePaperModel;
-            vc.title = onePaperModel.name;
+            vc.nextTitle = onePaperModel.name;
             [self.navigationController pushViewController:vc animated:YES];
         }else{
             NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithData:[USERDEFAULTS objectForKey:@"homeData"]];
@@ -154,7 +154,7 @@
                 PaperModel *pmodel = (PaperModel *)obj;
                 if ([[NSString stringWithFormat:@"%@",pmodel.ID] isEqualToString:model.testPaperId]) {
                     vc.onePaperModel = pmodel;
-                     vc.title = pmodel.name;
+                     vc.nextTitle = pmodel.name;
                     [self.navigationController pushViewController:vc animated:YES];
                 }
             }];
