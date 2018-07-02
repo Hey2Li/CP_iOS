@@ -153,6 +153,9 @@
         vc.title = self.nextTitle;
         vc.testPaperId = [NSString stringWithFormat:@"%@",self.onePaperModel.ID];
         [self.navigationController pushViewController:vc animated:YES];
+        [LTHttpManager  searchStudyCountWithUserId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
+            
+        }];
     }else if (indexPath.row == 1){
         [self selectMode];
     }else if (indexPath.row == 2){
@@ -163,6 +166,14 @@
             vc.testPaperId = [NSString stringWithFormat:@"%@",self.onePaperModel.ID];
             [self.maskView removeFromSuperview];
             [self.navigationController pushViewController:vc animated:YES];
+            [LTHttpManager searchClicktimeWithUserId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
+                if (result == LTHttpResultSuccess) {
+                    
+                }
+            }];
+            [LTHttpManager searchSimulationCountWithUserId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
+                
+            }];
         };
         [alertView show];
     }
@@ -294,10 +305,21 @@
     vc.title = self.nextTitle;
     vc.testPaperId = [NSString stringWithFormat:@"%@",self.onePaperModel.ID];
     [self.navigationController pushViewController:vc animated:YES];
+    [LTHttpManager searchClicktimeWithUserId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
+        if (result == LTHttpResultSuccess) {
+            
+        }
+    }];
+    [LTHttpManager searchExerciseCountWithUserId:IS_USER_ID Compelte:^(LTHttpResult result, NSString *message, id data) {
+        
+    }];
 }
 #pragma mark 下载试卷
 - (IBAction)downloadPaper:(UIButton *)sender {
     self.downloadView = [[LTDownloadView alloc]initWithTitle:@"是否下载此资源" sureBtn:@"立即下载" fileSize:self.voiceSize];
+    [LTHttpManager searchDownloadCountWithUserId:IS_USER_ID TestPaperId:@([self.downloadModel.testPaperId integerValue])  Complete:^(LTHttpResult result, NSString *message, id data) {
+        
+    }];
     [self.downloadView show];
     __block PaperDetailViewController *blockSelf = self;
     self.downloadView.resultIndex = ^(NSInteger index) {
@@ -379,6 +401,9 @@
                     self.collectionImageView.image = [UIImage imageNamed:@"collection_fill"];
                     self.onePaperModel.collection = @"1";
                     SVProgressShowStuteText(@"收藏成功", YES);
+                    [LTHttpManager searchCollectionCountWithUserId:IS_USER_ID TestPaperId:self.onePaperModel.ID Complete:^(LTHttpResult result, NSString *message, id data) {
+                        
+                    }];
                     [[NSNotificationCenter defaultCenter]postNotificationName:@"homereloaddata" object:nil];
                 }else{
                     SVProgressShowStuteText(message, NO);

@@ -148,6 +148,13 @@
             [USERDEFAULTS setObject:@"0" forKey:@"isHaveNet"];
         }
     }];
+    [LTHttpManager searchLoginCountWithUserId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
+        if (LTHttpResultSuccess == result) {
+            NSLog(@"用户打开次数");
+        }else{
+            NSLog(@"%@",data[@"msg"]);
+        }
+    }];
 }
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -160,6 +167,8 @@
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     NSLog(@"进入后台");
     [[NSNotificationCenter defaultCenter]postNotificationName:@"listenBackground" object:nil];
+    [[UIApplication sharedApplication]beginBackgroundTaskWithExpirationHandler:^(){
+    }];
 }
 
 
@@ -177,6 +186,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    NSLog(@"APP被关闭");
 }
 
 

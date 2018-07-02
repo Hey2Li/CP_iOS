@@ -40,6 +40,17 @@
                         range:NSMakeRange(0, holderText.length)];
     self.phoneTF.attributedPlaceholder = placeholder;
     _StringCount = @"";
+    if ([[UMSocialManager defaultManager]isInstall:UMSocialPlatformType_WechatSession] && !UI_IS_IPHONE4) {
+        self.wxButton.hidden = NO;
+        self.leftLine.hidden = NO;
+        self.rightLine.hidden = NO;
+        self.thirtyLogin.hidden = NO;
+    }else{
+        self.wxButton.hidden = YES;
+        self.leftLine.hidden = YES;
+        self.rightLine.hidden = YES;
+        self.thirtyLogin.hidden = YES;
+    }
 }
 
 -(void)textFieldDidChange:(UITextField *)textField{

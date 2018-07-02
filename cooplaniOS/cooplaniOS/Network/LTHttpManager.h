@@ -155,7 +155,6 @@
  *  下载文件
  *
  *  @param downloadURL  下载链接
- *  @param success 请求结果
  *  @param faliure 错误信息
  */
 +(NSURLSessionDownloadTask *)downloadURL:(NSString *) downloadURL progress:(void (^)(NSProgress *downloadProgress))progress destination:(void (^)(NSURL *targetPath))destination failure:(void(^)(NSError *error))faliure;
@@ -220,4 +219,14 @@
  @param complete block
  */
 + (void)removeWordsWithUseId:(NSNumber *)userId Word:(NSString *)word Complete:(completeBlock)complete;
+
+
+/**
+ 用户打开APP次数
+
+ @param userId 用户ID
+ @param complete block
+ */
++(void)searchLoginCountWithUserId:(NSString *)userId Complete:(completeBlock)complete;
+
 @end

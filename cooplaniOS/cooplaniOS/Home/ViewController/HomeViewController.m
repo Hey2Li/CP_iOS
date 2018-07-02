@@ -122,7 +122,12 @@
     
     UIView *tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:255])];
     //底部背景
-    UIView *backView = [[UIView alloc]initWithFrame:CGRectMake((-750 + SCREEN_WIDTH)/2 , - 444 - 64, 750, 750)];
+    UIView *backView;
+    if (UI_IS_IPHONE4) {
+        backView = [[UIView alloc]initWithFrame:CGRectMake((-750 + SCREEN_WIDTH)/2 , - 444 - 64 - 100 , 750, 750)];
+    }else{
+        backView = [[UIView alloc]initWithFrame:CGRectMake((-750 + SCREEN_WIDTH)/2 , - 444 - 64, 750, 750)];
+    }
     backView.backgroundColor = DRGBCOLOR;
     backView.layer.cornerRadius = 375;
     backView.layer.masksToBounds = YES;
@@ -278,6 +283,9 @@
     vc.nextTitle = cell.TitleLabel.text;
     vc.onePaperModel = self.paperMutableArray[indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];
+    [LTHttpManager  searchListeningCountWithUserId:IS_USER_ID TestPaperId:vc.onePaperModel.ID Complete:^(LTHttpResult result, NSString *message, id data) {
+        
+    }];
 }
 - (void) viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];

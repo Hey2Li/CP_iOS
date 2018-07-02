@@ -476,6 +476,9 @@
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [LTHttpManager searchOvertimeWithUserId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
+        
+    }];
 }
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];

@@ -9,5 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface LoginViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UIButton *wxButton;
+@property (weak, nonatomic) IBOutlet UILabel *rightLine;
+@property (weak, nonatomic) IBOutlet UILabel *leftLine;
+@property (weak, nonatomic) IBOutlet UILabel *thirtyLogin;
 
 @end

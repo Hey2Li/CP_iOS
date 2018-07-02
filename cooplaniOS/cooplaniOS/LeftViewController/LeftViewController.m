@@ -35,7 +35,11 @@
 - (void)initWithView{
     self.view.backgroundColor = [UIColor whiteColor];
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 160.0, SCREEN_HEIGHT) style:UITableViewStylePlain];
-    tableView.scrollEnabled = NO;
+    if (UI_IS_IPHONE4) {
+        tableView.scrollEnabled = YES;
+    }else{
+        tableView.scrollEnabled = NO;
+    }
     tableView.delegate = self;
     tableView.dataSource = self;
     tableView.separatorStyle = NO;
