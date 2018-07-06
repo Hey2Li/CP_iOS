@@ -19,24 +19,25 @@
 
 - (void)setModel:(QuestionsModel *)model{
     _model = model;
-    [self layoutIfNeeded];
+    [self setNeedsUpdateConstraints];
+    [self updateConstraints];
     if (model.isSelected) {
+        self.bottomView.hidden = NO;
+        self.youAnswerBtnTopHeight.constant = 10;
+        self.youAnswertBtnHeight.constant = 40;
+        self.answerDetailBottomHeight.constant = 5;
+        self.answerDetailTopHeight.constant = 10;
         [UIView animateWithDuration:0.2 animations:^{
             [self layoutIfNeeded];
-            self.bottomView.hidden = NO;
-            self.youAnswerBtnTopHeight.constant = 10;
-            self.youAnswertBtnHeight.constant = 40;
-            self.answerDetailBottomHeight.constant = 5;
-            self.answerDetailTopHeight.constant = 10;
         }];
     }else{
+        self.bottomView.hidden = YES;
+        self.youAnswerBtnTopHeight.constant = 0;
+        self.youAnswertBtnHeight.constant = 0;
+        self.answerDetailBottomHeight.constant = 0;
+        self.answerDetailTopHeight.constant = 0;
         [UIView animateWithDuration:0.2 animations:^{
             [self layoutIfNeeded];
-            self.bottomView.hidden = YES;
-            self.youAnswerBtnTopHeight.constant = 0;
-            self.youAnswertBtnHeight.constant = 0;
-            self.answerDetailBottomHeight.constant = 0;
-            self.answerDetailTopHeight.constant = 0;
         }];
     }
     if (model.isCorrect) {

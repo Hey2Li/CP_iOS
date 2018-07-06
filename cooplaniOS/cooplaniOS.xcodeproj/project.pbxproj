@@ -41,6 +41,7 @@
 		9B1EDCE1208891BA0033183F /* ListenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B1EDCDF208891BA0033183F /* ListenTableViewCell.xib */; };
 		9B1EDCE42089C06D0033183F /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1EDCE32089C06C0033183F /* UIView+Toast.m */; };
 		9B1EDCE72089CEAE0033183F /* NoContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1EDCE62089CEAD0033183F /* NoContentViewController.m */; };
+		9B26D86320E9BD3300B4FC11 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B26D86220E9BD3300B4FC11 /* VideoViewController.m */; };
 		9B32167620DA29590038FEAE /* playSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B32167520DA29590038FEAE /* playSlider.m */; };
 		9B32167C20DA3FFE0038FEAE /* NoHighlightedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B32167A20DA3FFE0038FEAE /* NoHighlightedTableViewCell.m */; };
 		9B32CB0B209BF00300FCEED3 /* SentenceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B32CB09209BF00300FCEED3 /* SentenceTableViewCell.m */; };
@@ -75,6 +76,9 @@
 		9B60C8D920B3B2C000373EA2 /* NSString+FileSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B60C8D820B3B2C000373EA2 /* NSString+FileSize.m */; };
 		9B6FB85C207F3D2100BC07F3 /* UILabel+HYLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6FB85B207F3D2100BC07F3 /* UILabel+HYLabel.m */; };
 		9B6FB85F207F3D7B00BC07F3 /* HYWord.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6FB85D207F3D7B00BC07F3 /* HYWord.m */; };
+		9B81D4DD20EB47ED00BFFC39 /* VideoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B81D4DB20EB47ED00BFFC39 /* VideoTableViewCell.m */; };
+		9B81D4DE20EB47ED00BFFC39 /* VideoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B81D4DC20EB47ED00BFFC39 /* VideoTableViewCell.xib */; };
+		9B81D4E220EB740B00BFFC39 /* WordWebViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B81D4E020EB740B00BFFC39 /* WordWebViewTableViewCell.m */; };
 		9B892A2220E1DF7100B0D5E5 /* LTDownloadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B892A2120E1DF7100B0D5E5 /* LTDownloadView.m */; };
 		9BA08EB0209308440026935E /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA08EAD209308440026935E /* FeedbackViewController.m */; };
 		9BA08EB52093120C0026935E /* FeedbackTypeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA08EB32093120C0026935E /* FeedbackTypeTableViewCell.m */; };
@@ -195,6 +199,8 @@
 		9B1EDCE32089C06C0033183F /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
 		9B1EDCE52089CEAD0033183F /* NoContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoContentViewController.h; sourceTree = "<group>"; };
 		9B1EDCE62089CEAD0033183F /* NoContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoContentViewController.m; sourceTree = "<group>"; };
+		9B26D86120E9BD3300B4FC11 /* VideoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
+		9B26D86220E9BD3300B4FC11 /* VideoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoViewController.m; sourceTree = "<group>"; };
 		9B32167420DA29590038FEAE /* playSlider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = playSlider.h; sourceTree = "<group>"; };
 		9B32167520DA29590038FEAE /* playSlider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = playSlider.m; sourceTree = "<group>"; };
 		9B32167920DA3FFE0038FEAE /* NoHighlightedTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoHighlightedTableViewCell.h; sourceTree = "<group>"; };
@@ -255,6 +261,11 @@
 		9B6FB85B207F3D2100BC07F3 /* UILabel+HYLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+HYLabel.m"; sourceTree = "<group>"; };
 		9B6FB85D207F3D7B00BC07F3 /* HYWord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYWord.m; sourceTree = "<group>"; };
 		9B6FB85E207F3D7B00BC07F3 /* HYWord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYWord.h; sourceTree = "<group>"; };
+		9B81D4DA20EB47ED00BFFC39 /* VideoTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoTableViewCell.h; sourceTree = "<group>"; };
+		9B81D4DB20EB47ED00BFFC39 /* VideoTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoTableViewCell.m; sourceTree = "<group>"; };
+		9B81D4DC20EB47ED00BFFC39 /* VideoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoTableViewCell.xib; sourceTree = "<group>"; };
+		9B81D4DF20EB740B00BFFC39 /* WordWebViewTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WordWebViewTableViewCell.h; sourceTree = "<group>"; };
+		9B81D4E020EB740B00BFFC39 /* WordWebViewTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WordWebViewTableViewCell.m; sourceTree = "<group>"; };
 		9B892A2020E1DF7100B0D5E5 /* LTDownloadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTDownloadView.h; sourceTree = "<group>"; };
 		9B892A2120E1DF7100B0D5E5 /* LTDownloadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTDownloadView.m; sourceTree = "<group>"; };
 		9BA08EAD209308440026935E /* FeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackViewController.m; sourceTree = "<group>"; };
@@ -567,6 +578,20 @@
 			path = Download;
 			sourceTree = "<group>";
 		};
+		9B26D86020E9BD0B00B4FC11 /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				9B26D86120E9BD3300B4FC11 /* VideoViewController.h */,
+				9B26D86220E9BD3300B4FC11 /* VideoViewController.m */,
+				9B81D4DA20EB47ED00BFFC39 /* VideoTableViewCell.h */,
+				9B81D4DB20EB47ED00BFFC39 /* VideoTableViewCell.m */,
+				9B81D4DC20EB47ED00BFFC39 /* VideoTableViewCell.xib */,
+				9B81D4DF20EB740B00BFFC39 /* WordWebViewTableViewCell.h */,
+				9B81D4E020EB740B00BFFC39 /* WordWebViewTableViewCell.m */,
+			);
+			path = Video;
+			sourceTree = "<group>";
+		};
 		9B3D02D12084885C005C923B /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -781,6 +806,7 @@
 		9BEA0A2F2071D9190026AF2C /* cooplaniOS */ = {
 			isa = PBXGroup;
 			children = (
+				9B26D86020E9BD0B00B4FC11 /* Video */,
 				9BA08EAC2093083A0026935E /* Feedback */,
 				9B3D02D12084885C005C923B /* Login */,
 				9B135CCC207CD8850040A883 /* Network */,
@@ -861,7 +887,6 @@
 				9BEA0A292071D9190026AF2C /* Sources */,
 				9BEA0A2A2071D9190026AF2C /* Frameworks */,
 				9BEA0A2B2071D9190026AF2C /* Resources */,
-				6FCDBC0FD6E0F70FA46DB3BD /* [CP] Embed Pods Frameworks */,
 				398B48542D9DCAF5B3F7550F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -881,8 +906,6 @@
 				9BEA0A412071D9190026AF2C /* Sources */,
 				9BEA0A422071D9190026AF2C /* Frameworks */,
 				9BEA0A432071D9190026AF2C /* Resources */,
-				A121DF610591F77F69F070A2 /* [CP] Embed Pods Frameworks */,
-				BEC5DF2282F66FAF6F0F0247 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -902,8 +925,6 @@
 				9BEA0A4C2071D9190026AF2C /* Sources */,
 				9BEA0A4D2071D9190026AF2C /* Frameworks */,
 				9BEA0A4E2071D9190026AF2C /* Resources */,
-				1AB1BE3471650EDDC74B1063 /* [CP] Embed Pods Frameworks */,
-				95417AD902BAF0410071F3EF /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -983,6 +1004,7 @@
 				9B3D02DB208488A3005C923B /* LoginNextViewController.xib in Resources */,
 				9B1EDCE1208891BA0033183F /* ListenTableViewCell.xib in Resources */,
 				9B3D02CB20845338005C923B /* PaperDetailViewController.xib in Resources */,
+				9B81D4DE20EB47ED00BFFC39 /* VideoTableViewCell.xib in Resources */,
 				9B16B080208F140A00094EE7 /* AnswerTableViewCell.xib in Resources */,
 				9BEA0A382071D9190026AF2C /* Main.storyboard in Resources */,
 				9BA08EC02093174A0026935E /* FeedbackPhoneTableViewCell.xib in Resources */,
@@ -1009,21 +1031,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1AB1BE3471650EDDC74B1063 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-cooplaniOSUITests/Pods-cooplaniOSUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		25AF123F3586DB2777F526E0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1071,6 +1078,7 @@
 				"${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle",
 				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
 				"${PODS_ROOT}/TZImagePickerController/TZImagePickerController/TZImagePickerController/TZImagePickerController.bundle",
+				"${PODS_ROOT}/WMPlayer/WMPlayer/WMPlayer.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -1078,25 +1086,11 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MJRefresh.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SVProgressHUD.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TZImagePickerController.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/WMPlayer.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-cooplaniOS/Pods-cooplaniOS-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6FCDBC0FD6E0F70FA46DB3BD /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-cooplaniOS/Pods-cooplaniOS-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8816A032BA4A0DCA035BF079 /* [CP] Check Pods Manifest.lock */ = {
@@ -1115,51 +1109,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		95417AD902BAF0410071F3EF /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-cooplaniOSUITests/Pods-cooplaniOSUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A121DF610591F77F69F070A2 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-cooplaniOSTests/Pods-cooplaniOSTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BEC5DF2282F66FAF6F0F0247 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-cooplaniOSTests/Pods-cooplaniOSTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1186,10 +1135,12 @@
 				9BA1CB5D20A5677D0093C37B /* collectionSentenceModel.m in Sources */,
 				9B32CB0B209BF00300FCEED3 /* SentenceTableViewCell.m in Sources */,
 				9B3D02C62084468E005C923B /* SUPlayer.m in Sources */,
+				9B81D4E220EB740B00BFFC39 /* WordWebViewTableViewCell.m in Sources */,
 				9B60C8D620B2B06B00373EA2 /* DownloadFileModel.m in Sources */,
 				9B135CCF207CD8AA0040A883 /* LTHTTPSessionManager.m in Sources */,
 				9B16B0932090623E00094EE7 /* QuestionTableViewCell.m in Sources */,
 				9B4ED8D820C3BC3C007521BD /* WordTableViewCell.m in Sources */,
+				9B81D4DD20EB47ED00BFFC39 /* VideoTableViewCell.m in Sources */,
 				9BC4158A20C6270E002851E6 /* DictionaryTableViewCell.m in Sources */,
 				9BEA0A352071D9190026AF2C /* ViewController.m in Sources */,
 				9B4BB736207B6EDC0029015F /* NSURL+SULoader.m in Sources */,
@@ -1234,6 +1185,7 @@
 				9B6FB85F207F3D7B00BC07F3 /* HYWord.m in Sources */,
 				9B1D31BF20734891007674CF /* HomeViewController.m in Sources */,
 				9B3D02D520848878005C923B /* LoginViewController.m in Sources */,
+				9B26D86320E9BD3300B4FC11 /* VideoViewController.m in Sources */,
 				9BA1CB6920A92A790093C37B /* MyCollectionModel.m in Sources */,
 				9B3CF25D20CE779800A52E14 /* ProgressImgView.m in Sources */,
 				9BA08EB0209308440026935E /* FeedbackViewController.m in Sources */,

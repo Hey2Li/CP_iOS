@@ -110,7 +110,7 @@
  @param age 年龄
  @param complete block
  */
-+ (void)thirdPartyLoginWithOpenId:(NSString *)openId IdentityType:(NSString *)identityType Token:(NSString *)token TokenTime:(NSString *)tokenTime HeadPortrait:(NSString *)headPortrait NickName:(NSString *)nickname Sex:(NSString *)sex age:(NSString *)age Complete:(completeBlock)complete{
++ (void)thirdPartyLoginWithOpenId:(NSString *)openId IdentityType:(NSString *)identityType Token:(NSString *)token TokenTime:(NSString *)tokenTime HeadPortrait:(NSString *)headPortrait NickName:(NSString *)nickname Sex:(NSString *)sex age:(NSString *)age UnionId:(NSString *)unionid Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
     NSDictionary *paramters = @{@"version":[Tool getAppVersion],
                                 @"openId":openId,
@@ -121,6 +121,7 @@
                                 @"nickname":nickname,
                                 @"sex":sex,
                                 @"age":age,
+                                @"unionid":unionid,
                                 };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/user/thirdPartyLogin",BaseURL]parameters:paramters complete:complete];
 }
@@ -402,14 +403,18 @@
  用户打开APP次数
  
  @param userId 用户ID
+ @param logintime 登录时间
+ @param exittime 登出时间
  @param complete block
  */
-+(void)searchLoginCountWithUserId:(NSString *)userId Complete:(completeBlock)complete{
++(void)searchLoginCountWithUserId:(NSString *)userId LoginTime:(NSString *)logintime ExitTime:(NSString *)exittime Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
     NSDictionary *paramters =  @{@"version":[Tool getAppVersion],
                                  @"userId":userId ? userId : @"",
+                                 @"logintime":logintime ? logintime : @"",
+                                 @"exittime":exittime ? exittime : @"",
                                  };
-    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/user/searchClicktime",BaseURL]parameters:paramters complete:complete];
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/user/searchLoginCount",BaseURL]parameters:paramters complete:complete];
 }
 
 /**
@@ -532,4 +537,21 @@
                                  };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/user/searchDownloadCount",BaseURL]parameters:paramters complete:complete];
 }
+
+/**
+ 统计banner点击量
+ 
+ @param userId 用户ID
+ @param bannerId bannerID
+ @param complete block
+ */
++ (void)searchBannerCountWithUserId:(NSString *)userId BannerId:(NSString *)bannerId Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"version":[Tool getAppVersion],
+                                 @"userId":userId ? userId : @"",
+                                 @"bannerId":bannerId
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/user/searchBannerCount",BaseURL]parameters:paramters complete:complete];
+}
+
 @end

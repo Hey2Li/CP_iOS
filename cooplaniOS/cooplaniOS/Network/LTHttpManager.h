@@ -78,9 +78,10 @@
  @param nickname 昵称
  @param sex 性别
  @param age 年龄
+ @param unionid unionid
  @param complete block
  */
-+ (void)thirdPartyLoginWithOpenId:(NSString *)openId IdentityType:(NSString *)identityType Token:(NSString *)token TokenTime:(NSString *)tokenTime HeadPortrait:(NSString *)headPortrait NickName:(NSString *)nickname Sex:(NSString *)sex age:(NSString *)age Complete:(completeBlock)complete;
++ (void)thirdPartyLoginWithOpenId:(NSString *)openId IdentityType:(NSString *)identityType Token:(NSString *)token TokenTime:(NSString *)tokenTime HeadPortrait:(NSString *)headPortrait NickName:(NSString *)nickname Sex:(NSString *)sex age:(NSString *)age UnionId:(NSString *)unionid Complete:(completeBlock)complete;
 
 
 /**
@@ -225,8 +226,94 @@
  用户打开APP次数
 
  @param userId 用户ID
+ @param logintime 登录时间
+ @param exittime 登出时间
  @param complete block
  */
-+(void)searchLoginCountWithUserId:(NSString *)userId Complete:(completeBlock)complete;
++(void)searchLoginCountWithUserId:(NSString *)userId LoginTime:(NSString *)logintime ExitTime:(NSString *)exittime Complete:(completeBlock)complete;
+
+
+/**
+ 统计用户点击事件
+
+ @param userId 用户ID
+ @param complete block
+ */
++ (void)searchClicktimeWithUserId:(NSString *)userId Complete:(completeBlock)complete;
+
+
+/**
+ 统计用户交卷时间
+
+ @param userId 用户ID
+ @param complete block
+ */
++ (void)searchOvertimeWithUserId:(NSString *)userId Complete:(completeBlock)complete;
+
+
+/**
+ 统计学习模式访问量
+
+ @param userId 用户ID
+ @param complete block
+ */
++ (void)searchStudyCountWithUserId:(NSString *)userId Complete:(completeBlock)complete;
+
+
+/**
+ 统计模拟考试访问量
+
+ @param userId 用户ID
+ @param complete block
+ */
++ (void)searchSimulationCountWithUserId:(NSString *)userId Complete:(completeBlock)complete;
+
+
+/**
+ 统计刷题模式访问量
+
+ @param userId 用户ID
+ @param complete block
+ */
++ (void)searchExerciseCountWithUserId:(NSString *)userId Compelte:(completeBlock)complete;
+
+
+/**
+ 统计用户试卷收藏量
+
+ @param userId 用户ID
+ @param testPaperId 试卷ID
+ @param complete block
+ */
++ (void)searchCollectionCountWithUserId:(NSString *)userId TestPaperId:(NSNumber *)testPaperId Complete:(completeBlock)complete;
+
+/**
+ 统计单篇听力用户点击量
+
+ @param userId 用户ID
+ @param testPaperId 试卷ID
+ @param complete block
+ */
++ (void)searchListeningCountWithUserId:(NSString *)userId TestPaperId:(NSNumber *)testPaperId Complete:(completeBlock)complete;
+
+
+/**
+ 统计用户下载量
+
+ @param userId 用户ID
+ @param testPaperId 试卷ID
+ @param complete block
+ */
++ (void)searchDownloadCountWithUserId:(NSString *)userId TestPaperId:(NSNumber *)testPaperId Complete:(completeBlock)complete;
+
+
+/**
+ 统计banner点击量
+
+ @param userId 用户ID
+ @param bannerId bannerID
+ @param complete block
+ */
++ (void)searchBannerCountWithUserId:(NSString *)userId BannerId:(NSString *)bannerId Complete:(completeBlock)complete;
 
 @end

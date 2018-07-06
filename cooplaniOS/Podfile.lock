@@ -50,6 +50,8 @@ PODS:
   - UMCShare/Social/ReducedWeChat (6.9.1):
     - UMCCommon
     - UMCShare/Core
+  - WMPlayer (5.0.0):
+    - Masonry
 
 DEPENDENCIES:
   - AFNetworking (~> 3.1.0)
@@ -67,6 +69,27 @@ DEPENDENCIES:
   - UMCCommon
   - UMCSecurityPlugins
   - UMCShare/Social/ReducedWeChat
+  - WMPlayer
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AFNetworking
+    - FMDB
+    - IQKeyboardManager
+    - JRDB
+    - Masonry
+    - MJExtension
+    - MJRefresh
+    - MMDrawerController
+    - SDCycleScrollView
+    - SDWebImage
+    - SVProgressHUD
+    - TYAttributedLabel
+    - TZImagePickerController
+    - UMCCommon
+    - UMCSecurityPlugins
+    - UMCShare
+    - WMPlayer
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
@@ -85,7 +108,8 @@ SPEC CHECKSUMS:
   UMCCommon: 82d21f4bb9532a5472cc533bbd8ed48aff376a14
   UMCSecurityPlugins: 0831a08f3988f3cea9f1d3a7626cd9bee4fef150
   UMCShare: f8be567946c3aa68deefd03b0ffaa0710a3b07ea
+  WMPlayer: a914f80ed5dca7cd9e3a94ec07a2b02eec8c15c0
 
-PODFILE CHECKSUM: f94aaf62310ef6e77b8157b7cdfc9f4ec54387b7
+PODFILE CHECKSUM: 8557f4656ed936bdb7566f3dd3874d28e7f80001
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.3

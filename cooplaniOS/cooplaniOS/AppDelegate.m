@@ -21,12 +21,33 @@
 
 @interface AppDelegate ()
 @property(nonatomic,strong) MMDrawerController * drawerController;
-
+@property (nonatomic, copy) NSString *loginTime;
+@property (nonatomic, copy) NSString *exitTime;
 @end
 
 @implementation AppDelegate
 
+- (NSString*)getCurrentTimes{
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    
+    // ----------设置你想要的格式,hh与HH的区别:分别表示12小时制,24小时制
+    
+    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+    
+    //现在时间,你可以输出来看下是什么格式
+    
+    NSDate *datenow = [NSDate date];
+    
+    //----------将nsdate按formatter格式转成nsstring
+    
+    NSString *currentTimeString = [formatter stringFromDate:datenow];
+    
+    NSLog(@"currentTimeString =  %@",currentTimeString);
+    
+    return currentTimeString;
 
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //初始化控制器
     UIViewController *centerVC = [[HomeViewController alloc]init];
@@ -81,6 +102,47 @@
                                                ]];
     J_CreateTable(DownloadFileModel);
     [self monitorNetworking];
+    self.loginTime = [self getCurrentTimes];
+    NSString *loginTime  =[USERDEFAULTS objectForKey:@"logintime"];
+    if (loginTime.length > 0) {
+        [LTHttpManager searchLoginCountWithUserId:IS_USER_ID LoginTime:loginTime ExitTime:@"" Complete:^(LTHttpResult result, NSString *message, id data) {
+            if (LTHttpResultSuccess == result) {
+                NSLog(@"用户打开次数");
+                NSString *exitTime = [USERDEFAULTS objectForKey:@"exittime"];
+                if (exitTime.length > 0) {
+                    [LTHttpManager searchLoginCountWithUserId:IS_USER_ID LoginTime:[USERDEFAULTS objectForKey:@"logintime"] ExitTime:exitTime Complete:^(LTHttpResult result, NSString *message, id data) {
+                        if (LTHttpResultSuccess == result) {
+                            NSLog(@"用户打开次数");
+                            [USERDEFAULTS setObject:self.loginTime forKey:@"logintime"];
+                        }else{
+                            NSLog(@"%@",data[@"msg"]);
+                        }
+                    }];
+                }else{
+                    [LTHttpManager searchLoginCountWithUserId:IS_USER_ID LoginTime:self.loginTime ExitTime:@"" Complete:^(LTHttpResult result, NSString *message, id data) {
+                        if (LTHttpResultSuccess == result) {
+                            NSLog(@"用户打开次数");
+                            
+                        }else{
+                            NSLog(@"%@",data[@"msg"]);
+                        }
+                    }];
+                }
+            }else{
+                NSLog(@"%@",data[@"msg"]);
+            }
+        }];
+    }else{
+        [LTHttpManager searchLoginCountWithUserId:IS_USER_ID LoginTime:loginTime ExitTime:@"" Complete:^(LTHttpResult result, NSString *message, id data) {
+            if (LTHttpResultSuccess == result) {
+                NSLog(@"用户打开次数");
+            }else{
+                NSLog(@"%@",data[@"msg"]);
+            }
+        }];
+        [USERDEFAULTS setObject:self.loginTime forKey:@"logintime"];
+    }
+    
     return YES;
 }
 - (void)confitUShareSettings
@@ -148,13 +210,6 @@
             [USERDEFAULTS setObject:@"0" forKey:@"isHaveNet"];
         }
     }];
-    [LTHttpManager searchLoginCountWithUserId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
-        if (LTHttpResultSuccess == result) {
-            NSLog(@"用户打开次数");
-        }else{
-            NSLog(@"%@",data[@"msg"]);
-        }
-    }];
 }
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -186,7 +241,10 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    NSLog(@"APP被关闭");
+    [USERDEFAULTS setObject:[self getCurrentTimes] forKey:@"exittime"];
+    NSString *exitTime = [USERDEFAULTS objectForKey:@"exittime"];
+    
+    NSLog(@"APP被关闭,%@",exitTime);
 }
 
 
