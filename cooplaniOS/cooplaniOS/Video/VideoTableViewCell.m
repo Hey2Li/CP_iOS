@@ -16,6 +16,7 @@
     // Initialization code
     [self.playBtn addTarget:self action:@selector(startPlayVideo:) forControlEvents:UIControlEventTouchUpInside];
     self.backgroundImageView.userInteractionEnabled = YES;
+    self.backgroundImageView.image = [UIImage imageNamed:@"缩略图"];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

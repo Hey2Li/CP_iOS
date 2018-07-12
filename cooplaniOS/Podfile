@@ -17,6 +17,8 @@ target 'cooplaniOS' do
     pod 'MMDrawerController', '~> 0.5.7'
     pod 'TYAttributedLabel', '~> 2.6.2'
     pod 'WMPlayer'
+    pod 'JPush'
+    pod 'VBFPopFlatButton'
     pod 'JRDB'
     pod 'TZImagePickerController'
     pod 'UMCCommon'

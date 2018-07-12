@@ -60,6 +60,12 @@
 		9B3D02D620848878005C923B /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B3D02D420848878005C923B /* LoginViewController.xib */; };
 		9B3D02DA208488A3005C923B /* LoginNextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3D02D8208488A3005C923B /* LoginNextViewController.m */; };
 		9B3D02DB208488A3005C923B /* LoginNextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B3D02D9208488A3005C923B /* LoginNextViewController.xib */; };
+		9B3DA34C20F4C1000028CDA9 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B3DA34B20F4C0FF0028CDA9 /* libWeChatSDK.a */; };
+		9B3DA35320F6160B0028CDA9 /* HomeTopTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3DA35220F6160B0028CDA9 /* HomeTopTitleView.m */; };
+		9B3DA35620F624DB0028CDA9 /* BaseHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3DA35520F624DB0028CDA9 /* BaseHomeViewController.m */; };
+		9B3DA35920F62B5A0028CDA9 /* LessonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3DA35820F62B5A0028CDA9 /* LessonViewController.m */; };
+		9B3DA35D20F631A10028CDA9 /* LessonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3DA35B20F631A10028CDA9 /* LessonTableViewCell.m */; };
+		9B3DA35E20F631A10028CDA9 /* LessonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B3DA35C20F631A10028CDA9 /* LessonTableViewCell.xib */; };
 		9B4BB6FD2079A9FC0029015F /* HomeListenCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4BB6FB2079A9FC0029015F /* HomeListenCell.m */; };
 		9B4BB6FE2079A9FC0029015F /* HomeListenCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B4BB6FC2079A9FC0029015F /* HomeListenCell.xib */; };
 		9B4BB7082079C1AE0029015F /* BottomLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4BB7072079C1AE0029015F /* BottomLabel.m */; };
@@ -230,6 +236,21 @@
 		9B3D02D7208488A3005C923B /* LoginNextViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginNextViewController.h; sourceTree = "<group>"; };
 		9B3D02D8208488A3005C923B /* LoginNextViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginNextViewController.m; sourceTree = "<group>"; };
 		9B3D02D9208488A3005C923B /* LoginNextViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginNextViewController.xib; sourceTree = "<group>"; };
+		9B3DA34520F4BF160028CDA9 /* WXApiObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		9B3DA34620F4BF160028CDA9 /* WechatAuthSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
+		9B3DA34720F4BF160028CDA9 /* WXApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		9B3DA34820F4BF590028CDA9 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		9B3DA34B20F4C0FF0028CDA9 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		9B3DA34D20F5E7570028CDA9 /* cooplaniOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = cooplaniOS.entitlements; sourceTree = "<group>"; };
+		9B3DA35120F6160B0028CDA9 /* HomeTopTitleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeTopTitleView.h; sourceTree = "<group>"; };
+		9B3DA35220F6160B0028CDA9 /* HomeTopTitleView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeTopTitleView.m; sourceTree = "<group>"; };
+		9B3DA35420F624DB0028CDA9 /* BaseHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseHomeViewController.h; sourceTree = "<group>"; };
+		9B3DA35520F624DB0028CDA9 /* BaseHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseHomeViewController.m; sourceTree = "<group>"; };
+		9B3DA35720F62B5A0028CDA9 /* LessonViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LessonViewController.h; sourceTree = "<group>"; };
+		9B3DA35820F62B5A0028CDA9 /* LessonViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LessonViewController.m; sourceTree = "<group>"; };
+		9B3DA35A20F631A10028CDA9 /* LessonTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LessonTableViewCell.h; sourceTree = "<group>"; };
+		9B3DA35B20F631A10028CDA9 /* LessonTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LessonTableViewCell.m; sourceTree = "<group>"; };
+		9B3DA35C20F631A10028CDA9 /* LessonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LessonTableViewCell.xib; sourceTree = "<group>"; };
 		9B4BB6FA2079A9FC0029015F /* HomeListenCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeListenCell.h; sourceTree = "<group>"; };
 		9B4BB6FB2079A9FC0029015F /* HomeListenCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeListenCell.m; sourceTree = "<group>"; };
 		9B4BB6FC2079A9FC0029015F /* HomeListenCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeListenCell.xib; sourceTree = "<group>"; };
@@ -338,6 +359,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B3DA34C20F4C1000028CDA9 /* libWeChatSDK.a in Frameworks */,
 				F746F6BA696BF43BB227A4AD /* libPods-cooplaniOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -619,6 +641,11 @@
 				9B3D02CE20847C5A005C923B /* PaperDetailTableViewCell.xib */,
 				9B3CF25B20CE779800A52E14 /* ProgressImgView.h */,
 				9B3CF25C20CE779800A52E14 /* ProgressImgView.m */,
+				9B3DA35120F6160B0028CDA9 /* HomeTopTitleView.h */,
+				9B3DA35220F6160B0028CDA9 /* HomeTopTitleView.m */,
+				9B3DA35A20F631A10028CDA9 /* LessonTableViewCell.h */,
+				9B3DA35B20F631A10028CDA9 /* LessonTableViewCell.m */,
+				9B3DA35C20F631A10028CDA9 /* LessonTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -631,6 +658,10 @@
 				9B3D02C720845338005C923B /* PaperDetailViewController.h */,
 				9B3D02C820845338005C923B /* PaperDetailViewController.m */,
 				9B3D02C920845338005C923B /* PaperDetailViewController.xib */,
+				9B3DA35420F624DB0028CDA9 /* BaseHomeViewController.h */,
+				9B3DA35520F624DB0028CDA9 /* BaseHomeViewController.m */,
+				9B3DA35720F62B5A0028CDA9 /* LessonViewController.h */,
+				9B3DA35820F62B5A0028CDA9 /* LessonViewController.m */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -806,6 +837,7 @@
 		9BEA0A2F2071D9190026AF2C /* cooplaniOS */ = {
 			isa = PBXGroup;
 			children = (
+				9B3DA34D20F5E7570028CDA9 /* cooplaniOS.entitlements */,
 				9B26D86020E9BD0B00B4FC11 /* Video */,
 				9BA08EAC2093083A0026935E /* Feedback */,
 				9B3D02D12084885C005C923B /* Login */,
@@ -831,6 +863,10 @@
 				9BEA0A3E2071D9190026AF2C /* Info.plist */,
 				9BEA0A3F2071D9190026AF2C /* main.m */,
 				9B1D31C020734B78007674CF /* CooplanPrefixHeader.pch */,
+				9B3DA34620F4BF160028CDA9 /* WechatAuthSDK.h */,
+				9B3DA34720F4BF160028CDA9 /* WXApi.h */,
+				9B3DA34520F4BF160028CDA9 /* WXApiObject.h */,
+				9B3DA34B20F4C0FF0028CDA9 /* libWeChatSDK.a */,
 			);
 			path = cooplaniOS;
 			sourceTree = "<group>";
@@ -856,6 +892,7 @@
 		DC4258BE67092C731E9D8EF8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9B3DA34820F4BF590028CDA9 /* libsqlite3.tbd */,
 				A469FDDB0CDF11590B5D2F3A /* libPods-cooplaniOS.a */,
 				BAFC1C4FBFDBB58C028CDF30 /* libPods-cooplaniOSTests.a */,
 				91AE146AACEAF93206FD6086 /* libPods-cooplaniOSUITests.a */,
@@ -948,6 +985,11 @@
 					9BEA0A2C2071D9190026AF2C = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					9BEA0A442071D9190026AF2C = {
 						CreatedOnToolsVersion = 9.2;
@@ -1009,6 +1051,7 @@
 				9BEA0A382071D9190026AF2C /* Main.storyboard in Resources */,
 				9BA08EC02093174A0026935E /* FeedbackPhoneTableViewCell.xib in Resources */,
 				9B13AD6220807B8E0000C750 /* BannerCollectionViewCell.xib in Resources */,
+				9B3DA35E20F631A10028CDA9 /* LessonTableViewCell.xib in Resources */,
 				9B32CB0C209BF00300FCEED3 /* SentenceTableViewCell.xib in Resources */,
 				9B4BB6FE2079A9FC0029015F /* HomeListenCell.xib in Resources */,
 			);
@@ -1150,9 +1193,11 @@
 				9B16B073208D781F00094EE7 /* TestModeViewController.m in Sources */,
 				9B135CD2207CD96C0040A883 /* LTHttpManager.m in Sources */,
 				9B13AD682080885F0000C750 /* PaperModel.m in Sources */,
+				9B3DA35620F624DB0028CDA9 /* BaseHomeViewController.m in Sources */,
 				9B892A2220E1DF7100B0D5E5 /* LTDownloadView.m in Sources */,
 				9B16B09C2091CA2600094EE7 /* AnswerHeadView.m in Sources */,
 				9B4BB6FD2079A9FC0029015F /* HomeListenCell.m in Sources */,
+				9B3DA35920F62B5A0028CDA9 /* LessonViewController.m in Sources */,
 				9B1A5B1820BBAC4500DA21A6 /* CheckWordView.m in Sources */,
 				9B32CB15209C25A500FCEED3 /* MyCollectionPaperTableViewCell.m in Sources */,
 				9B3D02CA20845338005C923B /* PaperDetailViewController.m in Sources */,
@@ -1166,6 +1211,7 @@
 				9B1D31D420736856007674CF /* WrongTopicViewController.m in Sources */,
 				9B16B08F20905BF100094EE7 /* PracticeModeViewController.m in Sources */,
 				9B1D31D720736866007674CF /* MyDownloadViewController.m in Sources */,
+				9B3DA35320F6160B0028CDA9 /* HomeTopTitleView.m in Sources */,
 				9B4BB728207B6E910029015F /* SUResourceLoader.m in Sources */,
 				9BEA0A402071D9190026AF2C /* main.m in Sources */,
 				9BA1CB6320A6BD730093C37B /* LTAlertView.m in Sources */,
@@ -1173,6 +1219,7 @@
 				9B4BB737207B6EDC0029015F /* NSString+SULoader.m in Sources */,
 				9BDFE0C4208833B500B59B3B /* LeftViweTableViewCell.m in Sources */,
 				9BC4158320C5329D002851E6 /* collectionWordModel.m in Sources */,
+				9B3DA35D20F631A10028CDA9 /* LessonTableViewCell.m in Sources */,
 				9B4BB7082079C1AE0029015F /* BottomLabel.m in Sources */,
 				9B32167620DA29590038FEAE /* playSlider.m in Sources */,
 				9B135CC1207C886A0040A883 /* UISlider+time.m in Sources */,
@@ -1359,6 +1406,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = cooplaniOS/cooplaniOS.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = PA4XLQ53KY;
@@ -1367,10 +1415,31 @@
 				INFOPLIST_FILE = cooplaniOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.cooplan.devecooplaniOS;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FMDB\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/IQKeyboardManager\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/JRDB\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/MJExtension\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/MJRefresh\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/MMDrawerController\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Masonry\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SDCycleScrollView\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SVProgressHUD\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/TYAttributedLabel\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/TZImagePickerController\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/VBFPopFlatButton\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/WMPlayer\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/pop\"",
+					"\"${PODS_ROOT}/UMCShare/UMShare/SocialLibraries/WeChat\"",
+					"$(PROJECT_DIR)/cooplaniOS",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cooplan.cooplaniOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "51ca8fcd-49b3-4a68-9a5b-290973f742dc";
-				PROVISIONING_PROFILE_SPECIFIER = "酷学听力开发";
+				PROVISIONING_PROFILE = "402bb37b-325a-4e6d-aa3d-4677117d20ab";
+				PROVISIONING_PROFILE_SPECIFIER = "酷学计划开发";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1381,6 +1450,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = cooplaniOS/cooplaniOS.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = PA4XLQ53KY;
@@ -1389,10 +1459,31 @@
 				INFOPLIST_FILE = cooplaniOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.cooplan.devecooplaniOS;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FMDB\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/IQKeyboardManager\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/JRDB\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/MJExtension\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/MJRefresh\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/MMDrawerController\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Masonry\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SDCycleScrollView\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SVProgressHUD\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/TYAttributedLabel\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/TZImagePickerController\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/VBFPopFlatButton\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/WMPlayer\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/pop\"",
+					"\"${PODS_ROOT}/UMCShare/UMShare/SocialLibraries/WeChat\"",
+					"$(PROJECT_DIR)/cooplaniOS",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cooplan.cooplaniOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "51ca8fcd-49b3-4a68-9a5b-290973f742dc";
-				PROVISIONING_PROFILE_SPECIFIER = "酷学听力开发";
+				PROVISIONING_PROFILE = "402bb37b-325a-4e6d-aa3d-4677117d20ab";
+				PROVISIONING_PROFILE_SPECIFIER = "酷学计划开发";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

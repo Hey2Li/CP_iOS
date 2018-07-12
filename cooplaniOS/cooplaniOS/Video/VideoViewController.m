@@ -194,6 +194,7 @@
     [self.view addSubview:tableView];
     tableView.delegate = self;
     tableView.dataSource = self;
+    tableView.scrollEnabled = NO;
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([VideoTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([VideoTableViewCell class])];
     [tableView registerClass:[WordWebViewTableViewCell class] forCellReuseIdentifier:NSStringFromClass([WordWebViewTableViewCell class])];
@@ -326,6 +327,7 @@
             playerModel.indexPath = indexPath;
             playerModel.videoURL = [NSURL URLWithString:@"https://oss.cooplan.cn/curriculums/%E5%88%B7%E9%A2%98%E8%AF%BE1/%E5%9B%9B%E7%BA%A7%E5%90%AC%E5%8A%9B%E5%88%B7%E9%A2%98%E8%AF%BE1_480.mp4"];
             weakSelf.wmPlayer = [[WMPlayer alloc] init];
+            weakSelf.wmPlayer.tintColor = DRGBCOLOR;
             weakSelf.wmPlayer.playerModel = playerModel;
             weakSelf.wmPlayer.delegate = weakSelf;
             [imageView addSubview:weakSelf.wmPlayer];

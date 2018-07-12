@@ -12,14 +12,23 @@
 #import "LeftViewController.h"
 #import "MMDrawerController.h"
 #import "MMDrawerVisualState.h"
-#import "LoginViewController.h"
+#import "BaseHomeViewController.h"
 #import <KeyboardManager.h>
 #import <UMShare/UMShare.h>
 #import <AVFoundation/AVFoundation.h>
+#import "WXApi.h"
+// 引入JPush功能所需头文件
+#import "JPUSHService.h"
+// iOS10注册APNs所需头文件
+#ifdef NSFoundationVersionNumber_iOS_9_x_Max
+#import <UserNotifications/UserNotifications.h>
+#endif
+// 如果需要使用idfa功能所需要引入的头文件（可选）
+#import <AdSupport/AdSupport.h>
 
 #define USHARE_DEMO_APPKEY @"5861e5daf5ade41326001eab"
 
-@interface AppDelegate ()
+@interface AppDelegate ()<JPUSHRegisterDelegate>
 @property(nonatomic,strong) MMDrawerController * drawerController;
 @property (nonatomic, copy) NSString *loginTime;
 @property (nonatomic, copy) NSString *exitTime;
@@ -50,7 +59,7 @@
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //初始化控制器
-    UIViewController *centerVC = [[HomeViewController alloc]init];
+    UIViewController *centerVC = [[BaseHomeViewController alloc]init];
     UIViewController *leftVC = [[LeftViewController alloc]init];
     
     //初始化导航控制器
@@ -69,8 +78,6 @@
     [self.drawerController setDrawerVisualStateBlock:[MMDrawerVisualState slideAndScaleVisualStateBlock]];
     //把阴影关闭
 //    self.drawerController.showsShadow = YES;
-    UIViewController *loginVC = [[LoginViewController alloc]init];
-    BaseViewController *centerNvaVC1 = [[BaseViewController alloc]initWithRootViewController:loginVC];
     
     IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
     manager.enable = YES;
@@ -143,8 +150,80 @@
         [USERDEFAULTS setObject:self.loginTime forKey:@"logintime"];
     }
     
+    [self JSPush:application :launchOptions];
     return YES;
 }
+#pragma mark 极光推送
+- (void)JSPush:(UIApplication *)application :(NSDictionary *)launchOptions{
+    //Required
+    //notice: 3.0.0及以后版本注册可以这样写，也可以继续用之前的注册方式
+    JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
+    entity.types = JPAuthorizationOptionAlert|JPAuthorizationOptionBadge|JPAuthorizationOptionSound;
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+        // 可以添加自定义categories
+        // NSSet<UNNotificationCategory *> *categories for iOS10 or later
+        // NSSet<UIUserNotificationCategory *> *categories for iOS8 and iOS9
+    }
+    [JPUSHService registerForRemoteNotificationConfig:entity delegate:self];
+    
+    // Optional
+    // 获取IDFA
+    // 如需使用IDFA功能请添加此代码并在初始化方法的advertisingIdentifier参数中填写对应值
+    NSString *advertisingId = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+    
+    // Required
+    // init Push
+    // notice: 2.1.5版本的SDK新增的注册方法，改成可上报IDFA，如果没有使用IDFA直接传nil
+    // 如需继续使用pushConfig.plist文件声明appKey等配置内容，请依旧使用[JPUSHService setupWithOption:launchOptions]方式初始化。
+    [JPUSHService setupWithOption:launchOptions appKey:@"0f5416a3ab0db79b426a8e70"
+                          channel:@"App Store"
+                 apsForProduction:false
+            advertisingIdentifier:advertisingId];
+}
+- (void)application:(UIApplication *)application
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    /// Required - 注册 DeviceToken
+    [JPUSHService registerDeviceToken:deviceToken];
+}
+#pragma mark- JPUSHRegisterDelegate
+
+// iOS 10 Support
+- (void)jpushNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(NSInteger))completionHandler  API_AVAILABLE(ios(10.0)){
+    // Required
+    NSDictionary * userInfo = notification.request.content.userInfo;
+    if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+        [JPUSHService handleRemoteNotification:userInfo];
+    }
+    completionHandler(UNNotificationPresentationOptionAlert); // 需要执行这个方法，选择是否提醒用户，有Badge、Sound、Alert三种类型可以选择设置
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    [JPUSHService setBadge:0];
+}
+
+// iOS 10 Support
+- (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler  API_AVAILABLE(ios(10.0)){
+    // Required
+    NSDictionary * userInfo = response.notification.request.content.userInfo;
+    if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+        [JPUSHService handleRemoteNotification:userInfo];
+    }
+    completionHandler();  // 系统要求执行这个方法
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    [JPUSHService setBadge:0];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    
+    // Required, iOS 7 Support
+    [JPUSHService handleRemoteNotification:userInfo];
+    completionHandler(UIBackgroundFetchResultNewData);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    
+    // Required,For systems with less than or equal to iOS6
+    [JPUSHService handleRemoteNotification:userInfo];
+}
+
 - (void)confitUShareSettings
 {
     /*
@@ -165,6 +244,7 @@
 {
     /* 设置微信的appKey和appSecret */
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wx0e4cba8a7ddfc51c" appSecret:@"1540440ad4b9f96f8031bde0a47c48cb" redirectURL:@"http://mobile.umeng.com/social"];
+    [WXApi registerApp:@"wxb4ba3c02aa476ea1" enableMTA:YES];
 }
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options
 {
@@ -172,6 +252,7 @@
     BOOL result = [[UMSocialManager defaultManager]  handleOpenURL:url options:options];
     if (!result) {
         // 其他如支付等SDK的回调
+        [WXApi handleOpenURL:url delegate:nil];
     }
     return result;
 }
@@ -224,6 +305,8 @@
     [[NSNotificationCenter defaultCenter]postNotificationName:@"listenBackground" object:nil];
     [[UIApplication sharedApplication]beginBackgroundTaskWithExpirationHandler:^(){
     }];
+    [application setApplicationIconBadgeNumber:0];
+    [application cancelAllLocalNotifications];
 }
 
 
@@ -231,6 +314,8 @@
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     NSLog(@"回到前台");
     [[NSNotificationCenter defaultCenter]postNotificationName:@"listenForeground" object:nil];
+    [application setApplicationIconBadgeNumber:0];
+    [application cancelAllLocalNotifications];
 }
 
 
