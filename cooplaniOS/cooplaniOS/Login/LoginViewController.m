@@ -148,7 +148,7 @@
                     [[NSUserDefaults standardUserDefaults]setObject:data[@"responseData"][@"tpu"][@"sex"] forKey:USER_SEX];
                     [[NSUserDefaults standardUserDefaults] synchronize];
                     //初始化控制器
-                    UIViewController *centerVC = [[HomeViewController alloc]init];
+                    UIViewController *centerVC = [[BaseHomeViewController alloc]init];
                     UIViewController *leftVC = [[LeftViewController alloc]init];
                     
                     //初始化导航控制器

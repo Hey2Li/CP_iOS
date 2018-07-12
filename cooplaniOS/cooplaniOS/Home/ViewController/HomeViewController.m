@@ -15,12 +15,16 @@
 #import "BannerCollectionViewCell.h"
 #import "PaperDetailViewController.h"
 #import "VideoViewController.h"
+#import "VBFPopFlatButton.h"
+#import "WXApi.h"
+#import "HomeTopTitleView.h"
 
 @interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) UITableView *myTableView;
 @property (nonatomic, strong) UICollectionView *myCollectionView;
 @property (nonatomic, strong) NSArray *bannerArray;
 @property (nonatomic, strong) NSMutableArray *paperMutableArray;
+@property (nonatomic, strong) VBFPopFlatButton *flatRoundedButton;
 @end
 
 @implementation HomeViewController
@@ -31,19 +35,11 @@
     }
     return _paperMutableArray;
 }
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBar.barTintColor = DRGBCOLOR;
-    [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
-    [self.mm_drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self initWithNavi];
     [self initWithView];
     self.view.backgroundColor = [UIColor whiteColor];
-    [self setupLeftMenuButton];
     [self loadData];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reloadTableView) name:@"homereloaddata" object:nil];
 }
@@ -85,31 +81,6 @@
             }
         }
     }];
-}
--(void)setupLeftMenuButton{
-    UIImage *image = [[UIImage imageNamed:@"view_list"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *leftDrawerBtn = [[UIBarButtonItem alloc]initWithImage:image style:UIBarButtonItemStyleDone target:self action:@selector(leftDrawerButtonPress:)];
-    leftDrawerBtn.tag = 0;
-    [self.navigationItem setLeftBarButtonItem:leftDrawerBtn animated:YES];
-}
--(void)leftDrawerButtonPress:(UIBarButtonItem *)sender{
-//    UIImage *image = [[UIImage imageNamed:@"view_list"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//    UIImage *back = [[UIImage imageNamed:@"back"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//    if (sender.tag == 0) {
-//        sender.tag = 1;
-//
-//    }else if (sender.tag == 1){
-//        sender.tag = 0;
-//        [sender setImage:image];
-//    }
-    
-    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
-//    [self.mm_drawerController openDrawerSide:MMDrawerSideLeft animated:YES completion:^(BOOL finished) {
-//        [sender setImage:back];
-//    }];
-//    [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
-//        [sender setImage:image];
-//    }];
 }
 
 - (void)initWithView{
@@ -204,47 +175,7 @@
     VideoViewController *vc =[[VideoViewController alloc]init];
     [self.navigationController pushViewController:vc animated:YES];
 }
-#pragma mark 导航栏
-- (void)initWithNavi{
-    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH-100, 44)];
-    titleView.backgroundColor = DRGBCOLOR;
-   
-    BottomLabel *monthAndDayLb = [[BottomLabel alloc]init];
-    monthAndDayLb.verticalAlignment = 2;
-    monthAndDayLb.font = [UIFont systemFontOfSize:14 weight:18];
-    monthAndDayLb.textColor = [UIColor blackColor];
-    monthAndDayLb.text = [NSString stringWithFormat:@"%@th %@",[Tool dateArray][2],[Tool dateArray][1]];
-    UIFont *font = [UIFont systemFontOfSize:14 weight:18];
-    // 根据字体得到NSString的尺寸
-    CGSize size = [monthAndDayLb.text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:font,NSFontAttributeName,nil]];
-    CGFloat width = size.width;
-    monthAndDayLb.textAlignment = NSTextAlignmentRight;
-    [titleView addSubview:monthAndDayLb];
-    [monthAndDayLb mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(titleView.mas_right);
-        make.bottom.equalTo(titleView).offset(-2);
-        make.top.equalTo(titleView);
-        make.width.equalTo(@(width + 10));
-    }];
-    
-    BottomLabel *weekLb = [BottomLabel new];
-    [titleView addSubview:weekLb];
-    [weekLb mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(titleView);
-        make.top.equalTo(titleView);
-        make.bottom.equalTo(titleView);
-        make.right.equalTo(monthAndDayLb.mas_left);
-    }];
-    weekLb.font = [UIFont systemFontOfSize:26 weight:26];
-    NSString *weekStr = [Tool dateArray][0];
-    weekLb.text = [NSString stringWithFormat:@"%@ %@",weekStr.uppercaseString ,@""];
-    weekLb.verticalAlignment = 2;
-    weekLb.textColor = [UIColor blackColor];
-    weekLb.textAlignment = NSTextAlignmentRight;
-    
-    UIBarButtonItem *barItem = [[UIBarButtonItem alloc]initWithCustomView:titleView];
-    self.navigationItem.rightBarButtonItem = barItem;
-}
+
 #pragma mark -- UITableViewDelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
@@ -256,17 +187,8 @@
     return 88;
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    NSMutableAttributedString *titleStr = [[NSMutableAttributedString alloc]initWithString:@"四级听力"];
-    [titleStr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:17]range:NSMakeRange(0, 3)];
-    return [titleStr string];//17bold
+    return @"四级听力";//17bold
 }
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-//    UILabel *label = [UILabel new];
-//    NSMutableAttributedString *titleStr = [[NSMutableAttributedString alloc]initWithString:@"四级听力"];
-//    [titleStr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:17]range:NSMakeRange(0, 3)];
-//    label.attributedText = titleStr;
-//    return label;
-//}
 -(void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section{
     // Background color
     view.tintColor = [UIColor whiteColor];
@@ -286,6 +208,7 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    /*
     HomeListenCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     PaperDetailViewController *vc = [PaperDetailViewController new];
     vc.nextTitle = cell.TitleLabel.text;
@@ -294,16 +217,58 @@
     [LTHttpManager  searchListeningCountWithUserId:IS_USER_ID TestPaperId:vc.onePaperModel.ID Complete:^(LTHttpResult result, NSString *message, id data) {
         
     }];
+     */
+    //============================================================
+    // V3&V4支付流程实现
+    // 注意:参数配置请查看服务器端Demo
+    // 更新时间：2015年11月20日
+    //============================================================
+    NSString *urlString   = @"http://192.168.0.103:8080/cooplan-app/weixin/app/wxPay";
+    //解析服务端返回json数据
+    NSError *error;
+    //加载一个NSURL对象
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    //将请求的url数据放到NSData对象中
+    NSData *response = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    if ( response != nil) {
+        NSMutableDictionary *dict = NULL;
+        //IOS5自带解析类NSJSONSerialization从response中解析出数据放到字典中
+        dict = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:&error];
+        
+        NSLog(@"url:%@",urlString);
+        if(dict != nil){
+            [self weiXinPayWithDic:dict];
+            NSMutableString *retcode = [dict objectForKey:@"retcode"];
+            if (retcode.intValue == 0){
+                NSMutableString *stamp  = [dict objectForKey:@"timestamp"];
+                //调起微信支付
+                PayReq* req             = [[PayReq alloc] init];
+                req.partnerId           = [dict objectForKey:@"partnerid"];
+                req.prepayId            = [dict objectForKey:@"prepayid"];
+                req.nonceStr            = [dict objectForKey:@"noncestr"];
+                req.timeStamp           = stamp.intValue;
+                req.package             = [dict objectForKey:@"package"];
+                req.sign                = [dict objectForKey:@"sign"];
+                [WXApi sendReq:req];
+                //日志输出
+                NSLog(@"appid=%@\npartid=%@\nprepayid =%@\nnoncestr=%@\ntimestamp=%ld\npackage=%@\nsign=%@",[dict objectForKey:@"appid"],req.partnerId,req.prepayId,req.nonceStr,(long)req.timeStamp,req.package,req.sign );
+            }else{
+            }
+        }else{
+        }
+    }else{
+    }
 }
-- (void) viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    //设置打开抽屉模式   这里要设置抽屉的打开和关闭，不能单一设置打开，不然就回不去了
-    [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
-    [self.mm_drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
-}
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+- (void)weiXinPayWithDic:(NSDictionary *)wechatPayDic {
+    PayReq *req = [[PayReq alloc] init];
+    req.openID = [wechatPayDic objectForKey:@"appId"];
+    req.partnerId = [wechatPayDic objectForKey:@"partnerId"];
+    req.prepayId = [wechatPayDic objectForKey:@"prepayId"];
+    req.package = [wechatPayDic objectForKey:@"packages"];
+    req.nonceStr = [wechatPayDic objectForKey:@"nonceStr"];
+    req.timeStamp = [[wechatPayDic objectForKey:@"timesTamp"] intValue];
+    req.sign = [wechatPayDic objectForKey:@"sign"];
+    [WXApi sendReq:req];
 }
 - (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];

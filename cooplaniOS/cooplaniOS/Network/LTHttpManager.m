@@ -16,7 +16,7 @@
  */
 + (void)FindAllBannerWithComplete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters = @{@"version":[Tool getAppVersion]};
+    NSDictionary *paramters = @{@"version":kVersion_1};
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/banner/findAllBanner",BaseURL] parameters:paramters complete:complete];
 }
 /**
@@ -26,7 +26,7 @@
  */
 + (void)FindAllWithUseId:(NSNumber *)userid Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters = @{@"version":kVersion_1,
                                 @"userid":userid ? userid : @""
                                 };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/testPaper/findAll",BaseURL]parameters:paramters complete:complete];
@@ -40,7 +40,7 @@
  */
 + (void)findOneTestPaperWithID:(NSNumber *)ID Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters = @{@"version":kVersion_1,
                                 @"id":ID,
                                 };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/testPaper/findOne",BaseURL]parameters:paramters complete:complete];
@@ -55,7 +55,7 @@
  */
 + (void)UserCodeLoginWithPhone:(NSString *)phone andCode:(NSString *)code Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters = @{@"version":kVersion_1,
                                 @"phone":phone,
                                 @"code":code
                                 };
@@ -71,7 +71,7 @@
  */
 + (void)UserSMSCodeWithPhone:(NSString *)phone Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters = @{@"version":kVersion_1,
                                 @"phone":phone,
                                 };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/user/smsCode",BaseURL]parameters:paramters complete:complete];
@@ -88,7 +88,7 @@
  */
 + (void)feedbackWithUserId:(NSNumber *)user_id Type:(NSString *)type Info:(NSString *)info ContactInfo:(NSString *)contactInfo Files:(NSArray *)files Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters = @{@"version":kVersion_1,
                                 @"userId":user_id,
                                 @"type":type,
                                 @"info":info,
@@ -112,7 +112,7 @@
  */
 + (void)thirdPartyLoginWithOpenId:(NSString *)openId IdentityType:(NSString *)identityType Token:(NSString *)token TokenTime:(NSString *)tokenTime HeadPortrait:(NSString *)headPortrait NickName:(NSString *)nickname Sex:(NSString *)sex age:(NSString *)age UnionId:(NSString *)unionid Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters = @{@"version":kVersion_1,
                                 @"openId":openId,
                                 @"identityType":identityType,
                                 @"token":token,
@@ -132,7 +132,7 @@
  */
 + (void)UserLoginOut:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters = @{@"version":[Tool getAppVersion]};
+    NSDictionary *paramters = @{@"version":kVersion_1};
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/user/logout",BaseURL]parameters:paramters complete:complete];
 }
 
@@ -146,7 +146,7 @@
  */
 + (void)collectionSectenceWithUserId:(NSString *)userId SectenceEN:(NSString *)sentenceEN SentenceCN:(NSString *)sentenceCN TestPaperName:(NSString *)testPaperName Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters = @{@"version":kVersion_1,
                                 @"userId":userId,
                                 @"sentenceEN":sentenceEN,
                                 @"sentenceCN":sentenceCN,
@@ -162,7 +162,7 @@
  */
 + (void)deleteSentenceNoteWithId:(NSNumber *)ID WithComplete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters = @{@"version":kVersion_1,
                                 @"id":ID
                                 };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/SentenceNote/private/delete",BaseURL]parameters:paramters complete:complete];
@@ -176,7 +176,7 @@
  */
 + (void)findSectenceNoteWIthUserId:(NSNumber *)userId Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters = @{@"version":kVersion_1,
                                 @"userId":userId,
                                 };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/SentenceNote/private/find",BaseURL]parameters:paramters complete:complete];
@@ -191,7 +191,7 @@
  */
 + (void)collectionTestPaperWithUserId:(NSNumber *)user_id TestPaperId:(NSNumber *)testPaperId Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters = @{@"version":kVersion_1,
                                 @"userId":user_id,
                                 @"testPaperId":testPaperId
                                 };
@@ -206,7 +206,7 @@
  */
 + (void)deleteCollectionTestPaperWithId:(NSNumber *)ID Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters = @{@"version":kVersion_1,
                                 @"testPaperId":ID,
                                 @"userId":IS_USER_ID
                                 };
@@ -220,7 +220,7 @@
  */
 + (void)findAllCollectionTestPaperWithUserId:(NSNumber *)userId Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters = @{@"version":kVersion_1,
                                 @"userId":userId
                                 };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/myCollect/private/find",BaseURL]parameters:paramters complete:complete];
@@ -234,7 +234,7 @@
  */
 +(void)UserDefaultLoginWithUserId:(NSNumber *)userId Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters = @{@"version":kVersion_1,
                                 @"userId":userId
                                 };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/user/defaulLogin",BaseURL]parameters:paramters complete:complete];
@@ -304,7 +304,7 @@
  */
 +(void)questionMistakesWithJsonString:(NSString *)json Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters = @{@"version":kVersion_1,
                                 @"mistakes":json
                                 };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/ios/mistakes/private/find",BaseURL]parameters:paramters complete:complete];
@@ -319,7 +319,7 @@
  */
 +(void)findOneTestPaperInfoWithUserId:(NSNumber *)userId TestPaperId:(NSNumber *)testPaperId Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters = @{@"version":kVersion_1,
                                 @"userId":userId ? userId : @"",
                                 @"testPaperId":testPaperId
                                 };
@@ -334,7 +334,7 @@
  */
 + (void)searchWordWithWord:(NSString *)word Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters = @{@"version":kVersion_1,
                                 @"word":word,
                                 @"userId":IS_USER_ID ? IS_USER_ID : @""
                                 };
@@ -355,7 +355,7 @@
  */
 + (void)addWordsWithUserId:(NSNumber *)userId Word:(NSString *)word Tranlate:(NSString *)translate Ph_en_mp3:(NSString *)ph_en_mp3 Ph_am_mp3:(NSString *)ph_am_mp3 Ph_am:(NSString *)ph_am Ph_en:(NSString *)ph_en Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters = @{@"version":kVersion_1,
                                 @"userId":userId,
                                 @"word":word,
                                 @"translate":translate,
@@ -376,7 +376,7 @@
  */
 + (void)findWordsWithUserId:(NSNumber *)userId Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters = @{@"version":kVersion_1,
                                 @"userId":userId
                                 };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/ios/words/private/find",BaseURL]parameters:paramters complete:complete];
@@ -392,7 +392,7 @@
  */
 + (void)removeWordsWithUseId:(NSNumber *)userId Word:(NSString *)word Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters = @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters = @{@"version":kVersion_1,
                                 @"userId":userId,
                                 @"word":word
                                 };
@@ -409,7 +409,7 @@
  */
 +(void)searchLoginCountWithUserId:(NSString *)userId LoginTime:(NSString *)logintime ExitTime:(NSString *)exittime Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters =  @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters =  @{@"version":kVersion_1,
                                  @"userId":userId ? userId : @"",
                                  @"logintime":logintime ? logintime : @"",
                                  @"exittime":exittime ? exittime : @"",
@@ -425,7 +425,7 @@
  */
 + (void)searchClicktimeWithUserId:(NSString *)userId Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters =  @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters =  @{@"version":kVersion_1,
                                  @"userId":userId ? userId : @"",
                                  };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/user/searchOvertime",BaseURL]parameters:paramters complete:complete];
@@ -440,7 +440,7 @@
  */
 + (void)searchOvertimeWithUserId:(NSString *)userId Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters =  @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters =  @{@"version":kVersion_1,
                                  @"userId":userId ? userId : @"",
                                  };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/user/searchClicktime",BaseURL]parameters:paramters complete:complete];
@@ -454,7 +454,7 @@
  */
 + (void)searchStudyCountWithUserId:(NSString *)userId Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters =  @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters =  @{@"version":kVersion_1,
                                  @"userId":userId ? userId : @"",
                                  };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/user/searchStudyCount",BaseURL]parameters:paramters complete:complete];
@@ -469,7 +469,7 @@
  */
 + (void)searchSimulationCountWithUserId:(NSString *)userId Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters =  @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters =  @{@"version":kVersion_1,
                                  @"userId":userId ? userId : @"",
                                  };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/user/searchSimulationCount",BaseURL]parameters:paramters complete:complete];
@@ -484,7 +484,7 @@
  */
 + (void)searchExerciseCountWithUserId:(NSString *)userId Compelte:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters =  @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters =  @{@"version":kVersion_1,
                                  @"userId":userId ? userId : @"",
                                  };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/user/searchExerciseCount",BaseURL]parameters:paramters complete:complete];
@@ -499,7 +499,7 @@
  */
 + (void)searchCollectionCountWithUserId:(NSString *)userId TestPaperId:(NSNumber *)testPaperId Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters =  @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters =  @{@"version":kVersion_1,
                                  @"userId":userId ? userId : @"",
                                  @"testPaperId":testPaperId
                                  };
@@ -515,7 +515,7 @@
  */
 + (void)searchListeningCountWithUserId:(NSString *)userId TestPaperId:(NSNumber *)testPaperId Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters =  @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters =  @{@"version":kVersion_1,
                                  @"userId":userId ? userId : @"",
                                  @"testPaperId":testPaperId
                                  };
@@ -531,7 +531,7 @@
  */
 + (void)searchDownloadCountWithUserId:(NSString *)userId TestPaperId:(NSNumber *)testPaperId Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters =  @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters =  @{@"version":kVersion_1,
                                  @"userId":userId ? userId : @"",
                                  @"testPaperId":testPaperId
                                  };
@@ -547,11 +547,29 @@
  */
 + (void)searchBannerCountWithUserId:(NSString *)userId BannerId:(NSString *)bannerId Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
-    NSDictionary *paramters =  @{@"version":[Tool getAppVersion],
+    NSDictionary *paramters =  @{@"version":kVersion_1,
                                  @"userId":userId ? userId : @"",
                                  @"bannerId":bannerId
                                  };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/user/searchBannerCount",BaseURL]parameters:paramters complete:complete];
 }
-
+/**
+ 添加订单信息
+ 
+ @param userId 用户id
+ @param addressee 收件人
+ @param phone 手机号
+ @param address 收件地址
+ @param complete block
+ */
++ (void)addOrderInfoWIthUserId:(NSString *)userId Addressee:(NSString *)addressee Phone:(NSString *)phone Address:(NSString *)address Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"version_2":kVersion_2,
+                                 @"userId":userId,
+                                 @"recipient":addressee,
+                                 @"phone":phone,
+                                 @"address":address,
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/info/addInfo",BaseURL]parameters:paramters complete:complete];
+}
 @end

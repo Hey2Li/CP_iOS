@@ -166,7 +166,7 @@
         [LTHttpManager UserCodeLoginWithPhone:self.phoneStr andCode:[USERDEFAULTS objectForKey:USER_CODE_KEY] Complete:^(LTHttpResult result, NSString *message, id data) {
             if (LTHttpResultSuccess == result) {
                 //初始化控制器
-                UIViewController *centerVC = [[HomeViewController alloc]init];
+                UIViewController *centerVC = [[BaseHomeViewController alloc]init];
                 UIViewController *leftVC = [[LeftViewController alloc]init];
                 
                 //初始化导航控制器

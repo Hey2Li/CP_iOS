@@ -40,4 +40,6 @@ extern NSString *const kJSONAlphabet;
 extern NSString *const kJSONText;
 extern NSString *const kJSONAnswer;
 extern NSString *const kJSONExplanation;
+extern NSString *const kVersion_1;
+extern NSString *const kVersion_2;
 @end

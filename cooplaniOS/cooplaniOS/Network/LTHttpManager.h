@@ -316,4 +316,15 @@
  */
 + (void)searchBannerCountWithUserId:(NSString *)userId BannerId:(NSString *)bannerId Complete:(completeBlock)complete;
 
+
+/**
+ 添加订单信息
+
+ @param userId 用户id
+ @param addressee 收件人
+ @param phone 手机号
+ @param address 收件地址
+ @param complete block
+ */
++ (void)addOrderInfoWIthUserId:(NSString *)userId Addressee:(NSString *)addressee Phone:(NSString *)phone Address:(NSString *)address Complete:(completeBlock)complete;
 @end

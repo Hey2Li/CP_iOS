@@ -40,4 +40,6 @@ NSString *const kJSONAlphabet = @"Alphabet";
 NSString *const kJSONText = @"Text";
 NSString *const kJSONAnswer = @"Answer";
 NSString *const kJSONExplanation = @"Explanation";
+NSString *const kVersion_1 = @"1.0.0";
+NSString *const kVersion_2 = @"2.0";
 @end

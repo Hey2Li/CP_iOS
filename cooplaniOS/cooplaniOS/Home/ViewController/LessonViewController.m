@@ -8,6 +8,7 @@
 
 #import "LessonViewController.h"
 #import "LessonTableViewCell.h"
+#import "BuyLessonViewController.h"
 
 @interface LessonViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -74,7 +75,12 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     LessonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LessonTableViewCell class])];
     cell.backgroundColor = [UIColor clearColor];
+    cell.selectionStyle = NO;
     return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    BuyLessonViewController *vc = [[BuyLessonViewController alloc]init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
