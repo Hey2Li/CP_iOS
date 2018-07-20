@@ -25,9 +25,8 @@
     // Configure the view for the selected state
 }
 -(void)startPlayVideo:(UIButton *)sender{
-    sender.hidden = YES;
     if (self.playStartClickBlock) {
-        self.playStartClickBlock(self.backgroundImageView);
+        self.playStartClickBlock(self.backgroundImageView, sender);
     }
     
 }

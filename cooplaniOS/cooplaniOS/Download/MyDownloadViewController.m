@@ -11,10 +11,15 @@
 #import "PaperDetailViewController.h"
 #import "NSString+FileSize.h"
 #import "PaperModel.h"
+#import "LessonTopSegment.h"
+#import "LessonDownloadTableViewCell.h"
 
-@interface MyDownloadViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface MyDownloadViewController ()<UITableViewDelegate, UITableViewDataSource, TopSegmentDelegate>
 @property (nonatomic, strong) UITableView *myTableView;
 @property (nonatomic, strong) NSMutableArray *downloadArray;
+@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) LessonTopSegment *topSegment;
+@property (nonatomic, strong) UITableView *listenTableView;
 @end
 
 @implementation MyDownloadViewController
@@ -26,7 +31,7 @@
 }
 - (UITableView *)myTableView{
     if (!_myTableView) {
-        _myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
+        _myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 40) style:UITableViewStylePlain];
         _myTableView.delegate = self;
         _myTableView.dataSource = self;
         _myTableView.separatorStyle = NO;
@@ -34,18 +39,58 @@
     }
     return _myTableView;
 }
+- (UITableView *)listenTableView{
+    if (!_listenTableView) {
+        _listenTableView = [[UITableView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 40) style:UITableViewStylePlain];
+        _listenTableView.delegate = self;
+        _listenTableView.dataSource = self;
+        _listenTableView.separatorStyle = NO;
+        [_listenTableView registerNib:[UINib nibWithNibName:NSStringFromClass([LessonDownloadTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([LessonDownloadTableViewCell class])];
+    }
+    return _listenTableView;
+}
+#pragma mark segmentDelegate
+- (void)segmentIndex:(NSInteger)index{
+    [self.scrollView setContentOffset:CGPointMake(SCREEN_WIDTH * index, 0) animated:YES];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"我的下载";
     self.view.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:self.myTableView];
+    [self initWithView];
+    [self initDB];
+}
+- (void)initWithView{
+    LessonTopSegment *topSegment = [[LessonTopSegment alloc]initWithTitles:@[@"听力",@"课程"] AndSelectColor:UIColorFromRGB(0x4dac7d)];
+    [self.view addSubview:topSegment];
+    topSegment.delegate = self;
+    self.topSegment = topSegment;
+    
+    UIScrollView *scrolleView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 40, SCREEN_WIDTH, SCREEN_HEIGHT - 40)];
+    [self.view addSubview:scrolleView];
+    scrolleView.backgroundColor = [UIColor greenColor];
+    [scrolleView setContentSize:CGSizeMake(SCREEN_WIDTH * 2, scrolleView.height)];
+    
+    [scrolleView addSubview:self.myTableView];
+    [scrolleView addSubview:self.listenTableView];
+    scrolleView.pagingEnabled = YES;
+    scrolleView.showsHorizontalScrollIndicator = NO;
+    self.scrollView = scrolleView;
+    self.scrollView.delegate = self;
+}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if (scrollView == self.scrollView) {
+        [self.topSegment selectIndex:scrollView.contentOffset.x/SCREEN_WIDTH];
+    }
+}
+- (void)initDB{
     NSArray<DownloadFileModel *> *list = J_Select(DownloadFileModel).Where(@"paperVoiceName").list;
     list = J_Select(DownloadFileModel).Where(@"paperVoiceName").list;
     [self.myTableView reloadData];
     NSArray *array = [DownloadFileModel jr_findAll];
     self.downloadArray = [NSMutableArray arrayWithArray:list];
-//    unsigned int count;
+    //    unsigned int count;
     for (int i = 0; i < list.count; i ++) {
         DownloadFileModel *model = self.downloadArray[i];
         NSLog(@"%@,%@",[model jr_primaryKeyValue],model);
@@ -54,18 +99,18 @@
         DownloadFileModel *model = array[i];
         NSLog(@"%@,%@",[model jr_primaryKeyValue],model);
     }
-//    if (self.downloadArray.count > 0) {
-//        objc_property_t *props = class_copyPropertyList([model class], &count);
-//        NSMutableArray *marray = [NSMutableArray array];
-//        for (int i = 0; i < count; i++) {
-//            objc_property_t property = props[i];
-//            const char *cName = property_getName(property);
-//            NSString *name = [NSString stringWithCString:cName encoding:NSUTF8StringEncoding];
-//            id propertyValue = [model valueForKey:(NSString *)name];
-//            NSLog(@"%@:%@",name,propertyValue);
-//            [marray addObject:name];
-//        }
-//    }
+    //    if (self.downloadArray.count > 0) {
+    //        objc_property_t *props = class_copyPropertyList([model class], &count);
+    //        NSMutableArray *marray = [NSMutableArray array];
+    //        for (int i = 0; i < count; i++) {
+    //            objc_property_t property = props[i];
+    //            const char *cName = property_getName(property);
+    //            NSString *name = [NSString stringWithCString:cName encoding:NSUTF8StringEncoding];
+    //            id propertyValue = [model valueForKey:(NSString *)name];
+    //            NSLog(@"%@:%@",name,propertyValue);
+    //            [marray addObject:name];
+    //        }
+    //    }
     [self.myTableView reloadData];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -77,45 +122,22 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 74;
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 64;
-}
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 74)];
-    view.backgroundColor = UIColorFromRGB(0xf7f7f7);
-    UILabel *dowloadLb = [[UILabel alloc]init];
-    dowloadLb.text = @"正在下载";
-    dowloadLb.font = [UIFont systemFontOfSize:16];
-    dowloadLb.textColor = UIColorFromRGB(0x666666);
-    [view addSubview:dowloadLb];
-    [dowloadLb mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(view.mas_left).offset(16);
-        make.centerY.equalTo(view.mas_centerY);
-        make.width.equalTo(@70);
-    }];
-    
-    UILabel *numLabel = [[UILabel alloc]init];
-    numLabel.text = @"0";
-    numLabel.font = [UIFont systemFontOfSize:16];
-    numLabel.textColor = UIColorFromRGB(0xFFBE2E);
-    [view addSubview:numLabel];
-    [numLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(dowloadLb.mas_right);
-        make.width.equalTo(@15);
-        make.centerY.equalTo(dowloadLb);
-    }];
-    return view;
-}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    MyCollectionPaperTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([MyCollectionPaperTableViewCell class])];
-    [cell.dowloadBtn setImage:[UIImage imageNamed:@"更多"] forState:UIControlStateNormal];
-    cell.selectionStyle = NO;
-    DownloadFileModel *model = self.downloadArray[indexPath.row];
-    cell.downloadModel = model;
-    NSString *path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *filePath = [NSString stringWithFormat:@"%@/%@",path,model.paperVoiceName];
-    cell.fileSizeLb.text = filePath.fileSize;
-    return cell;
+    if (tableView == self.myTableView) {
+        MyCollectionPaperTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([MyCollectionPaperTableViewCell class])];
+        [cell.dowloadBtn setImage:[UIImage imageNamed:@"更多"] forState:UIControlStateNormal];
+        cell.selectionStyle = NO;
+        DownloadFileModel *model = self.downloadArray[indexPath.row];
+        cell.downloadModel = model;
+        NSString *path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+        NSString *filePath = [NSString stringWithFormat:@"%@/%@",path,model.paperVoiceName];
+        cell.fileSizeLb.text = filePath.fileSize;
+        return cell;
+    }else{
+        LessonDownloadTableViewCell *cell =[tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LessonDownloadTableViewCell class])];
+        cell.selectionStyle = NO;
+        return cell;
+    }
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
     return YES;

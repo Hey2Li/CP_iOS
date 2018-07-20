@@ -10,6 +10,7 @@
 #import <WMPlayer.h>
 #import "VideoTableViewCell.h"
 #import "WordWebViewTableViewCell.h"
+#import "VideoBottomView.h"
 
 @interface VideoViewController ()<WMPlayerDelegate, UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *tableView;
@@ -199,6 +200,18 @@
     [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([VideoTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([VideoTableViewCell class])];
     [tableView registerClass:[WordWebViewTableViewCell class] forCellReuseIdentifier:NSStringFromClass([WordWebViewTableViewCell class])];
     self.tableView = tableView;
+    
+    VideoBottomView *bottomView = [[VideoBottomView alloc]init];
+    [self.view addSubview:bottomView];
+    [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view);
+        make.right.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+        make.height.equalTo(@50);
+    }];
+    bottomView.layer.shadowColor = [UIColor blackColor].CGColor;
+    bottomView.layer.shadowOffset = CGSizeMake(-3, 0);
+    bottomView.layer.shadowOpacity = 0.4;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 2;
@@ -223,11 +236,12 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (section > 0) {
         UIView *changeView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 48)];
-        changeView.backgroundColor = [UIColor blackColor];
+        changeView.backgroundColor = [UIColor whiteColor];
         UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        leftBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         [leftBtn setTitle:@"课件" forState:UIControlStateNormal];
-        [leftBtn setTitleColor:DRGBCOLOR forState:UIControlStateSelected];
-        [leftBtn setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateNormal];
+        [leftBtn setTitleColor:UIColorFromRGB(0x4DAC7D) forState:UIControlStateSelected];
+        [leftBtn setTitleColor:UIColorFromRGB(0x666666) forState:UIControlStateNormal];
         [changeView addSubview:leftBtn];
         [leftBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(changeView);
@@ -237,9 +251,10 @@
         }];
         
         UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        rightBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         [rightBtn setTitle:@"词汇" forState:UIControlStateNormal];
-        [rightBtn setTitleColor:DRGBCOLOR forState:UIControlStateSelected];
-        [rightBtn setTitleColor:UIColorFromRGB(0xffffff) forState:UIControlStateNormal];
+        [rightBtn setTitleColor:UIColorFromRGB(0x4DAC7D) forState:UIControlStateSelected];
+        [rightBtn setTitleColor:UIColorFromRGB(0x666666) forState:UIControlStateNormal];
         [changeView addSubview:rightBtn];
         [rightBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(changeView);
@@ -249,14 +264,24 @@
         }];
         
         UIView *bottomView = [UIView new];
-        bottomView.backgroundColor = DRGBCOLOR;
+        bottomView.backgroundColor = UIColorFromRGB(0x4DAC7D);
         [changeView addSubview:bottomView];
         [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.width.equalTo(@50);
-            make.height.equalTo(@2);
+            make.width.equalTo(@85);
+            make.height.equalTo(@3);
             make.centerX.equalTo(leftBtn.mas_centerX);
             make.bottom.equalTo(changeView);
         }];
+        
+        UILabel *line = [UILabel new];
+        [changeView addSubview:line];
+        [line mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(changeView);
+            make.right.equalTo(changeView);
+            make.height.equalTo(@1);
+            make.bottom.equalTo(changeView);
+        }];
+        line.backgroundColor = UIColorFromRGB(0xF0F0F0);
         
         self.bottomView = bottomView;
         self.leftBtn = leftBtn;
@@ -293,8 +318,8 @@
 
     [self.bottomView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(sender.mas_centerX);
-        make.width.equalTo(@50);
-        make.height.equalTo(@2);
+        make.width.equalTo(@85);
+        make.height.equalTo(@3);
         make.bottom.equalTo(self.bottomView.superview);
     }];
     [self.view setNeedsUpdateConstraints];
@@ -319,23 +344,50 @@
     }else{
         VideoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([VideoTableViewCell class])];
         WeakSelf
-        cell.playStartClickBlock = ^(UIImageView *imageView) {
-            [weakSelf releaseWMPlayer];
-            weakSelf.currentCell = (VideoTableViewCell *)imageView.superview.superview;
-            WMPlayerModel *playerModel = [WMPlayerModel new];
-            playerModel.title = @"测试视频";
-            playerModel.indexPath = indexPath;
-            playerModel.videoURL = [NSURL URLWithString:@"https://oss.cooplan.cn/curriculums/%E5%88%B7%E9%A2%98%E8%AF%BE1/%E5%9B%9B%E7%BA%A7%E5%90%AC%E5%8A%9B%E5%88%B7%E9%A2%98%E8%AF%BE1_480.mp4"];
-            weakSelf.wmPlayer = [[WMPlayer alloc] init];
-            weakSelf.wmPlayer.tintColor = DRGBCOLOR;
-            weakSelf.wmPlayer.playerModel = playerModel;
-            weakSelf.wmPlayer.delegate = weakSelf;
-            [imageView addSubview:weakSelf.wmPlayer];
-            [weakSelf.wmPlayer mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.edges.mas_equalTo(imageView);
-            }]; 
-            [weakSelf.wmPlayer play];
-        };
+        NSString *GPRSPlay = [[NSUserDefaults standardUserDefaults]objectForKey:@"GPRSPlay"];
+        if ([kNetworkState isEqualToString:@"WIFI"] || [GPRSPlay isEqualToString:@"1"]) {
+            cell.playStartClickBlock = ^(UIImageView *imageView, UIButton *sender) {
+                sender.hidden = YES;
+                [weakSelf releaseWMPlayer];
+                weakSelf.currentCell = (VideoTableViewCell *)imageView.superview.superview;
+                WMPlayerModel *playerModel = [WMPlayerModel new];
+                playerModel.title = @"测试视频";
+                playerModel.indexPath = indexPath;
+                playerModel.videoURL = [NSURL URLWithString:@"https://oss.cooplan.cn/curriculums/%E5%88%B7%E9%A2%98%E8%AF%BE1/%E5%9B%9B%E7%BA%A7%E5%90%AC%E5%8A%9B%E5%88%B7%E9%A2%98%E8%AF%BE1_480.mp4"];
+                weakSelf.wmPlayer = [[WMPlayer alloc] init];
+                weakSelf.wmPlayer.tintColor = DRGBCOLOR;
+                weakSelf.wmPlayer.playerModel = playerModel;
+                weakSelf.wmPlayer.delegate = weakSelf;
+                [imageView addSubview:weakSelf.wmPlayer];
+                [weakSelf.wmPlayer mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.edges.mas_equalTo(imageView);
+                }];
+                [weakSelf.wmPlayer play];
+            };
+        }else{
+            cell.playStartClickBlock = ^(UIImageView *imageView, UIButton *sender) {
+                LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"移动网络下确定要播放吗" sureBtn:@"确定" cancleBtn:@"取消"];
+                [alertView show];
+                alertView.resultIndex = ^(NSInteger index) {
+                    sender.hidden = YES;
+                    [weakSelf releaseWMPlayer];
+                    weakSelf.currentCell = (VideoTableViewCell *)imageView.superview.superview;
+                    WMPlayerModel *playerModel = [WMPlayerModel new];
+                    playerModel.title = @"测试视频";
+                    playerModel.indexPath = indexPath;
+                    playerModel.videoURL = [NSURL URLWithString:@"https://oss.cooplan.cn/curriculums/%E5%88%B7%E9%A2%98%E8%AF%BE1/%E5%9B%9B%E7%BA%A7%E5%90%AC%E5%8A%9B%E5%88%B7%E9%A2%98%E8%AF%BE1_480.mp4"];
+                    weakSelf.wmPlayer = [[WMPlayer alloc] init];
+                    weakSelf.wmPlayer.tintColor = DRGBCOLOR;
+                    weakSelf.wmPlayer.playerModel = playerModel;
+                    weakSelf.wmPlayer.delegate = weakSelf;
+                    [imageView addSubview:weakSelf.wmPlayer];
+                    [weakSelf.wmPlayer mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.edges.mas_equalTo(imageView);
+                    }];
+                    [weakSelf.wmPlayer play];
+                };
+            };
+        }
         cell.selectionStyle = NO;
         return cell;
     }
@@ -344,8 +396,6 @@
     [super viewWillAppear:animated];
     self.mm_drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
     self.mm_drawerController.closeDrawerGestureModeMask = MMCloseDrawerGestureModeNone;
-    [self.navigationController.navigationBar setBarTintColor:DRGBCOLOR];
-    self.navigationController.navigationBarHidden = NO;
 }
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];

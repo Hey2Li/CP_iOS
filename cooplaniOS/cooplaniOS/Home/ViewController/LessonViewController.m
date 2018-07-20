@@ -9,17 +9,39 @@
 #import "LessonViewController.h"
 #import "LessonTableViewCell.h"
 #import "BuyLessonViewController.h"
+#import "LessonDetailViewController.h"
+#import "LessonModel.h"
 
 @interface LessonViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
+@property (nonatomic, strong) NSMutableArray *dataArray;
 @end
 
 @implementation LessonViewController
-
+- (NSMutableArray *)dataArray{
+    if (!_dataArray) {
+        _dataArray = [NSMutableArray array];
+    }
+    return _dataArray;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self initWithView];
+    [self loadData];
+}
+- (void)loadData{
+    [LTHttpManager findAllCommodityWithComplete:^(LTHttpResult result, NSString *message, id data) {
+        if (LTHttpResultSuccess == result) {
+            NSArray *dataArray = data[@"responseData"];
+            [self.dataArray removeAllObjects];
+            for (NSDictionary *dict in dataArray) {
+                LessonModel *model = [LessonModel mj_objectWithKeyValues:dict];
+                [self.dataArray addObject:model];
+            }
+            [self.myTableView reloadData];
+        }
+    }];
 }
 - (void)initWithView{
     //底部背景
@@ -52,7 +74,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 3;
+    return self.dataArray.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return [Tool layoutForAlliPhoneHeight:152];
@@ -74,12 +96,13 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     LessonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LessonTableViewCell class])];
+    cell.lessonModel = self.dataArray[indexPath.row];
     cell.backgroundColor = [UIColor clearColor];
     cell.selectionStyle = NO;
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    BuyLessonViewController *vc = [[BuyLessonViewController alloc]init];
+    LessonDetailViewController *vc = [[LessonDetailViewController alloc]init];
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)didReceiveMemoryWarning {

@@ -48,6 +48,7 @@
 #define USER_NICKNAME @"user_nickname"
 #define USER_SEX @"user_sex"
 #define IS_USER_ID [[NSUserDefaults standardUserDefaults]objectForKey:@"user_id"]
+#define kNetworkState [[NSUserDefaults standardUserDefaults]objectForKey:@"networkState"]
 //------------------------size--------------------------
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height

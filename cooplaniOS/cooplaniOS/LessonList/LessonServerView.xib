@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="LessonServerView">
+            <rect key="frame" x="0.0" y="0.0" width="379" height="599"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EMv-KR-4Fp">
+                    <rect key="frame" x="119" y="80" width="140" height="140"/>
+                    <color key="backgroundColor" red="0.79914218189999997" green="0.79975396389999998" blue="0.7992369533" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="140" id="jKz-fn-5bJ"/>
+                        <constraint firstAttribute="height" constant="140" id="mSW-Tt-J6O"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="酷学计划微信群" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ap-5Q-Z5h">
+                    <rect key="frame" x="128.5" y="250" width="121.5" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="Z6a-YO-5Ko"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.3026795685" green="0.67348021270000002" blue="0.49126440290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OwT-Ce-0Zj">
+                    <rect key="frame" x="72.5" y="282" width="235" height="34"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="235" id="7To-dd-dWw"/>
+                        <constraint firstAttribute="height" constant="34" id="vbg-4h-7pX"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" red="0.79914218187332153" green="0.79975396394729614" blue="0.7992369532585144" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g2r-yG-txb">
+                    <rect key="frame" x="49.5" y="376" width="280" height="45"/>
+                    <color key="backgroundColor" red="0.3026795685" green="0.67348021270000002" blue="0.49126440290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="280" id="60z-n5-5W8"/>
+                        <constraint firstAttribute="height" constant="45" id="6Hg-fr-pUP"/>
+                    </constraints>
+                    <state key="normal" title="保存社群二维码"/>
+                    <connections>
+                        <action selector="saveQrCodeClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="dLo-fN-HtR"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="g2r-yG-txb" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="3x2-Jd-Q5I"/>
+                <constraint firstItem="EMv-KR-4Fp" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="60" id="67X-NS-UdO"/>
+                <constraint firstItem="OwT-Ce-0Zj" firstAttribute="top" secondItem="2Ap-5Q-Z5h" secondAttribute="bottom" constant="10" id="Mz5-Mk-DOL"/>
+                <constraint firstItem="2Ap-5Q-Z5h" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="V8G-4p-sa4"/>
+                <constraint firstItem="EMv-KR-4Fp" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="ZSa-IK-Ajc"/>
+                <constraint firstItem="2Ap-5Q-Z5h" firstAttribute="top" secondItem="EMv-KR-4Fp" secondAttribute="bottom" constant="30" id="fEd-AD-2q2"/>
+                <constraint firstItem="OwT-Ce-0Zj" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="l6I-e3-Mbk"/>
+                <constraint firstItem="g2r-yG-txb" firstAttribute="top" secondItem="OwT-Ce-0Zj" secondAttribute="bottom" constant="60" id="yMJ-dN-l1C"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="qrImg" destination="EMv-KR-4Fp" id="kvI-im-1dy"/>
+                <outlet property="saveQrCodeBtn" destination="g2r-yG-txb" id="dFD-dv-2Ei"/>
+            </connections>
+            <point key="canvasLocation" x="26.5" y="17.5"/>
+        </view>
+    </objects>
+</document>

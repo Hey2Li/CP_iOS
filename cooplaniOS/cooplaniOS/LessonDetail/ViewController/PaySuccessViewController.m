@@ -9,6 +9,8 @@
 #import "PaySuccessViewController.h"
 #import "BuyLessonTableHeaderView.h"
 #import "PaySuccessTableViewCell.h"
+#import "BaseHomeViewController.h"
+#import "LessonListViewController.h"
 
 @interface PaySuccessViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -33,6 +35,21 @@
     // Do any additional setup after loading the view.
     self.title = @"课程详情";
     [self initWithView];
+    [self initWithNavi];
+}
+- (void)initWithNavi{
+    self.navigationItem.hidesBackButton = YES;
+    UIImage *image = [[UIImage imageNamed:@"back"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:image style:UIBarButtonItemStyleDone target:self action:@selector(back)];
+    self.navigationItem.leftItemsSupplementBackButton = YES;
+}
+- (void)back{
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[BaseHomeViewController class]]) {
+            BaseHomeViewController *revise = (BaseHomeViewController *)controller;
+            [self.navigationController popToViewController:revise animated:YES];
+        }
+    }
 }
 - (void)initWithView{
     self.headerView = [[BuyLessonTableHeaderView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 100)];
@@ -58,7 +75,8 @@
     [self.headerView selectIndex:2];
 }
 - (void)nextStep:(UIButton *)btn{
-    [self.headerView selectIndex:btn.tag++];
+    LessonListViewController *vc = [[LessonListViewController alloc]init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 1;

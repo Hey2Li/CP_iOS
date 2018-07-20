@@ -15,6 +15,8 @@
 #import "LeftViweTableViewCell.h"
 #import "NoContentViewController.h"
 #import "FeedbackViewController.h"
+#import "LessonListViewController.h"
+#import "SettingViewController.h"
 
 @interface LeftViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -64,7 +66,6 @@
     [headerBtn addTarget:self action:@selector(preventFlicker:) forControlEvents:UIControlEventAllTouchEvents];
     self.headerBtn = headerBtn;
     
-    
     UILabel *userNameLb = [[UILabel alloc]init];
     NSString *phoneStr = [USERDEFAULTS objectForKey:USER_PHONE_KEY] ? [USERDEFAULTS objectForKey:USER_PHONE_KEY] : [USERDEFAULTS objectForKey:USER_NICKNAME];
     userNameLb.text =  phoneStr.length > 0 ? phoneStr : @"请登录";
@@ -91,6 +92,7 @@
     tableView.tableHeaderView = headerView;
     self.myTableView = tableView;
     [self.view addSubview:tableView];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(quitLogin:) name:@"quitLogin" object:nil];
 }
 - (void)preventFlicker:(UIButton *)button {
     button.highlighted = NO;
@@ -111,9 +113,13 @@
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
+- (void)quitLogin:(NSNotification *)notifi{
+    [self.headerBtn setImage:[UIImage imageNamed:@"touxiang"] forState:UIControlStateNormal];
+    self.userNameLb.text = @"请登录";
+}
 #pragma mark -- UITableViewDelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return [USERDEFAULTS objectForKey:USER_ID] ? 6:5;
+    return 6;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 1;
@@ -126,14 +132,11 @@
         case 1:
         case 2:
         case 4:
+        case 5:
             return 2;
             break;
         case 3:
             return 95;
-            break;
-        case 5:
-            return 20;
-            break;
             break;
         default:
             return CGFLOAT_MIN;
@@ -156,11 +159,12 @@
     cell.titleLb.font = [UIFont systemFontOfSize:14];
     switch (indexPath.section) {
         case 0:
-            cell.titleLb.text = @"我的笔记";
+//            cell.titleLb.text = @"我的笔记";
+            cell.titleLb.text = @"我的课程";
             cell.leftImageVIew.image = [UIImage imageNamed:@"note"];
             break;
         case 1:
-            cell.titleLb.text = @"我的收藏";
+            cell.titleLb.text = @"我的笔记";
             cell.leftImageVIew.image = [UIImage imageNamed:@"collection"];
             break;
         case 2:
@@ -168,19 +172,16 @@
             cell.leftImageVIew.image = [UIImage imageNamed:@"errorlog"];
             break;
         case 3:
-            cell.titleLb.text = @"意见反馈";
+            cell.titleLb.text = @"设置";
             cell.leftImageVIew.image = [UIImage imageNamed:@"Feedback"];
             break;
         case 4:
-            cell.titleLb.text = @"关于我们";
-            cell.leftImageVIew.image = [UIImage imageNamed:@"about us"];
+            cell.titleLb.text = @"意见反馈";
+            cell.leftImageVIew.image = [UIImage imageNamed:@"Feedback"];
             break;
         case 5:
-            cell.titleLb.text = @"退出登录";
-            cell.titleLb.textAlignment = NSTextAlignmentLeft;
-            cell.titleLb.textColor = UIColorFromRGB(0xFFFFFF);
-            cell.contentView.backgroundColor = UIColorFromRGB(0xD76F67);
-            cell.selectionStyle = NO;
+            cell.titleLb.text = @"关于我们";
+            cell.leftImageVIew.image = [UIImage imageNamed:@"about us"];
         default:
             break;
     }
@@ -191,8 +192,9 @@
     switch (indexPath.section) {
         case 0:
         {
-            MyNoteViewController *vc = [[MyNoteViewController alloc]init];
-            vc.title = @"我的笔记";
+            //我的课程
+            LessonListViewController *vc = [[LessonListViewController alloc]init];
+            vc.title = @"我的课程";
             //拿到我们的ViewController，让它去push
             UINavigationController* nav = (UINavigationController*)self.mm_drawerController.centerViewController;
             [nav pushViewController:vc animated:NO];
@@ -206,7 +208,8 @@
             break;
         case 1:
         {
-            MyCollectionViewController *vc = [[MyCollectionViewController alloc]init];
+            MyNoteViewController *vc = [[MyNoteViewController alloc]init];
+            vc.title = @"我的笔记";
             //拿到我们的ViewController，让它去push
             UINavigationController* nav = (UINavigationController*)self.mm_drawerController.centerViewController;
             [nav pushViewController:vc animated:NO];
@@ -235,6 +238,22 @@
             break;
         case 3:
         {
+            //设置
+            SettingViewController *vc = [[SettingViewController alloc]init];
+            vc.title = @"我的下载";
+            //拿到我们的ViewController，让它去push
+            UINavigationController* nav = (UINavigationController*)self.mm_drawerController.centerViewController;
+            [nav pushViewController:vc animated:NO];
+            //当我们push成功之后，关闭我们的抽屉
+            [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
+                //设置打开抽屉模式为MMOpenDrawerGestureModeNone，也就是没有任何效果。
+                [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
+                [tableView deselectRowAtIndexPath:indexPath animated:NO];
+            }];
+        }
+            break;
+        case 4:
+        {
             FeedbackViewController *vcccc = [[FeedbackViewController alloc]init];
             vcccc.title = @"意见反馈";
             //拿到我们的ViewController，让它去push
@@ -248,7 +267,7 @@
             }];
         }
             break;
-        case 4:
+        case 5:
         {
             VC.title = @"关于我们";
             //拿到我们的ViewController，让它去push
@@ -260,21 +279,6 @@
                 [self.mm_drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
                 [tableView deselectRowAtIndexPath:indexPath animated:NO];
             }];
-        }
-            break;
-        case 5:
-        {
-            LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"确定退出登录" sureBtn:@"确定" cancleBtn:@"取消"];
-            alertView.resultIndex = ^(NSInteger index) {
-                NSString*appDomain = [[NSBundle mainBundle]bundleIdentifier];
-                [[NSUserDefaults standardUserDefaults]removePersistentDomainForName:appDomain];
-                SVProgressShowStuteText(@"退出成功", YES);
-                [self.headerBtn setImage:[UIImage imageNamed:@"touxiang"] forState:UIControlStateNormal];
-                self.userNameLb.text = @"请登录";
-                 [[NSNotificationCenter defaultCenter]postNotificationName:@"homereloaddata" object:nil];
-                [self.myTableView reloadData];
-            };
-            [alertView show];
         }
         default:
             break;

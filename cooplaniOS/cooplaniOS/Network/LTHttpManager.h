@@ -327,4 +327,96 @@
  @param complete block
  */
 + (void)addOrderInfoWIthUserId:(NSString *)userId Addressee:(NSString *)addressee Phone:(NSString *)phone Address:(NSString *)address Complete:(completeBlock)complete;
+
+
+/**
+ 获得二维码
+
+ @param complete block
+ */
++ (void)getQRWithComplete:(completeBlock)complete;
+
+
+/**
+ 验证验证码
+
+ @param phone 登录手机号
+ @param code 验证码
+ @param complete block
+ */
++ (void)VerifyCodeWithPhone:(NSString *)phone Code:(NSString *)code Complete:(completeBlock)complete;
+
+/**
+ 微信支付
+
+ @param complete block
+ */
++ (void)wxPayWithCoodsId:(NSString *)commodity_id UserId:(NSString *)user_id Complete:(completeBlock)complete;
+
+
+/**
+ 查看所有商品
+
+ @param complete block
+ */
++ (void)findAllCommodityWithComplete:(completeBlock)complete;
+
+
+/**
+ 我购买的商品
+
+ @param user_id 用户ID
+ @param complete block
+ */
++ (void)findAllMyCommodityWithUserId:(NSString *)user_id Complete:(completeBlock)complete;
+
+
+/**
+ 根据类型查看所有课程
+
+ @param user_id 用户ID
+ @param curriculumType 课程类型 2方法可 3刷题可
+ @param complete block
+ */
++ (void)findByCurriculumTypeWithUserId:(NSString *)user_id CurriculumType:(NSString *)curriculumType Complete:(completeBlock)complete;
+
+
+/**
+ 查看一个课程
+
+ @param user_id 用户ID
+ @param curriculum_id 课程ID
+ @param complete block
+ */
++ (void)findOneCurriculumWithUserId:(NSString *)user_id CurriculumId:(NSString *)curriculum_id Complete:(completeBlock)complete;
+
+
+/**
+ 增加更新用户播放历史记录
+
+ @param user_id 用户ID
+ @param curriculum_id 课程ID
+ @param lastTime 上次播放时间
+ @param complete block
+ */
++ (void)addPlayRecordWithUseId:(NSString *)user_id CurriculumId:(NSString *)curriculum_id LastTime:(NSString *)lastTime Complete:(completeBlock)complete;
+
+
+/**
+ 查询用户播放历史记录
+
+ @param user_id 用户ID
+ @param complete block
+ */
++ (void)searchPlayRecordWithUserId:(NSString *)user_id Complete:(completeBlock)complete;
+
+
+/**
+ 删除用户播放记录
+
+ @param ID 播放记录ID
+ @param complete block
+ */
++ (void)deletePlayRecordWithPlayRecordId:(NSString *)ID Complete:(completeBlock)complete;
+
 @end

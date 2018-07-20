@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^playStartClick)(UIImageView *imageView);
+typedef void(^playStartClick)(UIImageView *imageView, UIButton *sender);
 
 @interface VideoTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIButton *playBtn;

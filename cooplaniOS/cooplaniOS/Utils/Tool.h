@@ -50,5 +50,5 @@ NSAttributedString *returnNumAttr(NSString *str,NSInteger fontSize);
 
 + (NSString *)getAppVersion;
 + (NSString *)arrayToJSONString:(NSArray *)array;
-
++ (void)gotoLogin:(UIViewController *)viewController;
 @end

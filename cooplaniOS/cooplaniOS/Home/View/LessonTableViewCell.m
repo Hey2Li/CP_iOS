@@ -20,5 +20,15 @@
 
     // Configure the view for the selected state
 }
-
+- (void)setLessonModel:(LessonModel *)lessonModel{
+    _lessonModel = lessonModel;
+    self.name.text = lessonModel.name;
+    self.price.text = [NSString stringWithFormat:@"￥%@",lessonModel.price];
+    self.detail.text = lessonModel.info;
+}
+- (void)setMyLessonModel:(LessonModel *)myLessonModel{
+    _myLessonModel = myLessonModel;
+    self.name.text = [NSString stringWithFormat:@"%@",myLessonModel.name];
+    self.detail.text = myLessonModel.info;
+}
 @end

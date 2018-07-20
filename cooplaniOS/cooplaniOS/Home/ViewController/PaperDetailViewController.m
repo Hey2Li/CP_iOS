@@ -316,6 +316,14 @@
 }
 #pragma mark 下载试卷
 - (IBAction)downloadPaper:(UIButton *)sender {
+    NSString *GPRSDownload = [USERDEFAULTS objectForKey:@"GPRSDownload"];
+    if ([kNetworkState isEqualToString:@"GPRS"] && [GPRSDownload isEqualToString:@"0"]) {
+        LTAlertView *alert = [[LTAlertView alloc]initWithTitle:@"移动网络确定下载吗" sureBtn:@"确定" cancleBtn:@"取消"];
+        [alert show];
+        alert.resultIndex = ^(NSInteger index) {
+            
+        };
+    }
     self.downloadView = [[LTDownloadView alloc]initWithTitle:@"是否下载此资源" sureBtn:@"立即下载" fileSize:self.voiceSize];
     [LTHttpManager searchDownloadCountWithUserId:IS_USER_ID TestPaperId:@([self.downloadModel.testPaperId integerValue])  Complete:^(LTHttpResult result, NSString *message, id data) {
         

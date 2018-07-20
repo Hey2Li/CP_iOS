@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="100" id="KGk-i7-Jjw" customClass="LessonListTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="321" height="100"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="321" height="99.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lMq-Eo-aE7">
+                        <rect key="frame" x="16" y="23" width="90" height="60"/>
+                        <color key="backgroundColor" red="0.3026795685" green="0.67348021270000002" blue="0.49126440290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="60" id="0pH-vI-b6R"/>
+                            <constraint firstAttribute="width" constant="90" id="Nm9-nG-4zS"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="听力中的警报词1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qGT-Tb-9a0">
+                        <rect key="frame" x="118" y="23" width="177" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="Agh-LK-165"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" red="0.3994230329990387" green="0.3997485339641571" blue="0.39947354793548584" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aPn-BV-amk">
+                        <rect key="frame" x="118" y="49" width="177" height="30"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.79914218187332153" green="0.79975396394729614" blue="0.7992369532585144" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:10:34" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X48-v7-KUc">
+                        <rect key="frame" x="57.5" y="66" width="43.5" height="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" red="0.96912556890000001" green="0.96985918280000005" blue="0.96923929450000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="lMq-Eo-aE7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="5Mq-XV-v0R"/>
+                    <constraint firstItem="X48-v7-KUc" firstAttribute="trailing" secondItem="lMq-Eo-aE7" secondAttribute="trailing" constant="-5" id="H1p-rZ-rIv"/>
+                    <constraint firstItem="qGT-Tb-9a0" firstAttribute="top" secondItem="lMq-Eo-aE7" secondAttribute="top" id="IpE-fa-dnk"/>
+                    <constraint firstItem="aPn-BV-amk" firstAttribute="leading" secondItem="qGT-Tb-9a0" secondAttribute="leading" id="WEu-Oi-kwl"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="aPn-BV-amk" secondAttribute="bottom" constant="10" id="Wa2-SQ-eph"/>
+                    <constraint firstItem="lMq-Eo-aE7" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="23" id="i51-CK-4aE"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="qGT-Tb-9a0" secondAttribute="trailing" constant="10" id="jw1-G8-DCI"/>
+                    <constraint firstItem="aPn-BV-amk" firstAttribute="trailing" secondItem="qGT-Tb-9a0" secondAttribute="trailing" id="sfW-Kb-LiI"/>
+                    <constraint firstItem="aPn-BV-amk" firstAttribute="top" secondItem="qGT-Tb-9a0" secondAttribute="bottom" constant="4" id="taY-tA-biC"/>
+                    <constraint firstItem="X48-v7-KUc" firstAttribute="bottom" secondItem="lMq-Eo-aE7" secondAttribute="bottom" constant="-5" id="tgB-Hf-apL"/>
+                    <constraint firstItem="qGT-Tb-9a0" firstAttribute="leading" secondItem="lMq-Eo-aE7" secondAttribute="trailing" constant="12" id="zGP-xe-PbL"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="info" destination="aPn-BV-amk" id="agD-Ya-yXS"/>
+                <outlet property="name" destination="qGT-Tb-9a0" id="aqh-qE-2y6"/>
+                <outlet property="time" destination="X48-v7-KUc" id="9fJ-mf-TYU"/>
+            </connections>
+            <point key="canvasLocation" x="25.5" y="80"/>
+        </tableViewCell>
+    </objects>
+</document>

@@ -248,7 +248,6 @@
  */
 +(NSURLSessionDownloadTask *)downloadURL:(NSString *) downloadURL progress:(void (^)(NSProgress *downloadProgress))progress destination:(void (^)(NSURL *targetPath))destination failure:(void(^)(NSError *error))faliure{
     
-    
     //1.创建管理者
     LTHTTPSessionManager *manage  = [LTHTTPSessionManager manager];
     
@@ -571,5 +570,155 @@
                                  @"address":address,
                                  };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/info/addInfo",BaseURL]parameters:paramters complete:complete];
+}
+
+/**
+ 获得二维码
+ 
+ @param complete block
+ */
++ (void)getQRWithComplete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"version_2":kVersion_2,
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/qr/getQR",BaseURL]parameters:paramters complete:complete];
+}
+
+/**
+ 验证验证码
+ 
+ @param phone 登录手机号
+ @param code 验证码
+ @param complete block
+ */
++ (void)VerifyCodeWithPhone:(NSString *)phone Code:(NSString *)code Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"version_2":kVersion_2,
+                                 @"phone":phone,
+                                 @"code":code,
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/user/verifyCode",BaseURL]parameters:paramters complete:complete];
+}
+/**
+ 微信支付
+ 
+ @param complete block
+ */
++ (void)wxPayWithCoodsId:(NSString *)commodity_id UserId:(NSString *)user_id Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"commodity_id":commodity_id,
+                                 @"user_id":user_id,
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/weixin/app/wxPay",BaseURL]parameters:paramters complete:complete];
+}
+
+/**
+ 查看所有商品
+ 
+ @param complete block
+ */
++ (void)findAllCommodityWithComplete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"version_2":kVersion_2,
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/commodity/findAll",BaseURL]parameters:paramters complete:complete];
+}
+
+
+/**
+ 我购买的商品
+ 
+ @param user_id 用户ID
+ @param complete block
+ */
++ (void)findAllMyCommodityWithUserId:(NSString *)user_id Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"version_2":kVersion_2,
+                                 @"user_id":user_id
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/mycommodity/findAll",BaseURL]parameters:paramters complete:complete];
+}
+
+
+/**
+ 根据类型查看所有课程
+ 
+ @param user_id 用户ID
+ @param curriculumType 课程类型 2方法可 3刷题可
+ @param complete block
+ */
++ (void)findByCurriculumTypeWithUserId:(NSString *)user_id CurriculumType:(NSString *)curriculumType Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"version_2":kVersion_2,
+                                 @"user_id":user_id,
+                                 @"curriculumType":curriculumType
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/curriculum/findByCurriculumType",BaseURL]parameters:paramters complete:complete];
+}
+
+
+/**
+ 查看一个课程
+ 
+ @param user_id 用户ID
+ @param curriculum_id 课程ID
+ @param complete block
+ */
++ (void)findOneCurriculumWithUserId:(NSString *)user_id CurriculumId:(NSString *)curriculum_id Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"version_2":kVersion_2,
+                                 @"user_id":user_id,
+                                 @"curriculum_id":curriculum_id
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/curriculum/findOneCurriculum",BaseURL]parameters:paramters complete:complete];
+}
+
+
+/**
+ 增加更新用户播放历史记录
+ 
+ @param user_id 用户ID
+ @param curriculum_id 课程ID
+ @param lastTime 上次播放时间
+ @param complete block
+ */
++ (void)addPlayRecordWithUseId:(NSString *)user_id CurriculumId:(NSString *)curriculum_id LastTime:(NSString *)lastTime Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"version_2":kVersion_2,
+                                 @"user_id":user_id,
+                                 @"curriculum_id":curriculum_id,
+                                 @"laseTime":lastTime
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/playRecord/private/addPlayRecord",BaseURL]parameters:paramters complete:complete];
+}
+
+
+/**
+ 查询用户播放历史记录
+ 
+ @param user_id 用户ID
+ @param complete block
+ */
++ (void)searchPlayRecordWithUserId:(NSString *)user_id Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"version_2":kVersion_2,
+                                 @"user_id":user_id
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/playRecord/private/searchPlayRecord",BaseURL]parameters:paramters complete:complete];
+}
+
+
+/**
+ 删除用户播放记录
+ 
+ @param ID 播放记录ID
+ @param complete block
+ */
++ (void)deletePlayRecordWithPlayRecordId:(NSString *)ID Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"version_2":kVersion_2,
+                                 @"id":ID
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/playRecord/private/delectPlayRecord",BaseURL]parameters:paramters complete:complete];
 }
 @end

@@ -11,6 +11,7 @@
 #import "LessonTableViewCell.h"
 #import "PaySuccessViewController.h"
 #import "WXPayTableViewCell.h"
+#import "WXApi.h"
 
 @interface PayViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -36,6 +37,7 @@
     // Do any additional setup after loading the view.
     self.title = @"课程详情";
     [self initWithView];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(wxPayHandle:) name:@"WXPay" object:nil];
 }
 - (void)initWithView{
     self.headerView = [[BuyLessonTableHeaderView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 100)];
@@ -61,8 +63,52 @@
     [self.headerView selectIndex:1];
 }
 - (void)nextStep:(UIButton *)btn{
-    PaySuccessViewController *vc = [[PaySuccessViewController alloc]init];
-    [self.navigationController pushViewController:vc animated:YES];
+    [self wxPay];
+}
+- (void)weiXinPayWithDic:(NSDictionary *)dict {
+    PayReq *req = [[PayReq alloc] init];
+    req.partnerId           = [dict objectForKey:@"partnerid"];
+    req.prepayId            = [dict objectForKey:@"prepayid"];
+    req.nonceStr            = [dict objectForKey:@"noncestr"];
+    req.timeStamp           = [[dict objectForKey:@"timestamp"] intValue];
+    req.package             = [dict objectForKey:@"package"];
+    req.sign                = [dict objectForKey:@"paysign"];
+    [WXApi sendReq:req];
+    NSLog(@"appid=%@\npartid=%@\nprepayid=%@\nnoncestr=%@\ntimestamp=%ld\npackage=%@\nsign=%@",[dict objectForKey:@"appid"],req.partnerId,req.prepayId,req.nonceStr,(long)req.timeStamp,req.package,req.sign );
+}
+- (void)wxPay{
+    //============================================================
+    // V3&V4支付流程实现
+    // 注意:参数配置请查看服务器端Demo
+    // 更新时间：2015年11月20日
+    //============================================================
+    if (IS_USER_ID) {
+        [LTHttpManager wxPayWithCoodsId:@"1" UserId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
+            NSDictionary *dict = [data objectForKey:@"responseData"];
+            NSLog(@"-------%@",dict);
+            [self weiXinPayWithDic:dict[@"data"]];
+        }];
+    }else{
+        [Tool gotoLogin:self];
+    }
+}
+- (void)wxPayHandle:(NSNotification *)notifi{
+    PayResp *resp = notifi.object;
+    NSLog(@"resp.errcode%d",resp.errCode);
+    switch (resp.errCode) {
+        case WXSuccess:
+        {
+            NSLog(@"支付成功－PaySuccess，retcode = %d", resp.errCode);
+            SVProgressShowStuteText(@"支付成功", YES);
+            PaySuccessViewController *vc = [[PaySuccessViewController alloc]init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+            break;
+        default:
+            SVProgressShowStuteText(@"支付失败", NO);
+            NSLog(@"错误，retcode = %d, retstr = %@", resp.errCode,resp.errStr);
+            break;
+    }
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 2;
@@ -95,6 +141,7 @@
         return cell;
     }else{
         WXPayTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WXPayTableViewCell class])];
+        cell.selectionStyle = NO;
         return cell;
     }
 }
@@ -108,7 +155,9 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
 /*
 #pragma mark - Navigation
 

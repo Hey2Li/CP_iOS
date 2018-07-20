@@ -17,6 +17,7 @@
 #import <UMShare/UMShare.h>
 #import <AVFoundation/AVFoundation.h>
 #import "WXApi.h"
+#import "WXApiManager.h"
 // 引入JPush功能所需头文件
 #import "JPUSHService.h"
 // iOS10注册APNs所需头文件
@@ -35,6 +36,74 @@
 @end
 
 @implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    //设置初始侧滑栏
+    [self setMMDrawViewController];
+    //设置键盘弹出
+    [self setKeyboardManager];
+    //设置友盟
+    [self setUMManager];
+    //设置
+    [self setSetting];
+    //埋点接口
+    [self setAPI];
+    //极光推送
+    [self JSPush:application :launchOptions];
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options
+{
+    //6.3的新的API调用，是为了兼容国外平台(例如:新版facebookSDK,VK等)的调用[如果用6.2的api调用会没有回调],对国内平台没有影响
+    BOOL result = [[UMSocialManager defaultManager]  handleOpenURL:url options:options];
+    if (!result) {
+        // 其他如支付等SDK的回调
+        [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
+    }
+    return result;
+}
+                   
+- (void)applicationWillResignActive:(UIApplication *)application {
+    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
+    // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+}
+
+
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
+    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    NSLog(@"进入后台");
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"listenBackground" object:nil];
+    [[UIApplication sharedApplication]beginBackgroundTaskWithExpirationHandler:^(){
+    }];
+    [application setApplicationIconBadgeNumber:0];
+    [application cancelAllLocalNotifications];
+}
+
+
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+    // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+    NSLog(@"回到前台");
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"listenForeground" object:nil];
+    [application setApplicationIconBadgeNumber:0];
+    [application cancelAllLocalNotifications];
+}
+
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+}
+
+
+- (void)applicationWillTerminate:(UIApplication *)application {
+    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [USERDEFAULTS setObject:[self getCurrentTimes] forKey:@"exittime"];
+    NSString *exitTime = [USERDEFAULTS objectForKey:@"exittime"];
+    
+    NSLog(@"APP被关闭,%@",exitTime);
+}
+
 
 - (NSString*)getCurrentTimes{
     
@@ -55,9 +124,9 @@
     NSLog(@"currentTimeString =  %@",currentTimeString);
     
     return currentTimeString;
-
+    
 }
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+- (void)setMMDrawViewController{
     //初始化控制器
     UIViewController *centerVC = [[BaseHomeViewController alloc]init];
     UIViewController *leftVC = [[LeftViewController alloc]init];
@@ -73,19 +142,11 @@
     //设置左右两边抽屉显示的多少
     self.drawerController.maximumLeftDrawerWidth = 160.0;
     self.drawerController.shouldStretchDrawer = YES;
-   
+    //把阴影关闭
+    //    self.drawerController.showsShadow = YES;
     [leftVC setRestorationIdentifier:@"MMExampleLeftNavigationControllerRestorationKey"];
     [self.drawerController setDrawerVisualStateBlock:[MMDrawerVisualState slideAndScaleVisualStateBlock]];
-    //把阴影关闭
-//    self.drawerController.showsShadow = YES;
     
-    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
-    manager.enable = YES;
-    manager.shouldResignOnTouchOutside = YES;
-    manager.shouldToolbarUsesTextFieldTintColor = YES;
-    manager.enableAutoToolbar = NO;
-    [NSThread sleepForTimeInterval:1];
-
     //初始化窗口、设置根控制器、显示窗口
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     [self.window setRootViewController:self.drawerController];
@@ -93,6 +154,15 @@
     self.drawerController.view.backgroundColor = [UIColor whiteColor];
     self.drawerController.centerViewController.view.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+}
+- (void)setKeyboardManager{
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+    manager.enable = YES;
+    manager.shouldResignOnTouchOutside = YES;
+    manager.shouldToolbarUsesTextFieldTintColor = YES;
+    manager.enableAutoToolbar = NO;
+}
+- (void)setUMManager{
     /* 打开调试日志 */
     [[UMSocialManager defaultManager] openLog:YES];
     
@@ -101,16 +171,22 @@
     // U-Share 平台设置
     [self configUSharePlatforms];
     [self confitUShareSettings];
+}
+- (void)setSetting{
+    //增加静音模式下也能播放声音
     AVAudioSession *avSession = [AVAudioSession sharedInstance];
     [avSession setCategory:AVAudioSessionCategoryPlayback error:nil];
     [avSession setActive:YES error:nil];
+    //JRDB数据库注册
     [[JRDBMgr shareInstance] registerClazzes:@[
                                                [DownloadFileModel class],
                                                ]];
     J_CreateTable(DownloadFileModel);
     [self monitorNetworking];
+}
+- (void)setAPI{
     self.loginTime = [self getCurrentTimes];
-    NSString *loginTime  =[USERDEFAULTS objectForKey:@"logintime"];
+    NSString *loginTime  = [USERDEFAULTS objectForKey:@"logintime"];
     if (loginTime.length > 0) {
         [LTHttpManager searchLoginCountWithUserId:IS_USER_ID LoginTime:loginTime ExitTime:@"" Complete:^(LTHttpResult result, NSString *message, id data) {
             if (LTHttpResultSuccess == result) {
@@ -149,9 +225,6 @@
         }];
         [USERDEFAULTS setObject:self.loginTime forKey:@"logintime"];
     }
-    
-    [self JSPush:application :launchOptions];
-    return YES;
 }
 #pragma mark 极光推送
 - (void)JSPush:(UIApplication *)application :(NSDictionary *)launchOptions{
@@ -244,19 +317,20 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 {
     /* 设置微信的appKey和appSecret */
     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wx0e4cba8a7ddfc51c" appSecret:@"1540440ad4b9f96f8031bde0a47c48cb" redirectURL:@"http://mobile.umeng.com/social"];
-    [WXApi registerApp:@"wxb4ba3c02aa476ea1" enableMTA:YES];
-}
-- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options
-{
-    //6.3的新的API调用，是为了兼容国外平台(例如:新版facebookSDK,VK等)的调用[如果用6.2的api调用会没有回调],对国内平台没有影响
-    BOOL result = [[UMSocialManager defaultManager]  handleOpenURL:url options:options];
-    if (!result) {
-        // 其他如支付等SDK的回调
-        [WXApi handleOpenURL:url delegate:nil];
-    }
-    return result;
+    [WXApi registerApp:@"wx0e4cba8a7ddfc51c" enableMTA:YES];
 }
 - (void)monitorNetworking{
+    NSString *loginTime = [USERDEFAULTS objectForKey:@"logintime"];
+    if (loginTime.length == 0) {
+        NSString *GPRSPlay;//移动网络播放
+        NSString *GPRSDownload;//移动网络下载
+        GPRSPlay = @"0";
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setObject:GPRSPlay forKey:@"GPRSPlay"];
+        GPRSDownload = @"0";
+        [userDefaults setObject:GPRSDownload forKey:@"GPRSDownload"];
+    }
+   
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         switch (status) {
@@ -270,14 +344,16 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
             {
                 NSLog(@"GPRS网络");
                 //发通知，带头搞事
-//                [[NSNotificationCenter defaultCenter] postNotificationName:@"monitorNetworking" object:@"1" userInfo:nil];
+                //                [[NSNotificationCenter defaultCenter] postNotificationName:@"monitorNetworking" object:@"1" userInfo:nil];
+                [[NSUserDefaults standardUserDefaults]setObject:@"GPRS" forKey:@"networkState"];
             }
                 break;
             case 2:
             {
                 NSLog(@"wifi网络");
                 //发通知，搞事情
-//                [[NSNotificationCenter defaultCenter] postNotificationName:@"monitorNetworking" object:@"2" userInfo:nil];
+                //                [[NSNotificationCenter defaultCenter] postNotificationName:@"monitorNetworking" object:@"2" userInfo:nil];
+                [[NSUserDefaults standardUserDefaults]setObject:@"WIFI" forKey:@"networkState"];
             }
                 break;
             default:
@@ -292,45 +368,4 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         }
     }];
 }
-- (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
-}
-
-
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    NSLog(@"进入后台");
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"listenBackground" object:nil];
-    [[UIApplication sharedApplication]beginBackgroundTaskWithExpirationHandler:^(){
-    }];
-    [application setApplicationIconBadgeNumber:0];
-    [application cancelAllLocalNotifications];
-}
-
-
-- (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-    NSLog(@"回到前台");
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"listenForeground" object:nil];
-    [application setApplicationIconBadgeNumber:0];
-    [application cancelAllLocalNotifications];
-}
-
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
-
-
-- (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    [USERDEFAULTS setObject:[self getCurrentTimes] forKey:@"exittime"];
-    NSString *exitTime = [USERDEFAULTS objectForKey:@"exittime"];
-    
-    NSLog(@"APP被关闭,%@",exitTime);
-}
-
-
 @end

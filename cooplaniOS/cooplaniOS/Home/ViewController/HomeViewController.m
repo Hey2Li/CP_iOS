@@ -14,9 +14,7 @@
 #import "ListenPaperViewController.h"
 #import "BannerCollectionViewCell.h"
 #import "PaperDetailViewController.h"
-#import "VideoViewController.h"
 #import "VBFPopFlatButton.h"
-#import "WXApi.h"
 #import "HomeTopTitleView.h"
 
 @interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
@@ -144,7 +142,6 @@
     return cell;
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    /*
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@",self.bannerArray[indexPath.row][@"skipUrl"]]];
     [LTHttpManager searchBannerCountWithUserId:IS_USER_ID BannerId:self.bannerArray[indexPath.row][@"id"] Complete:^(LTHttpResult result, NSString *message, id data) {
         NSLog(@"用户点击banner统计");
@@ -171,9 +168,6 @@
             [[UIApplication sharedApplication] openURL:url];
         }
     }
-    */
-    VideoViewController *vc =[[VideoViewController alloc]init];
-    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark -- UITableViewDelegate
@@ -208,68 +202,16 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    /*
     HomeListenCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     PaperDetailViewController *vc = [PaperDetailViewController new];
     vc.nextTitle = cell.TitleLabel.text;
     vc.onePaperModel = self.paperMutableArray[indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];
     [LTHttpManager  searchListeningCountWithUserId:IS_USER_ID TestPaperId:vc.onePaperModel.ID Complete:^(LTHttpResult result, NSString *message, id data) {
-        
+
     }];
-     */
-    //============================================================
-    // V3&V4支付流程实现
-    // 注意:参数配置请查看服务器端Demo
-    // 更新时间：2015年11月20日
-    //============================================================
-    NSString *urlString   = @"http://192.168.0.103:8080/cooplan-app/weixin/app/wxPay";
-    //解析服务端返回json数据
-    NSError *error;
-    //加载一个NSURL对象
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    //将请求的url数据放到NSData对象中
-    NSData *response = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-    if ( response != nil) {
-        NSMutableDictionary *dict = NULL;
-        //IOS5自带解析类NSJSONSerialization从response中解析出数据放到字典中
-        dict = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:&error];
-        
-        NSLog(@"url:%@",urlString);
-        if(dict != nil){
-            [self weiXinPayWithDic:dict];
-            NSMutableString *retcode = [dict objectForKey:@"retcode"];
-            if (retcode.intValue == 0){
-                NSMutableString *stamp  = [dict objectForKey:@"timestamp"];
-                //调起微信支付
-                PayReq* req             = [[PayReq alloc] init];
-                req.partnerId           = [dict objectForKey:@"partnerid"];
-                req.prepayId            = [dict objectForKey:@"prepayid"];
-                req.nonceStr            = [dict objectForKey:@"noncestr"];
-                req.timeStamp           = stamp.intValue;
-                req.package             = [dict objectForKey:@"package"];
-                req.sign                = [dict objectForKey:@"sign"];
-                [WXApi sendReq:req];
-                //日志输出
-                NSLog(@"appid=%@\npartid=%@\nprepayid =%@\nnoncestr=%@\ntimestamp=%ld\npackage=%@\nsign=%@",[dict objectForKey:@"appid"],req.partnerId,req.prepayId,req.nonceStr,(long)req.timeStamp,req.package,req.sign );
-            }else{
-            }
-        }else{
-        }
-    }else{
-    }
 }
-- (void)weiXinPayWithDic:(NSDictionary *)wechatPayDic {
-    PayReq *req = [[PayReq alloc] init];
-    req.openID = [wechatPayDic objectForKey:@"appId"];
-    req.partnerId = [wechatPayDic objectForKey:@"partnerId"];
-    req.prepayId = [wechatPayDic objectForKey:@"prepayId"];
-    req.package = [wechatPayDic objectForKey:@"packages"];
-    req.nonceStr = [wechatPayDic objectForKey:@"nonceStr"];
-    req.timeStamp = [[wechatPayDic objectForKey:@"timesTamp"] intValue];
-    req.sign = [wechatPayDic objectForKey:@"sign"];
-    [WXApi sendReq:req];
-}
+
 - (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

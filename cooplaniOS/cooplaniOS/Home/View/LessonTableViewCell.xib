@@ -94,6 +94,9 @@
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
                 <outlet property="backImageView" destination="uHj-va-XI3" id="bLo-Zg-cF3"/>
+                <outlet property="detail" destination="H5C-Wk-GyU" id="xR7-J0-rSy"/>
+                <outlet property="name" destination="Pug-fX-KcG" id="5zl-pD-v7N"/>
+                <outlet property="price" destination="s4m-y9-JWs" id="9Fc-r0-T4z"/>
             </connections>
             <point key="canvasLocation" x="42.5" y="142.5"/>
         </tableViewCell>
