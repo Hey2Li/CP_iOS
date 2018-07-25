@@ -12,10 +12,7 @@
 #import "learnLessonModel.h"
 
 @interface VideoViewController : UIViewController
-@property (nonatomic, strong) NSArray *lessonListArray;
-@property (nonatomic, strong) VideoLessonModel *videoModel;
-@property (nonatomic, strong) NSArray *learnedListArray;
-@property (nonatomic, strong) learnLessonModel *learnVideoModel;
-
+@property (nonatomic, strong) NSArray *dataArray;
+@property (nonatomic, assign) NSInteger videoId;
 @end
 

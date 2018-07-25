@@ -326,8 +326,7 @@
  @param address 收件地址
  @param complete block
  */
-+ (void)addOrderInfoWIthUserId:(NSString *)userId Addressee:(NSString *)addressee Phone:(NSString *)phone Address:(NSString *)address Complete:(completeBlock)complete;
-
++ (void)addOrderInfoWIthUserId:(NSString *)userId Addressee:(NSString *)addressee Phone:(NSString *)phone Address:(NSString *)address CommodityId:(NSString *)commodity_id Complete:(completeBlock)complete;
 
 /**
  获得二维码

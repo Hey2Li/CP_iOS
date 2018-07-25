@@ -39,6 +39,7 @@ PODS:
   - MMDrawerController/Subclass (0.5.7):
     - MMDrawerController/Core
   - pop (1.0.10)
+  - Popover.OC (2.2)
   - SDCycleScrollView (1.65):
     - SDWebImage (~> 3.7)
   - SDWebImage (3.8.2):
@@ -58,6 +59,8 @@ PODS:
     - pop
   - WMPlayer (5.0.0):
     - Masonry
+  - YJLocationPicker (0.0.2):
+    - Masonry
 
 DEPENDENCIES:
   - AFNetworking (~> 3.1.0)
@@ -68,6 +71,7 @@ DEPENDENCIES:
   - MJExtension (~> 3.0.7)
   - MJRefresh (~> 3.1.1)
   - MMDrawerController (~> 0.5.7)
+  - Popover.OC
   - SDCycleScrollView (~> 1.64)
   - SDWebImage (~> 3.8.2)
   - SVProgressHUD (~> 2.2.5)
@@ -78,6 +82,7 @@ DEPENDENCIES:
   - UMCShare/Social/ReducedWeChat
   - VBFPopFlatButton
   - WMPlayer
+  - YJLocationPicker
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -92,6 +97,7 @@ SPEC REPOS:
     - MJRefresh
     - MMDrawerController
     - pop
+    - Popover.OC
     - SDCycleScrollView
     - SDWebImage
     - SVProgressHUD
@@ -102,6 +108,7 @@ SPEC REPOS:
     - UMCShare
     - VBFPopFlatButton
     - WMPlayer
+    - YJLocationPicker
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
@@ -115,6 +122,7 @@ SPEC CHECKSUMS:
   MJRefresh: b48380ae2b927b46c4ef000de9adb8dc748e1df7
   MMDrawerController: 7a4cf8e25596bf2434e03ce50d22a8608ddee6a1
   pop: 82ca6b068ce9278fd350fd9dd09482a0ce9492e6
+  Popover.OC: bfcce8307f77593e1e1d7cf58604077f74e114bc
   SDCycleScrollView: f72904c77698a7f93a41bcbbc2d78b073bf7326c
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
@@ -125,7 +133,8 @@ SPEC CHECKSUMS:
   UMCShare: f8be567946c3aa68deefd03b0ffaa0710a3b07ea
   VBFPopFlatButton: 39e48ab56277f3d056734a9b5ec5d0cc60d69778
   WMPlayer: a914f80ed5dca7cd9e3a94ec07a2b02eec8c15c0
+  YJLocationPicker: 8cbdc99433435b17562de6f5d965cc52c8873355
 
-PODFILE CHECKSUM: 9af01dffb041e7cddd260d2a5b06fecbb491c78b
+PODFILE CHECKSUM: a525c5049bdeb5fb082db9778580730a7c9096a5
 
 COCOAPODS: 1.5.3

@@ -70,6 +70,7 @@
 }
 - (void)buy:(UIButton *)btn{
     BuyLessonViewController *vc = [[BuyLessonViewController alloc]init];
+    vc.commodity_id = self.commodity_id;
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)didReceiveMemoryWarning {

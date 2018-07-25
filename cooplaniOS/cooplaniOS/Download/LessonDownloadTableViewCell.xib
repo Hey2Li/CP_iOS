@@ -84,6 +84,11 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="time" destination="cAy-Ox-XQC" id="7KN-Hb-KTZ"/>
+                <outlet property="videoName" destination="lrH-27-8JN" id="lXx-vc-d3g"/>
+                <outlet property="videoSize" destination="2io-ZT-Nfc" id="SM3-pR-Dfe"/>
+            </connections>
             <point key="canvasLocation" x="21.5" y="70"/>
         </tableViewCell>
     </objects>

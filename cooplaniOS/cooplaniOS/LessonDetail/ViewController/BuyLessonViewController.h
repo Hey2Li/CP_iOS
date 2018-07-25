@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface BuyLessonViewController : UIViewController
-
+@property (nonatomic, copy) NSString *commodity_id;
 @end

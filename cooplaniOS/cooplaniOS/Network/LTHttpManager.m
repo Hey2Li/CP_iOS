@@ -561,13 +561,14 @@
  @param address 收件地址
  @param complete block
  */
-+ (void)addOrderInfoWIthUserId:(NSString *)userId Addressee:(NSString *)addressee Phone:(NSString *)phone Address:(NSString *)address Complete:(completeBlock)complete{
++ (void)addOrderInfoWIthUserId:(NSString *)userId Addressee:(NSString *)addressee Phone:(NSString *)phone Address:(NSString *)address CommodityId:(NSString *)commodity_id Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
     NSDictionary *paramters =  @{@"version_2":kVersion_2,
-                                 @"userId":userId,
+                                 @"user_id":userId,
                                  @"recipient":addressee,
                                  @"phone":phone,
                                  @"address":address,
+                                 @"commodity_id":commodity_id,
                                  };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/info/addInfo",BaseURL]parameters:paramters complete:complete];
 }

@@ -13,6 +13,9 @@
 #import "PaperModel.h"
 #import "LessonTopSegment.h"
 #import "LessonDownloadTableViewCell.h"
+#import "DownloadVideoModel.h"
+#import "VideoViewController.h"
+#import "LocalVideoViewController.h"
 
 @interface MyDownloadViewController ()<UITableViewDelegate, UITableViewDataSource, TopSegmentDelegate>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -20,9 +23,16 @@
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) LessonTopSegment *topSegment;
 @property (nonatomic, strong) UITableView *listenTableView;
+@property (nonatomic, strong) NSMutableArray *videoDownloadArray;
 @end
 
 @implementation MyDownloadViewController
+- (NSMutableArray *)videoDownloadArray{
+    if (!_videoDownloadArray) {
+        _videoDownloadArray = [NSMutableArray array];
+    }
+    return _videoDownloadArray;
+}
 - (NSMutableArray *)downloadArray{
     if (!_downloadArray) {
         _downloadArray = [NSMutableArray array];
@@ -69,7 +79,7 @@
     
     UIScrollView *scrolleView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 40, SCREEN_WIDTH, SCREEN_HEIGHT - 40)];
     [self.view addSubview:scrolleView];
-    scrolleView.backgroundColor = [UIColor greenColor];
+    scrolleView.backgroundColor = [UIColor whiteColor];
     [scrolleView setContentSize:CGSizeMake(SCREEN_WIDTH * 2, scrolleView.height)];
     
     [scrolleView addSubview:self.myTableView];
@@ -86,19 +96,44 @@
 }
 - (void)initDB{
     NSArray<DownloadFileModel *> *list = J_Select(DownloadFileModel).Where(@"paperVoiceName").list;
+    
+    NSArray *videoList1 = J_Select(DownloadVideoModel).Where(@"videoId").list;
+     NSArray<DownloadVideoModel *> *videoList = J_Select(DownloadVideoModel).list;
+    [self.downloadArray removeAllObjects];
+    for (DownloadVideoModel *model in videoList) {
+        if (model.videourl.length > 10) {
+            [self.videoDownloadArray addObject:model];
+        }
+    }
+    [self.videoDownloadArray removeAllObjects];
+    for (DownloadVideoModel *model in videoList) {
+        if (model.videourl.length > 10) {
+            [self.videoDownloadArray addObject:model];
+        }
+        [self.listenTableView reloadData];
+    }
+    NSLog(@"videoList---%lu",(unsigned long)videoList.count);
     list = J_Select(DownloadFileModel).Where(@"paperVoiceName").list;
+    
+//    videoList = J_Select(DownloadVideoModel).Where(@"videourl").list;
+    
+    NSLog(@"videoList---%lu",(unsigned long)videoList.count);
     [self.myTableView reloadData];
     NSArray *array = [DownloadFileModel jr_findAll];
+    NSArray *videoArray = [DownloadVideoModel jr_findAll];
+    
     self.downloadArray = [NSMutableArray arrayWithArray:list];
+    
+
     //    unsigned int count;
-    for (int i = 0; i < list.count; i ++) {
-        DownloadFileModel *model = self.downloadArray[i];
+    for (int i = 0; i < videoArray.count; i++) {
+        DownloadFileModel *model = videoArray[i];
         NSLog(@"%@,%@",[model jr_primaryKeyValue],model);
     }
-    for (int i = 0; i < array.count; i ++) {
-        DownloadFileModel *model = array[i];
-        NSLog(@"%@,%@",[model jr_primaryKeyValue],model);
-    }
+//    for (int i = 0; i < videoList.count; i ++) {
+//        DownloadFileModel *model = array[i];
+//        NSLog(@"%@,%@",[model jr_primaryKeyValue],model);
+//    }
     //    if (self.downloadArray.count > 0) {
     //        objc_property_t *props = class_copyPropertyList([model class], &count);
     //        NSMutableArray *marray = [NSMutableArray array];
@@ -111,13 +146,19 @@
     //            [marray addObject:name];
     //        }
     //    }
+    
     [self.myTableView reloadData];
+    [self.listenTableView reloadData];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.downloadArray.count;
+    if (tableView == self.myTableView) {
+        return self.downloadArray.count;
+    }else{
+        return self.videoDownloadArray.count;
+    }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 74;
@@ -133,10 +174,14 @@
         NSString *filePath = [NSString stringWithFormat:@"%@/%@",path,model.paperVoiceName];
         cell.fileSizeLb.text = filePath.fileSize;
         return cell;
-    }else{
+    }else if(tableView == self.listenTableView){
         LessonDownloadTableViewCell *cell =[tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LessonDownloadTableViewCell class])];
+        DownloadVideoModel *model = self.videoDownloadArray[indexPath.row];
+        cell.model = model;
         cell.selectionStyle = NO;
         return cell;
+    }else{
+        return nil;
     }
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -147,41 +192,62 @@
 }
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        DownloadFileModel *model = [self.downloadArray objectAtIndex:indexPath.row];
-        BOOL result = J_Delete(model).Recursive(YES).updateResult;
-        if (result) {
-            SVProgressShowStuteText(@"删除成功", YES);
+    if (tableView == self.myTableView) {
+        if (editingStyle == UITableViewCellEditingStyleDelete) {
+            DownloadFileModel *model = [self.downloadArray objectAtIndex:indexPath.row];
+            BOOL result = J_Delete(model).Recursive(YES).updateResult;
+            if (result) {
+                SVProgressShowStuteText(@"删除成功", YES);
+            }
+            // 从数据源中删除
+            [self.downloadArray removeObjectAtIndex:indexPath.row];
+            // 从列表中删除
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         }
-        // 从数据源中删除
-        [self.downloadArray removeObjectAtIndex:indexPath.row];
-        // 从列表中删除
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }else{
+        if (editingStyle == UITableViewCellEditingStyleDelete) {
+            DownloadVideoModel *model = [self.videoDownloadArray objectAtIndex:indexPath.row];
+            BOOL result = J_Delete(model).Recursive(YES).updateResult;
+            if (result) {
+                SVProgressShowStuteText(@"删除成功", YES);
+            }
+            // 从数据源中删除
+            [self.videoDownloadArray removeObjectAtIndex:indexPath.row];
+            // 从列表中删除
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        }
     }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    PaperDetailViewController *vc = [[PaperDetailViewController alloc]init];
-    DownloadFileModel *model = self.downloadArray[indexPath.row];
-    [LTHttpManager findOneTestPaperInfoWithUserId:IS_USER_ID ? IS_USER_ID : @"" TestPaperId:@([model.testPaperId integerValue]) Complete:^(LTHttpResult result, NSString *message, id data) {
-        if (LTHttpResultSuccess == result) {
-            NSMutableDictionary *muDict = [NSMutableDictionary dictionaryWithDictionary:data[@"responseData"][@"tp"]];
-            [muDict addEntriesFromDictionary:@{@"collection":data[@"responseData"][@"type"]}];
-            PaperModel *onePaperModel = [PaperModel mj_objectWithKeyValues:muDict];
-            vc.onePaperModel = onePaperModel;
-            vc.nextTitle = onePaperModel.name;
-            [self.navigationController pushViewController:vc animated:YES];
-        }else{
-            NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithData:[USERDEFAULTS objectForKey:@"homeData"]];
-            [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                PaperModel *pmodel = (PaperModel *)obj;
-                if ([[NSString stringWithFormat:@"%@",pmodel.ID] isEqualToString:model.testPaperId]) {
-                    vc.onePaperModel = pmodel;
-                     vc.nextTitle = pmodel.name;
-                    [self.navigationController pushViewController:vc animated:YES];
-                }
-            }];
-        }
-    }];
+    if (tableView == self.myTableView) {
+        PaperDetailViewController *vc = [[PaperDetailViewController alloc]init];
+        DownloadFileModel *model = self.downloadArray[indexPath.row];
+        [LTHttpManager findOneTestPaperInfoWithUserId:IS_USER_ID ? IS_USER_ID : @"" TestPaperId:@([model.testPaperId integerValue]) Complete:^(LTHttpResult result, NSString *message, id data) {
+            if (LTHttpResultSuccess == result) {
+                NSMutableDictionary *muDict = [NSMutableDictionary dictionaryWithDictionary:data[@"responseData"][@"tp"]];
+                [muDict addEntriesFromDictionary:@{@"collection":data[@"responseData"][@"type"]}];
+                PaperModel *onePaperModel = [PaperModel mj_objectWithKeyValues:muDict];
+                vc.onePaperModel = onePaperModel;
+                vc.nextTitle = onePaperModel.name;
+                [self.navigationController pushViewController:vc animated:YES];
+            }else{
+                NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithData:[USERDEFAULTS objectForKey:@"homeData"]];
+                [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    PaperModel *pmodel = (PaperModel *)obj;
+                    if ([[NSString stringWithFormat:@"%@",pmodel.ID] isEqualToString:model.testPaperId]) {
+                        vc.onePaperModel = pmodel;
+                        vc.nextTitle = pmodel.name;
+                        [self.navigationController pushViewController:vc animated:YES];
+                    }
+                }];
+            }
+        }];
+    }else{
+        DownloadVideoModel *model = self.videoDownloadArray[indexPath.row];
+        LocalVideoViewController *vc = [[LocalVideoViewController alloc]init];
+        vc.localVideoModel = model;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
     
 }
 

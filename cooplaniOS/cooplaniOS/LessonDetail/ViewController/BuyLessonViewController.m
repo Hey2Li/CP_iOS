@@ -10,6 +10,7 @@
 #import "BuyLessonTableHeaderView.h"
 #import "AddressTableViewCell.h"
 #import "PayViewController.h"
+#import <YJLocationPicker.h>
 
 @interface BuyLessonViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -69,41 +70,41 @@
     [self.headerView selectIndex:0];
 }
 - (void)nextStep:(UIButton *)btn{
-//    if (_addresseeStr.length > 0) {
-//        if (_telephoneStr.length > 0) {
-//            if (![Tool judgePhoneNumber:_telephoneStr]) {
-//                SVProgressShowStuteText(@"请输入正确的手机号码", NO);
-//                return;
-//            }else{
-//                if (_addressStr.length > 0) {
-//                    if (IS_USER_ID) {
-//                        [LTHttpManager addOrderInfoWIthUserId:IS_USER_ID Addressee:_addressStr Phone:_telephoneStr Address:_addresseeStr Complete:^(LTHttpResult result, NSString *message, id data) {
-//                            if (LTHttpResultSuccess == result) {
+    if (_addresseeStr.length > 0) {
+        if (_telephoneStr.length > 0) {
+            if (![Tool judgePhoneNumber:_telephoneStr]) {
+                SVProgressShowStuteText(@"请输入正确的手机号码", NO);
+                return;
+            }else{
+                if (_addressStr.length > 10) {
+                    if (IS_USER_ID) {
+                        [LTHttpManager addOrderInfoWIthUserId:IS_USER_ID Addressee:_addresseeStr Phone:_telephoneStr Address:_addressStr CommodityId:self.commodity_id Complete:^(LTHttpResult result, NSString *message, id data) {
+                            if (LTHttpResultSuccess == result) {
                                 PayViewController *vc = [[PayViewController alloc]init];
                                 [self.navigationController pushViewController:vc animated:YES];
-//                            }else{
-//                                SVProgressShowStuteText(message, NO);
-//                            }
-//                        }];
-//
-//                    }else{
-//                        LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"请先登录" sureBtn:@"去登录" cancleBtn:@"取消"];
-//                        [alertView show];
-//                        alertView.resultIndex = ^(NSInteger index) {
-//                            LoginViewController *vc = [[LoginViewController alloc]init];
-//                            [self.navigationController pushViewController:vc animated:YES];
-//                        };
-//                    }
-//                }else{
-//                    SVProgressShowStuteText(@"请填写地址", NO);
-//                }
-//            }
-//        }else{
-//            SVProgressShowStuteText(@"请输入手机号码", NO);
-//        }
-//    }else{
-//        SVProgressShowStuteText(@"请填写收件人", NO);
-//    }
+                            }else{
+                                SVProgressShowStuteText(message, NO);
+                            }
+                        }];
+
+                    }else{
+                        LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"请先登录" sureBtn:@"去登录" cancleBtn:@"取消"];
+                        [alertView show];
+                        alertView.resultIndex = ^(NSInteger index) {
+                            LoginViewController *vc = [[LoginViewController alloc]init];
+                            [self.navigationController pushViewController:vc animated:YES];
+                        };
+                    }
+                }else{
+                    SVProgressShowStuteText(@"请填写地址", NO);
+                }
+            }
+        }else{
+            SVProgressShowStuteText(@"请输入手机号码", NO);
+        }
+    }else{
+        SVProgressShowStuteText(@"请填写收件人", NO);
+    }
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     return @"请填写正确地址，以便我们寄送学习资料";//17bold
@@ -118,22 +119,28 @@
     return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 237;
+    return 277 + 50;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     AddressTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([AddressTableViewCell class])];
     cell.selectionStyle = NO;
     cell.addressClick = ^(NSString *text) {
-        NSLog(@"%@",text);
-        _addressStr = text;
+        _addressStr = [NSString stringWithFormat:@"%@%@",_addressStr,text];
+        NSLog(@"%@",_addressStr);
     };
     cell.addresseeClick = ^(NSString *text) {
-        NSLog(@"%@",text);
         _addresseeStr = text;
+        NSLog(@"%@",_addresseeStr);
     };
     cell.telephoneClick = ^(NSString *text) {
         NSLog(@"%@",text);
         _telephoneStr = text;
+    };
+    cell.changeAddressClick = ^(UILabel *lb) {
+        [[[YJLocationPicker alloc]initWithSlectedLocation:^(NSArray *locationArray) {
+            lb.text = [NSString stringWithFormat:@"%@ %@ %@",locationArray[0],locationArray[1],locationArray[2]];
+            _addressStr = lb.text;
+        }]show];
     };
     return cell;
 }

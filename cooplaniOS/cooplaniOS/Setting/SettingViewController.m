@@ -15,6 +15,9 @@
 
 @implementation SettingViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [self.myTableView reloadData];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -143,9 +146,9 @@
                 cellSwitch.tag = 1;
                 NSString *GPRSDownload = [USERDEFAULTS objectForKey:@"GPRSDownload"];
                 if ([GPRSDownload isEqualToString:@"0"]) {
-                    cellSwitch.on = NO;
-                }else{
                     cellSwitch.on = YES;
+                }else{
+                    cellSwitch.on = NO;
                 }
                 [cellSwitch addTarget:self action:@selector(switchChange:) forControlEvents:UIControlEventValueChanged];
                 cell.textLabel.text = @"允许移动网络下载";
@@ -164,8 +167,7 @@
                 make.centerY.equalTo(cell.mas_centerY);
             }];
             cellSwitch.tag = 2;
-            NSString *isPush = [USERDEFAULTS objectForKey:@"GPRSDownload"];
-            if ([isPush isEqualToString:@"0"]) {
+            if (![self isUserNotificationEnable]) {
                 cellSwitch.on = NO;
             }else{
                 cellSwitch.on = YES;
@@ -214,9 +216,40 @@
     }else if (sender.tag == 2){
         isPush = sender.on ? @"0" : @"1";
         [userDefaults setObject:isPush forKey:@"isPush"];
+        if (!sender.on) {
+            [[UIApplication sharedApplication]unregisterForRemoteNotifications];
+        }else{
+            if (![self isUserNotificationEnable]) {
+                [self goToAppSystemSetting];
+            }else{
+                [[UIApplication sharedApplication]registerForRemoteNotifications];
+            }
+        }
     }
     [userDefaults synchronize];
 }
+- (BOOL)isUserNotificationEnable { // 判断用户是否允许接收通知
+    BOOL isEnable = NO;
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0f) { // iOS版本 >=8.0 处理逻辑
+        UIUserNotificationSettings *setting = [[UIApplication sharedApplication] currentUserNotificationSettings];
+        isEnable = (UIUserNotificationTypeNone == setting.types) ? NO : YES;
+    }
+    return isEnable;
+}
+
+// 如果用户关闭了接收通知功能，该方法可以跳转到APP设置页面进行修改  iOS版本 >=8.0 处理逻辑
+- (void)goToAppSystemSetting {
+    UIApplication *application = [UIApplication sharedApplication];
+    NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+    if ([application canOpenURL:url]) {
+        if ([application respondsToSelector:@selector(openURL:options:completionHandler:)]) {
+            [application openURL:url options:@{} completionHandler:nil];
+        } else {
+            [application openURL:url];
+        }
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

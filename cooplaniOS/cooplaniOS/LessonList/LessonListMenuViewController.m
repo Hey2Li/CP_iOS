@@ -67,7 +67,7 @@
             NSArray *array = data[@"responseData"];
             [self.learnedListArray removeAllObjects];
             for (NSDictionary *dict in array) {
-                learnLessonModel *model = [learnLessonModel mj_objectWithKeyValues:dict];
+                VideoLessonModel *model = [VideoLessonModel mj_objectWithKeyValues:dict];
                 [self.learnedListArray addObject:model];
             }
             [self.learnedTableView reloadData];
@@ -81,6 +81,7 @@
     segment.frame = CGRectMake(0, 0, SCREEN_WIDTH, 40);
     self.topSegment = segment;
     [self.view addSubview:segment];
+    [self.view bringSubviewToFront:segment];
     self.topSegment.delegate = self;
     
     UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 40, SCREEN_WIDTH, SCREEN_HEIGHT - 40 - 64)];
@@ -137,20 +138,22 @@
         return cell;
     }else{
         LessonListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LessonListTableViewCell class])];
-        cell.learnedModel = self.learnedListArray[indexPath.row];
+        cell.model = self.learnedListArray[indexPath.row];
         cell.selectionStyle = NO;
         return cell;
     }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     VideoViewController *vc =[[VideoViewController alloc]init];
-    if (tableView == self.lessonListTableView) {
-        vc.lessonListArray = self.lessonArray;
-        vc.videoModel = self.lessonArray[indexPath.row];
+      if (tableView == self.lessonListTableView) {
+        VideoLessonModel *model = self.lessonArray[indexPath.row];
+        vc.videoId = model.ID;
+          vc.dataArray = self.lessonArray;
         [self.navigationController pushViewController:vc animated:YES];
     }else if (tableView == self.learnedTableView){
-        vc.learnedListArray = self.learnedListArray;
-        vc.learnVideoModel = self.learnedListArray[indexPath.row];
+        VideoLessonModel *model = self.learnedListArray[indexPath.row];
+        vc.videoId = model.ID;
+        vc.dataArray = self.learnedListArray;
         [self.navigationController pushViewController:vc animated:YES];
     }
 }

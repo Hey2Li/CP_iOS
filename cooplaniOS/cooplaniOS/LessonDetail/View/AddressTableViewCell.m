@@ -19,6 +19,8 @@
     self.addresseeTF.delegate = self;
     self.addressTF.delegate = self;
     self.telephoneTF.delegate = self;
+    [self.changeAddressLb.layer setCornerRadius:4.0f];
+    [self.changeAddressLb.layer setMasksToBounds:YES];
     // Initialization code
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField{
@@ -40,6 +42,12 @@
                 self.telephoneClick(textField.text);
             }
         }
+    }
+}
+- (IBAction)changeBtnClick:(UIButton *)sender {
+    [[UIApplication sharedApplication] sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
+    if (self.changeAddressClick) {
+        self.changeAddressClick(self.changeAddressLb);
     }
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

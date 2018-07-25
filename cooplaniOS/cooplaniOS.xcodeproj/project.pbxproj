@@ -42,6 +42,8 @@
 		9B1EDCE42089C06D0033183F /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1EDCE32089C06C0033183F /* UIView+Toast.m */; };
 		9B1EDCE72089CEAE0033183F /* NoContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1EDCE62089CEAD0033183F /* NoContentViewController.m */; };
 		9B26D86320E9BD3300B4FC11 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B26D86220E9BD3300B4FC11 /* VideoViewController.m */; };
+		9B2D432C2106CC7700790FF4 /* LocalVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2D432B2106CC7700790FF4 /* LocalVideoViewController.m */; };
+		9B2D432E2106EB8700790FF4 /* Address.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9B2D432D2106EB8600790FF4 /* Address.plist */; };
 		9B32167620DA29590038FEAE /* playSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B32167520DA29590038FEAE /* playSlider.m */; };
 		9B32167C20DA3FFE0038FEAE /* NoHighlightedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B32167A20DA3FFE0038FEAE /* NoHighlightedTableViewCell.m */; };
 		9B32CB0B209BF00300FCEED3 /* SentenceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B32CB09209BF00300FCEED3 /* SentenceTableViewCell.m */; };
@@ -119,6 +121,8 @@
 		9B9B08B721005B62000E110A /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B9B08B621005B62000E110A /* Photos.framework */; };
 		9B9B08BA21007901000E110A /* VideoBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9B08B921007901000E110A /* VideoBottomView.m */; };
 		9B9B08BC21007912000E110A /* VideoBottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B9B08BB21007912000E110A /* VideoBottomView.xib */; };
+		9B9B08BF2101B7AD000E110A /* DownloadVideoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9B08BE2101B7AD000E110A /* DownloadVideoModel.m */; };
+		9B9B08C22101EB1A000E110A /* OneLessonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9B08C12101EB1A000E110A /* OneLessonModel.m */; };
 		9BA08EB0209308440026935E /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA08EAD209308440026935E /* FeedbackViewController.m */; };
 		9BA08EB52093120C0026935E /* FeedbackTypeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA08EB32093120C0026935E /* FeedbackTypeTableViewCell.m */; };
 		9BA08EB62093120C0026935E /* FeedbackTypeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BA08EB42093120C0026935E /* FeedbackTypeTableViewCell.xib */; };
@@ -240,6 +244,9 @@
 		9B1EDCE62089CEAD0033183F /* NoContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoContentViewController.m; sourceTree = "<group>"; };
 		9B26D86120E9BD3300B4FC11 /* VideoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
 		9B26D86220E9BD3300B4FC11 /* VideoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoViewController.m; sourceTree = "<group>"; };
+		9B2D432A2106CC7700790FF4 /* LocalVideoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalVideoViewController.h; sourceTree = "<group>"; };
+		9B2D432B2106CC7700790FF4 /* LocalVideoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalVideoViewController.m; sourceTree = "<group>"; };
+		9B2D432D2106EB8600790FF4 /* Address.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Address.plist; sourceTree = "<group>"; };
 		9B32167420DA29590038FEAE /* playSlider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = playSlider.h; sourceTree = "<group>"; };
 		9B32167520DA29590038FEAE /* playSlider.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = playSlider.m; sourceTree = "<group>"; };
 		9B32167920DA3FFE0038FEAE /* NoHighlightedTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoHighlightedTableViewCell.h; sourceTree = "<group>"; };
@@ -378,6 +385,10 @@
 		9B9B08B821007901000E110A /* VideoBottomView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoBottomView.h; sourceTree = "<group>"; };
 		9B9B08B921007901000E110A /* VideoBottomView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoBottomView.m; sourceTree = "<group>"; };
 		9B9B08BB21007912000E110A /* VideoBottomView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoBottomView.xib; sourceTree = "<group>"; };
+		9B9B08BD2101B7AD000E110A /* DownloadVideoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DownloadVideoModel.h; sourceTree = "<group>"; };
+		9B9B08BE2101B7AD000E110A /* DownloadVideoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DownloadVideoModel.m; sourceTree = "<group>"; };
+		9B9B08C02101EB1A000E110A /* OneLessonModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OneLessonModel.h; sourceTree = "<group>"; };
+		9B9B08C12101EB1A000E110A /* OneLessonModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OneLessonModel.m; sourceTree = "<group>"; };
 		9BA08EAD209308440026935E /* FeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackViewController.m; sourceTree = "<group>"; };
 		9BA08EAE209308440026935E /* FeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackViewController.h; sourceTree = "<group>"; };
 		9BA08EB22093120C0026935E /* FeedbackTypeTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeedbackTypeTableViewCell.h; sourceTree = "<group>"; };
@@ -702,6 +713,8 @@
 			children = (
 				9B26D86120E9BD3300B4FC11 /* VideoViewController.h */,
 				9B26D86220E9BD3300B4FC11 /* VideoViewController.m */,
+				9B2D432A2106CC7700790FF4 /* LocalVideoViewController.h */,
+				9B2D432B2106CC7700790FF4 /* LocalVideoViewController.m */,
 				9B81D4DA20EB47ED00BFFC39 /* VideoTableViewCell.h */,
 				9B81D4DB20EB47ED00BFFC39 /* VideoTableViewCell.m */,
 				9B81D4DC20EB47ED00BFFC39 /* VideoTableViewCell.xib */,
@@ -710,6 +723,10 @@
 				9B9B08B821007901000E110A /* VideoBottomView.h */,
 				9B9B08B921007901000E110A /* VideoBottomView.m */,
 				9B9B08BB21007912000E110A /* VideoBottomView.xib */,
+				9B9B08BD2101B7AD000E110A /* DownloadVideoModel.h */,
+				9B9B08BE2101B7AD000E110A /* DownloadVideoModel.m */,
+				9B9B08C02101EB1A000E110A /* OneLessonModel.h */,
+				9B9B08C12101EB1A000E110A /* OneLessonModel.m */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -1058,6 +1075,7 @@
 				9BEA0A392071D9190026AF2C /* Assets.xcassets */,
 				9BEA0A3B2071D9190026AF2C /* LaunchScreen.storyboard */,
 				9BEA0A3E2071D9190026AF2C /* Info.plist */,
+				9B2D432D2106EB8600790FF4 /* Address.plist */,
 				9BEA0A3F2071D9190026AF2C /* main.m */,
 				9B1D31C020734B78007674CF /* CooplanPrefixHeader.pch */,
 			);
@@ -1243,6 +1261,7 @@
 				9B3D02DB208488A3005C923B /* LoginNextViewController.xib in Resources */,
 				9B1EDCE1208891BA0033183F /* ListenTableViewCell.xib in Resources */,
 				9B3DA38F20F880910028CDA9 /* LessonListTableViewCell.xib in Resources */,
+				9B2D432E2106EB8700790FF4 /* Address.plist in Resources */,
 				9B3D02CB20845338005C923B /* PaperDetailViewController.xib in Resources */,
 				9B81D4DE20EB47ED00BFFC39 /* VideoTableViewCell.xib in Resources */,
 				9B3DA36C20F74C980028CDA9 /* AddressTableViewCell.xib in Resources */,
@@ -1366,6 +1385,7 @@
 			files = (
 				9BC4158020C4ECA1002851E6 /* WZSwitch.m in Sources */,
 				9B4BB72D207B6E9D0029015F /* SUFileHandle.m in Sources */,
+				9B9B08C22101EB1A000E110A /* OneLessonModel.m in Sources */,
 				9B16B08820904FDD00094EE7 /* TestModeBottomView.m in Sources */,
 				9B9B08BA21007901000E110A /* VideoBottomView.m in Sources */,
 				9B70C76721003044006C594A /* WXApiManager.m in Sources */,
@@ -1446,6 +1466,7 @@
 				9B3DA36220F71FC10028CDA9 /* BuyLessonViewController.m in Sources */,
 				9B135CC1207C886A0040A883 /* UISlider+time.m in Sources */,
 				9B16B076208D7DC900094EE7 /* ListenPlay.m in Sources */,
+				9B2D432C2106CC7700790FF4 /* LocalVideoViewController.m in Sources */,
 				9B1EDCE72089CEAE0033183F /* NoContentViewController.m in Sources */,
 				9B13AD6120807B8E0000C750 /* BannerCollectionViewCell.m in Sources */,
 				9B3DA38620F855070028CDA9 /* BaseTableViewController.m in Sources */,
@@ -1458,6 +1479,7 @@
 				9B3D02D520848878005C923B /* LoginViewController.m in Sources */,
 				9B26D86320E9BD3300B4FC11 /* VideoViewController.m in Sources */,
 				9BA1CB6920A92A790093C37B /* MyCollectionModel.m in Sources */,
+				9B9B08BF2101B7AD000E110A /* DownloadVideoModel.m in Sources */,
 				9B7AD3C620FC6FED00C224CC /* SureChangePhoneViewController.m in Sources */,
 				9B3CF25D20CE779800A52E14 /* ProgressImgView.m in Sources */,
 				9BA08EB0209308440026935E /* FeedbackViewController.m in Sources */,

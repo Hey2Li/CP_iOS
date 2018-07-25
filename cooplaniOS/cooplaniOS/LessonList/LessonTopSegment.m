@@ -64,13 +64,13 @@
             make.bottom.equalTo(self);
             make.height.equalTo(@1);
         }];
-//        [line setBackgroundColor:UIColorFromRGB(0xcccccc)];
-        line.backgroundColor = [UIColor whiteColor];
-        line.layer.shadowColor = [UIColor blackColor].CGColor;
-        line.layer.shadowOffset = CGSizeMake(-3, 0);
-        line.layer.shadowOpacity = 0.4;
-        [line.layer setMasksToBounds:NO];
-        [line setClipsToBounds:NO];
+        [line setBackgroundColor:UIColorFromRGB(0xcccccc)];
+//        line.backgroundColor = [UIColor whiteColor];
+//        line.layer.shadowColor = [UIColor blackColor].CGColor;
+//        line.layer.shadowOffset = CGSizeMake(3, 0);
+//        line.layer.shadowOpacity = 0.4;
+//        [line.layer setMasksToBounds:NO];
+//        line.clipsToBounds = NO;
         UIButton *btn = (UIButton*)[self viewWithTag:1000];
         [self changeSegment:btn];
     }

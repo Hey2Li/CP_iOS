@@ -32,11 +32,23 @@
     return self;
 }
 - (IBAction)selectionClick:(UIButton *)sender {
+    if (self.selectionClickBlock) {
+        self.selectionClickBlock(sender);
+    }
 }
 - (IBAction)shareClick:(UIButton *)sender {
+    if (self.shareClickBlock) {
+        self.shareClickBlock(sender);
+    }
 }
 - (IBAction)downloadClick:(UIButton *)sender {
+    if (self.downloadClickBlcok) {
+        self.downloadClickBlcok(sender);
+    }
 }
 - (IBAction)clarityClick:(UIButton *)sender {
+    if (self.clarityClickBlock) {
+        self.clarityClickBlock(sender);
+    }
 }
 @end

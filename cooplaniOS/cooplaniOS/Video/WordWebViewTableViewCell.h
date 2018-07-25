@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OneLessonModel.h"
+#import "DownloadVideoModel.h"
 
 @interface WordWebViewTableViewCell : UITableViewCell
 @property (nonatomic, copy) void (^scrollSize)(CGFloat x);
 @property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) OneLessonModel *model;
+@property (nonatomic, strong) DownloadVideoModel *localVideoModel;
 @end

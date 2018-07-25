@@ -20,5 +20,10 @@
 
     // Configure the view for the selected state
 }
-
+- (void)setModel:(DownloadVideoModel *)model{
+    _model = model;
+    self.videoName.text = model.name;
+    self.videoSize.text = [NSString stringWithFormat:@"%dM",[model.videoSize intValue]/(1024 * 1024)];
+    self.time.text = model.time;
+}
 @end

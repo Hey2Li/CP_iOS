@@ -13,6 +13,7 @@
 #import "MMDrawerController.h"
 #import "MMDrawerVisualState.h"
 #import "BaseHomeViewController.h"
+#import "DownloadVideoModel.h"
 #import <KeyboardManager.h>
 #import <UMShare/UMShare.h>
 #import <AVFoundation/AVFoundation.h>
@@ -180,8 +181,10 @@
     //JRDB数据库注册
     [[JRDBMgr shareInstance] registerClazzes:@[
                                                [DownloadFileModel class],
+                                               [DownloadVideoModel class],
                                                ]];
     J_CreateTable(DownloadFileModel);
+    J_CreateTable(DownloadVideoModel);
     [self monitorNetworking];
 }
 - (void)setAPI{

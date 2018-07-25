@@ -103,6 +103,8 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     LessonDetailViewController *vc = [[LessonDetailViewController alloc]init];
+    LessonModel *model = self.dataArray[indexPath.row];
+    vc.commodity_id = [NSString stringWithFormat:@"%@",model.ID];
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)didReceiveMemoryWarning {
