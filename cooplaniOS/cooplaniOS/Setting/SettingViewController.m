@@ -146,9 +146,9 @@
                 cellSwitch.tag = 1;
                 NSString *GPRSDownload = [USERDEFAULTS objectForKey:@"GPRSDownload"];
                 if ([GPRSDownload isEqualToString:@"0"]) {
-                    cellSwitch.on = YES;
-                }else{
                     cellSwitch.on = NO;
+                }else{
+                    cellSwitch.on = YES;
                 }
                 [cellSwitch addTarget:self action:@selector(switchChange:) forControlEvents:UIControlEventValueChanged];
                 cell.textLabel.text = @"允许移动网络下载";
@@ -184,7 +184,7 @@
             subcell.detailTextLabel.font = [UIFont systemFontOfSize:12];
             subcell.detailTextLabel.textColor = UIColorFromRGB(0xCCCCCC);
             subcell.textLabel.text = @"清除缓存";
-            subcell.detailTextLabel.text = @"234M";
+            subcell.detailTextLabel.text = [NSString stringWithFormat:@"%0.2fM", [self folderSizeAtPath:[self getCachesPath]]];
             subcell.selectionStyle = NO;
             return subcell;
         }
@@ -199,7 +199,8 @@
         ChangePhoneViewController *vc = [[ChangePhoneViewController alloc]init];
         [self.navigationController pushViewController:vc animated:YES];
     }else if (indexPath.section == 3){
-        SVProgressShowStuteText(@"缓存清理成功", YES);
+        [self cleanCaches:[self getCachesPath]];
+        [self.myTableView reloadSections:[NSIndexSet indexSetWithIndex:3] withRowAnimation:UITableViewRowAnimationNone];
     }
 }
 - (void)switchChange:(UISwitch *)sender{
@@ -248,6 +249,45 @@
             [application openURL:url];
         }
     }
+}
+
+// 获取Caches目录路径
+- (NSString *)getCachesPath{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask,YES);
+    NSString *cachesDir = [paths lastObject];
+    return cachesDir;
+}
+
+- (CGFloat)folderSizeAtPath:(NSString *)path{
+    NSFileManager *manager = [NSFileManager defaultManager];
+    CGFloat size = 0;
+    if ([manager fileExistsAtPath:path]) {
+        // 目录下的文件计算大小
+        NSArray *childrenFile = [manager subpathsAtPath:path];
+        for (NSString *fileName in childrenFile) {
+            NSString *absolutePath = [path stringByAppendingPathComponent:fileName];
+            size += [manager attributesOfItemAtPath:absolutePath error:nil].fileSize;
+        }
+        //SDWebImage的缓存计算
+        size += [[SDImageCache sharedImageCache] getSize]/1024.0/1024.0;
+        // 将大小转化为M,size单位b,转，KB,MB除以两次1024
+        return size / 1024.0 / 1024.0;
+    }
+    return 0;
+}
+- (void)cleanCaches:(NSString *)path{
+    //SDWebImage的清除功能
+    [[SDImageCache sharedImageCache] clearDisk];
+    [[SDImageCache sharedImageCache] clearMemory];
+    [[NSURLCache sharedURLCache] removeAllCachedResponses];
+    NSHTTPCookie *cookie;
+    
+    NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (cookie in [storage cookies])
+    {
+        [storage deleteCookie:cookie];
+    }
+    SVProgressShowStuteText(@"缓存清理成功", YES);
 }
 
 - (void)didReceiveMemoryWarning {

@@ -79,6 +79,9 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{    
     LessonListMenuViewController *vc = [[LessonListMenuViewController alloc]init];
+    LessonModel *model = self.dataArray[indexPath.row];
+    vc.lessonType = [NSString stringWithFormat:@"%@",model.type];
+    vc.title = model.name;
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)didReceiveMemoryWarning {

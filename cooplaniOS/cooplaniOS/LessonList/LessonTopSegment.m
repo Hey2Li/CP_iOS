@@ -49,7 +49,7 @@
         bottomLine.backgroundColor = color;
         [self addSubview:bottomLine];
         [bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(self.mas_bottom).offset(-2);
+            make.bottom.equalTo(self.mas_bottom);
             make.height.equalTo(@2);
             make.width.equalTo(@80);
             make.centerX.equalTo(self.mas_left).offset(segmentWith/2);
@@ -101,7 +101,7 @@
         _tempBtn = sender;
     }
     [self.bottomLine mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.mas_bottom).offset(-2);
+        make.bottom.equalTo(self.mas_bottom);
         make.height.equalTo(@2);
         make.width.equalTo(@80);
         make.centerX.equalTo(sender.mas_centerX);

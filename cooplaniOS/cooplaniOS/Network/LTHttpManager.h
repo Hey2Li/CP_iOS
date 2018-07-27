@@ -350,8 +350,7 @@
 
  @param complete block
  */
-+ (void)wxPayWithCoodsId:(NSString *)commodity_id UserId:(NSString *)user_id Complete:(completeBlock)complete;
-
++ (void)wxPayWithCoodsId:(NSString *)commodity_id OrderId:(NSString *)order_id UserId:(NSString *)user_id Complete:(completeBlock)complete;
 
 /**
  查看所有商品
@@ -418,4 +417,28 @@
  */
 + (void)deletePlayRecordWithPlayRecordId:(NSString *)ID Complete:(completeBlock)complete;
 
+
+/**
+ 修改订单状态 只修改为2状态
+
+ @param ID 订单ID
+ @param complete block
+ */
++ (void)changeOrderTypeWithOrderId:(NSString *)ID Complete:(completeBlock)complete;
+
+/**
+ 查看用户的手机号
+
+ @param user_id 用户ID
+ @param complete block
+ */
++ (void)findPhoneByUserId:(NSString *)user_id Complete:(completeBlock)complete;
+
+/**
+ 验证验证码修改手机号
+
+ @param user_id 用户ID
+ @param complete block
+ */
++ (void)verifyCodeUpdatePhoneWithUserId:(NSString *)user_id Phone:(NSString *)phone Code:(NSString *)code Complete:(completeBlock)complete;
 @end

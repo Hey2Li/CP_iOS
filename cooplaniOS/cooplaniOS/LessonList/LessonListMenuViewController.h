@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface LessonListMenuViewController : UIViewController
-
+@property (nonatomic, copy) NSString *lessonType;
 @end

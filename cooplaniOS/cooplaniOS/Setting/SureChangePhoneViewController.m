@@ -7,11 +7,13 @@
 //
 
 #import "SureChangePhoneViewController.h"
+#import "SettingViewController.h"
 
 @interface SureChangePhoneViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *telephoneTF;
 @property (weak, nonatomic) IBOutlet UIButton *codeTF;
 @property (weak, nonatomic) IBOutlet UIButton *getCodeBtn;
+@property (weak, nonatomic) IBOutlet UITextField *codeTextField;
 
 @end
 
@@ -25,13 +27,35 @@
     self.title = @"设置";
 }
 - (IBAction)sureChangePhoneBtnClick:(id)sender {
+    if (self.telephoneTF.text.length > 0) {
+        if (self.codeTextField.text.length > 0) {
+            [LTHttpManager verifyCodeUpdatePhoneWithUserId:IS_USER_ID Phone:self.telephoneTF.text Code:self.codeTextField.text Complete:^(LTHttpResult result, NSString *message, id data) {
+                if (LTHttpResultSuccess == result) {
+                    SVProgressShowStuteText(@"换绑成功", YES);
+                    for (UIViewController *controller in self.navigationController.viewControllers) {
+                        if ([controller isKindOfClass:[SettingViewController class]]) {
+                            SettingViewController *revise = (SettingViewController *)controller;
+                            [self.navigationController popToViewController:revise animated:YES];
+                        }
+                    }
+                }
+            }];
+        }else{
+            SVProgressShowStuteText(@"请输入验证码", NO);
+        }
+    }else{
+        SVProgressShowStuteText(@"请输入手机号码", NO);
+    }
 }
 - (IBAction)getCode:(UIButton *)sender {
     if ([Tool judgePhoneNumber:self.telephoneTF.text]) {
         [LTHttpManager UserSMSCodeWithPhone:self.telephoneTF.text Complete:^(LTHttpResult result, NSString *message, id data) {
             if (LTHttpResultSuccess == result) {
                 sender.enabled = NO;
+                SVProgressShowStuteText(@"验证码已发送", YES);
                 [self openCountdown];
+            }else{
+                SVProgressShowStuteText(message, NO);
             }
         }];
     }else{
@@ -56,13 +80,13 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:
                                                   @"重新发送"];
-                [str addAttribute:NSForegroundColorAttributeName value:
-                 UIColorFromRGB(0xCCCCCC) range:NSMakeRange(0,7)];
-                [str addAttribute:NSForegroundColorAttributeName value:
-                 UIColorFromRGB(0x4A90E2) range:NSMakeRange(7,4)];
-                [str addAttribute:NSUnderlineStyleAttributeName value:
-                 [NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(7, 4)]; // 下划线
-                [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(0, str.length)];
+//                [str addAttribute:NSForegroundColorAttributeName value:
+//                 UIColorFromRGB(0xCCCCCC) range:NSMakeRange(0,7)];
+//                [str addAttribute:NSForegroundColorAttributeName value:
+//                 UIColorFromRGB(0x4A90E2) range:NSMakeRange(7,4)];
+//                [str addAttribute:NSUnderlineStyleAttributeName value:
+//                 [NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(7, 4)]; // 下划线
+//                [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(0, str.length)];
                 [self.getCodeBtn setTitle:[str string] forState:UIControlStateNormal];
                 self.getCodeBtn.userInteractionEnabled = YES;
             });

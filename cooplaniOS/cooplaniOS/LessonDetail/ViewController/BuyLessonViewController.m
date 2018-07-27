@@ -81,6 +81,8 @@
                         [LTHttpManager addOrderInfoWIthUserId:IS_USER_ID Addressee:_addresseeStr Phone:_telephoneStr Address:_addressStr CommodityId:self.commodity_id Complete:^(LTHttpResult result, NSString *message, id data) {
                             if (LTHttpResultSuccess == result) {
                                 PayViewController *vc = [[PayViewController alloc]init];
+                                vc.orderId = data[@"responseData"];
+                                vc.commodity_id = self.commodity_id;
                                 [self.navigationController pushViewController:vc animated:YES];
                             }else{
                                 SVProgressShowStuteText(message, NO);

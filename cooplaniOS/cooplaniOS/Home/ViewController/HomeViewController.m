@@ -37,7 +37,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self initWithView];
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = UIColorFromRGB(0xF7F7F7);
     [self loadData];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reloadTableView) name:@"homereloaddata" object:nil];
 }
@@ -87,7 +87,7 @@
     tableView.dataSource = self;
     tableView.separatorStyle = NO;
     tableView.showsVerticalScrollIndicator = NO;
-    tableView.backgroundColor = [UIColor whiteColor];
+    tableView.backgroundColor = UIColorFromRGB(0xF7F7F7);
     [tableView registerNib:[UINib nibWithNibName:@"HomeListenCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"HOMELISTEN"];
     
     UIView *tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:255])];
@@ -115,7 +115,7 @@
     collectionView.showsHorizontalScrollIndicator = NO;
     
     [tableHeaderView addSubview:collectionView];
-    tableHeaderView.backgroundColor = [UIColor whiteColor];
+    tableHeaderView.backgroundColor = UIColorFromRGB(0xF7F7F7);
     
     tableView.tableHeaderView = tableHeaderView;
     self.myCollectionView = collectionView;
@@ -178,14 +178,14 @@
     return self.paperMutableArray.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 88;
+    return 78;
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    return @"四级听力";//17bold
+    return @"四级听力·真题";//17bold
 }
 -(void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section{
     // Background color
-    view.tintColor = [UIColor whiteColor];
+    view.tintColor = UIColorFromRGB(0xF7F7F7);
     
     // Text Color
     UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
@@ -197,7 +197,7 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     HomeListenCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HOMELISTEN"];
-    cell.backgroundColor = UIColorFromRGB(0xF7F7F7);
+    cell.backgroundColor = UIColorFromRGB(0xFFFFFF);
     cell.Model = self.paperMutableArray[indexPath.row];
     return cell;
 }

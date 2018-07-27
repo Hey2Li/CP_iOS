@@ -1,4 +1,4 @@
-//
+  //
 //  LessonViewController.m
 //  cooplaniOS
 //
@@ -11,6 +11,7 @@
 #import "BuyLessonViewController.h"
 #import "LessonDetailViewController.h"
 #import "LessonModel.h"
+#import "LessonListMenuViewController.h"
 
 @interface LessonViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -29,6 +30,7 @@
     // Do any additional setup after loading the view.
     [self initWithView];
     [self loadData];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loadData) name:@"homereloaddata" object:nil];
 }
 - (void)loadData{
     [LTHttpManager findAllCommodityWithComplete:^(LTHttpResult result, NSString *message, id data) {
@@ -71,7 +73,7 @@
     
     self.myTableView.tableFooterView = [UIView new];
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = UIColorFromRGB(0xF7F7F7);
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.dataArray.count;
@@ -102,10 +104,17 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    LessonDetailViewController *vc = [[LessonDetailViewController alloc]init];
     LessonModel *model = self.dataArray[indexPath.row];
-    vc.commodity_id = [NSString stringWithFormat:@"%@",model.ID];
-    [self.navigationController pushViewController:vc animated:YES];
+    if ([model.state isEqualToString:@"1"]) {
+        LessonListMenuViewController *vc = [[LessonListMenuViewController alloc]init];
+        vc.lessonType = [NSString stringWithFormat:@"%@",model.type];
+        [self.navigationController pushViewController:vc animated:YES];
+    }else{
+        LessonDetailViewController *vc = [[LessonDetailViewController alloc]init];
+        vc.commodity_id = [NSString stringWithFormat:@"%@",model.ID];
+        vc.lessDetailUrl = model.url;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -51,7 +51,7 @@
         }
     }];
     //课程列表
-    [LTHttpManager findByCurriculumTypeWithUserId:IS_USER_ID CurriculumType:@"2" Complete:^(LTHttpResult result, NSString *message, id data) {
+    [LTHttpManager findByCurriculumTypeWithUserId:IS_USER_ID CurriculumType:self.lessonType Complete:^(LTHttpResult result, NSString *message, id data) {
         if (LTHttpResultSuccess == result) {
             NSArray *dataArray = data[@"responseData"];
             [self.lessonArray removeAllObjects];
@@ -75,7 +75,6 @@
     }];
 }
 - (void)initWithView{
-    self.title = @"CET-4刷题课";
     self.view.backgroundColor = [UIColor whiteColor];
     LessonTopSegment *segment = [[LessonTopSegment alloc]initWithTitles:@[@"课程列表",@"已学列表",@"课程服务"] AndSelectColor:UIColorFromRGB(0x4DAC7D)];
     segment.frame = CGRectMake(0, 0, SCREEN_WIDTH, 40);
@@ -145,14 +144,16 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     VideoViewController *vc =[[VideoViewController alloc]init];
-      if (tableView == self.lessonListTableView) {
+    if (tableView == self.lessonListTableView) {
         VideoLessonModel *model = self.lessonArray[indexPath.row];
         vc.videoId = model.ID;
-          vc.dataArray = self.lessonArray;
+        vc.title = model.name;
+        vc.dataArray = self.lessonArray;
         [self.navigationController pushViewController:vc animated:YES];
     }else if (tableView == self.learnedTableView){
         VideoLessonModel *model = self.learnedListArray[indexPath.row];
         vc.videoId = model.ID;
+        vc.title = model.name;
         vc.dataArray = self.learnedListArray;
         [self.navigationController pushViewController:vc animated:YES];
     }

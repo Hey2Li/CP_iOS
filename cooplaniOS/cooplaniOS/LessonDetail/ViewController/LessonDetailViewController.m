@@ -22,11 +22,10 @@
     self.title = @"课程详情";
 }
 - (void)initWithView{
-    UIWebView *webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64 - 50)];
-    webView.delegate = self;
-    [self.view addSubview:webView];
-    NSURLRequest *request = [[NSURLRequest alloc]initWithURL:[NSURL URLWithString:@"https://wx.cooplan.cn/methods.html"]];
-    [webView loadRequest:request];
+    _webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64 - 50)];
+    _webView.delegate = self;
+    _webView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:_webView];
     
     UIView *bottomView = [UIView new];
     [self.view addSubview:bottomView];
@@ -54,7 +53,7 @@
     [bottomView addSubview:buyBtn];
     [buyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(priceLb.mas_right);
-        make.height.equalTo(@50);
+        make.height.equalTo(@50) ;
         make.right.equalTo(bottomView);
         make.centerY.equalTo(bottomView);
     }];
@@ -67,11 +66,20 @@
     bottomView.layer.shadowColor = [UIColor blackColor].CGColor;
     bottomView.layer.shadowOffset = CGSizeMake(-3, 0);
     bottomView.layer.shadowOpacity = 0.4;
+    NSURLRequest *request = [[NSURLRequest alloc]initWithURL:[NSURL URLWithString:self.lessDetailUrl]];
+    [self.webView loadRequest:request];
 }
+
 - (void)buy:(UIButton *)btn{
     BuyLessonViewController *vc = [[BuyLessonViewController alloc]init];
     vc.commodity_id = self.commodity_id;
     [self.navigationController pushViewController:vc animated:YES];
+}
+- (void)webViewDidStartLoad:(UIWebView *)webView{
+    SVProgressShow();
+}
+- (void)webViewDidFinishLoad:(UIWebView *)webView{
+    SVProgressHiden();
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -19,7 +19,7 @@
     self.layer.shadowRadius = 3.0f;
     self.layer.shadowOffset = CGSizeMake(1, 1);
     self.selectionStyle = NO;
-    self.backgroundColor = UIColorFromRGB(0xF7F7F7);
+    self.backgroundColor = UIColorFromRGB(0xFFFFFF);
     
     [self.collectionBtn setImage:[UIImage imageNamed:@"collection"] forState:UIControlStateNormal];
     [self.collectionBtn setImage:[UIImage imageNamed:@"collection_fill"] forState:UIControlStateSelected];

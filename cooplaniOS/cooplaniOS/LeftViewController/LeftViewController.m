@@ -161,11 +161,11 @@
         case 0:
 //            cell.titleLb.text = @"我的笔记";
             cell.titleLb.text = @"我的课程";
-            cell.leftImageVIew.image = [UIImage imageNamed:@"note"];
+            cell.leftImageVIew.image = [UIImage imageNamed:@"我的课程"];
             break;
         case 1:
             cell.titleLb.text = @"我的笔记";
-            cell.leftImageVIew.image = [UIImage imageNamed:@"collection"];
+            cell.leftImageVIew.image = [UIImage imageNamed:@"我的笔记"];
             break;
         case 2:
             cell.titleLb.text = @"我的下载";
@@ -173,7 +173,7 @@
             break;
         case 3:
             cell.titleLb.text = @"设置";
-            cell.leftImageVIew.image = [UIImage imageNamed:@"Feedback"];
+            cell.leftImageVIew.image = [UIImage imageNamed:@"设置-5"];
             break;
         case 4:
             cell.titleLb.text = @"意见反馈";

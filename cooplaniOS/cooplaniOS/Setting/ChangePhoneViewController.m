@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *telephoneTF;
 @property (weak, nonatomic) IBOutlet UITextField *codeTF;
 @property (weak, nonatomic) IBOutlet UIButton *getCodeBtn;
+@property (nonatomic, copy) NSString *telephoneStr;
 
 @end
 
@@ -24,13 +25,31 @@
     [self.nextStepBtn.layer setCornerRadius:8.0f];
     [self.nextStepBtn.layer setMasksToBounds:YES];
     self.title = @"设置";
+    [self loadData];
+}
+- (void)loadData{
+    if (IS_USER_ID) {
+        [LTHttpManager findPhoneByUserId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
+            if (LTHttpResultSuccess == result) {
+                self.telephoneStr = data[@"responseData"];
+                if (self.telephoneStr.length > 10) {
+                    self.telephoneTF.text = self.telephoneStr;
+                }else{
+                    
+                }
+            }
+        }];
+    }
 }
 - (IBAction)getCode:(UIButton *)sender {
     sender.enabled = NO;
     if ([Tool judgePhoneNumber:self.telephoneTF.text]) {
         [LTHttpManager UserSMSCodeWithPhone:self.telephoneTF.text Complete:^(LTHttpResult result, NSString *message, id data) {
             if (LTHttpResultSuccess == result) {
+                SVProgressShowStuteText(@"验证码已发送", YES);
                 [self openCountdown];
+            }else{
+                SVProgressShowStuteText(message, NO);
             }
         }];
     }else{
@@ -56,13 +75,13 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:
                                                   @"重新发送"];
-                [str addAttribute:NSForegroundColorAttributeName value:
-                 UIColorFromRGB(0xCCCCCC) range:NSMakeRange(0,7)];
-                [str addAttribute:NSForegroundColorAttributeName value:
-                 UIColorFromRGB(0x4A90E2) range:NSMakeRange(7,4)];
-                [str addAttribute:NSUnderlineStyleAttributeName value:
-                 [NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(7, 4)]; // 下划线
-                [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(0, str.length)];
+//                [str addAttribute:NSForegroundColorAttributeName value:
+//                 UIColorFromRGB(0xCCCCCC) range:NSMakeRange(0,4)];
+//                [str addAttribute:NSForegroundColorAttributeName value:
+//                 UIColorFromRGB(0x4A90E2) range:NSMakeRange(7,4)];
+//                [str addAttribute:NSUnderlineStyleAttributeName value:
+//                 [NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(7, 4)]; // 下划线
+//                [str addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(0, str.length)];
                 [self.getCodeBtn setTitle:[str string] forState:UIControlStateNormal];
                 self.getCodeBtn.enabled = YES;
             });
@@ -80,12 +99,21 @@
     dispatch_resume(_timer);
 }
 - (IBAction)nextStepBtnClick:(id)sender {
-    [LTHttpManager VerifyCodeWithPhone:self.telephoneTF.text Code:self.codeTF.text Complete:^(LTHttpResult result, NSString *message, id data) {
-        if (LTHttpResultSuccess == result) {
-            SureChangePhoneViewController *vc = [[SureChangePhoneViewController alloc]init];
-            [self.navigationController pushViewController:vc animated:YES];
-        }
-    }];
+    if (self.telephoneTF.text.length > 0 && self.codeTF.text.length > 0) {
+        [ LTHttpManager verifyCodeUpdatePhoneWithUserId:IS_USER_ID Phone:self.telephoneTF.text Code:self.codeTF.text Complete:^(LTHttpResult result, NSString *message, id data) {
+            if (LTHttpResultSuccess == result) {
+                if ([self.telephoneStr isEqualToString:self.telephoneTF.text]) {
+                    SureChangePhoneViewController *vc = [[SureChangePhoneViewController alloc]init];
+                    [self.navigationController pushViewController:vc animated:YES];
+                }else{
+                    SVProgressShowStuteText(@"绑定成功", YES);
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+            }
+        }];
+    }else{
+        SVProgressShowStuteText(@"请先输入手机号码或验证码", NO);
+    }
 }
 
 - (void)didReceiveMemoryWarning {

@@ -14,4 +14,6 @@
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *price;
 @property (nonatomic, strong) NSNumber *type;
+@property (nonatomic, copy) NSString *url;
+@property (nonatomic, copy) NSString *state;
 @end

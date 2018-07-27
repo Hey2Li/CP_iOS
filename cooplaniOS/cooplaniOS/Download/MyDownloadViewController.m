@@ -86,6 +86,7 @@
     [scrolleView addSubview:self.listenTableView];
     scrolleView.pagingEnabled = YES;
     scrolleView.showsHorizontalScrollIndicator = NO;
+    scrolleView.scrollEnabled = NO;
     self.scrollView = scrolleView;
     self.scrollView.delegate = self;
 }

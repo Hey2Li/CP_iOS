@@ -83,11 +83,19 @@
     // 更新时间：2015年11月20日
     //============================================================
     if (IS_USER_ID) {
-        [LTHttpManager wxPayWithCoodsId:@"1" UserId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
-            NSDictionary *dict = [data objectForKey:@"responseData"];
-            NSLog(@"-------%@",dict);
-            [self weiXinPayWithDic:dict[@"data"]];
-        }];
+        if (self.orderId) {
+            [LTHttpManager wxPayWithCoodsId:self.commodity_id OrderId:self.orderId UserId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
+                if (LTHttpResultSuccess == result) {
+                    NSDictionary *dict = [data objectForKey:@"responseData"];
+                    NSLog(@"-------%@",dict);
+                    [self weiXinPayWithDic:dict[@"data"]];
+                }else{
+                    SVProgressShowStuteText(@"支付失败请重试", NO);
+                }
+            }];
+        }else{
+            SVProgressShowStuteText(@"订单错误，请重新下单", NO);
+        }
     }else{
         [Tool gotoLogin:self];
     }
@@ -100,11 +108,17 @@
         {
             NSLog(@"支付成功－PaySuccess，retcode = %d", resp.errCode);
             SVProgressShowStuteText(@"支付成功", YES);
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"homereloaddata" object:nil];
             PaySuccessViewController *vc = [[PaySuccessViewController alloc]init];
             [self.navigationController pushViewController:vc animated:YES];
         }
             break;
         default:
+            [LTHttpManager changeOrderTypeWithOrderId:self.orderId Complete:^(LTHttpResult result, NSString *message, id data) {
+                if (LTHttpResultSuccess == result) {
+                    [[NSNotificationCenter defaultCenter]postNotificationName:@"homereloaddata" object:nil];
+                }
+            }];
             SVProgressShowStuteText(@"支付失败", NO);
             NSLog(@"错误，retcode = %d, retstr = %@", resp.errCode,resp.errStr);
             break;

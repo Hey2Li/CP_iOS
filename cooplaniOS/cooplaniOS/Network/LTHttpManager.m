@@ -605,10 +605,11 @@
  
  @param complete block
  */
-+ (void)wxPayWithCoodsId:(NSString *)commodity_id UserId:(NSString *)user_id Complete:(completeBlock)complete{
++ (void)wxPayWithCoodsId:(NSString *)commodity_id OrderId:(NSString *)order_id UserId:(NSString *)user_id Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
     NSDictionary *paramters =  @{@"commodity_id":commodity_id,
                                  @"user_id":user_id,
+                                 @"order_id":order_id,
                                  };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/weixin/app/wxPay",BaseURL]parameters:paramters complete:complete];
 }
@@ -621,6 +622,7 @@
 + (void)findAllCommodityWithComplete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
     NSDictionary *paramters =  @{@"version_2":kVersion_2,
+                                 @"user_id":IS_USER_ID ? IS_USER_ID : @"",
                                  };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/commodity/findAll",BaseURL]parameters:paramters complete:complete];
 }
@@ -721,5 +723,48 @@
                                  @"id":ID
                                  };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/playRecord/private/delectPlayRecord",BaseURL]parameters:paramters complete:complete];
+}
+/**
+ 修改订单状态 只修改为2状态
+ 
+ @param ID 订单ID
+ @param complete block
+ */
++ (void)changeOrderTypeWithOrderId:(NSString *)ID Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"version_2":kVersion_2,
+                                 @"id":ID
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/info/modifyType",BaseURL]parameters:paramters complete:complete];
+}
+
+/**
+ 查看用户的手机号
+ 
+ @param user_id 用户ID
+ @param complete block
+ */
++ (void)findPhoneByUserId:(NSString *)user_id Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"version_2":kVersion_2,
+                                 @"user_id":user_id
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/user/findPhoneById",BaseURL]parameters:paramters complete:complete];
+}
+
+/**
+ 验证验证码修改手机号
+ 
+ @param user_id 用户ID
+ @param complete block
+ */
++ (void)verifyCodeUpdatePhoneWithUserId:(NSString *)user_id Phone:(NSString *)phone Code:(NSString *)code Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"version_2":kVersion_2,
+                                 @"id":user_id,
+                                 @"phone":phone,
+                                 @"code":code,
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/user/verifyCodeUpdatePhone",BaseURL]parameters:paramters complete:complete];
 }
 @end

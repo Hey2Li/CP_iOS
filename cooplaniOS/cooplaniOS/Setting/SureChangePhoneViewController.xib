@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SureChangePhoneViewController">
             <connections>
                 <outlet property="codeTF" destination="aTE-mf-HYB" id="Maq-rG-Tcf"/>
+                <outlet property="codeTextField" destination="BNk-tw-lQP" id="a8Z-iU-p1E"/>
                 <outlet property="getCodeBtn" destination="aTE-mf-HYB" id="eIQ-Wu-0cB"/>
                 <outlet property="sureChangeBtn" destination="LMI-Lp-bxu" id="Zrq-WJ-zbg"/>
                 <outlet property="telephoneTF" destination="lWE-ES-uZ6" id="S4W-Ms-eDA"/>
@@ -37,11 +38,10 @@
                             </constraints>
                         </imageView>
                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入您的手机号码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lWE-ES-uZ6">
-                            <rect key="frame" x="49" y="9" width="150" height="30"/>
+                            <rect key="frame" x="49" y="9" width="306" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="025-9h-AI3"/>
                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="7IR-2p-nYI"/>
-                                <constraint firstAttribute="width" constant="150" id="b80-NE-gOh"/>
                                 <constraint firstAttribute="height" constant="30" id="zyH-kP-WqX"/>
                             </constraints>
                             <nil key="textColor"/>
@@ -55,6 +55,7 @@
                         <constraint firstItem="pcN-8x-gz6" firstAttribute="centerY" secondItem="CWH-eh-vcR" secondAttribute="centerY" id="2hj-nw-Q5C"/>
                         <constraint firstItem="lWE-ES-uZ6" firstAttribute="centerY" secondItem="CWH-eh-vcR" secondAttribute="centerY" id="DFc-jK-Bi5"/>
                         <constraint firstItem="lWE-ES-uZ6" firstAttribute="leading" secondItem="pcN-8x-gz6" secondAttribute="trailing" constant="20" id="XzE-mt-ahc"/>
+                        <constraint firstAttribute="trailing" secondItem="lWE-ES-uZ6" secondAttribute="trailing" constant="20" id="bD7-GJ-lGM"/>
                         <constraint firstAttribute="height" constant="48" id="jX2-LC-Uhh"/>
                         <constraint firstItem="pcN-8x-gz6" firstAttribute="leading" secondItem="CWH-eh-vcR" secondAttribute="leading" constant="19" id="sVX-5B-urz"/>
                     </constraints>

@@ -17,10 +17,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9oB-ta-XeR">
-                    <rect key="frame" x="15" y="11" width="46" height="29"/>
+                    <rect key="frame" x="0.0" y="8" width="70" height="35"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="46" id="Rq0-Ah-hii"/>
-                        <constraint firstAttribute="height" constant="29" id="fAG-YH-C5L"/>
+                        <constraint firstAttribute="width" constant="70" id="Rq0-Ah-hii"/>
+                        <constraint firstAttribute="height" constant="35" id="fAG-YH-C5L"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" title="选集">
@@ -109,7 +109,7 @@
                 <constraint firstItem="rPZ-iB-Q6F" firstAttribute="top" secondItem="mGM-Dg-U3K" secondAttribute="top" id="PtI-hy-wjO"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="U02-RP-Ch1" secondAttribute="bottom" constant="8" id="TVW-Gb-Wqq"/>
                 <constraint firstItem="U02-RP-Ch1" firstAttribute="leading" secondItem="rPZ-iB-Q6F" secondAttribute="trailing" constant="45" id="Uuz-MP-gEv"/>
-                <constraint firstItem="9oB-ta-XeR" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="15" id="WtI-Ur-VMx"/>
+                <constraint firstItem="9oB-ta-XeR" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="WtI-Ur-VMx"/>
                 <constraint firstItem="U02-RP-Ch1" firstAttribute="centerX" secondItem="wVU-qp-6xz" secondAttribute="centerX" id="aD9-GU-JQ5"/>
                 <constraint firstItem="wVU-qp-6xz" firstAttribute="top" secondItem="2rm-Yj-hHv" secondAttribute="top" id="bQp-7h-Pud"/>
                 <constraint firstItem="QLf-eS-8tw" firstAttribute="bottom" secondItem="rPZ-iB-Q6F" secondAttribute="bottom" id="ctA-h0-T4q"/>

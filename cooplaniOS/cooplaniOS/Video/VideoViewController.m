@@ -199,7 +199,6 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     [self initWithView];
-    self.title = @"视频详情";
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     //旋转屏幕通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDeviceOrientationChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
@@ -256,7 +255,16 @@
     };
 #pragma mark 下载
     bottomView.downloadClickBlcok = ^(UIButton *btn) {
-        [self downloadVideo:btn];
+        NSString *GPRSDownload = [USERDEFAULTS objectForKey:@"GPRSDownload"];
+        if ([kNetworkState isEqualToString:@"GPRS"] && [GPRSDownload isEqualToString:@"0"]) {
+            LTAlertView *alert = [[LTAlertView alloc]initWithTitle:@"移动网络环境下确定下载吗" sureBtn:@"确定" cancleBtn:@"取消"];
+            [alert show];
+            alert.resultIndex = ^(NSInteger index) {
+                [self downloadVideo:btn];
+            };
+        }else{
+            [self downloadVideo:btn];
+        }
     };
     bottomView.shareClickBlock = ^(UIButton *btn) {
         
@@ -525,6 +533,7 @@
     }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+//选集
     if (tableView == self.allSelectionTableView) {
         VideoLessonModel *videoModel = self.dataArray[indexPath.row];
         [self.wmPlayer resetWMPlayer];
@@ -537,20 +546,14 @@
         [UIView animateWithDuration:0.2 animations:^{
             [self.view layoutIfNeeded];
         }];
+        [self.videoImg bringSubviewToFront:self.playBtn];
+        self.playBtn.hidden = NO;
         self.videoId = videoModel.ID;
         [self loadData];
     }
 }
 #pragma mark 下载视频
 - (void)downloadVideo:(UIButton *)sender{
-    NSString *GPRSDownload = [USERDEFAULTS objectForKey:@"GPRSDownload"];
-    if ([kNetworkState isEqualToString:@"GPRS"] && [GPRSDownload isEqualToString:@"0"]) {
-        LTAlertView *alert = [[LTAlertView alloc]initWithTitle:@"移动网络环境下确定下载吗" sureBtn:@"确定" cancleBtn:@"取消"];
-        [alert show];
-        alert.resultIndex = ^(NSInteger index) {
-     
-        };
-    }
     self.downloadView = [[LTDownloadView alloc]initWithTitle:@"是否下载此资源" sureBtn:@"立即下载" fileSize:[NSString stringWithFormat:@"%dM",[self.oneLessonModel.bsize intValue]/(1024 * 1024)]];
 
     [self.downloadView show];
@@ -612,6 +615,11 @@
 }
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
+    [LTHttpManager addPlayRecordWithUseId:IS_USER_ID ? IS_USER_ID : @"" CurriculumId:[NSString stringWithFormat:@"%ld",(long)self.videoId] LastTime:[NSString stringWithFormat:@"%f",self.wmPlayer.currentTime] Complete:^(LTHttpResult result, NSString *message, id data) {
+        if (LTHttpResultSuccess == result) {
+            
+        }
+    }];
     [self releaseWMPlayer];
 }
 - (void)didReceiveMemoryWarning {

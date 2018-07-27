@@ -10,4 +10,5 @@
 
 @interface LessonDetailViewController : UIViewController
 @property (nonatomic, copy) NSString *commodity_id;
+@property (nonatomic, copy) NSString *lessDetailUrl;
 @end
