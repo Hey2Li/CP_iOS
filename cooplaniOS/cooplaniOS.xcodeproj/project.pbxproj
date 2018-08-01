@@ -155,6 +155,12 @@
 		9BEA0A402071D9190026AF2C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BEA0A3F2071D9190026AF2C /* main.m */; };
 		9BEA0A4A2071D9190026AF2C /* cooplaniOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BEA0A492071D9190026AF2C /* cooplaniOSTests.m */; };
 		9BEA0A552071D9190026AF2C /* cooplaniOSUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BEA0A542071D9190026AF2C /* cooplaniOSUITests.m */; };
+		9BF8A4AF21104ED10079784F /* WordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF8A4AE21104ED10079784F /* WordViewController.m */; };
+		9BF8A4B4211050570079784F /* WordBookTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF8A4B2211050570079784F /* WordBookTableViewCell.m */; };
+		9BF8A4B5211050570079784F /* WordBookTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BF8A4B3211050570079784F /* WordBookTableViewCell.xib */; };
+		9BF8A4B9211052F00079784F /* LearnWordGroupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF8A4B8211052F00079784F /* LearnWordGroupView.m */; };
+		9BF8A4BB211052FC0079784F /* LearnWordGroupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BF8A4BA211052FC0079784F /* LearnWordGroupView.xib */; };
+		9BF8A4BE211070B40079784F /* ReciteWordsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BF8A4BD211070B40079784F /* ReciteWordsViewController.m */; };
 		B912EBFA1893DE34C08F91CD /* libPods-cooplaniOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAFC1C4FBFDBB58C028CDF30 /* libPods-cooplaniOSTests.a */; };
 		F746F6BA696BF43BB227A4AD /* libPods-cooplaniOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A469FDDB0CDF11590B5D2F3A /* libPods-cooplaniOS.a */; };
 /* End PBXBuildFile section */
@@ -447,6 +453,16 @@
 		9BEA0A502071D9190026AF2C /* cooplaniOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = cooplaniOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BEA0A542071D9190026AF2C /* cooplaniOSUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = cooplaniOSUITests.m; sourceTree = "<group>"; };
 		9BEA0A562071D9190026AF2C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9BF8A4AD21104ED10079784F /* WordViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WordViewController.h; sourceTree = "<group>"; };
+		9BF8A4AE21104ED10079784F /* WordViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WordViewController.m; sourceTree = "<group>"; };
+		9BF8A4B1211050570079784F /* WordBookTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WordBookTableViewCell.h; sourceTree = "<group>"; };
+		9BF8A4B2211050570079784F /* WordBookTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WordBookTableViewCell.m; sourceTree = "<group>"; };
+		9BF8A4B3211050570079784F /* WordBookTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordBookTableViewCell.xib; sourceTree = "<group>"; };
+		9BF8A4B7211052F00079784F /* LearnWordGroupView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LearnWordGroupView.h; sourceTree = "<group>"; };
+		9BF8A4B8211052F00079784F /* LearnWordGroupView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LearnWordGroupView.m; sourceTree = "<group>"; };
+		9BF8A4BA211052FC0079784F /* LearnWordGroupView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LearnWordGroupView.xib; sourceTree = "<group>"; };
+		9BF8A4BC211070B40079784F /* ReciteWordsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReciteWordsViewController.h; sourceTree = "<group>"; };
+		9BF8A4BD211070B40079784F /* ReciteWordsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReciteWordsViewController.m; sourceTree = "<group>"; };
 		9D37C6BD3FA27E3B5F22960E /* Pods-cooplaniOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cooplaniOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-cooplaniOSTests/Pods-cooplaniOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		A469FDDB0CDF11590B5D2F3A /* libPods-cooplaniOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-cooplaniOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAFC1C4FBFDBB58C028CDF30 /* libPods-cooplaniOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-cooplaniOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -744,18 +760,27 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		9B3DA35F20F71E810028CDA9 /* LessonDetail */ = {
+		9B3DA35F20F71E810028CDA9 /* Lesson */ = {
 			isa = PBXGroup;
 			children = (
+				9BF8A4B6211050D00079784F /* Model */,
 				9B3DA36420F7219F0028CDA9 /* ViewController */,
 				9B3DA36320F721990028CDA9 /* View */,
 			);
-			path = LessonDetail;
+			path = Lesson;
 			sourceTree = "<group>";
 		};
 		9B3DA36320F721990028CDA9 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				9B3DA38820F859290028CDA9 /* LessonTopSegment.h */,
+				9B3DA38920F859290028CDA9 /* LessonTopSegment.m */,
+				9B3DA38B20F880910028CDA9 /* LessonListTableViewCell.h */,
+				9B3DA38C20F880910028CDA9 /* LessonListTableViewCell.m */,
+				9B3DA38D20F880910028CDA9 /* LessonListTableViewCell.xib */,
+				9B3DA39020F886730028CDA9 /* LessonServerView.h */,
+				9B3DA39120F886730028CDA9 /* LessonServerView.m */,
+				9B3DA39320F886960028CDA9 /* LessonServerView.xib */,
 				9B3DA36520F721D10028CDA9 /* BuyLessonTableHeaderView.h */,
 				9B3DA36620F721D10028CDA9 /* BuyLessonTableHeaderView.m */,
 				9B3DA36820F74C980028CDA9 /* AddressTableViewCell.h */,
@@ -774,6 +799,12 @@
 		9B3DA36420F7219F0028CDA9 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				9B3DA35720F62B5A0028CDA9 /* LessonViewController.h */,
+				9B3DA35820F62B5A0028CDA9 /* LessonViewController.m */,
+				9B3DA37E20F83C3A0028CDA9 /* LessonListViewController.h */,
+				9B3DA37F20F83C3A0028CDA9 /* LessonListViewController.m */,
+				9B3DA38120F8543E0028CDA9 /* LessonListMenuViewController.h */,
+				9B3DA38220F8543E0028CDA9 /* LessonListMenuViewController.m */,
 				9B3DA36020F71FC10028CDA9 /* BuyLessonViewController.h */,
 				9B3DA36120F71FC10028CDA9 /* BuyLessonViewController.m */,
 				9B3DA36D20F75F900028CDA9 /* PayViewController.h */,
@@ -784,29 +815,6 @@
 				9B7AD3C920FD8ED400C224CC /* LessonDetailViewController.m */,
 			);
 			path = ViewController;
-			sourceTree = "<group>";
-		};
-		9B3DA37D20F83C240028CDA9 /* LessonList */ = {
-			isa = PBXGroup;
-			children = (
-				9B3DA37E20F83C3A0028CDA9 /* LessonListViewController.h */,
-				9B3DA37F20F83C3A0028CDA9 /* LessonListViewController.m */,
-				9B3DA38120F8543E0028CDA9 /* LessonListMenuViewController.h */,
-				9B3DA38220F8543E0028CDA9 /* LessonListMenuViewController.m */,
-				9B3DA38820F859290028CDA9 /* LessonTopSegment.h */,
-				9B3DA38920F859290028CDA9 /* LessonTopSegment.m */,
-				9B3DA38B20F880910028CDA9 /* LessonListTableViewCell.h */,
-				9B3DA38C20F880910028CDA9 /* LessonListTableViewCell.m */,
-				9B3DA38D20F880910028CDA9 /* LessonListTableViewCell.xib */,
-				9B3DA39020F886730028CDA9 /* LessonServerView.h */,
-				9B3DA39120F886730028CDA9 /* LessonServerView.m */,
-				9B3DA39320F886960028CDA9 /* LessonServerView.xib */,
-				9B7AD3CE20FF2F3B00C224CC /* VideoLessonModel.h */,
-				9B7AD3CF20FF2F3B00C224CC /* VideoLessonModel.m */,
-				9B70C7682100564E006C594A /* learnLessonModel.h */,
-				9B70C7692100564E006C594A /* learnLessonModel.m */,
-			);
-			path = LessonList;
 			sourceTree = "<group>";
 		};
 		9B4BB6F92079A9BD0029015F /* View */ = {
@@ -842,8 +850,6 @@
 				9B3D02C920845338005C923B /* PaperDetailViewController.xib */,
 				9B3DA35420F624DB0028CDA9 /* BaseHomeViewController.h */,
 				9B3DA35520F624DB0028CDA9 /* BaseHomeViewController.m */,
-				9B3DA35720F62B5A0028CDA9 /* LessonViewController.h */,
-				9B3DA35820F62B5A0028CDA9 /* LessonViewController.m */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1047,9 +1053,8 @@
 			isa = PBXGroup;
 			children = (
 				9B3DA34D20F5E7570028CDA9 /* cooplaniOS.entitlements */,
+				9BF8A4B02110503B0079784F /* Word */,
 				9B7AD3BA20FC3D2600C224CC /* Setting */,
-				9B3DA37D20F83C240028CDA9 /* LessonList */,
-				9B3DA35F20F71E810028CDA9 /* LessonDetail */,
 				9B26D86020E9BD0B00B4FC11 /* Video */,
 				9BA08EAC2093083A0026935E /* Feedback */,
 				9B3D02D12084885C005C923B /* Login */,
@@ -1098,6 +1103,35 @@
 				9BEA0A562071D9190026AF2C /* Info.plist */,
 			);
 			path = cooplaniOSUITests;
+			sourceTree = "<group>";
+		};
+		9BF8A4B02110503B0079784F /* Word */ = {
+			isa = PBXGroup;
+			children = (
+				9BF8A4AD21104ED10079784F /* WordViewController.h */,
+				9BF8A4AE21104ED10079784F /* WordViewController.m */,
+				9BF8A4B1211050570079784F /* WordBookTableViewCell.h */,
+				9BF8A4B2211050570079784F /* WordBookTableViewCell.m */,
+				9BF8A4B3211050570079784F /* WordBookTableViewCell.xib */,
+				9BF8A4B7211052F00079784F /* LearnWordGroupView.h */,
+				9BF8A4B8211052F00079784F /* LearnWordGroupView.m */,
+				9BF8A4BA211052FC0079784F /* LearnWordGroupView.xib */,
+				9BF8A4BC211070B40079784F /* ReciteWordsViewController.h */,
+				9BF8A4BD211070B40079784F /* ReciteWordsViewController.m */,
+				9B3DA35F20F71E810028CDA9 /* Lesson */,
+			);
+			path = Word;
+			sourceTree = "<group>";
+		};
+		9BF8A4B6211050D00079784F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9B7AD3CE20FF2F3B00C224CC /* VideoLessonModel.h */,
+				9B7AD3CF20FF2F3B00C224CC /* VideoLessonModel.m */,
+				9B70C7682100564E006C594A /* learnLessonModel.h */,
+				9B70C7692100564E006C594A /* learnLessonModel.m */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		DC4258BE67092C731E9D8EF8 /* Frameworks */ = {
@@ -1242,6 +1276,7 @@
 			files = (
 				9BA08EB62093120C0026935E /* FeedbackTypeTableViewCell.xib in Resources */,
 				9B4ED8D920C3BC3C007521BD /* WordTableViewCell.xib in Resources */,
+				9BF8A4B5211050570079784F /* WordBookTableViewCell.xib in Resources */,
 				9B16B078208D7DDE00094EE7 /* ListenPlay.xib in Resources */,
 				9B16B0942090623E00094EE7 /* QuestionTableViewCell.xib in Resources */,
 				9B3D02D020847C5A005C923B /* PaperDetailTableViewCell.xib in Resources */,
@@ -1266,6 +1301,7 @@
 				9B81D4DE20EB47ED00BFFC39 /* VideoTableViewCell.xib in Resources */,
 				9B3DA36C20F74C980028CDA9 /* AddressTableViewCell.xib in Resources */,
 				9B7AD3C220FC6FD200C224CC /* ChangePhoneViewController.xib in Resources */,
+				9BF8A4BB211052FC0079784F /* LearnWordGroupView.xib in Resources */,
 				9B7AD3C720FC6FED00C224CC /* SureChangePhoneViewController.xib in Resources */,
 				9B3DA39420F886960028CDA9 /* LessonServerView.xib in Resources */,
 				9B16B080208F140A00094EE7 /* AnswerTableViewCell.xib in Resources */,
@@ -1412,6 +1448,7 @@
 				9B135CCF207CD8AA0040A883 /* LTHTTPSessionManager.m in Sources */,
 				9B3DA38320F8543E0028CDA9 /* LessonListMenuViewController.m in Sources */,
 				9B16B0932090623E00094EE7 /* QuestionTableViewCell.m in Sources */,
+				9BF8A4BE211070B40079784F /* ReciteWordsViewController.m in Sources */,
 				9B3DA38020F83C3A0028CDA9 /* LessonListViewController.m in Sources */,
 				9B4ED8D820C3BC3C007521BD /* WordTableViewCell.m in Sources */,
 				9B81D4DD20EB47ED00BFFC39 /* VideoTableViewCell.m in Sources */,
@@ -1421,6 +1458,7 @@
 				9B3DA37B20F76E0D0028CDA9 /* WXPayTableViewCell.m in Sources */,
 				9B1D31BC2073487F007674CF /* BaseViewController.m in Sources */,
 				9BA08EB52093120C0026935E /* FeedbackTypeTableViewCell.m in Sources */,
+				9BF8A4AF21104ED10079784F /* WordViewController.m in Sources */,
 				9BC1D6DF207862A8007D88EF /* Tool.m in Sources */,
 				9B16B073208D781F00094EE7 /* TestModeViewController.m in Sources */,
 				9B135CD2207CD96C0040A883 /* LTHttpManager.m in Sources */,
@@ -1462,6 +1500,7 @@
 				9B7AD3B820F9C60400C224CC /* LessonDownloadTableViewCell.m in Sources */,
 				9B7AD3D020FF2F3B00C224CC /* VideoLessonModel.m in Sources */,
 				9B7AD3CD20FF219B00C224CC /* LessonModel.m in Sources */,
+				9BF8A4B4211050570079784F /* WordBookTableViewCell.m in Sources */,
 				9B3DA36720F721D10028CDA9 /* BuyLessonTableHeaderView.m in Sources */,
 				9B3DA36220F71FC10028CDA9 /* BuyLessonViewController.m in Sources */,
 				9B135CC1207C886A0040A883 /* UISlider+time.m in Sources */,
@@ -1480,6 +1519,7 @@
 				9B26D86320E9BD3300B4FC11 /* VideoViewController.m in Sources */,
 				9BA1CB6920A92A790093C37B /* MyCollectionModel.m in Sources */,
 				9B9B08BF2101B7AD000E110A /* DownloadVideoModel.m in Sources */,
+				9BF8A4B9211052F00079784F /* LearnWordGroupView.m in Sources */,
 				9B7AD3C620FC6FED00C224CC /* SureChangePhoneViewController.m in Sources */,
 				9B3CF25D20CE779800A52E14 /* ProgressImgView.m in Sources */,
 				9BA08EB0209308440026935E /* FeedbackViewController.m in Sources */,

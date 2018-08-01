@@ -19,6 +19,7 @@
 @end
 
 @implementation LessonViewController
+
 - (NSMutableArray *)dataArray{
     if (!_dataArray) {
         _dataArray = [NSMutableArray array];
@@ -30,7 +31,6 @@
     // Do any additional setup after loading the view.
     [self initWithView];
     [self loadData];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loadData) name:@"homereloaddata" object:nil];
 }
 - (void)loadData{
     [LTHttpManager findAllCommodityWithComplete:^(LTHttpResult result, NSString *message, id data) {

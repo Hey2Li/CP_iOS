@@ -9,6 +9,7 @@
 #import "HomeTopTitleView.h"
 #import "WZSwitch.h"
 
+#define kWidth [NSNumber numberWithDouble:self.width/3]
 @interface HomeTopTitleView()
 @property (nonatomic, strong) UIButton *tempBtn;
 @property (nonatomic, strong) UIButton *leftBtn;
@@ -53,37 +54,23 @@
 //    }
 //    return self;
 //}
-- (instancetype)initWithLeftTitle:(NSString *)leftTitle RightTitle:(NSString *)rightTitle{
+- (instancetype)initWithTitleArray:(NSArray *)titleArray{
     if (self = [super init]) {
         self.frame = CGRectMake(0, 0, 200, 44);
-        UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [leftBtn setTitle:leftTitle forState:UIControlStateNormal];
-        [leftBtn setTitleColor:UIColorFromRGB(0x444444) forState:UIControlStateNormal];
-        [self addSubview:leftBtn];
-        [leftBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(self.mas_centerX).offset(-7.5);
-            make.centerY.equalTo(self.mas_centerY);
-            make.height.equalTo(@25);
-            make.width.equalTo(@40);
-        }];
-        
-        UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [rightBtn setTitle:rightTitle forState:UIControlStateNormal];
-        [rightBtn setTitleColor:UIColorFromRGB(0x444444) forState:UIControlStateNormal];
-        [self addSubview:rightBtn];
-        [rightBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.mas_centerX).offset(7.5);
-            make.centerY.equalTo(self.mas_centerY);
-            make.height.equalTo(@25);
-            make.width.equalTo(@40);
-        }];
-        
-        [leftBtn addTarget:self action:@selector(BtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        [rightBtn addTarget:self action:@selector(BtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        leftBtn.tag = 10001;
-        rightBtn.tag = 10002;
-        self.leftBtn = leftBtn;
-        self.rightBtn = rightBtn;
+        for (int i = 0 ; i < titleArray.count; i++) {
+            UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+            [btn setTitle:titleArray[i] forState:UIControlStateNormal];
+            [btn setTitleColor:UIColorFromRGB(0x444444) forState:UIControlStateNormal];
+            [self addSubview:btn];
+            [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(self.mas_left).mas_offset(67 * i);
+                make.centerY.equalTo(self.mas_centerY);
+                make.height.equalTo(@25);
+                make.width.equalTo(@65);
+            }];
+            btn.tag = i + 10001;
+            [btn addTarget:self action:@selector(BtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        }
     }
     return self;
 }
@@ -127,12 +114,11 @@
     }];
 }
 - (CGSize)intrinsicContentSize{
-    return CGSizeMake(200, 44);
+    return CGSizeMake(201, 44);
 }
-- (void)selectLeft{
-    [self btnClick:self.leftBtn];
-}
-- (void)selectRight{
-    [self btnClick:self.rightBtn];
+- (void)selectIndexBtn:(NSInteger)index{
+//    NSLog(@"selectedIndex %ld",(long)index);
+    UIButton *btn = (UIButton *)[self viewWithTag:index + 10001];
+    [self btnClick:btn];
 }
 @end

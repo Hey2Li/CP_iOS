@@ -11,12 +11,9 @@
 typedef void(^topTitleSwitch)(NSInteger index);
 
 @interface HomeTopTitleView : UIView
-@property (nonatomic, strong) UILabel *leftLabel;
-@property (nonatomic, strong) UILabel *rightLabel;
 @property (nonatomic, copy) topTitleSwitch topTitleSwitchBlock;
 
-- (instancetype)initWithLeftTitle:(NSString *)leftTitle RightTitle:(NSString *)rightTitle;
+- (instancetype)initWithTitleArray:(NSArray *)titleArray;
 
-- (void)selectLeft;
-- (void)selectRight;
+- (void)selectIndexBtn:(NSInteger)index;
 @end

@@ -13,6 +13,7 @@
 #import "MMDrawerController.h"
 #import "HomeTopTitleView.h"
 #import "LessonViewController.h"
+#import "WordViewController.h"
 
 @interface BaseHomeViewController ()<UIScrollViewDelegate>
 @property (nonatomic, strong) UIScrollView *myScrollView;
@@ -47,16 +48,13 @@
 }
 #pragma mark 导航栏
 - (void)initWithNavi{
-    HomeTopTitleView *titleView  =[[HomeTopTitleView alloc]initWithLeftTitle:@"听力" RightTitle:@"课程"];
+    HomeTopTitleView *titleView  =[[HomeTopTitleView alloc]initWithTitleArray:@[@"听力", @"单词", @"课程"]];
     titleView.translatesAutoresizingMaskIntoConstraints = false;
     titleView.topTitleSwitchBlock = ^(NSInteger index) {
-        if (index == 10001) {
-            [self.myScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
-        }else{
-            [self.myScrollView setContentOffset:CGPointMake(SCREEN_WIDTH, 0) animated:YES];
-        }
+        [self.myScrollView setContentOffset:CGPointMake(SCREEN_WIDTH * (index - 10001), 0) animated:YES];
+        NSLog(@"%ld",(long)index);
     };
-    [titleView selectLeft];
+    [titleView selectIndexBtn:1];
     self.titleView = titleView;
     self.navigationItem.titleView = titleView;
 }
@@ -64,7 +62,7 @@
     UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     [self.view addSubview:scrollView];
     scrollView.backgroundColor = [UIColor whiteColor];
-    [scrollView setContentSize:CGSizeMake(SCREEN_WIDTH * 2, SCREEN_HEIGHT)];
+    [scrollView setContentSize:CGSizeMake(SCREEN_WIDTH * 3, SCREEN_HEIGHT)];
     
     HomeViewController *listenVC = [[HomeViewController alloc]init];
     [self addChildViewController:listenVC];
@@ -76,11 +74,16 @@
     [self addChildViewController:lessonVC];
     [scrollView addSubview:lessonVC.view];
     [scrollView insertSubview:lessonVC.view atIndex:0];
-    lessonVC.view.frame = CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    lessonVC.view.frame = CGRectMake(SCREEN_WIDTH * 2, 0, SCREEN_WIDTH , SCREEN_HEIGHT);
     
+    WordViewController *wordVC = [[WordViewController alloc]init];
+    [self addChildViewController:wordVC];
+    [scrollView addSubview:wordVC.view];
+    wordVC.view.frame = CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     scrollView.pagingEnabled = YES;
     scrollView.bounces = NO;
     scrollView.delegate = self;
+    [scrollView setContentOffset:CGPointMake(SCREEN_WIDTH, 0) animated:YES];
     self.myScrollView = scrollView;
 }
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
@@ -94,10 +97,12 @@
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     NSLog(@"%f",scrollView.contentOffset.x / SCREEN_WIDTH);
-    if (scrollView.contentOffset.x / SCREEN_WIDTH > 0.5) {
-        [self.titleView selectRight];
-    }else{
-        [self.titleView selectLeft];
+    if (scrollView.contentOffset.x / SCREEN_WIDTH == 0) {
+        [self.titleView selectIndexBtn:0];
+    }else if (scrollView.contentOffset.x / SCREEN_WIDTH == 1){
+        [self.titleView selectIndexBtn:1];
+    }else if (scrollView.contentOffset.x / SCREEN_WIDTH == 2){
+        [self.titleView selectIndexBtn:2];
     }
 }
 -(void)setupLeftMenuButton{
