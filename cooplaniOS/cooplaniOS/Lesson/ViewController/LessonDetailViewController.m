@@ -8,6 +8,7 @@
 
 #import "LessonDetailViewController.h"
 #import "BuyLessonViewController.h"
+#import <AlibcTradeSDK/AlibcTradeSDK.h>
 
 @interface LessonDetailViewController ()<UIWebViewDelegate>
 @property (nonatomic, strong) UIWebView *webView;
@@ -71,9 +72,42 @@
 }
 
 - (void)buy:(UIButton *)btn{
-    BuyLessonViewController *vc = [[BuyLessonViewController alloc]init];
-    vc.commodity_id = self.commodity_id;
-    [self.navigationController pushViewController:vc animated:YES];
+//    BuyLessonViewController *vc = [[BuyLessonViewController alloc]init];
+//    vc.commodity_id = self.commodity_id;
+//    [self.navigationController pushViewController:vc animated:YES];
+//    id<AlibcTradePage> page = [AlibcTradePageFactory itemDetailPage:@"36684204746"];
+//    id<AlibcTradeService> service = [AlibcTradeSDK sharedInstance].tradeService;
+//    AlibcTradeShowParams *showParams = [[AlibcTradeShowParams alloc] init];
+//    showParams.openType = AlibcOpenTypeNative;
+//    showParams.backUrl = @"tbopen24996842://";
+//    showParams.linkKey = @"taobao_scheme";
+//
+////    showParams.isNeedPush = showParams.isNeedPush ? self.navigationController : self;
+//    [service show:showParams.isNeedPush ? self.navigationController : self page:page showParams:showParams taoKeParams:nil trackParam:nil tradeProcessSuccessCallback:^(AlibcTradeResult * _Nullable result) {
+//        NSLog(@"aliSDK:%@",result);
+//    } tradeProcessFailedCallback:^(NSError * _Nullable error) {
+//        NSLog(@"aliSDK error:%@",error);
+//
+//    }];
+    AlibcWebViewController* view = [[AlibcWebViewController alloc] init];
+    
+    AlibcTradeShowParams* showParam = [[AlibcTradeShowParams alloc] init];
+    showParam.openType = AlibcOpenTypeNative;
+    //8位数appkey
+    showParam.backUrl=@"tbopen24996842";
+    showParam.isNeedPush=YES;
+    showParam.linkKey = @"taobao_scheme";
+    showParam.nativeFailMode=AlibcNativeFailModeJumpH5;
+    id<AlibcTradePage> page = [AlibcTradePageFactory itemDetailPage:@"574844095934"];
+    
+    //    0:  标识跳转到手淘打开了
+    //    1:  标识用h5打开
+    //    -1:  标识出错
+    NSInteger ret =[[AlibcTradeSDK sharedInstance].tradeService show:self webView:view.webView page:page showParams:showParam taoKeParams:nil trackParam:nil tradeProcessSuccessCallback:nil tradeProcessFailedCallback:nil];
+    NSLog(@"ret-----%ld",ret);
+    if (ret == 1) {
+        [self.navigationController pushViewController:view animated:YES];
+    }
 }
 - (void)webViewDidStartLoad:(UIWebView *)webView{
     SVProgressShow();

@@ -27,6 +27,7 @@
 #endif
 // 如果需要使用idfa功能所需要引入的头文件（可选）
 #import <AdSupport/AdSupport.h>
+#import <AlibcTradeSDK/AlibcTradeSDK.h>
 
 #define USHARE_DEMO_APPKEY @"5861e5daf5ade41326001eab"
 
@@ -51,20 +52,27 @@
     [self setAPI];
     //极光推送
     [self JSPush:application :launchOptions];
+    //阿里电商SDK
+    [self setAliSDK];
     return YES;
 }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options
 {
+    if (![[AlibcTradeSDK sharedInstance] application:app
+                                             openURL:url
+                                             options:options]) {
+        //处理其他app跳转到自己的app，如果百川处理过会返回YES
+    }
     //6.3的新的API调用，是为了兼容国外平台(例如:新版facebookSDK,VK等)的调用[如果用6.2的api调用会没有回调],对国内平台没有影响
     BOOL result = [[UMSocialManager defaultManager]  handleOpenURL:url options:options];
     if (!result) {
         // 其他如支付等SDK的回调
         [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
+       
     }
     return result;
 }
-                   
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
@@ -370,5 +378,16 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
             [USERDEFAULTS setObject:@"0" forKey:@"isHaveNet"];
         }
     }];
+}
+- (void)setAliSDK{
+    [[AlibcTradeSDK sharedInstance]asyncInitWithSuccess:^{
+        
+    } failure:^(NSError *error) {
+        NSLog(@"alisdk 初始化失败： %@",error.description);
+    }];
+    [[AlibcTradeSDK sharedInstance]setDebugLogOpen:YES];
+    
+    
+    [[AlibcTradeSDK sharedInstance]setIsForceH5:NO];
 }
 @end
