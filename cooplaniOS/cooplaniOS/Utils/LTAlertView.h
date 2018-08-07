@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 
 typedef void(^AlertResult)(NSInteger index);
+typedef void(^CancelClick)(NSInteger index);
 
 @interface LTAlertView : UIView
 @property (nonatomic, copy) AlertResult resultIndex;
+@property (nonatomic, copy) CancelClick cancelClick;
 - (instancetype)initWithTitle:(NSString *)title sureBtn:(NSString *)sureTitle cancleBtn:(NSString *)cancleTitle;
 - (void)show;
 - (void)dismiss;

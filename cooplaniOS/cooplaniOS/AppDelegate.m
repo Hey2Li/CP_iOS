@@ -385,7 +385,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     } failure:^(NSError *error) {
         NSLog(@"alisdk 初始化失败： %@",error.description);
     }];
-    [[AlibcTradeSDK sharedInstance]setDebugLogOpen:YES];
+    [[AlibcTradeSDK sharedInstance]setDebugLogOpen:NO];
     
     
     [[AlibcTradeSDK sharedInstance]setIsForceH5:NO];

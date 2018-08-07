@@ -152,6 +152,11 @@
             self.resultIndex(sender.tag);
         }
     }
+    if (sender.tag == 1000) {
+        if (self.cancelClick) {
+            self.cancelClick(sender.tag);
+        }
+    }
     [self removeFromSuperview];
 }
 - (void)dismiss{

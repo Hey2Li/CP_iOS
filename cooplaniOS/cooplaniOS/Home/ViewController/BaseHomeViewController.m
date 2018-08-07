@@ -14,6 +14,7 @@
 #import "HomeTopTitleView.h"
 #import "LessonViewController.h"
 #import "WordViewController.h"
+#import "StartLearnWordViewController.h"
 
 @interface BaseHomeViewController ()<UIScrollViewDelegate>
 @property (nonatomic, strong) UIScrollView *myScrollView;
@@ -76,7 +77,7 @@
     [scrollView insertSubview:lessonVC.view atIndex:0];
     lessonVC.view.frame = CGRectMake(SCREEN_WIDTH * 2, 0, SCREEN_WIDTH , SCREEN_HEIGHT);
     
-    WordViewController *wordVC = [[WordViewController alloc]init];
+    StartLearnWordViewController *wordVC = [[StartLearnWordViewController alloc]init];
     [self addChildViewController:wordVC];
     [scrollView addSubview:wordVC.view];
     wordVC.view.frame = CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT);

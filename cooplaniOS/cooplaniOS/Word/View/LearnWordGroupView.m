@@ -7,6 +7,7 @@
 //
 
 #import "LearnWordGroupView.h"
+#import "ReciteWordsViewController.h"
 
 @implementation LearnWordGroupView
 
@@ -34,7 +35,8 @@
     }];
 }
 - (IBAction)immediatelyToGroup:(UIButton *)sender {
-    
+    ReciteWordsViewController *vc = [ReciteWordsViewController new];
+    [self.viewController.navigationController pushViewController:vc animated:YES];
 }
 - (IBAction)close:(UIButton *)sender {
     [self removeFromSuperview];

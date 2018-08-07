@@ -441,4 +441,52 @@
  @param complete block
  */
 + (void)verifyCodeUpdatePhoneWithUserId:(NSString *)user_id Phone:(NSString *)phone Code:(NSString *)code Complete:(completeBlock)complete;
+
+
+/**
+ 获取用户需要背的单词
+
+ @param user_id 用户id
+ @param word_book_id 词书id
+ @param num 记忆个数
+ @param complete block
+ */
++ (void)findAllAppWordWithUser_id:(NSString *)user_id WordbookId:(NSString *)word_book_id Num:(NSString *)num Complete:(completeBlock)complete;
+
+
+/**
+ 查看背单词的进度 url: /app/wb/getReciteWordData
+
+ @param user_id 用户ID
+ @param word_book_id 词书ID
+ @param complete block
+ */
++ (void)getReciteWordProgressWithUser_id:(NSString *)user_id WordbookId:(NSString *)word_book_id Complete:(completeBlock)complete;
+
+
+/**
+ 获取词书剩余单词的个数 url: /app/wb/getResidueWordNum
+
+ @param user_id 学生ID
+ @param word_book_id 词书ID
+ @param complete block
+ */
++ (void)getResidueWordNumWithUser_id:(NSString *)user_id Wordbookid:(NSString *)word_book_id Complete:(completeBlock)complete;
+
+
+/**
+获得所有词书 url: /app/wb/getAllWordBook
+
+ @param complete block
+ */
++ (void)getAllWordbookComplete:(completeBlock)complete;
+
+
+/**
+ 保存背单词的数据 /app/oldWord/saveOldWord
+
+ @param data 单词数据
+ @param complete block
+ */
++ (void)saveOldWordWithwordData:(NSString *)data Complete:(completeBlock)complete;
 @end

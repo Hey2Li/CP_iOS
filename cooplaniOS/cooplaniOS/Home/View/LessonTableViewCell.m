@@ -24,7 +24,7 @@
     _lessonModel = lessonModel;
     self.name.text = lessonModel.name;
     if ([lessonModel.state isEqualToString:@"0"]) {
-        self.price.text = [NSString stringWithFormat:@"￥%@",lessonModel.price];
+        self.price.text = [NSString stringWithFormat:@"%@",lessonModel.price];
     }else if ([lessonModel.state isEqualToString:@"1"]){
         self.price.text = @"已购买";
     }

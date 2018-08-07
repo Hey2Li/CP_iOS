@@ -767,4 +767,82 @@
                                  };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/user/verifyCodeUpdatePhone",BaseURL]parameters:paramters complete:complete];
 }
+
+/**
+ 获取用户需要背的单词
+ 
+ @param user_id 用户id
+ @param word_book_id word_book_id 词书id
+ @param num 记忆个数
+ @param complete block
+ */
++ (void)findAllAppWordWithUser_id:(NSString *)user_id WordbookId:(NSString *)word_book_id Num:(NSString *)num Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"version_2":kVersion_2,
+                                 @"user_id":user_id ? user_id : @"",
+                                 @"word_book_id":word_book_id,
+                                 @"num":num,
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/wb/getReciteWord",BaseURL]parameters:paramters complete:complete];
+}
+
+/**
+ 查看背单词的进度 url: /app/wb/getReciteWordData
+ 
+ @param user_id 用户ID
+ @param word_book_id 词书ID
+ @param complete block
+ */
++ (void)getReciteWordProgressWithUser_id:(NSString *)user_id WordbookId:(NSString *)word_book_id Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"version_2":kVersion_2,
+                                 @"user_id":user_id,
+                                 @"wordbookid":word_book_id,
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/wb/getReciteWordData",BaseURL]parameters:paramters complete:complete];
+}
+
+
+/**
+ 获取词书剩余单词的个数 url: /app/wb/getResidueWordNum
+ 
+ @param user_id 学生ID
+ @param word_book_id 词书ID
+ @param complete block
+ */
++ (void)getResidueWordNumWithUser_id:(NSString *)user_id Wordbookid:(NSString *)word_book_id Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"version_2":kVersion_2,
+                                 @"user_id":user_id,
+                                 @"word_book_id":word_book_id,
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/wb/getResidueWordNum",BaseURL]parameters:paramters complete:complete];
+}
+
+
+/**
+ 获得所有词书 url: /app/wb/getAllWordBook
+ 
+ @param complete block
+ */
++ (void)getAllWordbookComplete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"version_2":kVersion_2,
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/wb/getAllWordBook",BaseURL]parameters:paramters complete:complete];
+}
+
+/**
+ 保存背单词的数据 /app/oldWord/saveOldWord
+ 
+ @param data 单词数据
+ @param complete block
+ */
++ (void)saveOldWordWithwordData:(NSString *)data Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"version_2":kVersion_2,
+                                 @"data":data,
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/oldWord/saveOldWord",BaseURL]parameters:paramters complete:complete];
+}
 @end
