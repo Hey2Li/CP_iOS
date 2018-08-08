@@ -20,6 +20,8 @@
     self.layer.shadowOffset = CGSizeMake(1, 1);
     self.selectionStyle = NO;
     self.backgroundColor = UIColorFromRGB(0xFFFFFF);
+    [self.progressView.layer setCornerRadius:4.0f];
+    [self.progressView.layer setMasksToBounds:YES];
 }
 - (void)setFrame:(CGRect)frame{
     frame.origin.x = 10;
@@ -35,16 +37,19 @@
 - (IBAction)alwaysWordClick:(UIButton *)sender {
     WordErrorListTableViewController *vc = [[WordErrorListTableViewController alloc]init];
     vc.title = @"常错词";
+    vc.type = 2;
     [self.viewController.navigationController pushViewController:vc animated:YES];
 }
 - (IBAction)inMemoryClick:(UIButton *)sender {
     WordErrorListTableViewController *vc = [[WordErrorListTableViewController alloc]init];
     vc.title = @"记忆中";
+    vc.type = 3;
     [self.viewController.navigationController pushViewController:vc animated:YES];
 }
 - (IBAction)skilledWordClick:(UIButton *)sender {
     WordErrorListTableViewController *vc = [[WordErrorListTableViewController alloc]init];
     vc.title = @"熟练词";
+    vc.type = 1;
     [self.viewController.navigationController pushViewController:vc animated:YES];
 }
 

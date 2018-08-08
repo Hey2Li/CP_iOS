@@ -7,9 +7,19 @@
 //
 
 #import "WordErrorListTableViewCell.h"
+#import "SUPlayer.h"
+
+@interface WordErrorListTableViewCell ()
+@property (nonatomic, strong) SUPlayer *player;
+@end
 
 @implementation WordErrorListTableViewCell
-
+- (SUPlayer *)player{
+    if (!_player) {
+        _player = [[SUPlayer alloc]init];
+    }
+    return _player;
+}
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
@@ -24,28 +34,30 @@
     //周期时间
     self.playImageView.animationDuration = 1;
     //重复次数，0为无限制
-    self.playImageView.animationRepeatCount = 0;
+    self.playImageView.animationRepeatCount = 1;
 }
 #pragma mark Play播放动画
 
 - (IBAction)playAnimation:(UIButton *)sender {
-    sender.selected = !sender.selected;
-    if (sender.selected) {
-        [self.playImageView startAnimating];
-    }else{
-        [self.playImageView stopAnimating];
-        self.playImageView.image = self.playImageView.animationImages.firstObject;
-    }
+    sender.enabled = NO;
+    [self.playImageView startAnimating];
+    [self playVocieWithUrl:self.model.us_mp3];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        sender.enabled = YES;
+    });
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
 }
-- (void)setIsOpen:(BOOL)isOpen{
-    _isOpen = isOpen;
-    
-    if (isOpen) {
+- (void)setModel:(ReciteWordModel *)model{
+    _model = model;
+    self.wordNameLb.text = model.word;
+    self.wordExplainLb.text = model.result;
+    self.phonogramLb.text = model.us_soundmark;
+    self.bottomWordExplainLb.text = model.result;
+    if (model.isOpen) {
         self.wordErrorBottomView.hidden = NO;
     }else{
         self.wordErrorBottomView.hidden = YES;
@@ -54,5 +66,10 @@
         [self layoutIfNeeded];
         [self needsUpdateConstraints];
     }];
+}
+- (void)playVocieWithUrl:(NSString *)url{
+    if (url) {
+        [[self.player initWithURL:[NSURL URLWithString:url]]play];
+    }
 }
 @end

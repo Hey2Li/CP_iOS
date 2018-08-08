@@ -489,4 +489,16 @@
  @param complete block
  */
 + (void)saveOldWordWithwordData:(NSString *)data Complete:(completeBlock)complete;
+
+
+/**
+ 查询单词状态 ycj 8/8
+
+ @param user_id 用户ID
+ @param word_book_id  词书ID
+ @param type 状态
+ @param page_num page_num
+ @param complete 1（熟练>100) ;2（错误<-100）;3（记忆中(-100~100)）
+ */
++ (void)searchOldWordWithUserId:(NSString *)user_id WordBookId:(NSString *)word_book_id Type:(NSNumber *)type PageNum:(NSNumber *)page_num Complete:(completeBlock)complete;
 @end

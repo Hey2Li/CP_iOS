@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ReciteWordModel.h"
 
 @interface WordErrorListTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIView *wordErrorTopView;
@@ -17,4 +18,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *phonogramLb;
 @property (weak, nonatomic) IBOutlet UILabel *bottomWordExplainLb;
 @property (nonatomic, assign) BOOL isOpen;
+@property (nonatomic, strong) ReciteWordModel *model;
 @end

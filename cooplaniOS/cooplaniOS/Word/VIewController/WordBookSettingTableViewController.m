@@ -9,11 +9,18 @@
 #import "WordBookSettingTableViewController.h"
 
 @interface WordBookSettingTableViewController ()
-
+@property (nonatomic, strong) NSUserDefaults *userDefaults;
+@property (nonatomic, strong) UIPickerView *pickView;
 @end
 
 @implementation WordBookSettingTableViewController
 
+- (NSUserDefaults *)userDefaults{
+    if (!_userDefaults) {
+        _userDefaults = [NSUserDefaults standardUserDefaults];
+    }
+    return _userDefaults;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -34,7 +41,7 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -73,7 +80,15 @@
                 make.right.equalTo(cell.mas_right).offset(-18);
                 make.centerY.equalTo(cell.mas_centerY);
             }];
+            if ([[self.userDefaults objectForKey:kWordAutoPlay] isEqualToString:@"1"]) {
+                cellSwitch.on = YES;
+            }else{
+                cellSwitch.on = NO;
+            }
             cell.textLabel.text = @"单词自动发音";
+            cellSwitch.tag = 0;
+            [cellSwitch addTarget:self action:@selector(switchChange:) forControlEvents:UIControlEventValueChanged];
+
         }else{
             UISwitch *cellSwitch = [[UISwitch alloc]init];
             cellSwitch.onTintColor = UIColorFromRGB(0xFFCE43);
@@ -82,36 +97,59 @@
                 make.right.equalTo(cell.mas_right).offset(-18);
                 make.centerY.equalTo(cell.mas_centerY);
             }];
+            if ([[self.userDefaults objectForKey:kQuestionVoice] isEqualToString:@"1"]) {
+                cellSwitch.on = YES;
+            }else{
+                cellSwitch.on = NO;
+            }
+            cellSwitch.tag = 1;
             cell.textLabel.text = @"答题音效";
+            [cellSwitch addTarget:self action:@selector(switchChange:) forControlEvents:UIControlEventValueChanged];
+
         }
     }else{
         if (indexPath.row == 0) {
-            UITableViewCell *subcell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-            subcell.textLabel.font = [UIFont systemFontOfSize:16];
-            subcell.textLabel.textColor = UIColorFromRGB(0x666666);
-            subcell.detailTextLabel.font = [UIFont systemFontOfSize:12];
-            subcell.detailTextLabel.textColor = UIColorFromRGB(0xCCCCCC);
-            subcell.textLabel.text = @"词书下载（推荐）";
-            subcell.detailTextLabel.text = @"234M";
-            subcell.selectionStyle = NO;
-            return subcell;
-        }else{
-            UITableViewCell *subcell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-            subcell.textLabel.font = [UIFont systemFontOfSize:16];
-            subcell.textLabel.textColor = UIColorFromRGB(0x666666);
-            subcell.detailTextLabel.font = [UIFont systemFontOfSize:12];
-            subcell.detailTextLabel.textColor = UIColorFromRGB(0xCCCCCC);
-            subcell.textLabel.text = @"每组单词量";
-            subcell.detailTextLabel.text = @"2";
-            subcell.selectionStyle = NO;
-            return subcell;
+//            UITableViewCell *subcell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+//            subcell.textLabel.font = [UIFont systemFontOfSize:16];
+//            subcell.textLabel.textColor = UIColorFromRGB(0x666666);
+//            subcell.detailTextLabel.font = [UIFont systemFontOfSize:12];
+//            subcell.detailTextLabel.textColor = UIColorFromRGB(0xCCCCCC);
+//            subcell.textLabel.text = @"词书下载（推荐）";
+//            subcell.detailTextLabel.text = @"234M";
+//            subcell.selectionStyle = NO;
+//            return subcell;
+//            UITableViewCell *subcell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+//            subcell.textLabel.font = [UIFont systemFontOfSize:16];
+//            subcell.textLabel.textColor = UIColorFromRGB(0x666666);
+//            subcell.detailTextLabel.font = [UIFont systemFontOfSize:12];
+//            subcell.detailTextLabel.textColor = UIColorFromRGB(0xCCCCCC);
+//            subcell.textLabel.text = @"每组单词量";
+//            subcell.detailTextLabel.text = @"20";
+//            subcell.selectionStyle = NO;
+//            return subcell;
         }
     }
     // Configure the cell...
     
     return cell;
 }
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 1) {
+        
+    }
+}
+- (void)switchChange:(UISwitch *)sender{
+    NSString *wordAutoPlay;//单词自动发音
+    NSString *questionVoice;//答题音效
+    if (sender.tag == 0) {
+        wordAutoPlay = sender.on ? @"1":@"0";
+        [self.userDefaults setObject:wordAutoPlay forKey:kWordAutoPlay];
+    }else if (sender.tag == 1){
+        questionVoice = sender.on ? @"1" : @"0";
+        [self.userDefaults setObject:questionVoice forKey:kQuestionVoice];
+    }
+    [self.userDefaults synchronize];
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

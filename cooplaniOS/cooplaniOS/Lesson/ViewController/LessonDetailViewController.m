@@ -89,25 +89,7 @@
 //        NSLog(@"aliSDK error:%@",error);
 //
 //    }];
-    AlibcWebViewController* view = [[AlibcWebViewController alloc] init];
-    
-    AlibcTradeShowParams* showParam = [[AlibcTradeShowParams alloc] init];
-    showParam.openType = AlibcOpenTypeNative;
-    //8位数appkey
-    showParam.backUrl=@"tbopen24996842";
-    showParam.isNeedPush=YES;
-    showParam.linkKey = @"taobao_scheme";
-    showParam.nativeFailMode=AlibcNativeFailModeJumpH5;
-    id<AlibcTradePage> page = [AlibcTradePageFactory itemDetailPage:@"574844095934"];
-    
-    //    0:  标识跳转到手淘打开了
-    //    1:  标识用h5打开
-    //    -1:  标识出错
-    NSInteger ret =[[AlibcTradeSDK sharedInstance].tradeService show:self webView:view.webView page:page showParams:showParam taoKeParams:nil trackParam:nil tradeProcessSuccessCallback:nil tradeProcessFailedCallback:nil];
-    NSLog(@"ret-----%ld",ret);
-    if (ret == 1) {
-        [self.navigationController pushViewController:view animated:YES];
-    }
+  
 }
 - (void)webViewDidStartLoad:(UIWebView *)webView{
     SVProgressShow();

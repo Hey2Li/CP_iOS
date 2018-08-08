@@ -42,4 +42,8 @@ extern NSString *const kJSONAnswer;
 extern NSString *const kJSONExplanation;
 extern NSString *const kVersion_1;
 extern NSString *const kVersion_2;
+extern NSString *const kWordAutoPlay;//单词自动发音
+extern NSString *const kQuestionVoice;//答题音效
+extern NSString *const kLoadWordHomePageData;//加载单词首页数据
+
 @end

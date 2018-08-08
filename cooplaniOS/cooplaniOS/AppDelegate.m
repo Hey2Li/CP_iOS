@@ -340,6 +340,8 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         [userDefaults setObject:GPRSPlay forKey:@"GPRSPlay"];
         GPRSDownload = @"0";
         [userDefaults setObject:GPRSDownload forKey:@"GPRSDownload"];
+        [userDefaults setObject:@"1" forKey:kWordAutoPlay];//设置自动播放单词发音
+        [userDefaults setObject:@"1" forKey:kQuestionVoice];//设置答题音效
     }
    
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];

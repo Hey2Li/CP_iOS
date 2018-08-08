@@ -8,13 +8,20 @@
 
 #import "WordErrorListTableViewController.h"
 #import "WordErrorListTableViewCell.h"
+#import "ReciteWordModel.h"
 
 @interface WordErrorListTableViewController ()
-
+@property (nonatomic, assign) int page_num;
+@property (nonatomic, strong) NSMutableArray *dataArray;
 @end
 
 @implementation WordErrorListTableViewController
-
+- (NSMutableArray *)dataArray{
+    if (!_dataArray) {
+        _dataArray = [NSMutableArray array];
+    }
+    return _dataArray;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Uncomment the following line to preserve selection between presentations.
@@ -26,8 +33,42 @@
     self.tableView.separatorStyle = NO;
     self.tableView.estimatedRowHeight = 60.0f;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    _page_num = 0;
+    [self loadData];
+    [self footerLoadData];
 }
-
+- (void)loadData{
+    [LTHttpManager searchOldWordWithUserId:IS_USER_ID ? IS_USER_ID : @"" WordBookId:@"1" Type:@(self.type) PageNum:@(_page_num) Complete:^(LTHttpResult result, NSString *message, id data) {
+        if (LTHttpResultSuccess == result) {
+            NSArray *array = data[@"responseData"];
+            [self.dataArray removeAllObjects];
+            for (NSDictionary *dict in array) {
+                ReciteWordModel *model = [ReciteWordModel mj_objectWithKeyValues:dict];
+                [self.dataArray addObject:model];
+            }
+            [self.tableView reloadData];
+        }
+    }];
+}
+- (void)footerLoadData{
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        _page_num++;
+        [LTHttpManager searchOldWordWithUserId:IS_USER_ID ? IS_USER_ID : @"" WordBookId:@"1" Type:@(self.type) PageNum:@(_page_num) Complete:^(LTHttpResult result, NSString *message, id data) {
+            if (LTHttpResultSuccess == result) {
+                NSArray *array = data[@"responseData"];
+                for (NSDictionary *dict in array) {
+                    ReciteWordModel *model = [ReciteWordModel mj_objectWithKeyValues:dict];
+                    [self.dataArray addObject:model];
+                }
+                [self.tableView.mj_footer endRefreshing];
+                [self.tableView reloadData];
+            }else{
+                [self.tableView.mj_footer endRefreshing];
+                _page_num--;
+            }
+        }];
+    }];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -35,16 +76,12 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return self.dataArray.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    WordErrorListTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if (cell.isOpen) {
+    ReciteWordModel *model = self.dataArray[indexPath.row];
+    if (model.isOpen) {
         return 230;
     }else{
         return 60;
@@ -54,11 +91,14 @@
     WordErrorListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WordErrorListTableViewCell class])];
     // Configure the cell...
     cell.selectionStyle = NO;
+    if (indexPath.row < self.dataArray.count) {
+        cell.model = self.dataArray[indexPath.row];
+    }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    WordErrorListTableViewCell *cell = [tableView cellForRowAtIndexPath:[tableView indexPathForSelectedRow]];
-    cell.isOpen = !cell.isOpen;
+    ReciteWordModel *model = self.dataArray[indexPath.row];
+    model.isOpen = !model.isOpen;
     [self.tableView reloadData];
 }
 /*

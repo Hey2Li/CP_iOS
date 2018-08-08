@@ -28,9 +28,17 @@
 @property (nonatomic, strong) SUPlayer *player;
 @property (nonatomic, strong) ReciteWordTableViewCell *selectionCell;
 @property (nonatomic, assign) BOOL isSelectedCell;//cell是否被点击
+@property (nonatomic, assign) BOOL isAnswerCorrect;//答题是否正确
+@property (nonatomic, strong) NSUserDefaults *userDefaults;
 @end
 
 @implementation ReciteWordsViewController
+- (NSUserDefaults *)userDefaults{
+    if (!_userDefaults) {
+        _userDefaults = [NSUserDefaults standardUserDefaults];
+    }
+    return _userDefaults;
+}
 - (SUPlayer *)player{
     if (!_player) {
         _player = [[SUPlayer alloc]init];
@@ -49,14 +57,6 @@
     }
     return _dataArray;
 }
-//- (NotKnowView *)notKonwView{
-//    if (!_notKonwView) {
-//        _notKonwView = [[NotKnowView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 360)];
-//        [self.view bringSubviewToFront:_notKonwView];
-//        [_notKonwView.nextWordBtn addTarget:self action:@selector(goOnClick:) forControlEvents:UIControlEventTouchUpInside];
-//    }
-//    return _notKonwView;
-//}
 - (UITableView *)myTableView{
     if (!_myTableView) {
         _myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
@@ -104,6 +104,7 @@
                     [self.dataArray addObject:model];
                 }
                 [self.myTableView reloadData];
+                [self playWordVoice];
             }else{
                 WordTestDoneViewController *vc = [[WordTestDoneViewController alloc]init];
                 [self.navigationController pushViewController:vc animated:YES];
@@ -151,8 +152,12 @@
 -(void)playAnimation:(UIButton *)btn{
     btn.enabled = NO;
     [self.tableViewHeaderView.playImageView startAnimating];
-    ReciteWordModel *model = self.dataArray[_wordIndex];
-    [[self.player initWithURL:[NSURL URLWithString:model.us_mp3]] play];
+    if (_wordIndex < self.dataArray.count) {
+        ReciteWordModel *model = self.dataArray[_wordIndex];
+        if (model.us_mp3) {
+            [[self.player initWithURL:[NSURL URLWithString:model.us_mp3]] play];
+        }
+    }
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         btn.enabled = YES;
     });
@@ -206,7 +211,7 @@
 #pragma mark 不认识
 - (void)notKnowClick:(UIButton *)btn{
     ReciteWordModel *model = self.dataArray[_wordIndex];
-    [[self.player initWithURL:[NSURL URLWithString:model.us_mp3]] play];
+    [self playWordVoice];
     NSString *wordId = [NSString stringWithFormat:@"%ld",(long)model.ID];
     NSInteger socre = model.score;
     socre = socre + 0;//不认识+0
@@ -217,7 +222,14 @@
     [dict setValue:@(socre) forKey:@"score"];
     [dict setValue:@(model.word_book_id) forKey:@"word_book_id"];
     [self.postDataArray addObject:dict];
-    
+    [self notKonwShow];
+}
+#pragma mark 答错
+- (void)answerWrong{
+    [self playWordVoice];
+    [self notKonwShow];
+}
+- (void)notKonwShow{
     [self.notKonwView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view.mas_bottom).offset(-360);
         make.left.equalTo(self.view);
@@ -229,6 +241,8 @@
         [self.view layoutIfNeeded];
     }];
 }
+
+#pragma mark 释义页面 继续
 - (void)goOnClick:(UIButton *)btn{
     [self.notKonwView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view.mas_bottom);
@@ -240,6 +254,18 @@
         [self.view updateConstraintsIfNeeded];
         [self.view layoutIfNeeded];
     }];
+    if (!_isAnswerCorrect) {
+        [self.selectionCell.optionsLb setTextColor:UIColorFromRGB(0x666666)];
+        [self.selectionCell.optionsTitle setTextColor:UIColorFromRGB(0x666666)];
+        
+        self.selectionCell.selectedView.backgroundColor = [UIColor whiteColor];
+        [self.notKonwView.addNoteImg setImage:[UIImage imageNamed:@"添加-4"]];
+        [self.notKonwView.addNoteLb setText:@"添加到笔记"];
+        [self.notKonwView.addNoteLb  setTextColor:UIColorFromRGB(0xFFCE43)];
+        self.notKonwView.addNoteBtn.enabled = YES;
+        self.isSelectedCell = NO;
+        [self.myTableView reloadData];
+    }
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 4;
@@ -285,28 +311,41 @@
         NSLog(@"%@----%@",optionStr,model.result);
         if ([optionStr isEqualToString:model.result]) {//判断单词多少分数
             if ([model.state isEqualToString:@"1"]) {
-                socre = socre + 100;//第一次背对直接+100 熟练词
+                if (socre == 0) {
+                    socre = socre + 100;//分值为0 第一次背对  直接+100 熟练词
+                }else{
+                   socre = socre + 50;
+                }
             }else{
                 socre = socre + 50;//第一次背错 后来背对 + 50 记忆中
             }
+            model.score = socre;
             cell.selectedView.backgroundColor = UIColorFromRGB(0x7EDDBC);
             [self playYESVoice];
+            //答题数据保存到本地
+            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+            [dict setValue:IS_USER_ID forKey:@"user_id"];
+            [dict setValue:wordId forKey:@"word_id"];
+            [dict setValue:[self getCurrentTimes] forKey:@"time"];
+            [dict setValue:@(socre) forKey:@"score"];
+            [dict setValue:@(model.word_book_id) forKey:@"word_book_id"];
+            [self.postDataArray addObject:dict];
+            _isAnswerCorrect = YES;
+            [self reloadNextWord];//进入下一题 刷新页面
         }else{
             socre = socre - 25;//背错 -25 常错词
+            model.score = socre;
             cell.selectedView.backgroundColor = UIColorFromRGB(0xE6948E);
             [self playNOVoice];
+            //跳转到答错
+            [self answerWrong];
+            _isAnswerCorrect = NO;
+            model.state = @"0";
         }
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setValue:IS_USER_ID forKey:@"user_id"];
-        [dict setValue:wordId forKey:@"word_id"];
-        [dict setValue:[self getCurrentTimes] forKey:@"time"];
-        [dict setValue:@(socre) forKey:@"score"];
-        [dict setValue:@(model.word_book_id) forKey:@"word_book_id"];
-        [self.postDataArray addObject:dict];
         self.selectionCell = cell;
-        [self reloadNextWord];
     }
 }
+#pragma mark 加载下一题
 - (void)reloadNextWord{
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self nextWordReloadData];
@@ -316,27 +355,15 @@
 - (void)nextWordReloadData{
     _wordIndex ++;
     if (_wordIndex >= self.dataArray.count) {
-        LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"你已经完成今日任务，是否继续" sureBtn:@"继续" cancleBtn:@"歇一歇"];
-        alertView.resultIndex = ^(NSInteger index) {
-            //发给后台
-            [LTHttpManager saveOldWordWithwordData:[self arrayToJSONString:self.postDataArray] Complete:^(LTHttpResult result, NSString *message, id data) {
-                if (LTHttpResultSuccess == result) {
-                    [self loadData];
-                }
-            }];
-        };
-        alertView.cancelClick = ^(NSInteger index) {
-            [LTHttpManager saveOldWordWithwordData:[self arrayToJSONString:self.postDataArray] Complete:^(LTHttpResult result, NSString *message, id data) {
-                if (LTHttpResultSuccess == result) {
-                    _wordIndex = 0;
-                    [self.navigationController popViewControllerAnimated:YES];
-                }
-            }];
-        };
-        [alertView show];
+        _wordIndex = 0;
+        //发给后台
+        [LTHttpManager saveOldWordWithwordData:[self arrayToJSONString:self.postDataArray] Complete:^(LTHttpResult result, NSString *message, id data) {
+            if (LTHttpResultSuccess == result) {
+                [self loadData];
+            }
+        }];
     }else{
-        ReciteWordModel *model = self.dataArray[_wordIndex];
-        [[self.player initWithURL:[NSURL URLWithString:model.us_mp3]] play];
+        [self playWordVoice];
     }
     [self.selectionCell.optionsLb setTextColor:UIColorFromRGB(0x666666)];
     [self.selectionCell.optionsTitle setTextColor:UIColorFromRGB(0x666666)];
@@ -371,6 +398,14 @@
     }
     return _currentDate;
 }
+- (void)viewDidDisappear:(BOOL)animated{
+    [LTHttpManager saveOldWordWithwordData:[self arrayToJSONString:self.postDataArray] Complete:^(LTHttpResult result, NSString *message, id data) {
+        if (LTHttpResultSuccess == result) {
+            NSLog(@"用户单词数据保存成功");
+            [[NSNotificationCenter defaultCenter]postNotificationName:kLoadWordHomePageData object:nil];
+        }
+    }];
+}
 /**
  *  字典转JSON字符串
  *
@@ -383,17 +418,34 @@
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:&parseError];
     return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 }
+#pragma mark 播放正确音频
 - (void)playYESVoice{
-    NSString *audioFile = [[NSBundle mainBundle]pathForResource:@"YES" ofType:@"mp3"];
-    NSURL *fileUrl = [NSURL fileURLWithPath:audioFile];
-    [[self.player initWithURL:fileUrl]play];
+    if ([[self.userDefaults objectForKey:kQuestionVoice] isEqualToString:@"1"]) {
+        NSString *audioFile = [[NSBundle mainBundle]pathForResource:@"YES" ofType:@"mp3"];
+        NSURL *fileUrl = [NSURL fileURLWithPath:audioFile];
+        [[self.player initWithURL:fileUrl]play];
+    }
 }
+#pragma mark 播放错误音频
 - (void)playNOVoice{
-    // 普通短震，3D Touch 中 Peek 震动反馈
-    AudioServicesPlaySystemSound(1519);
-    NSString *audioFile = [[NSBundle mainBundle]pathForResource:@"NO" ofType:@"mp3"];
-    NSURL *fileUrl = [NSURL fileURLWithPath:audioFile];
-    [[self.player initWithURL:fileUrl]play];
+    if ([[self.userDefaults objectForKey:kQuestionVoice] isEqualToString:@"1"]) {
+        // 普通短震，3D Touch 中 Peek 震动反馈
+        AudioServicesPlaySystemSound(1519);
+        NSString *audioFile = [[NSBundle mainBundle]pathForResource:@"NO" ofType:@"mp3"];
+        NSURL *fileUrl = [NSURL fileURLWithPath:audioFile];
+        [[self.player initWithURL:fileUrl]play];
+    }
+}
+#pragma mark 播放单词音频
+- (void)playWordVoice{
+    if ([[self.userDefaults objectForKey:kWordAutoPlay] isEqualToString:@"1"]) {
+        if (_wordIndex < self.dataArray.count) {
+            ReciteWordModel *model = self.dataArray[_wordIndex];
+            if (model.us_mp3) {
+                [[self.player initWithURL:[NSURL URLWithString:model.us_mp3]] play];
+            }
+        }
+    }
 }
 - (void)dealloc{
     [self.player stop];

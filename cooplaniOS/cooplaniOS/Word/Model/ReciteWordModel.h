@@ -21,4 +21,5 @@
 @property (nonatomic , strong) NSMutableArray <NSString *>              * arr_options;
 @property (nonatomic , assign) NSInteger              word_book_id;
 @property (nonatomic , assign) NSInteger              score;
+@property (nonatomic, assign) BOOL isOpen;
 @end

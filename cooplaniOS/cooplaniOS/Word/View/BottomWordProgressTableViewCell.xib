@@ -13,11 +13,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="177" id="KGk-i7-Jjw" customClass="BottomWordProgressTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="324" height="177"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="210" id="KGk-i7-Jjw" customClass="BottomWordProgressTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="324" height="210"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="324" height="176.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="324" height="209.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon单词进度" translatesAutoresizingMaskIntoConstraints="NO" id="gsc-pd-8lI">
@@ -123,27 +123,62 @@
                             <action selector="skilledWordClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="DKD-ki-PWt"/>
                         </connections>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="进度" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X55-A3-mEH">
+                        <rect key="frame" x="25" y="168.5" width="30" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="17" id="Wec-2Z-ZeW"/>
+                            <constraint firstAttribute="width" constant="30" id="gmC-Fv-hrU"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
+                        <color key="textColor" red="0.3994230329990387" green="0.3997485339641571" blue="0.39947354793548584" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z59-sf-CT3">
+                        <rect key="frame" x="269" y="169" width="30" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="30" id="sjh-Aa-9mM"/>
+                            <constraint firstAttribute="height" constant="17" id="yIh-Sj-Bhc"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.39942303299999998" green="0.39974853399999999" blue="0.3994735479" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="vxG-Sa-Vk8">
+                        <rect key="frame" x="81" y="173" width="162" height="8"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="8" id="DFr-7p-T7C"/>
+                        </constraints>
+                        <color key="progressTintColor" red="0.99915176630000002" green="0.82896530629999998" blue="0.29778558020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="trackTintColor" red="0.79914218187332153" green="0.79975396394729614" blue="0.7992369532585144" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </progressView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="WXz-Ob-9fe" firstAttribute="top" secondItem="LCL-Fd-u8o" secondAttribute="top" id="6QK-BT-e7M"/>
                     <constraint firstItem="3ak-2A-9tz" firstAttribute="top" secondItem="ifT-UN-rh2" secondAttribute="top" id="96T-jg-Cc5"/>
                     <constraint firstItem="8IR-Hr-mLy" firstAttribute="leading" secondItem="gsc-pd-8lI" secondAttribute="trailing" constant="4" id="DkJ-fN-Hhs"/>
+                    <constraint firstAttribute="bottom" secondItem="X55-A3-mEH" secondAttribute="bottom" constant="24" id="Ec3-I1-e1u"/>
                     <constraint firstItem="ifT-UN-rh2" firstAttribute="height" secondItem="LCL-Fd-u8o" secondAttribute="height" id="EqD-1m-Aha"/>
                     <constraint firstItem="ifT-UN-rh2" firstAttribute="width" secondItem="LCL-Fd-u8o" secondAttribute="width" id="Hd3-T3-OtN"/>
                     <constraint firstItem="zEn-BA-dOZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="25" id="Je6-3w-G7K"/>
                     <constraint firstItem="s5X-AL-Zqc" firstAttribute="leading" secondItem="3ak-2A-9tz" secondAttribute="leading" id="Jys-Sv-rYo"/>
                     <constraint firstItem="QIF-dY-gm4" firstAttribute="top" secondItem="kup-wf-4av" secondAttribute="top" id="Oi5-2S-cqG"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="vxG-Sa-Vk8" secondAttribute="trailing" constant="65" id="Pyd-F1-aXA"/>
                     <constraint firstItem="zEn-BA-dOZ" firstAttribute="trailing" secondItem="WXz-Ob-9fe" secondAttribute="trailing" id="R4d-Ws-07Z"/>
                     <constraint firstItem="eu1-1Z-qJB" firstAttribute="centerY" secondItem="HyT-lC-ADS" secondAttribute="centerY" id="SQB-P8-rG8"/>
+                    <constraint firstItem="vxG-Sa-Vk8" firstAttribute="centerY" secondItem="X55-A3-mEH" secondAttribute="centerY" id="Sa8-Vm-R5w"/>
                     <constraint firstItem="s5X-AL-Zqc" firstAttribute="trailing" secondItem="3ak-2A-9tz" secondAttribute="trailing" id="UfX-LV-uas"/>
                     <constraint firstItem="gsc-pd-8lI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="10" id="VZb-KB-LwA"/>
                     <constraint firstItem="Jrz-B0-FCt" firstAttribute="bottom" secondItem="QIF-dY-gm4" secondAttribute="bottom" id="Vtu-GX-1dg"/>
                     <constraint firstItem="s5X-AL-Zqc" firstAttribute="centerY" secondItem="zEn-BA-dOZ" secondAttribute="centerY" id="Wex-wo-shP"/>
                     <constraint firstItem="ifT-UN-rh2" firstAttribute="centerY" secondItem="LCL-Fd-u8o" secondAttribute="centerY" id="Y36-eG-zgF"/>
+                    <constraint firstItem="vxG-Sa-Vk8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="65" id="Ysy-2z-TOS"/>
+                    <constraint firstItem="X55-A3-mEH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="25" id="Z0M-bA-ExW"/>
+                    <constraint firstAttribute="trailing" secondItem="z59-sf-CT3" secondAttribute="trailing" constant="25" id="bFm-T7-jYL"/>
                     <constraint firstItem="zEn-BA-dOZ" firstAttribute="leading" secondItem="WXz-Ob-9fe" secondAttribute="leading" id="bq5-pR-g0U"/>
                     <constraint firstItem="sZT-jj-NLN" firstAttribute="leading" secondItem="QIF-dY-gm4" secondAttribute="leading" id="cQE-qU-54S"/>
                     <constraint firstItem="sZT-jj-NLN" firstAttribute="trailing" secondItem="QIF-dY-gm4" secondAttribute="trailing" id="cfl-V6-Pd4"/>
                     <constraint firstItem="Jrz-B0-FCt" firstAttribute="top" secondItem="sZT-jj-NLN" secondAttribute="bottom" constant="2" id="emo-eQ-UL3"/>
+                    <constraint firstItem="z59-sf-CT3" firstAttribute="centerY" secondItem="X55-A3-mEH" secondAttribute="centerY" id="eq5-MC-TNP"/>
                     <constraint firstItem="kup-wf-4av" firstAttribute="width" secondItem="LCL-Fd-u8o" secondAttribute="width" id="er7-gY-ezk"/>
                     <constraint firstItem="HyT-lC-ADS" firstAttribute="bottom" secondItem="WXz-Ob-9fe" secondAttribute="bottom" id="f2b-Ax-6d1"/>
                     <constraint firstItem="eu1-1Z-qJB" firstAttribute="bottom" secondItem="3ak-2A-9tz" secondAttribute="bottom" id="gww-He-BaA"/>
@@ -171,10 +206,12 @@
                 <outlet property="alwaysErrorLb" destination="HyT-lC-ADS" id="fSw-NY-Rec"/>
                 <outlet property="inMemoryBtn" destination="QIF-dY-gm4" id="FrV-g7-6zo"/>
                 <outlet property="inMemoryLb" destination="Jrz-B0-FCt" id="WYt-Vv-7tS"/>
+                <outlet property="progressLb" destination="z59-sf-CT3" id="9VD-Pu-nCs"/>
+                <outlet property="progressView" destination="vxG-Sa-Vk8" id="EKH-QT-QcQ"/>
                 <outlet property="skilledWordBtn" destination="3ak-2A-9tz" id="Gfc-7A-MhL"/>
                 <outlet property="skilledWordLb" destination="eu1-1Z-qJB" id="nyB-0U-ilW"/>
             </connections>
-            <point key="canvasLocation" x="44" y="126.5"/>
+            <point key="canvasLocation" x="45" y="123"/>
         </tableViewCell>
     </objects>
     <resources>

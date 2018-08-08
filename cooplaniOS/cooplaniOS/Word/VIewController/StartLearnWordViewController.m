@@ -16,6 +16,8 @@
 @property (nonatomic, strong) NSDictionary *dataDict;
 @property (nonatomic, strong) NSArray *wordbookArray;
 @property (nonatomic, strong) NSString *residueStr;
+@property (nonatomic, assign) NSInteger alwaysErrorNum;
+@property (nonatomic, assign) NSInteger skilledNum;
 @end
 
 @implementation StartLearnWordViewController
@@ -31,12 +33,20 @@
     // Do any additional setup after loading the view.
     [self initWithView];
     [self loadData];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loadData) name:kLoadWordHomePageData object:nil];
 }
 - (void)loadData{
     [LTHttpManager getReciteWordProgressWithUser_id:IS_USER_ID ? IS_USER_ID : @"" WordbookId:@"1" Complete:^(LTHttpResult result, NSString *message, id data) {
         if (LTHttpResultSuccess == result) {
             self.dataDict = data[@"responseData"];
-            [self.myTableView reloadData];
+            _alwaysErrorNum = [[NSString stringWithFormat:@"%@",self.dataDict[@"mistake_num"]] integerValue];
+            _skilledNum = [[NSString stringWithFormat:@"%@",self.dataDict[@"proficiency_num"]] integerValue];
+            [LTHttpManager getResidueWordNumWithUser_id:IS_USER_ID ? IS_USER_ID : @"" Wordbookid:@"1" Complete:^(LTHttpResult result, NSString *message, id data) {
+                if (LTHttpResultSuccess == result) {
+                    _residueStr = [NSString stringWithFormat:@"%@",data[@"responseData"]];
+                    [self.myTableView reloadData];
+                }
+            }];
         }else{
             
         }
@@ -44,12 +54,6 @@
     [LTHttpManager getAllWordbookComplete:^(LTHttpResult result, NSString *message, id data) {
         if (LTHttpResultSuccess == result) {
             self.wordbookArray = data[@"responseData"];
-            [self.myTableView reloadData];
-        }
-    }];
-    [LTHttpManager getResidueWordNumWithUser_id:IS_USER_ID ? IS_USER_ID : @"" Wordbookid:@"1" Complete:^(LTHttpResult result, NSString *message, id data) {
-        if (LTHttpResultSuccess == result) {
-            _residueStr = [NSString stringWithFormat:@"%@",data[@"responseData"]];
             [self.myTableView reloadData];
         }
     }];
@@ -72,7 +76,7 @@
     [tableHeaderView addSubview:backView];
     [self.view addSubview:tableHeaderView];
     
-    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 5, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
     tableView.delegate = self;
     tableView.dataSource = self;
 //    tableView.scrollEnabled = NO;
@@ -100,7 +104,7 @@
     if (indexPath.row == 0) {
         return 140;
     }else if (indexPath.row == 1){
-        return 182;
+        return 182 + 38;
     }else{
         return 100;
     }
@@ -120,6 +124,9 @@
         cell.inMemoryLb.text = [NSString stringWithFormat:@"%@",self.dataDict[@"memory_num"]];
         cell.alwaysErrorLb.text = [NSString stringWithFormat:@"%@",self.dataDict[@"mistake_num"]];
         cell.skilledWordLb.text = [NSString stringWithFormat:@"%@",self.dataDict[@"proficiency_num"]];
+        cell.progressView.progress = (float)(_skilledNum + _alwaysErrorNum) / [_residueStr integerValue];
+        NSLog(@"%f--%ld__%ld__%@",(float)(_skilledNum + _alwaysErrorNum) / [_residueStr integerValue],(long)_skilledNum,(long)_alwaysErrorNum,_residueStr);
+        cell.progressLb.text = [NSString stringWithFormat:@"%.0f%%",(float)(_skilledNum + _alwaysErrorNum) / [_residueStr integerValue] * 100];
         return cell;
     }else{
         UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];

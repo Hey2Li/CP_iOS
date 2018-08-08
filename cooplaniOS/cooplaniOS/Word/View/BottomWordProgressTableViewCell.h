@@ -28,4 +28,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *inMemoryBtn;
 @property (weak, nonatomic) IBOutlet UIButton *skilledWordBtn;
 
+/**
+ 进度label
+ */
+@property (weak, nonatomic) IBOutlet UILabel *progressLb;
+@property (weak, nonatomic) IBOutlet UIProgressView *progressView;
+
 @end

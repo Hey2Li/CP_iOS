@@ -797,7 +797,7 @@
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
     NSDictionary *paramters =  @{@"version_2":kVersion_2,
                                  @"user_id":user_id,
-                                 @"wordbookid":word_book_id,
+                                 @"word_book_id":word_book_id,
                                  };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/wb/getReciteWordData",BaseURL]parameters:paramters complete:complete];
 }
@@ -844,5 +844,24 @@
                                  @"data":data,
                                  };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/oldWord/saveOldWord",BaseURL]parameters:paramters complete:complete];
+}
+
+/**
+ 查询单词状态 ycj 8/8
+ 
+ @param user_id 用户ID
+ @param word_book_id 词书ID
+ @param type 状态
+ @param complete 1（熟练>100) ;2（错误<-100）;3（记忆中(-100~100)）
+ */
++ (void)searchOldWordWithUserId:(NSString *)user_id WordBookId:(NSString *)word_book_id Type:(NSNumber *)type PageNum:(NSNumber *)page_num Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"version_2":kVersion_2,
+                                 @"user_id":user_id,
+                                 @"word_book_id":word_book_id,
+                                 @"type":type,
+                                 @"page_num":page_num
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/oldWord/searchOldWord",BaseURL]parameters:paramters complete:complete];
 }
 @end
