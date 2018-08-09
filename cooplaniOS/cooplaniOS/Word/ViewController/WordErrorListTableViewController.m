@@ -51,7 +51,7 @@
     }];
 }
 - (void)footerLoadData{
-    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+    MJRefreshBackNormalFooter *footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         _page_num++;
         [LTHttpManager searchOldWordWithUserId:IS_USER_ID ? IS_USER_ID : @"" WordBookId:@"1" Type:@(self.type) PageNum:@(_page_num) Complete:^(LTHttpResult result, NSString *message, id data) {
             if (LTHttpResultSuccess == result) {
@@ -68,6 +68,9 @@
             }
         }];
     }];
+     footer.stateLabel.hidden = YES;
+  
+    self.tableView.mj_footer = footer;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

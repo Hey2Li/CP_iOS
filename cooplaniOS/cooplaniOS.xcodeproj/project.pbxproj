@@ -805,7 +805,7 @@
 			path = Video;
 			sourceTree = "<group>";
 		};
-		9B286A302113041D00C7A2D4 /* VIewController */ = {
+		9B286A302113041D00C7A2D4 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
 				9BF8A4AD21104ED10079784F /* WordViewController.h */,
@@ -822,7 +822,7 @@
 				9BB0B89B211544E80063054A /* WordErrorListTableViewController.h */,
 				9BB0B89C211544E80063054A /* WordErrorListTableViewController.m */,
 			);
-			path = VIewController;
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		9B286A312113042400C7A2D4 /* View */ = {
@@ -894,6 +894,9 @@
 		9B3DA36320F721990028CDA9 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				9B3DA35A20F631A10028CDA9 /* LessonTableViewCell.h */,
+				9B3DA35B20F631A10028CDA9 /* LessonTableViewCell.m */,
+				9B3DA35C20F631A10028CDA9 /* LessonTableViewCell.xib */,
 				9B3DA38820F859290028CDA9 /* LessonTopSegment.h */,
 				9B3DA38920F859290028CDA9 /* LessonTopSegment.m */,
 				9B3DA38B20F880910028CDA9 /* LessonListTableViewCell.h */,
@@ -954,9 +957,6 @@
 				9B3CF25C20CE779800A52E14 /* ProgressImgView.m */,
 				9B3DA35120F6160B0028CDA9 /* HomeTopTitleView.h */,
 				9B3DA35220F6160B0028CDA9 /* HomeTopTitleView.m */,
-				9B3DA35A20F631A10028CDA9 /* LessonTableViewCell.h */,
-				9B3DA35B20F631A10028CDA9 /* LessonTableViewCell.m */,
-				9B3DA35C20F631A10028CDA9 /* LessonTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1235,7 +1235,7 @@
 			children = (
 				9B286A322113042C00C7A2D4 /* Model */,
 				9B286A312113042400C7A2D4 /* View */,
-				9B286A302113041D00C7A2D4 /* VIewController */,
+				9B286A302113041D00C7A2D4 /* ViewController */,
 			);
 			path = Word;
 			sourceTree = "<group>";

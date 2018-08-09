@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CET4 2017年06月" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a6a-4F-mMT">
-                        <rect key="frame" x="68" y="25" width="243" height="14"/>
+                        <rect key="frame" x="68" y="20" width="243" height="14"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="14" id="ozw-z1-sxX"/>
                         </constraints>
@@ -29,16 +29,16 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="如果你无法简洁的表达你的想法那说明你还不够了解它" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P7b-Te-Hf2">
-                        <rect key="frame" x="68" y="39" width="243" height="44.5"/>
+                        <rect key="frame" x="68" y="34" width="243" height="49.5"/>
                         <fontDescription key="fontDescription" type="system" weight="thin" pointSize="12"/>
                         <color key="textColor" red="0.53328466415405273" green="0.53336447477340698" blue="0.53326719999313354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cWh-nK-oxq">
-                        <rect key="frame" x="12" y="25" width="44" height="44"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="听力课图片" translatesAutoresizingMaskIntoConstraints="NO" id="cWh-nK-oxq">
+                        <rect key="frame" x="12" y="20" width="44" height="54"/>
                         <color key="backgroundColor" red="0.84843069314956665" green="0.84556788206100464" blue="0.84852796792984009" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="44" id="71G-b9-SwS"/>
+                            <constraint firstAttribute="height" constant="54" id="71G-b9-SwS"/>
                             <constraint firstAttribute="width" constant="44" id="X1X-Po-Jpe"/>
                         </constraints>
                     </imageView>
@@ -59,8 +59,12 @@
             <connections>
                 <outlet property="TitleLabel" destination="a6a-4F-mMT" id="CTE-zy-T0o"/>
                 <outlet property="detailLabel" destination="P7b-Te-Hf2" id="ghy-sw-49I"/>
+                <outlet property="paperTestImg" destination="cWh-nK-oxq" id="FAj-br-aHx"/>
             </connections>
             <point key="canvasLocation" x="25" y="77"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="听力课图片" width="44" height="56"/>
+    </resources>
 </document>

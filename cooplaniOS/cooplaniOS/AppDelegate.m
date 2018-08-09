@@ -332,16 +332,21 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
 }
 - (void)monitorNetworking{
     NSString *loginTime = [USERDEFAULTS objectForKey:@"logintime"];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     if (loginTime.length == 0) {
         NSString *GPRSPlay;//移动网络播放
         NSString *GPRSDownload;//移动网络下载
         GPRSPlay = @"0";
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         [userDefaults setObject:GPRSPlay forKey:@"GPRSPlay"];
         GPRSDownload = @"0";
         [userDefaults setObject:GPRSDownload forKey:@"GPRSDownload"];
         [userDefaults setObject:@"1" forKey:kWordAutoPlay];//设置自动播放单词发音
         [userDefaults setObject:@"1" forKey:kQuestionVoice];//设置答题音效
+    }else{
+        if ([userDefaults objectForKey:kWordAutoPlay] == nil || [[userDefaults objectForKey:kWordAutoPlay] isEqualToString: @""]) {
+            [userDefaults setObject:@"1" forKey:kWordAutoPlay];//设置自动播放单词发音
+            [userDefaults setObject:@"1" forKey:kQuestionVoice];//设置答题音效
+        }
     }
    
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];

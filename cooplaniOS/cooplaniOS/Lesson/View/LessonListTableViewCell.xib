@@ -20,7 +20,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="321" height="99.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lMq-Eo-aE7">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="视频封面" translatesAutoresizingMaskIntoConstraints="NO" id="lMq-Eo-aE7">
                         <rect key="frame" x="16" y="23" width="90" height="60"/>
                         <color key="backgroundColor" red="0.3026795685" green="0.67348021270000002" blue="0.49126440290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -73,4 +73,7 @@
             <point key="canvasLocation" x="25.5" y="80"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="视频封面" width="375" height="220"/>
+    </resources>
 </document>

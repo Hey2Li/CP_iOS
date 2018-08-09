@@ -13,7 +13,6 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    self.backImageView.image = [UIImage imageNamed:@"lessonGroup"];
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
@@ -28,6 +27,13 @@
     }else if ([lessonModel.state isEqualToString:@"1"]){
         self.price.text = @"已购买";
     }
+    if ([lessonModel.type  isEqual: @2]) {//2:方法课,3刷题课
+        self.backImageView.image = [UIImage imageNamed:@"方法课"];
+    }else if ([lessonModel.type  isEqual: @3]){
+        self.backImageView.image = [UIImage imageNamed:@"刷题课"];
+    }else{
+        self.backImageView.image = [UIImage imageNamed:@"急救包"];
+    }
     self.detail.text = lessonModel.info;
 }
 - (void)setMyLessonModel:(LessonModel *)myLessonModel{
@@ -35,5 +41,12 @@
     self.name.text = [NSString stringWithFormat:@"%@",myLessonModel.name];
     self.detail.text = myLessonModel.info;
     self.price.text = @"已购买";
+    if ([myLessonModel.type  isEqual: @2]) {//2:方法课,3刷题课
+        self.backImageView.image = [UIImage imageNamed:@"方法课"];
+    }else if ([myLessonModel.type  isEqual: @3]){
+        self.backImageView.image = [UIImage imageNamed:@"刷题课"];
+    }else{
+        self.backImageView.image = [UIImage imageNamed:@"急救包"];
+    }
 }
 @end

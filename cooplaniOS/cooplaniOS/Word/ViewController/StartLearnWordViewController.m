@@ -60,20 +60,8 @@
 }
 - (void)initWithView{
     UIView *tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:255])];
-    tableHeaderView.backgroundColor = UIColorFromRGB(0xF7F7F7);
-    //底部背景
-    UIView *backView;
-    if (UI_IS_IPHONE4) {
-        backView = [[UIView alloc]initWithFrame:CGRectMake((-750 + SCREEN_WIDTH)/2 , - 444 - 64 - 100 , 750, 750)];
-    }else{
-        backView = [[UIView alloc]initWithFrame:CGRectMake((-750 + SCREEN_WIDTH)/2 , - 444 - 64, 750, 750)];
-    }
-    backView.backgroundColor = DRGBCOLOR;
-    backView.layer.cornerRadius = 375;
-    backView.layer.masksToBounds = YES;
-    backView.clipsToBounds = YES;
-    [tableHeaderView.layer setMasksToBounds:YES];
-    [tableHeaderView addSubview:backView];
+    tableHeaderView.backgroundColor = [UIColor clearColor];
+  
     [self.view addSubview:tableHeaderView];
     
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 5, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
@@ -91,7 +79,7 @@
     
     self.myTableView.tableFooterView = [UIView new];
     
-    self.view.backgroundColor = UIColorFromRGB(0xF7F7F7);
+    self.view.backgroundColor = [UIColor clearColor];
 }
 - (void)startLearnClick:(UIButton *)btn{
     ReciteWordsViewController *vc = [[ReciteWordsViewController alloc]init];
@@ -116,17 +104,18 @@
             cell.wordBookNameLb.text = self.wordbookArray[0][@"name"];
             cell.wordBookDetailLb.text = self.wordbookArray[0][@"info"];
             [cell.wordBookImg sd_setImageWithURL:[NSURL URLWithString:self.wordbookArray[0][@"img"]] placeholderImage:nil];
-            cell.wordBookNumLb.text = [NSString stringWithFormat:@"剩余单词：%@",_residueStr ? _residueStr : @"0"];
+            cell.wordBookNumLb.text = [NSString stringWithFormat:@"%@",_residueStr ? _residueStr : @"0"];
         }
         return cell;
     }else if (indexPath.row == 1){
         BottomWordProgressTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([BottomWordProgressTableViewCell class])];
-        cell.inMemoryLb.text = [NSString stringWithFormat:@"%@",self.dataDict[@"memory_num"]];
-        cell.alwaysErrorLb.text = [NSString stringWithFormat:@"%@",self.dataDict[@"mistake_num"]];
-        cell.skilledWordLb.text = [NSString stringWithFormat:@"%@",self.dataDict[@"proficiency_num"]];
-        cell.progressView.progress = (float)(_skilledNum + _alwaysErrorNum) / [_residueStr integerValue];
-        NSLog(@"%f--%ld__%ld__%@",(float)(_skilledNum + _alwaysErrorNum) / [_residueStr integerValue],(long)_skilledNum,(long)_alwaysErrorNum,_residueStr);
-        cell.progressLb.text = [NSString stringWithFormat:@"%.0f%%",(float)(_skilledNum + _alwaysErrorNum) / [_residueStr integerValue] * 100];
+        if ([self.dataDict allKeys].count) {
+            cell.inMemoryLb.text = [NSString stringWithFormat:@"%@",self.dataDict[@"memory_num"]];
+            cell.alwaysErrorLb.text = [NSString stringWithFormat:@"%@",self.dataDict[@"mistake_num"]];
+            cell.skilledWordLb.text = [NSString stringWithFormat:@"%@",self.dataDict[@"proficiency_num"]];
+            cell.progressView.progress = (float)(_skilledNum + _alwaysErrorNum) / [_residueStr integerValue];
+            cell.progressLb.text = [NSString stringWithFormat:@"%.1f%%",(float)(_skilledNum + _alwaysErrorNum) / [_residueStr integerValue] * 100];
+        }
         return cell;
     }else{
         UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];

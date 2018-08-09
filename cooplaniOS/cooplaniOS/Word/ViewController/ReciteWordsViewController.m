@@ -189,7 +189,8 @@
     ReciteWordModel *model = self.dataArray[_wordIndex];
     btn.enabled = NO;
     if (IS_USER_ID) {
-        [LTHttpManager addWordsWithUserId:IS_USER_ID Word:model.word Tranlate:[self arrayToJSONString:@[model.result]] Ph_en_mp3:model.uk_mp3 Ph_am_mp3:model.us_mp3 Ph_am:model.us_soundmark Ph_en:model.uk_soundmark Complete:^(LTHttpResult result, NSString *message, id data) {
+        NSArray *array = @[@{@"means":@[model.result],@"part":@""}];
+        [LTHttpManager addWordsWithUserId:IS_USER_ID Word:model.word Tranlate:[self arrayToJSONString:array] Ph_en_mp3:model.uk_mp3 Ph_am_mp3:model.us_mp3 Ph_am:model.us_soundmark Ph_en:model.uk_soundmark Complete:^(LTHttpResult result, NSString *message, id data) {
             if (LTHttpResultSuccess == result) {
                 SVProgressShowStuteText(@"添加成功", YES);
                 [self.notKonwView.addNoteImg setImage:[UIImage imageNamed:@"已添加-2"]];

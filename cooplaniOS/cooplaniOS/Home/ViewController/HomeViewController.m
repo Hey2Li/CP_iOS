@@ -37,7 +37,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self initWithView];
-    self.view.backgroundColor = UIColorFromRGB(0xF7F7F7);
     [self loadData];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reloadTableView) name:@"homereloaddata" object:nil];
 }
@@ -87,21 +86,11 @@
     tableView.dataSource = self;
     tableView.separatorStyle = NO;
     tableView.showsVerticalScrollIndicator = NO;
-    tableView.backgroundColor = UIColorFromRGB(0xF7F7F7);
+    tableView.backgroundColor = [UIColor clearColor];
     [tableView registerNib:[UINib nibWithNibName:@"HomeListenCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"HOMELISTEN"];
     
     UIView *tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:255])];
-    //底部背景
-    UIView *backView;
-    if (UI_IS_IPHONE4) {
-        backView = [[UIView alloc]initWithFrame:CGRectMake((-750 + SCREEN_WIDTH)/2 , - 444 - 64 - 100 , 750, 750)];
-    }else{
-        backView = [[UIView alloc]initWithFrame:CGRectMake((-750 + SCREEN_WIDTH)/2 , - 444 - 64, 750, 750)];
-    }
-    backView.backgroundColor = DRGBCOLOR;
-    backView.layer.cornerRadius = 375;
-    backView.layer.masksToBounds = YES;
-    [tableHeaderView addSubview:backView];
+
     //banner collectionView
     UICollectionViewFlowLayout *flowlayout = [[UICollectionViewFlowLayout alloc]init];
     flowlayout.minimumLineSpacing = 20;
@@ -115,11 +104,12 @@
     collectionView.showsHorizontalScrollIndicator = NO;
     
     [tableHeaderView addSubview:collectionView];
-    tableHeaderView.backgroundColor = UIColorFromRGB(0xF7F7F7);
+    tableHeaderView.backgroundColor = [UIColor clearColor];
     
     tableView.tableHeaderView = tableHeaderView;
     self.myCollectionView = collectionView;
     self.myTableView = tableView;
+    self.view.backgroundColor = [UIColor clearColor];
     [self.view addSubview:tableView];
 }
 #pragma mark UICollectionViewDelegate

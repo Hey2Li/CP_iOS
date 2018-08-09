@@ -30,6 +30,7 @@
     [self initWithNavi];
     [self initWithView];
     [self setupLeftMenuButton];
+    self.view.backgroundColor = UIColorFromRGB(0xF7F7F7);
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -55,14 +56,31 @@
         [self.myScrollView setContentOffset:CGPointMake(SCREEN_WIDTH * (index - 10001), 0) animated:YES];
         NSLog(@"%ld",(long)index);
     };
-    [titleView selectIndexBtn:1];
+    [titleView selectIndexBtn:0];
     self.titleView = titleView;
     self.navigationItem.titleView = titleView;
 }
 - (void)initWithView{
+    UIView *tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:255])];
+    tableHeaderView.backgroundColor = UIColorFromRGB(0xF7F7F7);
+    //底部背景
+    UIView *backView;
+    if (UI_IS_IPHONE4) {
+        backView = [[UIView alloc]initWithFrame:CGRectMake((-750 + SCREEN_WIDTH)/2 , - 444 - 64 - 100 , 750, 750)];
+    }else{
+        backView = [[UIView alloc]initWithFrame:CGRectMake((-750 + SCREEN_WIDTH)/2 , - 444 - 64, 750, 750)];
+    }
+    backView.backgroundColor = DRGBCOLOR;
+    backView.layer.cornerRadius = 375;
+    backView.layer.masksToBounds = YES;
+    backView.clipsToBounds = YES;
+//    [tableHeaderView.layer setMasksToBounds:YES];
+//    [tableHeaderView addSubview:backView];
+//    [self.view addSubview:tableHeaderView];
+    [self.view insertSubview:backView atIndex:0];
     UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     [self.view addSubview:scrollView];
-    scrollView.backgroundColor = [UIColor whiteColor];
+    scrollView.backgroundColor = [UIColor clearColor];
     [scrollView setContentSize:CGSizeMake(SCREEN_WIDTH * 3, SCREEN_HEIGHT)];
     
     HomeViewController *listenVC = [[HomeViewController alloc]init];
@@ -84,7 +102,7 @@
     scrollView.pagingEnabled = YES;
     scrollView.bounces = NO;
     scrollView.delegate = self;
-    [scrollView setContentOffset:CGPointMake(SCREEN_WIDTH, 0) animated:YES];
+    [scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
     self.myScrollView = scrollView;
 }
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {

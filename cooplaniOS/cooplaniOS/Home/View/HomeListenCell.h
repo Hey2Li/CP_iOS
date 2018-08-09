@@ -13,5 +13,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *TitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *detailLabel;
 @property (weak, nonatomic) IBOutlet UIButton *collectionBtn;
+@property (weak, nonatomic) IBOutlet UIImageView *paperTestImg;
 @property (nonatomic, strong) PaperModel *Model;
 @end

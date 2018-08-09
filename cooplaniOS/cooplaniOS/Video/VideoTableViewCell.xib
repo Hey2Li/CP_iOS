@@ -19,7 +19,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="347" height="192.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XDL-sf-cdh">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="视频封面" translatesAutoresizingMaskIntoConstraints="NO" id="XDL-sf-cdh">
                         <rect key="frame" x="0.0" y="0.0" width="347" height="193"/>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="niy-wv-sRR">
@@ -51,6 +51,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="video_play_btn_bg" width="64" height="64"/>
+        <image name="video_play_btn_bg" width="48" height="48"/>
+        <image name="视频封面" width="375" height="220"/>
     </resources>
 </document>

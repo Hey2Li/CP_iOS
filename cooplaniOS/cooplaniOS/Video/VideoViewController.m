@@ -312,7 +312,7 @@
     
     UIImageView *videoImg = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 9 /16)];
     [self.view addSubview:videoImg];
-    videoImg.backgroundColor = [UIColor blackColor];
+    videoImg.image = [UIImage imageNamed:@"视频封面"];
     videoImg.userInteractionEnabled = YES;
     self.videoImg = videoImg;
     UIButton *playBtn = [UIButton buttonWithType:UIButtonTypeCustom];

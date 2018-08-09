@@ -85,6 +85,7 @@
     _Model = Model;
     self.TitleLabel.text = [NSString stringWithFormat:@"%@", Model.name];
     self.detailLabel.text = [NSString stringWithFormat:@"%@",Model.info];
+    [self.paperTestImg sd_setImageWithURL:[NSURL URLWithString:Model.coverUrl]];
     if ([Model.collection isEqualToString:@"1"]) {
         self.collectionBtn.tag = 1;
         self.collectionBtn.selected = YES;

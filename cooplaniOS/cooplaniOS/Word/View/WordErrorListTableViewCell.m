@@ -72,4 +72,7 @@
         [[self.player initWithURL:[NSURL URLWithString:url]]play];
     }
 }
+- (void)dealloc{
+    [self.player stop];
+}
 @end

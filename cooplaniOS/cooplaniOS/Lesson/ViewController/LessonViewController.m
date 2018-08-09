@@ -49,19 +49,6 @@
 }
 - (void)initWithView{
     //底部背景
-    UIView *backView;
-    if (UI_IS_IPHONE4) {
-        backView = [[UIView alloc]initWithFrame:CGRectMake((-750 + SCREEN_WIDTH)/2 , - 444 - 64 - 100 , 750, 750)];
-    }else{
-        backView = [[UIView alloc]initWithFrame:CGRectMake((-750 + SCREEN_WIDTH)/2 , - 444 - 64, 750, 750)];
-    }
-    backView.backgroundColor = DRGBCOLOR;
-    backView.layer.cornerRadius = 375;
-    backView.layer.masksToBounds = YES;
-    backView.clipsToBounds = YES;
-    [self.view addSubview:backView];
-    [self.view insertSubview:backView atIndex:0];
-    
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64) style:UITableViewStylePlain];
     tableView.delegate = self;
     tableView.dataSource = self;
@@ -75,7 +62,7 @@
     
     self.myTableView.tableFooterView = [UIView new];
     
-    self.view.backgroundColor = UIColorFromRGB(0xF7F7F7);
+    self.view.backgroundColor = [UIColor clearColor];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.dataArray.count;
