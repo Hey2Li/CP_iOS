@@ -81,7 +81,7 @@
     _wordIndex = 0;
 }
 - (void)loadData{
-    [LTHttpManager findAllAppWordWithUser_id:IS_USER_ID WordbookId:@"1" Num:@"20" Complete:^(LTHttpResult result, NSString *message, id data) {
+    [LTHttpManager findAllAppWordWithUser_id:IS_USER_ID WordbookId:self.wookbookId ? self.wookbookId : @"1" Num:@"20" Complete:^(LTHttpResult result, NSString *message, id data) {
         if (result == LTHttpResultSuccess) {
             NSArray *array = data[@"responseData"];
             if (array.count > 0) {

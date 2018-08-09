@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ReciteWordsViewController : UIViewController
-
+@property (nonatomic, copy) NSString *wookbookId;
 @end

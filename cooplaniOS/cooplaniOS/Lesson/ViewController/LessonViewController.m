@@ -97,6 +97,7 @@
     if ([model.state isEqualToString:@"1"]) {
         LessonListMenuViewController *vc = [[LessonListMenuViewController alloc]init];
         vc.lessonType = [NSString stringWithFormat:@"%@",model.type];
+        vc.title = model.name;
         [self.navigationController pushViewController:vc animated:YES];
     }else{
         if (model.url) {

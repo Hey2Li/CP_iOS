@@ -83,6 +83,8 @@
 }
 - (void)startLearnClick:(UIButton *)btn{
     ReciteWordsViewController *vc = [[ReciteWordsViewController alloc]init];
+    vc.title = self.wordbookArray[0][@"name"] ? self.wordbookArray[0][@"name"] : @"";
+    vc.wookbookId = self.wordbookArray[0][@"id"] ? self.wordbookArray[0][@"id"] : @"";
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
