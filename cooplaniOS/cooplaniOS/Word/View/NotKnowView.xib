@@ -37,7 +37,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="例句：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HD5-55-ydh">
-                    <rect key="frame" x="28" y="80" width="43" height="20"/>
+                    <rect key="frame" x="28" y="160" width="43" height="20"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="43" id="AId-3D-ajB"/>
                         <constraint firstAttribute="height" constant="20" id="SHD-JV-0Od"/>
@@ -46,14 +46,14 @@
                     <color key="textColor" red="0.99915176630000002" green="0.82896530629999998" blue="0.29778558020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="n.拥有；占有某物  " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hnp-zP-baR">
-                    <rect key="frame" x="71" y="40" width="211" height="20"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="n.拥有；占有某物  " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hnp-zP-baR">
+                    <rect key="frame" x="71" y="40" width="211" height="17"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.39942303299999998" green="0.39974853399999999" blue="0.3994735479" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="That information is not in  our possession.\n那则信息不归我们所有。" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="05M-oU-Or2">
-                    <rect key="frame" x="71" y="80" width="211" height="50.5"/>
+                    <rect key="frame" x="71" y="160" width="211" height="50.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.39942303299999998" green="0.39974853399999999" blue="0.3994735479" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
@@ -109,7 +109,7 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="HD5-55-ydh" firstAttribute="top" secondItem="6hv-qE-1Gj" secondAttribute="bottom" constant="20" id="3bI-aT-vba"/>
+                <constraint firstItem="HD5-55-ydh" firstAttribute="top" secondItem="6hv-qE-1Gj" secondAttribute="bottom" constant="100" id="3bI-aT-vba"/>
                 <constraint firstItem="G5D-kj-K8P" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="52W-Pp-uK5"/>
                 <constraint firstItem="32Z-AP-pc4" firstAttribute="leading" secondItem="nSe-vz-rgc" secondAttribute="trailing" id="7wd-PG-etq"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="nSe-vz-rgc" secondAttribute="bottom" constant="37" id="9WT-Ob-2Je"/>
@@ -123,7 +123,6 @@
                 <constraint firstItem="6hv-qE-1Gj" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="28" id="STJ-vV-Z6Z"/>
                 <constraint firstItem="HD5-55-ydh" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="28" id="So7-eA-UiH"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="G5D-kj-K8P" secondAttribute="bottom" id="TYn-GS-Nrh"/>
-                <constraint firstItem="hnp-zP-baR" firstAttribute="bottom" secondItem="6hv-qE-1Gj" secondAttribute="bottom" id="UfF-1x-vyG"/>
                 <constraint firstItem="R2m-h3-EZs" firstAttribute="top" secondItem="KdT-A4-W1U" secondAttribute="bottom" constant="7" id="VWo-5o-pUi"/>
                 <constraint firstItem="G5D-kj-K8P" firstAttribute="top" secondItem="z4o-Jq-yG1" secondAttribute="bottom" id="XKY-8t-iLJ"/>
                 <constraint firstItem="6mW-CT-ZF3" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="ZPa-Vr-CGh"/>

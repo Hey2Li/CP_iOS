@@ -45,5 +45,6 @@ NSString *const kVersion_2 = @"2.0";
 NSString *const kWordAutoPlay = @"wordAutoPlay";
 NSString *const kQuestionVoice = @"questionVoice";//答题音效
 NSString *const kLoadWordHomePageData = @"loadWordHomepageData";//加载单词首页数据
+NSString *const kLoadLearnedList = @"loadLearnedList";//加载已学列表
 
 @end

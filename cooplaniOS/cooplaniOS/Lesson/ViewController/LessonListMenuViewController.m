@@ -42,14 +42,11 @@
     // Do any additional setup after loading the view.
     [self initWithView];
     [self loadData];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loadLearndList) name:kLoadLearnedList object:nil];
 }
 - (void)loadData{
     //二维码
-    [LTHttpManager getQRWithComplete:^(LTHttpResult result, NSString *message, id data) {
-        if (LTHttpResultSuccess == result) {
-            [self.lessonServerView.qrImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",data[@"responseData"]]] placeholderImage:[UIImage new]];
-        }
-    }];
+   [self.lessonServerView.qrImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",self.qr_code]] placeholderImage:[UIImage new]];
     //课程列表
     [LTHttpManager findByCurriculumTypeWithUserId:IS_USER_ID CurriculumType:self.lessonType Complete:^(LTHttpResult result, NSString *message, id data) {
         if (LTHttpResultSuccess == result) {
@@ -62,6 +59,19 @@
             [self.lessonListTableView reloadData];
         }
     }];
+    [LTHttpManager  searchPlayRecordWithUserId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
+        if (LTHttpResultSuccess == result) {
+            NSArray *array = data[@"responseData"];
+            [self.learnedListArray removeAllObjects];
+            for (NSDictionary *dict in array) {
+                VideoLessonModel *model = [VideoLessonModel mj_objectWithKeyValues:dict];
+                [self.learnedListArray addObject:model];
+            }
+            [self.learnedTableView reloadData];
+        }
+    }];
+}
+- (void)loadLearndList{
     [LTHttpManager  searchPlayRecordWithUserId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
         if (LTHttpResultSuccess == result) {
             NSArray *array = data[@"responseData"];
@@ -162,7 +172,9 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
 /*
 #pragma mark - Navigation
 

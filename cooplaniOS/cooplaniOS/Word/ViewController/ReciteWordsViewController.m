@@ -15,7 +15,8 @@
 #import "ReciteWordModel.h"
 #import "SUPlayer.h"
 
-
+#define WORDNUM @"20"
+#define kNoKnowHeight [Tool layoutForAlliPhoneHeight:360]
 @interface ReciteWordsViewController ()<UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) UITableView *myTableView;
 @property (nonatomic, strong) ReciteWordTbHeaderView *tableViewHeaderView;
@@ -81,7 +82,7 @@
     _wordIndex = 0;
 }
 - (void)loadData{
-    [LTHttpManager findAllAppWordWithUser_id:IS_USER_ID WordbookId:self.wookbookId ? self.wookbookId : @"1" Num:@"20" Complete:^(LTHttpResult result, NSString *message, id data) {
+    [LTHttpManager findAllAppWordWithUser_id:IS_USER_ID WordbookId:self.wookbookId ? self.wookbookId : @"1" Num:WORDNUM Complete:^(LTHttpResult result, NSString *message, id data) {
         if (result == LTHttpResultSuccess) {
             NSArray *array = data[@"responseData"];
             if (array.count > 0) {
@@ -145,7 +146,7 @@
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
         make.top.equalTo(self.view.mas_bottom);
-        make.height.equalTo(@360);
+        make.height.mas_equalTo(kNoKnowHeight);
     }];
 }
 #pragma mark Play播放动画
@@ -171,18 +172,20 @@
 }
 #pragma mark 下一个
 - (void)nextWordClick:(UIButton *)btn{
-    ReciteWordModel *model = self.dataArray[_wordIndex];
-    NSString *wordId = [NSString stringWithFormat:@"%ld",(long)model.ID];
-    NSInteger socre = model.score;
-    socre = socre + 0;//下一个+0
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setValue:IS_USER_ID forKey:@"user_id"];
-    [dict setValue:wordId forKey:@"word_id"];
-    [dict setValue:[self getCurrentTimes] forKey:@"time"];
-    [dict setValue:@(socre) forKey:@"score"];
-    [dict setValue:@(model.word_book_id) forKey:@"word_book_id"];
-    [self.postDataArray addObject:dict];
-    [self nextWordReloadData];
+    if (self.dataArray.count > 0) {
+        ReciteWordModel *model = self.dataArray[_wordIndex];
+        NSString *wordId = [NSString stringWithFormat:@"%ld",(long)model.ID];
+        NSInteger socre = model.score;
+        socre = socre + 0;//下一个+0
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setValue:IS_USER_ID forKey:@"user_id"];
+        [dict setValue:wordId forKey:@"word_id"];
+        [dict setValue:[self getCurrentTimes] forKey:@"time"];
+        [dict setValue:@(socre) forKey:@"score"];
+        [dict setValue:@(model.word_book_id) forKey:@"word_book_id"];
+        [self.postDataArray addObject:dict];
+        [self nextWordReloadData];
+    }
 }
 #pragma mark 添加到笔记
 - (void)addNoteClick:(UIButton *)btn{
@@ -210,19 +213,13 @@
     }
 }
 #pragma mark 不认识
+#warning 不认识下版本要修改逻辑0814
 - (void)notKnowClick:(UIButton *)btn{
     ReciteWordModel *model = self.dataArray[_wordIndex];
     [self playWordVoice];
-    NSString *wordId = [NSString stringWithFormat:@"%ld",(long)model.ID];
     NSInteger socre = model.score;
-    socre = socre + 0;//不认识+0
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setValue:IS_USER_ID forKey:@"user_id"];
-    [dict setValue:wordId forKey:@"word_id"];
-    [dict setValue:[self getCurrentTimes] forKey:@"time"];
-    [dict setValue:@(socre) forKey:@"score"];
-    [dict setValue:@(model.word_book_id) forKey:@"word_book_id"];
-    [self.postDataArray addObject:dict];
+    socre = socre - 50;//不认识+0
+    model.score = socre;
     [self notKonwShow];
 }
 #pragma mark 答错
@@ -232,10 +229,10 @@
 }
 - (void)notKonwShow{
     [self.notKonwView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_bottom).offset(-360);
+        make.top.equalTo(self.view.mas_bottom).offset(-kNoKnowHeight);
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
-        make.height.equalTo(@360);
+        make.height.mas_equalTo(kNoKnowHeight);
     }];
     [UIView animateWithDuration:0.4 animations:^{
         [self.view updateConstraintsIfNeeded];
@@ -249,7 +246,7 @@
         make.top.equalTo(self.view.mas_bottom);
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
-        make.height.equalTo(@360);
+        make.height.mas_equalTo(kNoKnowHeight);
     }];
     [UIView animateWithDuration:0.4 animations:^{
         [self.view updateConstraintsIfNeeded];
@@ -265,6 +262,10 @@
         [self.notKonwView.addNoteLb  setTextColor:UIColorFromRGB(0xFFCE43)];
         self.notKonwView.addNoteBtn.enabled = YES;
         self.isSelectedCell = NO;
+        if (self.dataArray.count > 0){
+            ReciteWordModel *model = self.dataArray[_wordIndex];
+            model.arr_options = [NSMutableArray arrayWithArray:[self arraySortBreakWith:model.arr_options]];
+        }
         [self.myTableView reloadData];
     }
 }
@@ -302,7 +303,10 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (!self.isSelectedCell) {
         self.isSelectedCell = YES;
-        ReciteWordModel *model = self.dataArray[_wordIndex];
+        ReciteWordModel *model;
+        if (self.dataArray.count > 0) {
+            model = self.dataArray[_wordIndex];
+        }
         ReciteWordTableViewCell *cell = [tableView  cellForRowAtIndexPath:[tableView indexPathForSelectedRow]];
         [cell.optionsLb setTextColor:[UIColor whiteColor]];
         [cell.optionsTitle setTextColor:[UIColor whiteColor]];
@@ -323,6 +327,21 @@
             model.score = socre;
             cell.selectedView.backgroundColor = UIColorFromRGB(0x7EDDBC);
             [self playYESVoice];
+            _isAnswerCorrect = YES;
+            [self reloadNextWord];//进入下一题 刷新页面
+        }else{
+            socre = socre <= -100 ? -100 : socre - 25;//背错 -25 常错词
+            model.score = socre;
+            cell.selectedView.backgroundColor = UIColorFromRGB(0xE6948E);
+            model.arr_options = [NSMutableArray arrayWithArray:[self arraySortBreakWith:model.arr_options]];
+            [self playNOVoice];
+            //跳转到答错
+            [self answerWrong];
+            _isAnswerCorrect = NO;
+            model.state = @"0";
+        }
+        //防止重复添加
+        if (self.postDataArray.count == _wordIndex) {
             //答题数据保存到本地
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             [dict setValue:IS_USER_ID forKey:@"user_id"];
@@ -331,17 +350,18 @@
             [dict setValue:@(socre) forKey:@"score"];
             [dict setValue:@(model.word_book_id) forKey:@"word_book_id"];
             [self.postDataArray addObject:dict];
-            _isAnswerCorrect = YES;
-            [self reloadNextWord];//进入下一题 刷新页面
         }else{
-            socre = socre - 25;//背错 -25 常错词
-            model.score = socre;
-            cell.selectedView.backgroundColor = UIColorFromRGB(0xE6948E);
-            [self playNOVoice];
-            //跳转到答错
-            [self answerWrong];
-            _isAnswerCorrect = NO;
-            model.state = @"0";
+            if (self.postDataArray.count > 0) {
+                [self.postDataArray removeLastObject];
+                //答题数据保存到本地
+                NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+                [dict setValue:IS_USER_ID forKey:@"user_id"];
+                [dict setValue:wordId forKey:@"word_id"];
+                [dict setValue:[self getCurrentTimes] forKey:@"time"];
+                [dict setValue:@(socre) forKey:@"score"];
+                [dict setValue:@(model.word_book_id) forKey:@"word_book_id"];
+                [self.postDataArray addObject:dict];
+            }
         }
         self.selectionCell = cell;
     }
@@ -357,6 +377,7 @@
     _wordIndex ++;
     if (_wordIndex >= self.dataArray.count) {
         _wordIndex = 0;
+        [self.dataArray removeAllObjects];
         //发给后台
         [LTHttpManager saveOldWordWithwordData:[self arrayToJSONString:self.postDataArray] Complete:^(LTHttpResult result, NSString *message, id data) {
             if (LTHttpResultSuccess == result) {
@@ -400,12 +421,14 @@
     return _currentDate;
 }
 - (void)viewDidDisappear:(BOOL)animated{
-    [LTHttpManager saveOldWordWithwordData:[self arrayToJSONString:self.postDataArray] Complete:^(LTHttpResult result, NSString *message, id data) {
-        if (LTHttpResultSuccess == result) {
-            NSLog(@"用户单词数据保存成功");
-            [[NSNotificationCenter defaultCenter]postNotificationName:kLoadWordHomePageData object:nil];
-        }
-    }];
+    if (IS_USER_ID) {
+        [LTHttpManager saveOldWordWithwordData:[self arrayToJSONString:self.postDataArray] Complete:^(LTHttpResult result, NSString *message, id data) {
+            if (LTHttpResultSuccess == result) {
+                NSLog(@"用户单词数据保存成功");
+                [[NSNotificationCenter defaultCenter]postNotificationName:kLoadWordHomePageData object:nil];
+            }
+        }];
+    }
 }
 /**
  *  字典转JSON字符串
@@ -447,6 +470,30 @@
             }
         }
     }
+}
+#pragma mark 数组乱序
+
+/**
+ 对数组进行乱序操作
+
+ @param array 当前数组
+ @return 乱序后的数组
+ */
+- (NSArray *)arraySortBreakWith:(NSArray *)array{
+    //数组排序
+    //对数组进行排序
+    NSArray *result = [array sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        NSLog(@"%@~%@",obj1,obj2);
+        //乱序
+        if (arc4random_uniform(2) == 0) {
+            return [obj2 compare:obj1]; //降序
+        }
+        else{
+            return [obj1 compare:obj2]; //升序
+        }
+    }];
+    NSLog(@"array=%@,result=%@",array,result);
+    return result;
 }
 - (void)dealloc{
     [self.player stop];

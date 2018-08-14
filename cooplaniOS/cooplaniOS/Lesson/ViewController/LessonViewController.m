@@ -98,6 +98,7 @@
         LessonListMenuViewController *vc = [[LessonListMenuViewController alloc]init];
         vc.lessonType = [NSString stringWithFormat:@"%@",model.type];
         vc.title = model.name;
+        vc.qr_code = model.qr_code;
         [self.navigationController pushViewController:vc animated:YES];
     }else{
         if (model.url) {

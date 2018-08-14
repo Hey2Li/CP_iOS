@@ -10,4 +10,5 @@
 
 @interface LessonListMenuViewController : UIViewController
 @property (nonatomic, copy) NSString *lessonType;
+@property (nonatomic, copy) NSString *qr_code;
 @end

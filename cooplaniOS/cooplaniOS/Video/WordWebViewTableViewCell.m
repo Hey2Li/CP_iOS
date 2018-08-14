@@ -99,7 +99,7 @@
                       font-weight: 550;\
                       }\
                       .hVocabularyContent{\
-                      color: #ccc;\
+                      color:rgb(102,102,102);\
                       font-size: 14px;\
                       }\
                       .indent{\
@@ -131,7 +131,7 @@
                       font-weight: 550;\
                       }\
                       .hVocabularyContent{\
-                      color: #ccc;\
+                      color:rgb(102,102,102);\
                       font-size: 14px;\
                       }\
                       .indent{\
@@ -168,7 +168,7 @@
                       font-weight: 550;\
                       }\
                       .hVocabularyContent{\
-                      color: #ccc;\
+                      color:rgb(102,102,102);\
                       font-size: 14px;\
                       }\
                       .indent{\
@@ -200,7 +200,7 @@
                        font-weight: 550;\
                        }\
                        .hVocabularyContent{\
-                       color: #ccc;\
+                       color:rgb(102,102,102);\
                        font-size: 14px;\
                        }\
                        .indent{\

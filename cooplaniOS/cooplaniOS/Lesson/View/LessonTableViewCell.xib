@@ -28,7 +28,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="MNV-eg-vQ5"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                 <color key="textColor" red="0.26833903789520264" green="0.2685706615447998" blue="0.26837491989135742" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -38,11 +38,11 @@
                                     <constraint firstAttribute="height" constant="50" id="nG0-He-Pi0"/>
                                     <constraint firstAttribute="width" constant="200" id="zDr-Pt-lIj"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="12"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="0.53399336338043213" green="0.53441524505615234" blue="0.53405874967575073" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="限售3000人" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2zP-Wt-HET">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="限售3000人" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2zP-Wt-HET">
                                 <rect key="frame" x="20" y="193" width="70" height="12"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="0cP-8q-Rny"/>

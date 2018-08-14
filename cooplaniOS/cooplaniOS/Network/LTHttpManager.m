@@ -690,7 +690,7 @@
     NSDictionary *paramters =  @{@"version_2":kVersion_2,
                                  @"user_id":user_id,
                                  @"curriculum_id":curriculum_id,
-                                 @"laseTime":lastTime
+                                 @"lastTime":lastTime
                                  };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/playRecord/private/addPlayRecord",BaseURL]parameters:paramters complete:complete];
 }

@@ -56,13 +56,12 @@
     tableView.dataSource = self;
     [self.view addSubview:tableView];
     tableView.separatorStyle = NO;
-    tableView.backgroundColor = [UIColor clearColor];
     [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([LessonTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([LessonTableViewCell class])];
-    
-    self.myTableView.backgroundColor = [UIColor clearColor];
     self.myTableView = tableView;
-    
+    self.myTableView.backgroundColor = UIColorFromRGB(0xF7F7F7);
+
     self.myTableView.tableFooterView = [UIView new];
+    self.view.backgroundColor = UIColorFromRGB(0xF7F7F7);
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.dataArray.count;
@@ -73,13 +72,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     LessonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LessonTableViewCell class])];
     cell.myLessonModel = self.dataArray[indexPath.row];
-    cell.backgroundColor = [UIColor clearColor];
+    cell.backgroundColor = UIColorFromRGB(0xF7F7F7);
     cell.selectionStyle = NO;
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{    
     LessonListMenuViewController *vc = [[LessonListMenuViewController alloc]init];
     LessonModel *model = self.dataArray[indexPath.row];
+    vc.qr_code = model.qr_code;
     vc.lessonType = [NSString stringWithFormat:@"%@",model.type];
     vc.title = model.name;
     [self.navigationController pushViewController:vc animated:YES];

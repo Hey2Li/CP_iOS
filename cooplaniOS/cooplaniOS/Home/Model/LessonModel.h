@@ -16,4 +16,5 @@
 @property (nonatomic, strong) NSNumber *type;
 @property (nonatomic, copy) NSString *url;
 @property (nonatomic, copy) NSString *state;
+@property (nonatomic, copy) NSString *qr_code;
 @end

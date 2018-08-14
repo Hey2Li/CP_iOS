@@ -33,7 +33,7 @@
                     <color key="textColor" red="0.3026795685" green="0.67348021270000002" blue="0.49126440290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OwT-Ce-0Zj">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OwT-Ce-0Zj">
                     <rect key="frame" x="72.5" y="282" width="235" height="34"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="235" id="7To-dd-dWw"/>
@@ -50,7 +50,7 @@
                         <constraint firstAttribute="width" constant="280" id="60z-n5-5W8"/>
                         <constraint firstAttribute="height" constant="45" id="6Hg-fr-pUP"/>
                     </constraints>
-                    <state key="normal" title="保存社群二维码"/>
+                    <state key="normal" title="保存二维码"/>
                     <connections>
                         <action selector="saveQrCodeClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="dLo-fN-HtR"/>
                     </connections>
