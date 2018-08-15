@@ -47,6 +47,8 @@
 - (void)loadData{
     //二维码
    [self.lessonServerView.qrImg sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",self.qr_code]] placeholderImage:[UIImage new]];
+    self.lessonServerView.qrCodeName.text = [NSString stringWithFormat:@"%@",self.qr_code_name ? self.qr_code_name : @""];
+    self.lessonServerView.guide.text = [NSString stringWithFormat:@"%@",self.guide ? self.guide : @""];
     //课程列表
     [LTHttpManager findByCurriculumTypeWithUserId:IS_USER_ID CurriculumType:self.lessonType Complete:^(LTHttpResult result, NSString *message, id data) {
         if (LTHttpResultSuccess == result) {
@@ -59,7 +61,7 @@
             [self.lessonListTableView reloadData];
         }
     }];
-    [LTHttpManager  searchPlayRecordWithUserId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
+    [LTHttpManager searchPlayRecordWithUserId:IS_USER_ID Commodity_id:self.commodity_id ? self.commodity_id : @"" Complete:^(LTHttpResult result, NSString *message, id data) {
         if (LTHttpResultSuccess == result) {
             NSArray *array = data[@"responseData"];
             [self.learnedListArray removeAllObjects];
@@ -72,7 +74,7 @@
     }];
 }
 - (void)loadLearndList{
-    [LTHttpManager  searchPlayRecordWithUserId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
+    [LTHttpManager  searchPlayRecordWithUserId:IS_USER_ID Commodity_id:self.commodity_id ? self.commodity_id : @"" Complete:^(LTHttpResult result, NSString *message, id data) {
         if (LTHttpResultSuccess == result) {
             NSArray *array = data[@"responseData"];
             [self.learnedListArray removeAllObjects];

@@ -8,8 +8,6 @@
 
 #import "LessonViewController.h"
 #import "LessonTableViewCell.h"
-#import "BuyLessonViewController.h"
-#import "LessonDetailViewController.h"
 #import "LessonModel.h"
 #import "LessonListMenuViewController.h"
 #import <AlibcTradeSDK/AlibcTradeSDK.h>
@@ -99,6 +97,9 @@
         vc.lessonType = [NSString stringWithFormat:@"%@",model.type];
         vc.title = model.name;
         vc.qr_code = model.qr_code;
+        vc.qr_code_name = model.qr_code_name;
+        vc.guide = model.guide;
+        vc.commodity_id = [NSString stringWithFormat:@"%@",model.ID];
         [self.navigationController pushViewController:vc animated:YES];
     }else{
         if (model.url) {

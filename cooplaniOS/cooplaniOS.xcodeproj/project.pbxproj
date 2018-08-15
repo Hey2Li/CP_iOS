@@ -81,12 +81,9 @@
 		9B3DA35920F62B5A0028CDA9 /* LessonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3DA35820F62B5A0028CDA9 /* LessonViewController.m */; };
 		9B3DA35D20F631A10028CDA9 /* LessonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3DA35B20F631A10028CDA9 /* LessonTableViewCell.m */; };
 		9B3DA35E20F631A10028CDA9 /* LessonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B3DA35C20F631A10028CDA9 /* LessonTableViewCell.xib */; };
-		9B3DA36220F71FC10028CDA9 /* BuyLessonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3DA36120F71FC10028CDA9 /* BuyLessonViewController.m */; };
 		9B3DA36720F721D10028CDA9 /* BuyLessonTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3DA36620F721D10028CDA9 /* BuyLessonTableHeaderView.m */; };
 		9B3DA36B20F74C980028CDA9 /* AddressTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3DA36920F74C980028CDA9 /* AddressTableViewCell.m */; };
 		9B3DA36C20F74C980028CDA9 /* AddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B3DA36A20F74C980028CDA9 /* AddressTableViewCell.xib */; };
-		9B3DA36F20F75F900028CDA9 /* PayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3DA36E20F75F900028CDA9 /* PayViewController.m */; };
-		9B3DA37220F762CF0028CDA9 /* PaySuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3DA37120F762CF0028CDA9 /* PaySuccessViewController.m */; };
 		9B3DA37620F76C4A0028CDA9 /* PaySuccessTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3DA37420F76C4A0028CDA9 /* PaySuccessTableViewCell.m */; };
 		9B3DA37720F76C4A0028CDA9 /* PaySuccessTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B3DA37520F76C4A0028CDA9 /* PaySuccessTableViewCell.xib */; };
 		9B3DA37B20F76E0D0028CDA9 /* WXPayTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3DA37920F76E0D0028CDA9 /* WXPayTableViewCell.m */; };
@@ -124,7 +121,6 @@
 		9B7AD3C220FC6FD200C224CC /* ChangePhoneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B7AD3C020FC6FD200C224CC /* ChangePhoneViewController.xib */; };
 		9B7AD3C620FC6FED00C224CC /* SureChangePhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7AD3C420FC6FED00C224CC /* SureChangePhoneViewController.m */; };
 		9B7AD3C720FC6FED00C224CC /* SureChangePhoneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B7AD3C520FC6FED00C224CC /* SureChangePhoneViewController.xib */; };
-		9B7AD3CA20FD8ED400C224CC /* LessonDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7AD3C920FD8ED400C224CC /* LessonDetailViewController.m */; };
 		9B7AD3CD20FF219B00C224CC /* LessonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7AD3CC20FF219B00C224CC /* LessonModel.m */; };
 		9B7AD3D020FF2F3B00C224CC /* VideoLessonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B7AD3CF20FF2F3B00C224CC /* VideoLessonModel.m */; };
 		9B81D4DD20EB47ED00BFFC39 /* VideoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B81D4DB20EB47ED00BFFC39 /* VideoTableViewCell.m */; };
@@ -339,17 +335,11 @@
 		9B3DA35A20F631A10028CDA9 /* LessonTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LessonTableViewCell.h; sourceTree = "<group>"; };
 		9B3DA35B20F631A10028CDA9 /* LessonTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LessonTableViewCell.m; sourceTree = "<group>"; };
 		9B3DA35C20F631A10028CDA9 /* LessonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LessonTableViewCell.xib; sourceTree = "<group>"; };
-		9B3DA36020F71FC10028CDA9 /* BuyLessonViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BuyLessonViewController.h; sourceTree = "<group>"; };
-		9B3DA36120F71FC10028CDA9 /* BuyLessonViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BuyLessonViewController.m; sourceTree = "<group>"; };
 		9B3DA36520F721D10028CDA9 /* BuyLessonTableHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BuyLessonTableHeaderView.h; sourceTree = "<group>"; };
 		9B3DA36620F721D10028CDA9 /* BuyLessonTableHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BuyLessonTableHeaderView.m; sourceTree = "<group>"; };
 		9B3DA36820F74C980028CDA9 /* AddressTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddressTableViewCell.h; sourceTree = "<group>"; };
 		9B3DA36920F74C980028CDA9 /* AddressTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddressTableViewCell.m; sourceTree = "<group>"; };
 		9B3DA36A20F74C980028CDA9 /* AddressTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressTableViewCell.xib; sourceTree = "<group>"; };
-		9B3DA36D20F75F900028CDA9 /* PayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PayViewController.h; sourceTree = "<group>"; };
-		9B3DA36E20F75F900028CDA9 /* PayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PayViewController.m; sourceTree = "<group>"; };
-		9B3DA37020F762CF0028CDA9 /* PaySuccessViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaySuccessViewController.h; sourceTree = "<group>"; };
-		9B3DA37120F762CF0028CDA9 /* PaySuccessViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaySuccessViewController.m; sourceTree = "<group>"; };
 		9B3DA37320F76C4A0028CDA9 /* PaySuccessTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaySuccessTableViewCell.h; sourceTree = "<group>"; };
 		9B3DA37420F76C4A0028CDA9 /* PaySuccessTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaySuccessTableViewCell.m; sourceTree = "<group>"; };
 		9B3DA37520F76C4A0028CDA9 /* PaySuccessTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaySuccessTableViewCell.xib; sourceTree = "<group>"; };
@@ -416,8 +406,6 @@
 		9B7AD3C320FC6FED00C224CC /* SureChangePhoneViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SureChangePhoneViewController.h; sourceTree = "<group>"; };
 		9B7AD3C420FC6FED00C224CC /* SureChangePhoneViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SureChangePhoneViewController.m; sourceTree = "<group>"; };
 		9B7AD3C520FC6FED00C224CC /* SureChangePhoneViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SureChangePhoneViewController.xib; sourceTree = "<group>"; };
-		9B7AD3C820FD8ED400C224CC /* LessonDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LessonDetailViewController.h; sourceTree = "<group>"; };
-		9B7AD3C920FD8ED400C224CC /* LessonDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LessonDetailViewController.m; sourceTree = "<group>"; };
 		9B7AD3CB20FF219B00C224CC /* LessonModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LessonModel.h; sourceTree = "<group>"; };
 		9B7AD3CC20FF219B00C224CC /* LessonModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LessonModel.m; sourceTree = "<group>"; };
 		9B7AD3CE20FF2F3B00C224CC /* VideoLessonModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoLessonModel.h; sourceTree = "<group>"; };
@@ -929,14 +917,6 @@
 				9B3DA37F20F83C3A0028CDA9 /* LessonListViewController.m */,
 				9B3DA38120F8543E0028CDA9 /* LessonListMenuViewController.h */,
 				9B3DA38220F8543E0028CDA9 /* LessonListMenuViewController.m */,
-				9B3DA36020F71FC10028CDA9 /* BuyLessonViewController.h */,
-				9B3DA36120F71FC10028CDA9 /* BuyLessonViewController.m */,
-				9B3DA36D20F75F900028CDA9 /* PayViewController.h */,
-				9B3DA36E20F75F900028CDA9 /* PayViewController.m */,
-				9B3DA37020F762CF0028CDA9 /* PaySuccessViewController.h */,
-				9B3DA37120F762CF0028CDA9 /* PaySuccessViewController.m */,
-				9B7AD3C820FD8ED400C224CC /* LessonDetailViewController.h */,
-				9B7AD3C920FD8ED400C224CC /* LessonDetailViewController.m */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1571,7 +1551,6 @@
 				9BB0B89D211544E80063054A /* WordErrorListTableViewController.m in Sources */,
 				9B3DA37620F76C4A0028CDA9 /* PaySuccessTableViewCell.m in Sources */,
 				9B1D31D120736846007674CF /* MyCollectionViewController.m in Sources */,
-				9B7AD3CA20FD8ED400C224CC /* LessonDetailViewController.m in Sources */,
 				9B6FB85C207F3D2100BC07F3 /* UILabel+HYLabel.m in Sources */,
 				9BB0B899211435B90063054A /* WordBookSettingTableViewController.m in Sources */,
 				9B3D02CF20847C5A005C923B /* PaperDetailTableViewCell.m in Sources */,
@@ -1608,7 +1587,6 @@
 				9B16B09C2091CA2600094EE7 /* AnswerHeadView.m in Sources */,
 				9B4BB6FD2079A9FC0029015F /* HomeListenCell.m in Sources */,
 				9B3DA35920F62B5A0028CDA9 /* LessonViewController.m in Sources */,
-				9B3DA36F20F75F900028CDA9 /* PayViewController.m in Sources */,
 				9BB0B8A82115A6220063054A /* ReciteWordModel.m in Sources */,
 				9B286A262112B36800C7A2D4 /* BottomWordProgressTableViewCell.m in Sources */,
 				9B1A5B1820BBAC4500DA21A6 /* CheckWordView.m in Sources */,
@@ -1644,7 +1622,6 @@
 				9B7AD3CD20FF219B00C224CC /* LessonModel.m in Sources */,
 				9BF8A4B4211050570079784F /* WordBookTableViewCell.m in Sources */,
 				9B3DA36720F721D10028CDA9 /* BuyLessonTableHeaderView.m in Sources */,
-				9B3DA36220F71FC10028CDA9 /* BuyLessonViewController.m in Sources */,
 				9B135CC1207C886A0040A883 /* UISlider+time.m in Sources */,
 				9B16B076208D7DC900094EE7 /* ListenPlay.m in Sources */,
 				9B2D432C2106CC7700790FF4 /* LocalVideoViewController.m in Sources */,
@@ -1675,7 +1652,6 @@
 				9BB3E26B2099B3FC00FDBE77 /* PracticeModeTiKaCCell.m in Sources */,
 				9B286A212112B33F00C7A2D4 /* TopWordBookTableViewCell.m in Sources */,
 				9B1D31CE2073683A007674CF /* MyNoteViewController.m in Sources */,
-				9B3DA37220F762CF0028CDA9 /* PaySuccessViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1918,7 +1894,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cooplan.cooplaniOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "35543eb5-8983-45c1-ae87-3fd22e09de9b";
+				PROVISIONING_PROFILE = "7c7d9696-1693-453a-9499-b2f1e15e5c03";
 				PROVISIONING_PROFILE_SPECIFIER = "酷学计划开发";
 				TARGETED_DEVICE_FAMILY = 1;
 			};

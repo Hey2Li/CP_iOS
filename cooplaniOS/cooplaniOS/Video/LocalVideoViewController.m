@@ -268,7 +268,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        return 220;
+        return SCREEN_WIDTH * 9 /16;
     }else{
         return SCREEN_HEIGHT;
     }
@@ -286,7 +286,7 @@
         UIView *changeView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 48)];
         changeView.backgroundColor = [UIColor whiteColor];
         UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        leftBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        leftBtn.titleLabel.font = [UIFont systemFontOfSize:16];
         [leftBtn setTitle:@"课件" forState:UIControlStateNormal];
         [leftBtn setTitleColor:UIColorFromRGB(0x4DAC7D) forState:UIControlStateSelected];
         [leftBtn setTitleColor:UIColorFromRGB(0x666666) forState:UIControlStateNormal];
@@ -299,7 +299,7 @@
         }];
         
         UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        rightBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        rightBtn.titleLabel.font = [UIFont systemFontOfSize:16];
         [rightBtn setTitle:@"词汇" forState:UIControlStateNormal];
         [rightBtn setTitleColor:UIColorFromRGB(0x4DAC7D) forState:UIControlStateSelected];
         [rightBtn setTitleColor:UIColorFromRGB(0x666666) forState:UIControlStateNormal];

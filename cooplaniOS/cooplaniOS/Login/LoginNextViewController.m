@@ -136,7 +136,7 @@
 - (IBAction)loginClick:(UIButton *)sender {
     if ([self.phoneStr isEqualToString:@"18812345678"]) {
         //初始化控制器
-        UIViewController *centerVC = [[HomeViewController alloc]init];
+        UIViewController *centerVC = [[BaseHomeViewController alloc]init];
         UIViewController *leftVC = [[LeftViewController alloc]init];
         
         //初始化导航控制器

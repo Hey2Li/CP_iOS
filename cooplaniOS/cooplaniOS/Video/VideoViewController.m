@@ -394,7 +394,7 @@
         return 100;
     }
     if (indexPath.section == 0) {
-        return 220;
+        return SCREEN_WIDTH * 9 /16;
     }else{
         return SCREEN_HEIGHT - 64;
     }
@@ -571,7 +571,7 @@
                 blockSelf.videoBottomView.downloadImg.hidden = YES;
                 blockSelf.videoBottomView.downloadLb.hidden = YES;
                 sender.enabled = NO;
-                SVProgressShowStuteText(@"您已经下载过了", NO);
+                SVProgressShowStuteText(@"您已经下载过了，请到下载页查看", NO);
                 return;
             }else{
                 blockSelf.downloadTask = [LTHttpManager downloadURL:blockSelf.oneLessonModel.burl progress:^(NSProgress *downloadProgress) {

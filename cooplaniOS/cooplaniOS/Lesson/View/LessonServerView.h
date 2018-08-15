@@ -11,5 +11,7 @@
 @interface LessonServerView : UIView
 @property (weak, nonatomic) IBOutlet UIButton *saveQrCodeBtn;
 @property (weak, nonatomic) IBOutlet UIImageView *qrImg;
+@property (weak, nonatomic) IBOutlet UILabel *guide;
+@property (weak, nonatomic) IBOutlet UILabel *qrCodeName;
 
 @end

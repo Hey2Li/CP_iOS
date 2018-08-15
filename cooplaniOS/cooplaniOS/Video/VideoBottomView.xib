@@ -54,7 +54,7 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="下载" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QLf-eS-8tw">
-                    <rect key="frame" x="238" y="30" width="25" height="12"/>
+                    <rect key="frame" x="328" y="30" width="25" height="12"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="25" id="DHg-YM-qmU"/>
                     </constraints>
@@ -63,20 +63,20 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="download-1" translatesAutoresizingMaskIntoConstraints="NO" id="mGM-Dg-U3K">
-                    <rect key="frame" x="242" y="7" width="16" height="18"/>
+                    <rect key="frame" x="332" y="7" width="16" height="18"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="18" id="BDY-dU-VVx"/>
                         <constraint firstAttribute="width" constant="16" id="q60-ZK-2xy"/>
                     </constraints>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rPZ-iB-Q6F">
-                    <rect key="frame" x="235" y="7" width="30" height="35"/>
+                    <rect key="frame" x="325" y="7" width="30" height="35"/>
                     <connections>
                         <action selector="downloadClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="C2K-Sb-ThY"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fhq-V4-ump">
-                    <rect key="frame" x="160" y="16" width="40" height="18"/>
+                    <rect key="frame" x="250" y="16" width="40" height="18"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="18" id="2EU-Td-cGE"/>
                         <constraint firstAttribute="width" constant="40" id="AeG-SW-c8d"/>
@@ -108,7 +108,6 @@
                 <constraint firstItem="9oB-ta-XeR" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Pnb-qS-Qrh"/>
                 <constraint firstItem="rPZ-iB-Q6F" firstAttribute="top" secondItem="mGM-Dg-U3K" secondAttribute="top" id="PtI-hy-wjO"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="U02-RP-Ch1" secondAttribute="bottom" constant="8" id="TVW-Gb-Wqq"/>
-                <constraint firstItem="U02-RP-Ch1" firstAttribute="leading" secondItem="rPZ-iB-Q6F" secondAttribute="trailing" constant="45" id="Uuz-MP-gEv"/>
                 <constraint firstItem="9oB-ta-XeR" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="WtI-Ur-VMx"/>
                 <constraint firstItem="U02-RP-Ch1" firstAttribute="centerX" secondItem="wVU-qp-6xz" secondAttribute="centerX" id="aD9-GU-JQ5"/>
                 <constraint firstItem="wVU-qp-6xz" firstAttribute="top" secondItem="2rm-Yj-hHv" secondAttribute="top" id="bQp-7h-Pud"/>
@@ -119,6 +118,7 @@
                 <constraint firstItem="U02-RP-Ch1" firstAttribute="bottom" secondItem="2rm-Yj-hHv" secondAttribute="bottom" id="jUB-Di-67T"/>
                 <constraint firstItem="Fc5-FV-1OI" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="53" id="jnP-L9-5li"/>
                 <constraint firstItem="rPZ-iB-Q6F" firstAttribute="centerX" secondItem="mGM-Dg-U3K" secondAttribute="centerX" id="m0G-9O-1L6"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="rPZ-iB-Q6F" secondAttribute="trailing" constant="20" id="q0v-96-53w"/>
                 <constraint firstItem="Fhq-V4-ump" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="xEZ-To-2zG"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

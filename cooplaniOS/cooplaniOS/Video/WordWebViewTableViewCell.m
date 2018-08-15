@@ -9,6 +9,7 @@
 #import "WordWebViewTableViewCell.h"
 #import <WebKit/WebKit.h>
 
+#define kWebViewHeight SCREEN_HEIGHT - 64 - (SCREEN_WIDTH * 9 /16)  - 44 - 48
 @interface WordWebViewTableViewCell ()<WKUIDelegate, UIScrollViewDelegate>
 @property (nonatomic, strong) UIWebView *leftWebView;
 @property (nonatomic, strong) UIWebView *rightWebView;
@@ -53,11 +54,11 @@
 //        [scrollView addSubview:leftWebView];
 //        [leftWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.baidu.com"]]];
         
-        UIWebView *rightWebView = [[UIWebView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64 - 220 - 44 - 48)];
+        UIWebView *rightWebView = [[UIWebView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, kWebViewHeight)];
         rightWebView.backgroundColor = [UIColor whiteColor];
         [scrollView addSubview:rightWebView];
         
-        UIWebView *leftWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64 - 220 - 44 - 48)];
+        UIWebView *leftWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, kWebViewHeight)];
         rightWebView.backgroundColor = [UIColor whiteColor];
         [scrollView addSubview:leftWebView];
         rightWebView.backgroundColor = [UIColor whiteColor];
@@ -77,7 +78,6 @@
 }
 //页面加载完成之后调用
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
-    WeakSelf
     [webView evaluateJavaScript:@"document.body.scrollHeight" completionHandler:^(id _Nullable value, NSError * _Nullable error) {
         
     }];
@@ -149,8 +149,8 @@
                       %@\
                       </div>\
                       </html>",model.vocabulary];
-    [self.rightWebView loadHTMLString:html baseURL:nil];
-    [self.leftWebView loadHTMLString:htmls baseURL:nil];
+    [self.leftWebView loadHTMLString:html baseURL:nil];
+    [self.rightWebView loadHTMLString:htmls baseURL:nil];
 }
 - (void)setLocalVideoModel:(DownloadVideoModel *)localVideoModel{
     _localVideoModel = localVideoModel;
@@ -218,8 +218,8 @@
                        %@\
                        </div>\
                        </html>",localVideoModel.wordHtml];
-    [self.rightWebView loadHTMLString:html baseURL:nil];
-    [self.leftWebView loadHTMLString:htmls baseURL:nil];
+    [self.leftWebView loadHTMLString:html baseURL:nil];
+    [self.rightWebView loadHTMLString:htmls baseURL:nil];
     self.rightWebView.frame = CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64 - 220 - 44);
     self.leftWebView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64 - 220 - 44);
 }

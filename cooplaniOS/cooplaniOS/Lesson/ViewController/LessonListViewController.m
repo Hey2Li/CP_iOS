@@ -9,7 +9,6 @@
 #import "LessonListViewController.h"
 #import "LessonTableViewCell.h"
 #import "LessonListMenuViewController.h"
-#import "LessonDetailViewController.h"
 #import "LessonModel.h"
 
 @interface LessonListViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -51,7 +50,7 @@
 }
 - (void)initWithView{
    
-    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64) style:UITableViewStylePlain];
     tableView.delegate = self;
     tableView.dataSource = self;
     [self.view addSubview:tableView];
@@ -80,6 +79,9 @@
     LessonListMenuViewController *vc = [[LessonListMenuViewController alloc]init];
     LessonModel *model = self.dataArray[indexPath.row];
     vc.qr_code = model.qr_code;
+    vc.qr_code_name = model.qr_code_name;
+    vc.guide = model.guide;
+    vc.commodity_id = [NSString stringWithFormat:@"%@",model.ID];
     vc.lessonType = [NSString stringWithFormat:@"%@",model.type];
     vc.title = model.name;
     [self.navigationController pushViewController:vc animated:YES];

@@ -177,13 +177,26 @@
         NSString *wordId = [NSString stringWithFormat:@"%ld",(long)model.ID];
         NSInteger socre = model.score;
         socre = socre + 0;//下一个+0
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setValue:IS_USER_ID forKey:@"user_id"];
-        [dict setValue:wordId forKey:@"word_id"];
-        [dict setValue:[self getCurrentTimes] forKey:@"time"];
-        [dict setValue:@(socre) forKey:@"score"];
-        [dict setValue:@(model.word_book_id) forKey:@"word_book_id"];
-        [self.postDataArray addObject:dict];
+        BOOL isHaveDict = NO;
+        for (NSMutableDictionary *dict in self.postDataArray) {
+            if ([dict[@"word_id"] isEqualToString: wordId]) {
+                [dict setValue:IS_USER_ID forKey:@"user_id"];
+                [dict setValue:wordId forKey:@"word_id"];
+                [dict setValue:[self getCurrentTimes] forKey:@"time"];
+                [dict setValue:@(socre) forKey:@"score"];
+                [dict setValue:@(model.word_book_id) forKey:@"word_book_id"];
+                isHaveDict = YES;
+            }
+        }
+        if (!isHaveDict) {
+            NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+            [dict setValue:IS_USER_ID forKey:@"user_id"];
+            [dict setValue:wordId forKey:@"word_id"];
+            [dict setValue:[self getCurrentTimes] forKey:@"time"];
+            [dict setValue:@(socre) forKey:@"score"];
+            [dict setValue:@(model.word_book_id) forKey:@"word_book_id"];
+            [self.postDataArray addObject:dict];
+        }
         [self nextWordReloadData];
     }
 }
@@ -340,9 +353,18 @@
             _isAnswerCorrect = NO;
             model.state = @"0";
         }
-        //防止重复添加
-        if (self.postDataArray.count == _wordIndex) {
-            //答题数据保存到本地
+        BOOL isHaveDict = NO;
+        for (NSMutableDictionary *dict in self.postDataArray) {
+            if ([dict[@"word_id"] isEqualToString: wordId]) {
+                [dict setValue:IS_USER_ID forKey:@"user_id"];
+                [dict setValue:wordId forKey:@"word_id"];
+                [dict setValue:[self getCurrentTimes] forKey:@"time"];
+                [dict setValue:@(socre) forKey:@"score"];
+                [dict setValue:@(model.word_book_id) forKey:@"word_book_id"];
+                isHaveDict = YES;
+            }
+        }
+        if (!isHaveDict) {
             NSMutableDictionary *dict = [NSMutableDictionary dictionary];
             [dict setValue:IS_USER_ID forKey:@"user_id"];
             [dict setValue:wordId forKey:@"word_id"];
@@ -350,18 +372,6 @@
             [dict setValue:@(socre) forKey:@"score"];
             [dict setValue:@(model.word_book_id) forKey:@"word_book_id"];
             [self.postDataArray addObject:dict];
-        }else{
-            if (self.postDataArray.count > 0) {
-                [self.postDataArray removeLastObject];
-                //答题数据保存到本地
-                NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-                [dict setValue:IS_USER_ID forKey:@"user_id"];
-                [dict setValue:wordId forKey:@"word_id"];
-                [dict setValue:[self getCurrentTimes] forKey:@"time"];
-                [dict setValue:@(socre) forKey:@"score"];
-                [dict setValue:@(model.word_book_id) forKey:@"word_book_id"];
-                [self.postDataArray addObject:dict];
-            }
         }
         self.selectionCell = cell;
     }

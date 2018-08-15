@@ -702,10 +702,11 @@
  @param user_id 用户ID
  @param complete block
  */
-+ (void)searchPlayRecordWithUserId:(NSString *)user_id Complete:(completeBlock)complete{
++ (void)searchPlayRecordWithUserId:(NSString *)user_id Commodity_id:(NSString *)commodity_id Complete:(completeBlock)complete{
     LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
     NSDictionary *paramters =  @{@"version_2":kVersion_2,
-                                 @"user_id":user_id
+                                 @"user_id":user_id,
+                                 @"curriculum_id":commodity_id
                                  };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/playRecord/private/searchPlayRecord",BaseURL]parameters:paramters complete:complete];
 }
