@@ -41,7 +41,12 @@
                 LessonModel *model = [LessonModel mj_objectWithKeyValues:dict];
                 [self.dataArray addObject:model];
             }
+            self.myTableView.ly_emptyView = [LTEmpty NoDataEmptyWithMessage:@"暂无数据"];
             [self.myTableView reloadData];
+        }else{
+            self.myTableView.ly_emptyView = [LTEmpty NoNetworkEmpty:^{
+                [self loadData];
+            }];
         }
     }];
 }

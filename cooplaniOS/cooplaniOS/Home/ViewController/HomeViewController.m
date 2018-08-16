@@ -75,6 +75,10 @@
             if (array.count) {
                 self.paperMutableArray = [NSMutableArray arrayWithArray:array];
                 [self.myTableView reloadData];
+            }else{
+                self.myTableView.ly_emptyView = [LTEmpty NoNetworkEmpty:^{
+                    [self loadData];
+                }];
             }
         }
     }];
@@ -171,7 +175,12 @@
     return 78;
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    return @"四级听力·真题";//17bold
+    NSString *isHaveNet = [USERDEFAULTS objectForKey:@"isHaveNet"];
+    if ([isHaveNet isEqualToString:@"0"]) {
+        return @"";
+    }else{
+        return @"四级听力·真题";//17bold
+    }
 }
 -(void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section{
     // Background color

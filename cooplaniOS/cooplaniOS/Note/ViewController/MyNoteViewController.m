@@ -278,8 +278,11 @@
                         });
                     });
                 }
+                self.myTableView.ly_emptyView = [LTEmpty NoDataEmptyWithMessage:@"您还没有笔记"];
             }else{
-                
+                self.myTableView.ly_emptyView = [LTEmpty NoNetworkEmpty:^{
+                    [self loadData];
+                }];
             }
            
         }];
@@ -296,9 +299,11 @@
                         });
                     });
                 }];
-                ;
+                self.wordTableView.ly_emptyView = [LTEmpty NoDataEmptyWithMessage:@"您还没有笔记"];
             }else{
-                
+                self.wordTableView.ly_emptyView = [LTEmpty NoNetworkEmpty:^{
+                    [self loadData];
+                }];
             }
         }];
     }else{

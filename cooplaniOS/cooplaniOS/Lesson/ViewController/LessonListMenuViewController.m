@@ -58,7 +58,12 @@
                 VideoLessonModel *model = [VideoLessonModel mj_objectWithKeyValues:dict];
                 [self.lessonArray addObject:model];
             }
+            self.lessonListTableView.ly_emptyView = [LTEmpty NoDataEmptyWithMessage:@"还没有课程哦"];
             [self.lessonListTableView reloadData];
+        }else{
+            self.lessonListTableView.ly_emptyView = [LTEmpty NoNetworkEmpty:^{
+                [self loadData];
+            }];
         }
     }];
     [LTHttpManager searchPlayRecordWithUserId:IS_USER_ID Commodity_id:self.commodity_id ? self.commodity_id : @"" Complete:^(LTHttpResult result, NSString *message, id data) {
@@ -69,7 +74,12 @@
                 VideoLessonModel *model = [VideoLessonModel mj_objectWithKeyValues:dict];
                 [self.learnedListArray addObject:model];
             }
+            self.learnedTableView.ly_emptyView = [LTEmpty NoDataEmptyWithMessage:@"您还没有学习课程哦"];
             [self.learnedTableView reloadData];
+        }else{
+            self.learnedTableView.ly_emptyView = [LTEmpty NoNetworkEmpty:^{
+                [self loadData];
+            }];
         }
     }];
 }

@@ -43,6 +43,7 @@ PODS:
     - JCore (~> 1.2.0)
   - JRDB (2.1.1):
     - FMDB
+  - LYEmptyView (1.1.0)
   - Masonry (1.1.0)
   - MJExtension (3.0.13)
   - MJRefresh (3.1.15.3)
@@ -99,6 +100,7 @@ DEPENDENCIES:
   - IQKeyboardManager (~> 3.3.4)
   - JPush
   - JRDB
+  - LYEmptyView
   - Masonry (~> 1.0)
   - MJExtension (~> 3.0.7)
   - MJRefresh (~> 3.1.1)
@@ -135,6 +137,7 @@ SPEC REPOS:
     - JCore
     - JPush
     - JRDB
+    - LYEmptyView
     - Masonry
     - MJExtension
     - MJRefresh
@@ -164,6 +167,7 @@ SPEC CHECKSUMS:
   JCore: b52e3dd73625eec70afd1244bb9c41038aa06087
   JPush: 48041e8c5ad2ef9b48709eb0888af9640b36e9b0
   JRDB: 3d39482c7314ee58e4c0a8617f131324ccabc214
+  LYEmptyView: 893007305370c9c69d7dc71b4b32f9b2ee80a622
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
   MJRefresh: b48380ae2b927b46c4ef000de9adb8dc748e1df7
@@ -187,6 +191,6 @@ SPEC CHECKSUMS:
   WMPlayer: a914f80ed5dca7cd9e3a94ec07a2b02eec8c15c0
   YJLocationPicker: 8cbdc99433435b17562de6f5d965cc52c8873355
 
-PODFILE CHECKSUM: 175618acac1c125f2dfae253f4ec42fa3d9d428c
+PODFILE CHECKSUM: 6d0501c69d0cd6ad895eee9d341d1663255b09fe
 
 COCOAPODS: 1.5.3

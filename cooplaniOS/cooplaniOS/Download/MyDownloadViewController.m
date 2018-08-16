@@ -150,6 +150,8 @@
     
     [self.myTableView reloadData];
     [self.listenTableView reloadData];
+    self.myTableView.ly_emptyView = [LTEmpty NoDataEmptyWithMessage:@"您还没有下载"];
+    self.listenTableView.ly_emptyView = [LTEmpty NoDataEmptyWithMessage:@"您还没有下载"];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;

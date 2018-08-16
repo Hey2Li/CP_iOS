@@ -17,6 +17,7 @@
 #import "FeedbackViewController.h"
 #import "LessonListViewController.h"
 #import "SettingViewController.h"
+#import "AboutUsViewController.h"
 
 @interface LeftViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -269,10 +270,11 @@
             break;
         case 5:
         {
-            VC.title = @"关于我们";
+            AboutUsViewController *vc = [[AboutUsViewController alloc]init];
+            vc.title = @"关于我们";
             //拿到我们的ViewController，让它去push
             UINavigationController* nav = (UINavigationController*)self.mm_drawerController.centerViewController;
-            [nav pushViewController:VC animated:NO];
+            [nav pushViewController:vc animated:NO];
             //当我们push成功之后，关闭我们的抽屉
             [self.mm_drawerController closeDrawerAnimated:YES completion:^(BOOL finished) {
                 //设置打开抽屉模式为MMOpenDrawerGestureModeNone，也就是没有任何效果。

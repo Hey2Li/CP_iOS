@@ -33,7 +33,8 @@
     self.tableView.separatorStyle = NO;
     self.tableView.estimatedRowHeight = 60.0f;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-    _page_num = 0;
+    self.tableView.ly_emptyView = [LTEmpty NoDataEmptyWithMessage:@"您还没有单词"];
+    _page_num = 1;
     [self loadData];
     [self footerLoadData];
 }

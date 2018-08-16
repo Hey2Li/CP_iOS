@@ -36,6 +36,7 @@
             [btn setTitleColor:color forState:UIControlStateSelected];
             [btn addTarget:self action:@selector(changeSegment:) forControlEvents:UIControlEventTouchUpInside];
             btn.tag = 1000 + i;
+            btn.titleLabel.font = [UIFont boldSystemFontOfSize:16];
             [self addSubview:btn];
             [btn mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.equalTo(self.mas_left).offset(segmentWith * i);
