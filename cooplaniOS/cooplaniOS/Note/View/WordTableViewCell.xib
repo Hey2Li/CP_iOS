@@ -129,21 +129,31 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fvG-xW-oNu">
+                                <rect key="frame" x="0.0" y="0.0" width="333" height="65"/>
+                                <connections>
+                                    <action selector="cellOpenClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Klm-g6-BlA"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="ew2-Pc-9uC" firstAttribute="centerY" secondItem="5YV-FM-Eud" secondAttribute="centerY" id="2hZ-DQ-BqT"/>
+                            <constraint firstItem="fvG-xW-oNu" firstAttribute="leading" secondItem="5YV-FM-Eud" secondAttribute="leading" id="5VX-ZP-XAn"/>
                             <constraint firstItem="Rdi-99-eEH" firstAttribute="top" secondItem="5YV-FM-Eud" secondAttribute="top" constant="20" id="9tG-TA-gQ3"/>
                             <constraint firstItem="Rdi-99-eEH" firstAttribute="leading" secondItem="5YV-FM-Eud" secondAttribute="leading" constant="16" id="H6w-jq-mDW"/>
                             <constraint firstItem="20o-en-uot" firstAttribute="leading" secondItem="5YV-FM-Eud" secondAttribute="leading" constant="16" id="Leq-WF-wXx"/>
                             <constraint firstItem="f4T-rO-6zE" firstAttribute="leading" secondItem="5YV-FM-Eud" secondAttribute="leading" id="XSZ-4w-uDV"/>
                             <constraint firstItem="ew2-Pc-9uC" firstAttribute="leading" secondItem="Rdi-99-eEH" secondAttribute="trailing" constant="10" id="fVN-cw-dB7"/>
+                            <constraint firstItem="f4T-rO-6zE" firstAttribute="top" secondItem="fvG-xW-oNu" secondAttribute="bottom" id="fWU-eF-TN6"/>
                             <constraint firstAttribute="trailing" secondItem="ew2-Pc-9uC" secondAttribute="trailing" constant="16" id="gan-3b-kx7"/>
                             <constraint firstItem="20o-en-uot" firstAttribute="top" secondItem="Rdi-99-eEH" secondAttribute="bottom" constant="3" id="irX-M3-31e"/>
                             <constraint firstAttribute="trailing" secondItem="20o-en-uot" secondAttribute="trailing" constant="50" id="jfk-qw-SJg"/>
                             <constraint firstAttribute="height" constant="67" id="ozx-7b-rVg"/>
                             <constraint firstAttribute="trailing" secondItem="f4T-rO-6zE" secondAttribute="trailing" id="qSI-3F-a2i"/>
                             <constraint firstAttribute="bottom" secondItem="f4T-rO-6zE" secondAttribute="bottom" id="r96-xL-ru0"/>
+                            <constraint firstAttribute="trailing" secondItem="fvG-xW-oNu" secondAttribute="trailing" id="spC-Ep-N69"/>
+                            <constraint firstItem="fvG-xW-oNu" firstAttribute="top" secondItem="5YV-FM-Eud" secondAttribute="top" id="uK4-9H-rYO"/>
                         </constraints>
                     </view>
                 </subviews>

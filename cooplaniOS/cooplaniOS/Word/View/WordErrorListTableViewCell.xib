@@ -60,18 +60,28 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rUp-UL-WBi">
+                                <rect key="frame" x="0.0" y="0.0" width="357" height="60"/>
+                                <connections>
+                                    <action selector="cellBtnClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="9Ql-2X-jZa"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="rUp-UL-WBi" secondAttribute="trailing" id="6hM-25-hwH"/>
                             <constraint firstAttribute="trailing" secondItem="D9a-Ki-f0B" secondAttribute="trailing" constant="20" id="SDg-v1-cMo"/>
                             <constraint firstItem="D9a-Ki-f0B" firstAttribute="leading" secondItem="Wxo-Ko-FRL" secondAttribute="leading" constant="20" id="TaJ-ac-mg6"/>
                             <constraint firstItem="0fr-pb-6IL" firstAttribute="leading" secondItem="Wxo-Ko-FRL" secondAttribute="leading" constant="20" id="Vsl-e5-DPO"/>
                             <constraint firstItem="gRK-Hx-Pw7" firstAttribute="centerX" secondItem="Wxo-Ko-FRL" secondAttribute="centerX" id="WgG-ea-QGT"/>
+                            <constraint firstAttribute="bottom" secondItem="rUp-UL-WBi" secondAttribute="bottom" id="bYI-nN-dXQ"/>
                             <constraint firstItem="gRK-Hx-Pw7" firstAttribute="centerY" secondItem="Wxo-Ko-FRL" secondAttribute="centerY" id="cUV-kW-cfy"/>
                             <constraint firstAttribute="trailing" secondItem="7jb-SR-Yob" secondAttribute="trailing" constant="20" id="imV-UW-P4U"/>
                             <constraint firstItem="gRK-Hx-Pw7" firstAttribute="leading" secondItem="0fr-pb-6IL" secondAttribute="trailing" constant="2" id="kY3-PS-aF6"/>
                             <constraint firstItem="7jb-SR-Yob" firstAttribute="leading" secondItem="gRK-Hx-Pw7" secondAttribute="trailing" constant="2" id="lwt-dP-Xgp"/>
                             <constraint firstAttribute="height" constant="60" id="mbs-Mo-CxX"/>
+                            <constraint firstItem="rUp-UL-WBi" firstAttribute="top" secondItem="Wxo-Ko-FRL" secondAttribute="top" id="mcg-SP-Xph"/>
                             <constraint firstItem="7jb-SR-Yob" firstAttribute="centerY" secondItem="Wxo-Ko-FRL" secondAttribute="centerY" id="s2X-iF-sDJ"/>
+                            <constraint firstItem="rUp-UL-WBi" firstAttribute="leading" secondItem="Wxo-Ko-FRL" secondAttribute="leading" id="vIM-PU-NxW"/>
                             <constraint firstAttribute="bottom" secondItem="D9a-Ki-f0B" secondAttribute="bottom" constant="1" id="vOj-sM-Vdq"/>
                             <constraint firstItem="0fr-pb-6IL" firstAttribute="centerY" secondItem="Wxo-Ko-FRL" secondAttribute="centerY" id="xYe-EQ-EYF"/>
                         </constraints>
@@ -162,6 +172,7 @@
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
                 <outlet property="bottomWordExplainLb" destination="zrs-4z-Gnf" id="999-WZ-Gcd"/>
+                <outlet property="clickBtn" destination="rUp-UL-WBi" id="Cbc-Hs-D6b"/>
                 <outlet property="phonogramLb" destination="sjh-Mw-Zjq" id="8cC-8E-ite"/>
                 <outlet property="playImageView" destination="VFB-p5-ceR" id="aXL-7d-gyj"/>
                 <outlet property="wordErrorBottomView" destination="YH9-6u-Ddd" id="vv6-AL-hY1"/>

@@ -67,6 +67,12 @@
         [self needsUpdateConstraints];
     }];
 }
+- (IBAction)cellBtnClick:(UIButton *)sender {
+    if (self.cellBtnClick) {
+        self.cellBtnClick(sender);
+    }
+}
+
 - (void)playVocieWithUrl:(NSString *)url{
     if (url) {
         [[self.player initWithURL:[NSURL URLWithString:url]]play];

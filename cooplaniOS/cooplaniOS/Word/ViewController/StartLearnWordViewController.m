@@ -10,6 +10,7 @@
 #import "TopWordBookTableViewCell.h"
 #import "BottomWordProgressTableViewCell.h"
 #import "ReciteWordsViewController.h"
+#import "LoginViewController.h"
 
 @interface StartLearnWordViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -82,10 +83,15 @@
     self.view.backgroundColor = [UIColor clearColor];
 }
 - (void)startLearnClick:(UIButton *)btn{
-    ReciteWordsViewController *vc = [[ReciteWordsViewController alloc]init];
-    vc.title = self.wordbookArray[0][@"name"] ? self.wordbookArray[0][@"name"] : @"";
-    vc.wookbookId = self.wordbookArray[0][@"id"] ? self.wordbookArray[0][@"id"] : @"";
-    [self.navigationController pushViewController:vc animated:YES];
+    if (IS_USER_ID) {
+        ReciteWordsViewController *vc = [[ReciteWordsViewController alloc]init];
+        vc.title = self.wordbookArray[0][@"name"] ? self.wordbookArray[0][@"name"] : @"";
+        vc.wookbookId = self.wordbookArray[0][@"id"] ? self.wordbookArray[0][@"id"] : @"";
+        [self.navigationController pushViewController:vc animated:YES];
+    }else{
+        LoginViewController *vc = [[LoginViewController alloc]init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 3;

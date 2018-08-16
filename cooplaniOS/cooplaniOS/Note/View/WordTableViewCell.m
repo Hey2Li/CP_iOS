@@ -83,6 +83,11 @@
 
     // Configure the view for the selected state
 }
+- (IBAction)cellOpenClick:(UIButton *)sender {
+    if (self.cellOpenBtnClick) {
+        self.cellOpenBtnClick(sender);
+    }
+}
 
 - (IBAction)sayEnBtn:(UIButton *)sender {
     AVPlayerItem *item = [[AVPlayerItem alloc]initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",_model.ph_en_mp3]]];

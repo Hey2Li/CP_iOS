@@ -97,12 +97,19 @@
     if (indexPath.row < self.dataArray.count) {
         cell.model = self.dataArray[indexPath.row];
     }
+    cell.cellBtnClick = ^(UIButton *btn) {
+        ReciteWordModel *model = self.dataArray[indexPath.row];
+        model.isOpen = !model.isOpen;
+        [self.tableView reloadData];
+    };
     return cell;
 }
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    ReciteWordModel *model = self.dataArray[indexPath.row];
-    model.isOpen = !model.isOpen;
-    [self.tableView reloadData];
+//    WordErrorListTableViewCell *cell = [tableView cellForRowAtIndexPath:[tableView indexPathForSelectedRow]];
+//    ReciteWordModel *model = self.dataArray[indexPath.row];
+//    model.isOpen = !model.isOpen;
+//    [self.tableView reloadData];
 }
 /*
 // Override to support conditional editing of the table view.

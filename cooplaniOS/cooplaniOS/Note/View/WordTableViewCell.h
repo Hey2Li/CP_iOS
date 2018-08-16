@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "collectionWordModel.h"
 
+typedef void(^cellOpenClick)(UIButton *btn);
 @interface WordTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *wordLb;
 @property (weak, nonatomic) IBOutlet UILabel *detailLb;
@@ -21,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (weak, nonatomic) IBOutlet UIButton *arrowsBtn;
 @property (nonatomic, copy) void (^cellIsOpenBlock)(void);
+@property (nonatomic, copy) cellOpenClick cellOpenBtnClick;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *amBtnTopHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *amBtnHeight;

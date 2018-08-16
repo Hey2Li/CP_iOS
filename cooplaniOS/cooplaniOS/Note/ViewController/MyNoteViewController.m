@@ -115,22 +115,25 @@
             collectionWordModel *model = self.wordArray[indexPath.row];
             cell.model = model;
         }
+        cell.cellOpenBtnClick = ^(UIButton *btn) {
+            collectionWordModel *model = self.wordArray[indexPath.row];
+            model.isOpen = !model.isOpen;
+            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:nil];
+            if (model.isOpen) {
+                WordTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+                cell.arrowsBtn.transform = CGAffineTransformMakeRotation(M_PI/2);
+            }else{
+                WordTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+                cell.arrowsBtn.transform = CGAffineTransformMakeRotation(M_PI/2*4);
+            }
+        };
         return cell;
     }
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (tableView == self.wordTableView) {
-        collectionWordModel *model = self.wordArray[indexPath.row];
-        model.isOpen = !model.isOpen;
-        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:nil];
-        if (model.isOpen) {
-            WordTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-            cell.arrowsBtn.transform = CGAffineTransformMakeRotation(M_PI/2);
-        }else{
-            WordTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-            cell.arrowsBtn.transform = CGAffineTransformMakeRotation(M_PI/2*4);
-        }
-    }
+//    if (tableView == self.wordTableView) {
+//      
+//    }
 }
 //允许 Menu菜单
 - (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath
