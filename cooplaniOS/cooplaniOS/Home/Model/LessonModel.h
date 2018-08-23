@@ -19,4 +19,5 @@
 @property (nonatomic, copy) NSString *qr_code;
 @property (nonatomic, copy) NSString *guide;
 @property (nonatomic, copy) NSString *qr_code_name;
+@property (nonatomic, copy) NSString *cover;
 @end

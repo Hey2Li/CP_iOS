@@ -27,6 +27,7 @@
     }else if ([lessonModel.state isEqualToString:@"1"]){
         self.price.text = @"已购买";
     }
+    lessonModel.type = @(arc4random()%3 + 1);
     if ([lessonModel.type  isEqual: @2]) {//2:方法课,3刷题课
         self.backImageView.image = [UIImage imageNamed:@"方法课"];
     }else if ([lessonModel.type  isEqual: @3]){
@@ -41,6 +42,7 @@
     self.name.text = [NSString stringWithFormat:@"%@",myLessonModel.name];
     self.detail.text = myLessonModel.info;
     self.price.text = @"已购买";
+    myLessonModel.type = @(arc4random()%3 + 1);
     if ([myLessonModel.type  isEqual: @2]) {//2:方法课,3刷题课
         self.backImageView.image = [UIImage imageNamed:@"方法课"];
     }else if ([myLessonModel.type  isEqual: @3]){
