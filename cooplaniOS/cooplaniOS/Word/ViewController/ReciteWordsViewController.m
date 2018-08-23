@@ -231,7 +231,8 @@
     ReciteWordModel *model = self.dataArray[_wordIndex];
     [self playWordVoice];
     NSInteger socre = model.score;
-    socre = socre - 50;//不认识+0
+    model.isKnow = YES;
+    socre = socre + 0;//不认识+0
     model.score = socre;
     [self notKonwShow];
 }
@@ -326,16 +327,19 @@
         NSString *optionStr = cell.optionsLb.text;
         NSString *wordId = [NSString stringWithFormat:@"%ld",(long)model.ID];
         NSInteger socre = model.score;
-        NSLog(@"%@----%@",optionStr,model.result);
         if ([optionStr isEqualToString:model.result]) {//判断单词多少分数
-            if ([model.state isEqualToString:@"1"]) {
-                if (socre == 0) {
-                    socre = socre + 100;//分值为0 第一次背对  直接+100 熟练词
-                }else{
-                   socre = socre + 50;
-                }
+            if (model.isKnow) {//不认识直接0分
+                socre = socre + 0;
             }else{
-                socre = socre + 50;//第一次背错 后来背对 + 50 记忆中
+                if ([model.state isEqualToString:@"1"]) {
+                    if (socre == 0) {
+                        socre = socre + 100;//分值为0 第一次背对  直接+100 熟练词
+                    }else{
+                        socre = socre + 50;
+                    }
+                }else{
+                    socre = socre + 50;//第一次背错 后来背对 + 50 记忆中
+                }
             }
             model.score = socre;
             cell.selectedView.backgroundColor = UIColorFromRGB(0x7EDDBC);
@@ -353,6 +357,8 @@
             _isAnswerCorrect = NO;
             model.state = @"0";
         }
+        NSLog(@"%@----%@",optionStr,model.result);
+      
         BOOL isHaveDict = NO;
         for (NSMutableDictionary *dict in self.postDataArray) {
             if ([dict[@"word_id"] isEqualToString: wordId]) {
