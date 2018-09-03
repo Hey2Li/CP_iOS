@@ -33,9 +33,6 @@
 
     // Configure the view for the selected state
 }
-- (IBAction)wordBookSettingClick:(UIButton *)sender {
-    WordBookSettingTableViewController *vc  =[[WordBookSettingTableViewController alloc]init];
-    [self.viewController.navigationController pushViewController:vc animated:YES];
-}
+
 
 @end

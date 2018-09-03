@@ -11,6 +11,7 @@
 #import "BottomWordProgressTableViewCell.h"
 #import "ReciteWordsViewController.h"
 #import "LoginViewController.h"
+#import "WordBookSettingTableViewController.h"
 
 @interface StartLearnWordViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -37,14 +38,18 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loadData) name:kLoadWordHomePageData object:nil];
 }
 - (void)loadData{
-    [LTHttpManager getReciteWordProgressWithUser_id:IS_USER_ID ? IS_USER_ID : @"" WordbookId:@"1" Complete:^(LTHttpResult result, NSString *message, id data) {
+    NSString *wordbookId = [[NSUserDefaults standardUserDefaults]objectForKey:kWordBookId];
+    if (!wordbookId) {
+        wordbookId = @"1";
+    }
+    [LTHttpManager getReciteWordProgressWithUser_id:IS_USER_ID ? IS_USER_ID : @"" WordbookId:wordbookId Complete:^(LTHttpResult result, NSString *message, id data) {
         if (LTHttpResultSuccess == result) {
             self.dataDict = data[@"responseData"];
             _alwaysErrorNum = [[NSString stringWithFormat:@"%@",self.dataDict[@"mistake_num"]] integerValue];
             _skilledNum = [[NSString stringWithFormat:@"%@",self.dataDict[@"proficiency_num"]] integerValue];
-            [LTHttpManager getResidueWordNumWithUser_id:IS_USER_ID ? IS_USER_ID : @"" Wordbookid:@"1" Complete:^(LTHttpResult result, NSString *message, id data) {
+            [LTHttpManager getResidueWordNumWithUser_id:IS_USER_ID ? IS_USER_ID : @"" Wordbookid:wordbookId Complete:^(LTHttpResult result, NSString *message, id data) {
                 if (LTHttpResultSuccess == result) {
-                    _residueStr = [NSString stringWithFormat:@"%@",data[@"responseData"]];
+                    _residueStr = [NSString stringWithFormat:@"%@",data[@"responseData"]];//剩余单词
                     [self.myTableView reloadData];
                 }
             }];
@@ -52,16 +57,22 @@
             
         }
     }];
-    [LTHttpManager getAllWordbookComplete:^(LTHttpResult result, NSString *message, id data) {
+    [LTHttpManager findOpenBookWithUser_id:IS_USER_ID ? IS_USER_ID : @"" Complete:^(LTHttpResult result, NSString *message, id data) {
         if (LTHttpResultSuccess == result) {
             self.wordbookArray = data[@"responseData"];
             [self.myTableView reloadData];
         }
     }];
+//    [LTHttpManager getAllWordbookComplete:^(LTHttpResult result, NSString *message, id data) {
+//        if (LTHttpResultSuccess == result) {
+//            self.wordbookArray = data[@"responseData"];
+//            [self.myTableView reloadData];
+//        }
+//    }];
 }
 - (void)initWithView{
     UIView *tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:255])];
-    tableHeaderView.backgroundColor = [UIColor clearColor];
+//    tableHeaderView.backgroundColor = [UIColor clearColor];
   
     [self.view addSubview:tableHeaderView];
     
@@ -108,6 +119,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
         TopWordBookTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([TopWordBookTableViewCell class])];
+        [cell.wordBookSettingBtn addTarget:self action:@selector(wordBookSettingClick:) forControlEvents:UIControlEventTouchUpInside];
         if (self.wordbookArray) {
             cell.wordBookNameLb.text = self.wordbookArray[0][@"name"];
             cell.wordBookDetailLb.text = self.wordbookArray[0][@"info"];
@@ -121,7 +133,7 @@
             cell.inMemoryLb.text = [NSString stringWithFormat:@"%@",self.dataDict[@"memory_num"]];
             cell.alwaysErrorLb.text = [NSString stringWithFormat:@"%@",self.dataDict[@"mistake_num"]];
             cell.skilledWordLb.text = [NSString stringWithFormat:@"%@",self.dataDict[@"proficiency_num"]];
-            cell.progressView.progress = (float)(_skilledNum + _alwaysErrorNum) / [_residueStr integerValue];
+            cell.progressView.progress = (float)(_skilledNum + _alwaysErrorNum) / [_residueStr integerValue];//背单词进度条
             cell.progressLb.text = [NSString stringWithFormat:@"%.1f%%",(float)(_skilledNum + _alwaysErrorNum) / [_residueStr integerValue] * 100];
         }
         return cell;
@@ -160,6 +172,12 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
  
+}
+- (void)wordBookSettingClick:(UIButton *)sender {
+    WordBookSettingTableViewController *vc  =[[WordBookSettingTableViewController alloc]init];
+    vc.wordNum = [NSString stringWithFormat:@"%ld", [self.dataDict[@"memory_num"] integerValue] + [self.dataDict[@"mistake_num"] integerValue] + [self.dataDict[@"proficiency_num"] integerValue] + [_residueStr integerValue]];
+    vc.wordBookName = self.wordbookArray[0][@"name"];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

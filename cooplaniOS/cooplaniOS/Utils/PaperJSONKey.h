@@ -46,4 +46,7 @@ extern NSString *const kWordAutoPlay;//单词自动发音
 extern NSString *const kQuestionVoice;//答题音效
 extern NSString *const kLoadWordHomePageData;//加载单词首页数据
 extern NSString *const kLoadLearnedList;//加载已学列表
+extern NSString *const kWordNum;//加载单词的个数
+extern NSString *const kWordBookId;//加载单词的个数
+
 @end

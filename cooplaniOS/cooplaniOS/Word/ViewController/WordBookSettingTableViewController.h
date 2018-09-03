@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface WordBookSettingTableViewController : UITableViewController
-
+@property (nonatomic, copy) NSString *wordNum;
+@property (nonatomic, copy) NSString *wordBookName;
 @end

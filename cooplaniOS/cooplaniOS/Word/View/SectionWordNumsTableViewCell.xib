@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="SectionWordNumsTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="每组单词量" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gg3-hB-HKB">
+                        <rect key="frame" x="16" y="12" width="82" height="19.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" red="0.35686274509803922" green="0.35686274509803922" blue="0.35686274509803922" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20个" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZPe-Ae-Vd5">
+                        <rect key="frame" x="251.5" y="15" width="27.5" height="14.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.99915176630000002" green="0.82896530629999998" blue="0.29778558020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v4O-Gl-ZIY">
+                        <rect key="frame" x="284" y="-1" width="30" height="44"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="30" id="1OI-9g-2lY"/>
+                            <constraint firstAttribute="height" constant="44" id="Wu7-8L-f0v"/>
+                        </constraints>
+                        <state key="normal" image="疑问"/>
+                        <connections>
+                            <action selector="FAQ:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="8Xg-PG-jRf"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="gg3-hB-HKB" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="2Uj-K0-553"/>
+                    <constraint firstItem="v4O-Gl-ZIY" firstAttribute="leading" secondItem="ZPe-Ae-Vd5" secondAttribute="trailing" constant="5" id="Amr-Jm-QcF"/>
+                    <constraint firstItem="ZPe-Ae-Vd5" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="C0f-83-sKX"/>
+                    <constraint firstItem="gg3-hB-HKB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="E8b-Wr-mTX"/>
+                    <constraint firstAttribute="trailing" secondItem="v4O-Gl-ZIY" secondAttribute="trailing" constant="6" id="cAo-il-v8h"/>
+                    <constraint firstItem="v4O-Gl-ZIY" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="i8X-te-lFC"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
+            <connections>
+                <outlet property="faqBtn" destination="v4O-Gl-ZIY" id="vDX-fx-vQH"/>
+                <outlet property="numberLb" destination="ZPe-Ae-Vd5" id="aWH-WE-Thc"/>
+                <outlet property="sectionWordNumLb" destination="gg3-hB-HKB" id="sSM-zq-54b"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="疑问" width="14" height="14"/>
+    </resources>
+</document>

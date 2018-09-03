@@ -82,7 +82,12 @@
     _wordIndex = 0;
 }
 - (void)loadData{
-    [LTHttpManager findAllAppWordWithUser_id:IS_USER_ID WordbookId:self.wookbookId ? self.wookbookId : @"1" Num:WORDNUM Complete:^(LTHttpResult result, NSString *message, id data) {
+    NSString *wordNum = [self.userDefaults objectForKey:kWordNum];
+    if (!wordNum) {
+        wordNum = @"20";
+    }
+    NSLog(@"%@",wordNum);
+    [LTHttpManager findAllAppWordWithUser_id:IS_USER_ID WordbookId:self.wookbookId ? self.wookbookId : @"1" Num:wordNum Complete:^(LTHttpResult result, NSString *message, id data) {
         if (result == LTHttpResultSuccess) {
             NSArray *array = data[@"responseData"];
             if (array.count > 0) {
@@ -226,7 +231,6 @@
     }
 }
 #pragma mark 不认识
-#warning 不认识下版本要修改逻辑0814
 - (void)notKnowClick:(UIButton *)btn{
     ReciteWordModel *model = self.dataArray[_wordIndex];
     [self playWordVoice];

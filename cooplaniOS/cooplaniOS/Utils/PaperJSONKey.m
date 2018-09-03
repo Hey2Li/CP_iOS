@@ -46,5 +46,7 @@ NSString *const kWordAutoPlay = @"wordAutoPlay";
 NSString *const kQuestionVoice = @"questionVoice";//答题音效
 NSString *const kLoadWordHomePageData = @"loadWordHomepageData";//加载单词首页数据
 NSString *const kLoadLearnedList = @"loadLearnedList";//加载已学列表
+NSString *const kWordNum = @"beiwordnum";//加载单词的个数
+NSString *const kWordBookId = @"wordbookId";//加载单词的个数
 
 @end

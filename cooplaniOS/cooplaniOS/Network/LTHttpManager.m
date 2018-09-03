@@ -865,4 +865,47 @@
                                  };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/oldWord/searchOldWord",BaseURL]parameters:paramters complete:complete];
 }
+
+/**
+ 查询所有词书
+ 
+ @param user_id 用户ID
+ @param complete block
+ */
++ (void)findAllWordBookWithUser_id:(NSString *)user_id Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"version_2":kVersion_2,
+                                 @"user_id":user_id,
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/wb/findAllWordBook",BaseURL]parameters:paramters complete:complete];
+}
+/**
+ 查看用户打开的词书
+ 
+ @param user_id 用户id
+ @param complete block
+ */
++ (void)findOpenBookWithUser_id:(NSString *)user_id Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"version_2":kVersion_2,
+                                 @"user_id":user_id,
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/user/findOpenBook",BaseURL]parameters:paramters complete:complete];
+}
+
+/**
+ 修改用户打开的词书
+ url: /client/public/user/modifyOpenBook
+ @param user_id 用户ID
+ @param open_book 词书ID
+ @param complete block
+ */
++ (void)changeUserOpenWordbookWithUser_id:(NSString *)user_id BookId:(NSString *)open_book Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"version_2":kVersion_2,
+                                 @"id":user_id,
+                                 @"open_book":open_book
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/user/modifyOpenBook",BaseURL]parameters:paramters complete:complete];
+}
 @end
