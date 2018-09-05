@@ -111,8 +111,8 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     [USERDEFAULTS setObject:[self getCurrentTimes] forKey:@"exittime"];
     NSString *exitTime = [USERDEFAULTS objectForKey:@"exittime"];
+    if ([USERDEFAULTS synchronize]) NSLog(@"APP被关闭,%@",exitTime);
     
-    NSLog(@"APP被关闭,%@",exitTime);
 }
 
 

@@ -174,7 +174,7 @@
         [self.navigationController pushViewController:vc animated:YES];
     }else if (tableView == self.learnedTableView){
         VideoLessonModel *model = self.learnedListArray[indexPath.row];
-        vc.videoId = model.ID;
+        vc.videoId = model.course_id;
         vc.title = model.name;
         vc.dataArray = self.learnedListArray;
         [self.navigationController pushViewController:vc animated:YES];

@@ -26,5 +26,5 @@
 @property (nonatomic, strong) NSString * gsize;
 @property (nonatomic, strong) NSString * last_time;
 @property (nonatomic, assign) NSInteger record_id;
-
+@property (nonatomic, assign) NSInteger course_id;
 @end
