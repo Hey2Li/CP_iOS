@@ -7,8 +7,9 @@
 //
 
 #import "WordErrorListTableViewController.h"
-#import "WordErrorListTableViewCell.h"
+#import "WordListTableViewCell.h"
 #import "ReciteWordModel.h"
+#import "WordExplainTableViewController.h"
 
 @interface WordErrorListTableViewController ()
 @property (nonatomic, assign) int page_num;
@@ -29,7 +30,7 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([WordErrorListTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([WordErrorListTableViewCell class])];
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([WordListTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([WordListTableViewCell class])];
     self.tableView.separatorStyle = NO;
     self.tableView.estimatedRowHeight = 60.0f;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
@@ -84,33 +85,23 @@
     return self.dataArray.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    ReciteWordModel *model = self.dataArray[indexPath.row];
-    if (model.isOpen) {
-        return 230;
-    }else{
-        return 60;
-    }
+    return 60;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WordErrorListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WordErrorListTableViewCell class])];
+    WordListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WordListTableViewCell class])];
     // Configure the cell...
     cell.selectionStyle = NO;
     if (indexPath.row < self.dataArray.count) {
         cell.model = self.dataArray[indexPath.row];
     }
-    cell.cellBtnClick = ^(UIButton *btn) {
-        ReciteWordModel *model = self.dataArray[indexPath.row];
-        model.isOpen = !model.isOpen;
-        [self.tableView reloadData];
-    };
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    WordErrorListTableViewCell *cell = [tableView cellForRowAtIndexPath:[tableView indexPathForSelectedRow]];
-//    ReciteWordModel *model = self.dataArray[indexPath.row];
-//    model.isOpen = !model.isOpen;
-//    [self.tableView reloadData];
+    ReciteWordModel *model = self.dataArray[indexPath.row];
+    WordExplainTableViewController *vc = [[WordExplainTableViewController alloc]init];
+    vc.model = model;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 /*
 // Override to support conditional editing of the table view.

@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ReciteWordModel.h"
 
 @interface NotKnowView : UIView
 @property (weak, nonatomic) IBOutlet UIButton *addNoteBtn;
 @property (weak, nonatomic) IBOutlet UIButton *nextWordBtn;
-@property (weak, nonatomic) IBOutlet UILabel *wordMeanLb;
-@property (weak, nonatomic) IBOutlet UILabel *exampleLb;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImg;
 @property (weak, nonatomic) IBOutlet UILabel *addNoteLb;
 @property (weak, nonatomic) IBOutlet UIImageView *addNoteImg;
+@property (weak, nonatomic) IBOutlet UIPageControl *examplePageControl;
+@property (weak, nonatomic) IBOutlet UICollectionView *exampleCollection;
+@property (nonatomic, strong) ReciteWordModel *model;
 @end

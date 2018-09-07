@@ -15,6 +15,8 @@
 #import "ReciteWordModel.h"
 #import "SUPlayer.h"
 
+#define kTBViewFooterHeight 85
+#define kTBViewHeaderHeight 250
 #define WORDNUM @"20"
 #define kNoKnowHeight [Tool layoutForAlliPhoneHeight:360]
 @interface ReciteWordsViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -119,7 +121,7 @@
     }];
 }
 - (void)initWithView{
-    ReciteWordTbHeaderView *tableHeaderView = [[ReciteWordTbHeaderView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 250)];
+    ReciteWordTbHeaderView *tableHeaderView = [[ReciteWordTbHeaderView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, kTBViewHeaderHeight)];
     NSArray<UIImage*> *imageArray=[NSArray arrayWithObjects:
                                    [UIImage imageNamed:@"播放2根线"],
                                    [UIImage imageNamed:@"播放一根线"]
@@ -134,7 +136,7 @@
     
     [tableHeaderView.playBtn addTarget:self action:@selector(playAnimation:) forControlEvents:UIControlEventTouchUpInside];
     
-    ReciteWordTbFooterView *tableFooterView = [[ReciteWordTbFooterView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 105)];
+    ReciteWordTbFooterView *tableFooterView = [[ReciteWordTbFooterView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, kTBViewFooterHeight)];
     [tableFooterView.nextWordBtn addTarget:self action:@selector(nextWordClick:) forControlEvents:UIControlEventTouchUpInside];
     [tableFooterView.notKnowBtn addTarget:self action:@selector(notKnowClick:) forControlEvents:UIControlEventTouchUpInside];
     self.myTableView.tableFooterView = tableFooterView;
@@ -291,7 +293,7 @@
     return 4;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return ceilf((SCREEN_HEIGHT - 250 - 105 - 64)/4);
+    return ceilf((SCREEN_HEIGHT - kTBViewFooterHeight - kTBViewHeaderHeight - 64)/4);
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     ReciteWordTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ReciteWordTableViewCell class])];
@@ -300,8 +302,7 @@
         ReciteWordModel *model = self.dataArray[_wordIndex];
         self.tableViewHeaderView.wordLb.text = model.word;
         self.tableViewHeaderView.phonogramLb.text = model.us_soundmark;
-        self.notKonwView.exampleLb.text = model.ex;
-        self.notKonwView.wordMeanLb.text = model.result;
+        self.notKonwView.model = model;
         if (indexPath.row == 0) {
             cell.optionsTitle.text = @"A.";
             cell.optionsLb.text = model.arr_options.count > 0 ? model.arr_options[0] : @"";

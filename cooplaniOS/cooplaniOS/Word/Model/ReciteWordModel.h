@@ -21,6 +21,37 @@
 @property (nonatomic , strong) NSMutableArray <NSString *>              * arr_options;
 @property (nonatomic , assign) NSInteger              word_book_id;
 @property (nonatomic , assign) NSInteger              score;
+
+/**
+ 单词出现次数
+ */
+@property (nonatomic , assign) NSInteger              count;
+
+/**
+ 例句 中文
+ */
+@property (nonatomic , copy) NSString              * eg_cn;
+
+/**
+ 例句 英文
+ */
+@property (nonatomic , copy) NSString              * eg_en;
+
+/**
+ 助记
+ */
+@property (nonatomic , copy) NSString              * mnemonic;
+
+/**
+ 提示
+ */
+@property (nonatomic , copy) NSString              * prompt;
+
+/**
+ 是否收藏
+ */
+@property (nonatomic , copy) NSString              * collection;
+
 /**
  是否认识
  */

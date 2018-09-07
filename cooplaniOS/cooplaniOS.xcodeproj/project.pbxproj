@@ -64,6 +64,9 @@
 		9B32CB15209C25A500FCEED3 /* MyCollectionPaperTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B32CB13209C25A500FCEED3 /* MyCollectionPaperTableViewCell.m */; };
 		9B32CB16209C25A500FCEED3 /* MyCollectionPaperTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B32CB14209C25A500FCEED3 /* MyCollectionPaperTableViewCell.xib */; };
 		9B32CB19209C410700FCEED3 /* UIView+YYAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B32CB17209C410600FCEED3 /* UIView+YYAdd.m */; };
+		9B39193E2142747600FAD7E9 /* WordDetailFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B39193D2142747600FAD7E9 /* WordDetailFooterView.m */; };
+		9B3919402142748600FAD7E9 /* WordDetailFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B39193F2142748600FAD7E9 /* WordDetailFooterView.xib */; };
+		9B39194221427C7E00FAD7E9 /* ReciteWordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B39194121427C7E00FAD7E9 /* ReciteWordTableViewCell.xib */; };
 		9B3CF25D20CE779800A52E14 /* ProgressImgView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3CF25C20CE779800A52E14 /* ProgressImgView.m */; };
 		9B3CF26020CFA65C00A52E14 /* CHMagnifierView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3CF25E20CFA65C00A52E14 /* CHMagnifierView.m */; };
 		9B3D02C62084468E005C923B /* SUPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B3D02C52084468E005C923B /* SUPlayer.m */; };
@@ -107,8 +110,21 @@
 		9B4BB72E207B6E9D0029015F /* SURequestTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4BB72C207B6E9D0029015F /* SURequestTask.m */; };
 		9B4BB736207B6EDC0029015F /* NSURL+SULoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4BB732207B6EDC0029015F /* NSURL+SULoader.m */; };
 		9B4BB737207B6EDC0029015F /* NSString+SULoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4BB735207B6EDC0029015F /* NSString+SULoader.m */; };
+		9B4ECDC12140FF76009D770D /* NoKnowFirstPageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B4ECDBF2140FF76009D770D /* NoKnowFirstPageCell.xib */; };
+		9B4ECDC62140FF92009D770D /* NoKnowSecondPageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B4ECDC42140FF92009D770D /* NoKnowSecondPageCell.xib */; };
+		9B4ECDCA21412030009D770D /* WordListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4ECDC821412030009D770D /* WordListTableViewCell.m */; };
+		9B4ECDCB21412030009D770D /* WordListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B4ECDC921412030009D770D /* WordListTableViewCell.xib */; };
+		9B4ECDD0214123B5009D770D /* WordDetailFirstCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4ECDCE214123B5009D770D /* WordDetailFirstCellTableViewCell.m */; };
+		9B4ECDD1214123B5009D770D /* WordDetailFirstCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B4ECDCF214123B5009D770D /* WordDetailFirstCellTableViewCell.xib */; };
+		9B4ECDD5214123CF009D770D /* WordDetailSecondTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4ECDD3214123CF009D770D /* WordDetailSecondTableViewCell.m */; };
+		9B4ECDD6214123CF009D770D /* WordDetailSecondTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B4ECDD4214123CF009D770D /* WordDetailSecondTableViewCell.xib */; };
+		9B4ECDDA214123EB009D770D /* WordDetailThirdTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4ECDD8214123EB009D770D /* WordDetailThirdTableViewCell.m */; };
+		9B4ECDDB214123EB009D770D /* WordDetailThirdTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B4ECDD9214123EB009D770D /* WordDetailThirdTableViewCell.xib */; };
+		9B4ECDDE21412C0D009D770D /* WordExplainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4ECDDD21412C0D009D770D /* WordExplainTableViewController.m */; };
 		9B4ED8D820C3BC3C007521BD /* WordTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B4ED8D620C3BC3C007521BD /* WordTableViewCell.m */; };
 		9B4ED8D920C3BC3C007521BD /* WordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B4ED8D720C3BC3C007521BD /* WordTableViewCell.xib */; };
+		9B54EC4221424950007DE1B5 /* NoKnowFirstPageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B54EC3E21424950007DE1B5 /* NoKnowFirstPageCell.m */; };
+		9B54EC4321424950007DE1B5 /* NoKnowSecondPageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B54EC4121424950007DE1B5 /* NoKnowSecondPageCell.m */; };
 		9B60C8D620B2B06B00373EA2 /* DownloadFileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B60C8D520B2B06A00373EA2 /* DownloadFileModel.m */; };
 		9B60C8D920B3B2C000373EA2 /* NSString+FileSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B60C8D820B3B2C000373EA2 /* NSString+FileSize.m */; };
 		9B6FB85C207F3D2100BC07F3 /* UILabel+HYLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6FB85B207F3D2100BC07F3 /* UILabel+HYLabel.m */; };
@@ -153,11 +169,8 @@
 		9BB0B88F21142D290063054A /* WordTestDoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB0B88D21142D290063054A /* WordTestDoneViewController.m */; };
 		9BB0B89021142D290063054A /* WordTestDoneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BB0B88E21142D290063054A /* WordTestDoneViewController.xib */; };
 		9BB0B89421142FA40063054A /* ReciteWordTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB0B89221142FA40063054A /* ReciteWordTableViewCell.m */; };
-		9BB0B89521142FA40063054A /* ReciteWordTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BB0B89321142FA40063054A /* ReciteWordTableViewCell.xib */; };
 		9BB0B899211435B90063054A /* WordBookSettingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB0B897211435B90063054A /* WordBookSettingTableViewController.m */; };
 		9BB0B89D211544E80063054A /* WordErrorListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB0B89C211544E80063054A /* WordErrorListTableViewController.m */; };
-		9BB0B8A12115498D0063054A /* WordErrorListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB0B89F2115498D0063054A /* WordErrorListTableViewCell.m */; };
-		9BB0B8A22115498D0063054A /* WordErrorListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BB0B8A02115498D0063054A /* WordErrorListTableViewCell.xib */; };
 		9BB0B8A82115A6220063054A /* ReciteWordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB0B8A72115A6220063054A /* ReciteWordModel.m */; };
 		9BB3E26320998A4400FDBE77 /* PracticeModeHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB3E26220998A4400FDBE77 /* PracticeModeHeaderView.m */; };
 		9BB3E26520998A6000FDBE77 /* PracticeModeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BB3E26420998A6000FDBE77 /* PracticeModeHeaderView.xib */; };
@@ -310,6 +323,10 @@
 		9B32CB14209C25A500FCEED3 /* MyCollectionPaperTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyCollectionPaperTableViewCell.xib; sourceTree = "<group>"; };
 		9B32CB17209C410600FCEED3 /* UIView+YYAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+YYAdd.m"; sourceTree = "<group>"; };
 		9B32CB18209C410700FCEED3 /* UIView+YYAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+YYAdd.h"; sourceTree = "<group>"; };
+		9B39193C2142747600FAD7E9 /* WordDetailFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WordDetailFooterView.h; sourceTree = "<group>"; };
+		9B39193D2142747600FAD7E9 /* WordDetailFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WordDetailFooterView.m; sourceTree = "<group>"; };
+		9B39193F2142748600FAD7E9 /* WordDetailFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordDetailFooterView.xib; sourceTree = "<group>"; };
+		9B39194121427C7E00FAD7E9 /* ReciteWordTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReciteWordTableViewCell.xib; sourceTree = "<group>"; };
 		9B3CF25B20CE779800A52E14 /* ProgressImgView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProgressImgView.h; sourceTree = "<group>"; };
 		9B3CF25C20CE779800A52E14 /* ProgressImgView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProgressImgView.m; sourceTree = "<group>"; };
 		9B3CF25E20CFA65C00A52E14 /* CHMagnifierView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHMagnifierView.m; sourceTree = "<group>"; };
@@ -389,9 +406,29 @@
 		9B4BB733207B6EDC0029015F /* NSString+SULoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SULoader.h"; sourceTree = "<group>"; };
 		9B4BB734207B6EDC0029015F /* NSURL+SULoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+SULoader.h"; sourceTree = "<group>"; };
 		9B4BB735207B6EDC0029015F /* NSString+SULoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SULoader.m"; sourceTree = "<group>"; };
+		9B4ECDBF2140FF76009D770D /* NoKnowFirstPageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoKnowFirstPageCell.xib; sourceTree = "<group>"; };
+		9B4ECDC42140FF92009D770D /* NoKnowSecondPageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoKnowSecondPageCell.xib; sourceTree = "<group>"; };
+		9B4ECDC721412030009D770D /* WordListTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WordListTableViewCell.h; sourceTree = "<group>"; };
+		9B4ECDC821412030009D770D /* WordListTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WordListTableViewCell.m; sourceTree = "<group>"; };
+		9B4ECDC921412030009D770D /* WordListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordListTableViewCell.xib; sourceTree = "<group>"; };
+		9B4ECDCD214123B5009D770D /* WordDetailFirstCellTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WordDetailFirstCellTableViewCell.h; sourceTree = "<group>"; };
+		9B4ECDCE214123B5009D770D /* WordDetailFirstCellTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WordDetailFirstCellTableViewCell.m; sourceTree = "<group>"; };
+		9B4ECDCF214123B5009D770D /* WordDetailFirstCellTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordDetailFirstCellTableViewCell.xib; sourceTree = "<group>"; };
+		9B4ECDD2214123CF009D770D /* WordDetailSecondTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WordDetailSecondTableViewCell.h; sourceTree = "<group>"; };
+		9B4ECDD3214123CF009D770D /* WordDetailSecondTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WordDetailSecondTableViewCell.m; sourceTree = "<group>"; };
+		9B4ECDD4214123CF009D770D /* WordDetailSecondTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordDetailSecondTableViewCell.xib; sourceTree = "<group>"; };
+		9B4ECDD7214123EB009D770D /* WordDetailThirdTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WordDetailThirdTableViewCell.h; sourceTree = "<group>"; };
+		9B4ECDD8214123EB009D770D /* WordDetailThirdTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WordDetailThirdTableViewCell.m; sourceTree = "<group>"; };
+		9B4ECDD9214123EB009D770D /* WordDetailThirdTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordDetailThirdTableViewCell.xib; sourceTree = "<group>"; };
+		9B4ECDDC21412C0D009D770D /* WordExplainTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WordExplainTableViewController.h; sourceTree = "<group>"; };
+		9B4ECDDD21412C0D009D770D /* WordExplainTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WordExplainTableViewController.m; sourceTree = "<group>"; };
 		9B4ED8D520C3BC3C007521BD /* WordTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WordTableViewCell.h; sourceTree = "<group>"; };
 		9B4ED8D620C3BC3C007521BD /* WordTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WordTableViewCell.m; sourceTree = "<group>"; };
 		9B4ED8D720C3BC3C007521BD /* WordTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordTableViewCell.xib; sourceTree = "<group>"; };
+		9B54EC3E21424950007DE1B5 /* NoKnowFirstPageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoKnowFirstPageCell.m; sourceTree = "<group>"; };
+		9B54EC3F21424950007DE1B5 /* NoKnowFirstPageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoKnowFirstPageCell.h; sourceTree = "<group>"; };
+		9B54EC4021424950007DE1B5 /* NoKnowSecondPageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoKnowSecondPageCell.h; sourceTree = "<group>"; };
+		9B54EC4121424950007DE1B5 /* NoKnowSecondPageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoKnowSecondPageCell.m; sourceTree = "<group>"; };
 		9B60C8D420B2B06A00373EA2 /* DownloadFileModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DownloadFileModel.h; sourceTree = "<group>"; };
 		9B60C8D520B2B06A00373EA2 /* DownloadFileModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DownloadFileModel.m; sourceTree = "<group>"; };
 		9B60C8D720B3B2C000373EA2 /* NSString+FileSize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+FileSize.h"; sourceTree = "<group>"; };
@@ -468,14 +505,10 @@
 		9BB0B88E21142D290063054A /* WordTestDoneViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordTestDoneViewController.xib; sourceTree = "<group>"; };
 		9BB0B89121142FA40063054A /* ReciteWordTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReciteWordTableViewCell.h; sourceTree = "<group>"; };
 		9BB0B89221142FA40063054A /* ReciteWordTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReciteWordTableViewCell.m; sourceTree = "<group>"; };
-		9BB0B89321142FA40063054A /* ReciteWordTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReciteWordTableViewCell.xib; sourceTree = "<group>"; };
 		9BB0B896211435B90063054A /* WordBookSettingTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WordBookSettingTableViewController.h; sourceTree = "<group>"; };
 		9BB0B897211435B90063054A /* WordBookSettingTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WordBookSettingTableViewController.m; sourceTree = "<group>"; };
 		9BB0B89B211544E80063054A /* WordErrorListTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WordErrorListTableViewController.h; sourceTree = "<group>"; };
 		9BB0B89C211544E80063054A /* WordErrorListTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WordErrorListTableViewController.m; sourceTree = "<group>"; };
-		9BB0B89E2115498D0063054A /* WordErrorListTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WordErrorListTableViewCell.h; sourceTree = "<group>"; };
-		9BB0B89F2115498D0063054A /* WordErrorListTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WordErrorListTableViewCell.m; sourceTree = "<group>"; };
-		9BB0B8A02115498D0063054A /* WordErrorListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordErrorListTableViewCell.xib; sourceTree = "<group>"; };
 		9BB0B8A62115A6220063054A /* ReciteWordModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReciteWordModel.h; sourceTree = "<group>"; };
 		9BB0B8A72115A6220063054A /* ReciteWordModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReciteWordModel.m; sourceTree = "<group>"; };
 		9BB3E26120998A4400FDBE77 /* PracticeModeHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PracticeModeHeaderView.h; sourceTree = "<group>"; };
@@ -830,6 +863,8 @@
 				9B90287E2138E2DC00F0564C /* SelectedWBTableViewController.m */,
 				9BB0B89B211544E80063054A /* WordErrorListTableViewController.h */,
 				9BB0B89C211544E80063054A /* WordErrorListTableViewController.m */,
+				9B4ECDDC21412C0D009D770D /* WordExplainTableViewController.h */,
+				9B4ECDDD21412C0D009D770D /* WordExplainTableViewController.m */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -837,6 +872,8 @@
 		9B286A312113042400C7A2D4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				9B4ECDDF214243EE009D770D /* NoKonw */,
+				9B4ECDCC2141238B009D770D /* WordDetailCell */,
 				9BF8A4B1211050570079784F /* WordBookTableViewCell.h */,
 				9BF8A4B2211050570079784F /* WordBookTableViewCell.m */,
 				9BF8A4B3211050570079784F /* WordBookTableViewCell.xib */,
@@ -855,15 +892,12 @@
 				9B286A232112B36800C7A2D4 /* BottomWordProgressTableViewCell.h */,
 				9B286A242112B36800C7A2D4 /* BottomWordProgressTableViewCell.m */,
 				9B286A252112B36800C7A2D4 /* BottomWordProgressTableViewCell.xib */,
-				9B286A35211304C200C7A2D4 /* NotKnowView.h */,
-				9B286A36211304C200C7A2D4 /* NotKnowView.m */,
-				9B286A33211304AA00C7A2D4 /* NotKnowView.xib */,
 				9BB0B89121142FA40063054A /* ReciteWordTableViewCell.h */,
 				9BB0B89221142FA40063054A /* ReciteWordTableViewCell.m */,
-				9BB0B89321142FA40063054A /* ReciteWordTableViewCell.xib */,
-				9BB0B89E2115498D0063054A /* WordErrorListTableViewCell.h */,
-				9BB0B89F2115498D0063054A /* WordErrorListTableViewCell.m */,
-				9BB0B8A02115498D0063054A /* WordErrorListTableViewCell.xib */,
+				9B39194121427C7E00FAD7E9 /* ReciteWordTableViewCell.xib */,
+				9B4ECDC721412030009D770D /* WordListTableViewCell.h */,
+				9B4ECDC821412030009D770D /* WordListTableViewCell.m */,
+				9B4ECDC921412030009D770D /* WordListTableViewCell.xib */,
 				9B9028782138D61400F0564C /* SectionWordNumsTableViewCell.h */,
 				9B9028792138D61400F0564C /* SectionWordNumsTableViewCell.m */,
 				9B90287A2138D61400F0564C /* SectionWordNumsTableViewCell.xib */,
@@ -987,6 +1021,41 @@
 				9B13AD6920819B640000C750 /* View */,
 			);
 			path = LearningMode;
+			sourceTree = "<group>";
+		};
+		9B4ECDCC2141238B009D770D /* WordDetailCell */ = {
+			isa = PBXGroup;
+			children = (
+				9B4ECDCD214123B5009D770D /* WordDetailFirstCellTableViewCell.h */,
+				9B4ECDCE214123B5009D770D /* WordDetailFirstCellTableViewCell.m */,
+				9B4ECDCF214123B5009D770D /* WordDetailFirstCellTableViewCell.xib */,
+				9B4ECDD2214123CF009D770D /* WordDetailSecondTableViewCell.h */,
+				9B4ECDD3214123CF009D770D /* WordDetailSecondTableViewCell.m */,
+				9B4ECDD4214123CF009D770D /* WordDetailSecondTableViewCell.xib */,
+				9B4ECDD7214123EB009D770D /* WordDetailThirdTableViewCell.h */,
+				9B4ECDD8214123EB009D770D /* WordDetailThirdTableViewCell.m */,
+				9B4ECDD9214123EB009D770D /* WordDetailThirdTableViewCell.xib */,
+				9B39193C2142747600FAD7E9 /* WordDetailFooterView.h */,
+				9B39193D2142747600FAD7E9 /* WordDetailFooterView.m */,
+				9B39193F2142748600FAD7E9 /* WordDetailFooterView.xib */,
+			);
+			path = WordDetailCell;
+			sourceTree = "<group>";
+		};
+		9B4ECDDF214243EE009D770D /* NoKonw */ = {
+			isa = PBXGroup;
+			children = (
+				9B54EC3F21424950007DE1B5 /* NoKnowFirstPageCell.h */,
+				9B54EC3E21424950007DE1B5 /* NoKnowFirstPageCell.m */,
+				9B4ECDBF2140FF76009D770D /* NoKnowFirstPageCell.xib */,
+				9B54EC4021424950007DE1B5 /* NoKnowSecondPageCell.h */,
+				9B54EC4121424950007DE1B5 /* NoKnowSecondPageCell.m */,
+				9B4ECDC42140FF92009D770D /* NoKnowSecondPageCell.xib */,
+				9B286A35211304C200C7A2D4 /* NotKnowView.h */,
+				9B286A36211304C200C7A2D4 /* NotKnowView.m */,
+				9B286A33211304AA00C7A2D4 /* NotKnowView.xib */,
+			);
+			path = NoKonw;
 			sourceTree = "<group>";
 		};
 		9B70C76421003025006C594A /* WXPay */ = {
@@ -1402,6 +1471,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B4ECDDB214123EB009D770D /* WordDetailThirdTableViewCell.xib in Resources */,
 				9BAC4CCF2125661C00A3A58B /* AboutUsViewController.xib in Resources */,
 				9BA08EB62093120C0026935E /* FeedbackTypeTableViewCell.xib in Resources */,
 				9BF7227121118FE40061B1C4 /* yw_1222.jpg in Resources */,
@@ -1415,6 +1485,7 @@
 				9B3D02D620848878005C923B /* LoginViewController.xib in Resources */,
 				9B286A2F2112F92D00C7A2D4 /* ReciteWordTbHeaderView.xib in Resources */,
 				9BB0B89021142D290063054A /* WordTestDoneViewController.xib in Resources */,
+				9B4ECDC12140FF76009D770D /* NoKnowFirstPageCell.xib in Resources */,
 				9B4BB71D207A234D0029015F /* ListenPaperViewController.xib in Resources */,
 				9B3DA37C20F76E0D0028CDA9 /* WXPayTableViewCell.xib in Resources */,
 				9BA08EBB209313B00026935E /* FeedbackContentTableViewCell.xib in Resources */,
@@ -1425,6 +1496,8 @@
 				9B32CB16209C25A500FCEED3 /* MyCollectionPaperTableViewCell.xib in Resources */,
 				9B286A34211304AA00C7A2D4 /* NotKnowView.xib in Resources */,
 				9BC4158B20C6270E002851E6 /* DictionaryTableViewCell.xib in Resources */,
+				9B39194221427C7E00FAD7E9 /* ReciteWordTableViewCell.xib in Resources */,
+				9B3919402142748600FAD7E9 /* WordDetailFooterView.xib in Resources */,
 				9B286A272112B36800C7A2D4 /* BottomWordProgressTableViewCell.xib in Resources */,
 				9B3DA37720F76C4A0028CDA9 /* PaySuccessTableViewCell.xib in Resources */,
 				9BEA0A3A2071D9190026AF2C /* Assets.xcassets in Resources */,
@@ -1433,17 +1506,19 @@
 				9B3DA38F20F880910028CDA9 /* LessonListTableViewCell.xib in Resources */,
 				9B2D432E2106EB8700790FF4 /* Address.plist in Resources */,
 				9B3D02CB20845338005C923B /* PaperDetailViewController.xib in Resources */,
+				9B4ECDD6214123CF009D770D /* WordDetailSecondTableViewCell.xib in Resources */,
 				9B02C4C821193D01008F22B6 /* NO.mp3 in Resources */,
+				9B4ECDD1214123B5009D770D /* WordDetailFirstCellTableViewCell.xib in Resources */,
 				9B81D4DE20EB47ED00BFFC39 /* VideoTableViewCell.xib in Resources */,
 				9B3DA36C20F74C980028CDA9 /* AddressTableViewCell.xib in Resources */,
 				9B286A1A2111ADDE00C7A2D4 /* ReciteWordTbFooterView.xib in Resources */,
-				9BB0B8A22115498D0063054A /* WordErrorListTableViewCell.xib in Resources */,
 				9B7AD3C220FC6FD200C224CC /* ChangePhoneViewController.xib in Resources */,
 				9BF8A4BB211052FC0079784F /* LearnWordGroupView.xib in Resources */,
-				9BB0B89521142FA40063054A /* ReciteWordTableViewCell.xib in Resources */,
 				9B02C4C921193D01008F22B6 /* YES.mp3 in Resources */,
+				9B4ECDCB21412030009D770D /* WordListTableViewCell.xib in Resources */,
 				9B7AD3C720FC6FED00C224CC /* SureChangePhoneViewController.xib in Resources */,
 				9B3DA39420F886960028CDA9 /* LessonServerView.xib in Resources */,
+				9B4ECDC62140FF92009D770D /* NoKnowSecondPageCell.xib in Resources */,
 				9B16B080208F140A00094EE7 /* AnswerTableViewCell.xib in Resources */,
 				9BEA0A382071D9190026AF2C /* Main.storyboard in Resources */,
 				9B90287C2138D61400F0564C /* SectionWordNumsTableViewCell.xib in Resources */,
@@ -1585,6 +1660,7 @@
 				9B3DA37620F76C4A0028CDA9 /* PaySuccessTableViewCell.m in Sources */,
 				9B1D31D120736846007674CF /* MyCollectionViewController.m in Sources */,
 				9B6FB85C207F3D2100BC07F3 /* UILabel+HYLabel.m in Sources */,
+				9B4ECDD0214123B5009D770D /* WordDetailFirstCellTableViewCell.m in Sources */,
 				9BB0B899211435B90063054A /* WordBookSettingTableViewController.m in Sources */,
 				9B3D02CF20847C5A005C923B /* PaperDetailTableViewCell.m in Sources */,
 				9BB0A07E209C762C00089C4A /* TestPaperModel.m in Sources */,
@@ -1595,8 +1671,10 @@
 				9BA1CB5D20A5677D0093C37B /* collectionSentenceModel.m in Sources */,
 				9B32CB0B209BF00300FCEED3 /* SentenceTableViewCell.m in Sources */,
 				9BAC4CC521254D3A00A3A58B /* LTEmpty.m in Sources */,
+				9B4ECDD5214123CF009D770D /* WordDetailSecondTableViewCell.m in Sources */,
 				9B3D02C62084468E005C923B /* SUPlayer.m in Sources */,
 				9B81D4E220EB740B00BFFC39 /* WordWebViewTableViewCell.m in Sources */,
+				9B39193E2142747600FAD7E9 /* WordDetailFooterView.m in Sources */,
 				9B60C8D620B2B06B00373EA2 /* DownloadFileModel.m in Sources */,
 				9B135CCF207CD8AA0040A883 /* LTHTTPSessionManager.m in Sources */,
 				9B286A1D2111ADEB00C7A2D4 /* ReciteWordTbFooterView.m in Sources */,
@@ -1617,6 +1695,7 @@
 				9B16B073208D781F00094EE7 /* TestModeViewController.m in Sources */,
 				9B135CD2207CD96C0040A883 /* LTHttpManager.m in Sources */,
 				9B13AD682080885F0000C750 /* PaperModel.m in Sources */,
+				9B4ECDCA21412030009D770D /* WordListTableViewCell.m in Sources */,
 				9B3DA35620F624DB0028CDA9 /* BaseHomeViewController.m in Sources */,
 				9B892A2220E1DF7100B0D5E5 /* LTDownloadView.m in Sources */,
 				9B16B09C2091CA2600094EE7 /* AnswerHeadView.m in Sources */,
@@ -1626,6 +1705,7 @@
 				9B286A262112B36800C7A2D4 /* BottomWordProgressTableViewCell.m in Sources */,
 				9B1A5B1820BBAC4500DA21A6 /* CheckWordView.m in Sources */,
 				9B7AD3C120FC6FD200C224CC /* ChangePhoneViewController.m in Sources */,
+				9B54EC4321424950007DE1B5 /* NoKnowSecondPageCell.m in Sources */,
 				9B70C76A2100564E006C594A /* learnLessonModel.m in Sources */,
 				9B32CB15209C25A500FCEED3 /* MyCollectionPaperTableViewCell.m in Sources */,
 				9B3D02CA20845338005C923B /* PaperDetailViewController.m in Sources */,
@@ -1638,6 +1718,7 @@
 				9BB3E26320998A4400FDBE77 /* PracticeModeHeaderView.m in Sources */,
 				9B4BB71C207A234D0029015F /* ListenPaperViewController.m in Sources */,
 				9B90287F2138E2DC00F0564C /* SelectedWBTableViewController.m in Sources */,
+				9B54EC4221424950007DE1B5 /* NoKnowFirstPageCell.m in Sources */,
 				9B1D31D420736856007674CF /* WrongTopicViewController.m in Sources */,
 				9B16B08F20905BF100094EE7 /* PracticeModeViewController.m in Sources */,
 				9B1D31D720736866007674CF /* MyDownloadViewController.m in Sources */,
@@ -1657,6 +1738,7 @@
 				9B7AD3D020FF2F3B00C224CC /* VideoLessonModel.m in Sources */,
 				9B7AD3CD20FF219B00C224CC /* LessonModel.m in Sources */,
 				9BF8A4B4211050570079784F /* WordBookTableViewCell.m in Sources */,
+				9B4ECDDE21412C0D009D770D /* WordExplainTableViewController.m in Sources */,
 				9B3DA36720F721D10028CDA9 /* BuyLessonTableHeaderView.m in Sources */,
 				9B135CC1207C886A0040A883 /* UISlider+time.m in Sources */,
 				9B16B076208D7DC900094EE7 /* ListenPlay.m in Sources */,
@@ -1665,11 +1747,11 @@
 				9B13AD6120807B8E0000C750 /* BannerCollectionViewCell.m in Sources */,
 				9B3DA38620F855070028CDA9 /* BaseTableViewController.m in Sources */,
 				9B16B07B208F054300094EE7 /* AnswerViewController.m in Sources */,
+				9B4ECDDA214123EB009D770D /* WordDetailThirdTableViewCell.m in Sources */,
 				9BC4158620C620D9002851E6 /* DictionaryViewController.m in Sources */,
 				9B1D31C320735804007674CF /* LeftViewController.m in Sources */,
 				9BB0B89421142FA40063054A /* ReciteWordTableViewCell.m in Sources */,
 				9B6FB85F207F3D7B00BC07F3 /* HYWord.m in Sources */,
-				9BB0B8A12115498D0063054A /* WordErrorListTableViewCell.m in Sources */,
 				9B1D31BF20734891007674CF /* HomeViewController.m in Sources */,
 				9B90287B2138D61400F0564C /* SectionWordNumsTableViewCell.m in Sources */,
 				9B3DA39220F886730028CDA9 /* LessonServerView.m in Sources */,
