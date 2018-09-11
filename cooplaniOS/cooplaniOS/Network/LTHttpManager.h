@@ -222,102 +222,6 @@
  */
 + (void)removeWordsWithUseId:(NSNumber *)userId Word:(NSString *)word Complete:(completeBlock)complete;
 
-
-/**
- 用户打开APP次数
-
- @param userId 用户ID
- @param logintime 登录时间
- @param exittime 登出时间
- @param complete block
- */
-+(void)searchLoginCountWithUserId:(NSString *)userId LoginTime:(NSString *)logintime ExitTime:(NSString *)exittime Complete:(completeBlock)complete;
-
-
-/**
- 统计用户点击事件
-
- @param userId 用户ID
- @param complete block
- */
-+ (void)searchClicktimeWithUserId:(NSString *)userId Complete:(completeBlock)complete;
-
-
-/**
- 统计用户交卷时间
-
- @param userId 用户ID
- @param complete block
- */
-+ (void)searchOvertimeWithUserId:(NSString *)userId Complete:(completeBlock)complete;
-
-
-/**
- 统计学习模式访问量
-
- @param userId 用户ID
- @param complete block
- */
-+ (void)searchStudyCountWithUserId:(NSString *)userId Complete:(completeBlock)complete;
-
-
-/**
- 统计模拟考试访问量
-
- @param userId 用户ID
- @param complete block
- */
-+ (void)searchSimulationCountWithUserId:(NSString *)userId Complete:(completeBlock)complete;
-
-
-/**
- 统计刷题模式访问量
-
- @param userId 用户ID
- @param complete block
- */
-+ (void)searchExerciseCountWithUserId:(NSString *)userId Compelte:(completeBlock)complete;
-
-
-/**
- 统计用户试卷收藏量
-
- @param userId 用户ID
- @param testPaperId 试卷ID
- @param complete block
- */
-+ (void)searchCollectionCountWithUserId:(NSString *)userId TestPaperId:(NSNumber *)testPaperId Complete:(completeBlock)complete;
-
-/**
- 统计单篇听力用户点击量
-
- @param userId 用户ID
- @param testPaperId 试卷ID
- @param complete block
- */
-+ (void)searchListeningCountWithUserId:(NSString *)userId TestPaperId:(NSNumber *)testPaperId Complete:(completeBlock)complete;
-
-
-/**
- 统计用户下载量
-
- @param userId 用户ID
- @param testPaperId 试卷ID
- @param complete block
- */
-+ (void)searchDownloadCountWithUserId:(NSString *)userId TestPaperId:(NSNumber *)testPaperId Complete:(completeBlock)complete;
-
-
-/**
- 统计banner点击量
-
- @param userId 用户ID
- @param bannerId bannerID
- @param complete block
- */
-+ (void)searchBannerCountWithUserId:(NSString *)userId BannerId:(NSString *)bannerId Complete:(completeBlock)complete;
-
-
 /**
  添加订单信息
 
@@ -502,4 +406,32 @@
  @param complete 1（熟练>100) ;2（错误<-100）;3（记忆中(-100~100)）
  */
 + (void)searchOldWordWithUserId:(NSString *)user_id WordBookId:(NSString *)word_book_id Type:(NSNumber *)type PageNum:(NSNumber *)page_num Complete:(completeBlock)complete;
+
+
+/**
+ 查询所有词书
+
+ @param user_id 用户ID
+ @param complete block
+ */
++ (void)findAllWordBookWithUser_id:(NSString *)user_id Complete:(completeBlock)complete;
+
+
+/**
+ 查看用户打开的词书
+
+ @param user_id 用户id
+ @param complete block
+ */
++ (void)findOpenBookWithUser_id:(NSString *)user_id Complete:(completeBlock)complete;
+
+
+/**
+ 修改用户打开的词书
+url: /client/public/user/modifyOpenBook
+ @param user_id 用户ID
+ @param open_book 词书ID
+ @param complete block
+ */
++ (void)changeUserOpenWordbookWithUser_id:(NSString *)user_id BookId:(NSString *)open_book Complete:(completeBlock)complete;
 @end

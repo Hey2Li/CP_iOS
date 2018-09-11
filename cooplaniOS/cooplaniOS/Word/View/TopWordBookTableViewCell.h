@@ -35,4 +35,9 @@
  */
 @property (weak, nonatomic) IBOutlet UIButton *wordBookSettingBtn;
 
+/**
+ 生词本个数
+ */
+@property (weak, nonatomic) IBOutlet UILabel *noKonwWordNum;
+
 @end

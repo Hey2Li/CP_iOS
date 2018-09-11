@@ -8,6 +8,7 @@
 
 #import "TopWordBookTableViewCell.h"
 #import "WordBookSettingTableViewController.h"
+#import "MyNoteViewController.h"
 
 @implementation TopWordBookTableViewCell
 
@@ -33,6 +34,11 @@
 
     // Configure the view for the selected state
 }
+- (IBAction)noKonwWordBtnClick:(UIButton *)sender {
+    MyNoteViewController *vc = [[MyNoteViewController alloc]init];
+    [self.viewController.navigationController pushViewController:vc animated:YES];
+}
+
 
 
 @end

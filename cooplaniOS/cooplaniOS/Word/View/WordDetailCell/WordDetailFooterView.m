@@ -29,7 +29,7 @@
 }
 - (void)setModel:(ReciteWordModel *)model{
     _model = model;
-    if (model.collection) {
+    if ([model.collection isEqualToString:@"1"]) {
         self.addCollectionImg.image = [UIImage imageNamed:@"已添加-2"];
         [self.addCollectionLb  setTextColor:UIColorFromRGB(0xcccccc)];
         [self.addCollectionLb setText:@"已添加"];
@@ -51,6 +51,7 @@
                 self.addCollectionImg.image = [UIImage imageNamed:@"已添加-2"];
                 [self.addCollectionLb  setTextColor:UIColorFromRGB(0xcccccc)];
                 [self.addCollectionLb setText:@"已添加"];
+                self.model.collection = @"1";
             }else{
                 SVProgressShowStuteText(message, NO);
                 sender.enabled = YES;

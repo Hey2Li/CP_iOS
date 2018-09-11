@@ -81,16 +81,16 @@
         return cell;
     }else if (indexPath.row == 1){
         WordDetailSecondTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WordDetailSecondTableViewCell class])];
-        cell.enAndZhLb.text = [NSString stringWithFormat:@"%@\n%@",self.model.eg_en, self.model.eg_cn];
+        cell.enAndZhLb.text = [NSString stringWithFormat:@"%@\n%@",self.model.eg_en ? self.model.eg_en : @"", self.model.eg_cn ? self.model.eg_cn : @""];
         return cell;
     }else if (indexPath.row == 2){
         WordDetailThirdTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WordDetailThirdTableViewCell class])];
-        cell.helpMemoryLb.text = [NSString stringWithFormat:@"%@", self.model.mnemonic];
+        cell.helpMemoryLb.text = [NSString stringWithFormat:@"%@", self.model.mnemonic ? self.model.mnemonic : @""];
         return cell;
     }else{
         WordDetailThirdTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WordDetailThirdTableViewCell class])];
         cell.cellTitleCell.text = @"提示";
-        cell.helpMemoryLb.text = [NSString stringWithFormat:@"%@", self.model.prompt];
+        cell.helpMemoryLb.text = [NSString stringWithFormat:@"%@", self.model.prompt ? self.model.prompt : @""];
         return cell;
     }
 }

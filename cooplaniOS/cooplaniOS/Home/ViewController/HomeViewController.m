@@ -137,9 +137,6 @@
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@",self.bannerArray[indexPath.row][@"skipUrl"]]];
-    [LTHttpManager searchBannerCountWithUserId:IS_USER_ID BannerId:self.bannerArray[indexPath.row][@"id"] Complete:^(LTHttpResult result, NSString *message, id data) {
-        NSLog(@"用户点击banner统计");
-    }];
     NSLog(@"%@",url);
     if([[UIDevice currentDevice].systemVersion floatValue] >= 10.0){
         if ([[UIApplication sharedApplication] respondsToSelector:@selector(openURL:options:completionHandler:)]) {
@@ -206,9 +203,6 @@
     vc.nextTitle = cell.TitleLabel.text;
     vc.onePaperModel = self.paperMutableArray[indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];
-    [LTHttpManager  searchListeningCountWithUserId:IS_USER_ID TestPaperId:vc.onePaperModel.ID Complete:^(LTHttpResult result, NSString *message, id data) {
-
-    }];
 }
 
 - (void)didReceiveMemoryWarning{

@@ -59,9 +59,6 @@
                     sender.tag = 1;
                     _Model.collection = @"1";
                     SVProgressShowStuteText(@"收藏成功", YES);
-                    [LTHttpManager searchCollectionCountWithUserId:IS_USER_ID TestPaperId:_Model.ID Complete:^(LTHttpResult result, NSString *message, id data) {
-                        
-                    }];
                 }else{
                     SVProgressShowStuteText(message, NO);
                 }

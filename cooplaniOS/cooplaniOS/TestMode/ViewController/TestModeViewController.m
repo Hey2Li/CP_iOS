@@ -433,9 +433,6 @@
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     self.navigationController.interactivePopGestureRecognizer.enabled = YES;
-    [LTHttpManager searchOvertimeWithUserId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
-        
-    }];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

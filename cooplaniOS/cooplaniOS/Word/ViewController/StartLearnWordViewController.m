@@ -20,6 +20,10 @@
 @property (nonatomic, strong) NSString *residueStr;
 @property (nonatomic, assign) NSInteger alwaysErrorNum;
 @property (nonatomic, assign) NSInteger skilledNum;
+/**
+ 生词本数组
+ */
+@property (nonatomic, strong) NSArray *noKnowArray;
 @end
 
 @implementation StartLearnWordViewController
@@ -69,6 +73,11 @@
 //            [self.myTableView reloadData];
 //        }
 //    }];
+    [LTHttpManager findWordsWithUserId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
+        if (LTHttpResultSuccess == result) {
+           self.noKnowArray = data[@"responseData"];
+        }
+    }];
 }
 - (void)initWithView{
     UIView *tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:255])];
@@ -125,6 +134,7 @@
             cell.wordBookDetailLb.text = self.wordbookArray[0][@"info"];
             [cell.wordBookImg sd_setImageWithURL:[NSURL URLWithString:self.wordbookArray[0][@"img"]] placeholderImage:nil];
             cell.wordBookNumLb.text = [NSString stringWithFormat:@"%@",_residueStr ? _residueStr : @"0"];
+            cell.noKonwWordNum.text = [NSString stringWithFormat:@"%ld", self.noKnowArray.count];
         }
         return cell;
     }else if (indexPath.row == 1){

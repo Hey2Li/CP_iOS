@@ -48,8 +48,6 @@
     [self setUMManager];
     //设置
     [self setSetting];
-    //埋点接口
-    [self setAPI];
     //极光推送
     [self JSPush:application :launchOptions];
     //阿里电商SDK
@@ -196,48 +194,6 @@
     J_CreateTable(DownloadFileModel);
     J_CreateTable(DownloadVideoModel);
     [self monitorNetworking];
-}
-- (void)setAPI{
-    self.loginTime = [self getCurrentTimes];
-    NSString *loginTime  = [USERDEFAULTS objectForKey:@"logintime"];
-    if (loginTime.length > 0) {
-        [LTHttpManager searchLoginCountWithUserId:IS_USER_ID LoginTime:loginTime ExitTime:@"" Complete:^(LTHttpResult result, NSString *message, id data) {
-            if (LTHttpResultSuccess == result) {
-                NSLog(@"用户打开次数");
-                NSString *exitTime = [USERDEFAULTS objectForKey:@"exittime"];
-                if (exitTime.length > 0) {
-                    [LTHttpManager searchLoginCountWithUserId:IS_USER_ID LoginTime:[USERDEFAULTS objectForKey:@"logintime"] ExitTime:exitTime Complete:^(LTHttpResult result, NSString *message, id data) {
-                        if (LTHttpResultSuccess == result) {
-                            NSLog(@"用户打开次数");
-                            [USERDEFAULTS setObject:self.loginTime forKey:@"logintime"];
-                        }else{
-                            NSLog(@"%@",data[@"msg"]);
-                        }
-                    }];
-                }else{
-                    [LTHttpManager searchLoginCountWithUserId:IS_USER_ID LoginTime:self.loginTime ExitTime:@"" Complete:^(LTHttpResult result, NSString *message, id data) {
-                        if (LTHttpResultSuccess == result) {
-                            NSLog(@"用户打开次数");
-                            
-                        }else{
-                            NSLog(@"%@",data[@"msg"]);
-                        }
-                    }];
-                }
-            }else{
-                NSLog(@"%@",data[@"msg"]);
-            }
-        }];
-    }else{
-        [LTHttpManager searchLoginCountWithUserId:IS_USER_ID LoginTime:loginTime ExitTime:@"" Complete:^(LTHttpResult result, NSString *message, id data) {
-            if (LTHttpResultSuccess == result) {
-                NSLog(@"用户打开次数");
-            }else{
-                NSLog(@"%@",data[@"msg"]);
-            }
-        }];
-        [USERDEFAULTS setObject:self.loginTime forKey:@"logintime"];
-    }
 }
 #pragma mark 极光推送
 - (void)JSPush:(UIApplication *)application :(NSDictionary *)launchOptions{
