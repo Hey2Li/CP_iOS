@@ -15,6 +15,7 @@
 #import "LessonViewController.h"
 #import "WordViewController.h"
 #import "StartLearnWordViewController.h"
+#import "BottomLabel.h"
 
 @interface BaseHomeViewController ()<UIScrollViewDelegate>
 @property (nonatomic, strong) UIScrollView *myScrollView;
@@ -50,15 +51,39 @@
 }
 #pragma mark 导航栏
 - (void)initWithNavi{
-    HomeTopTitleView *titleView  =[[HomeTopTitleView alloc]initWithTitleArray:@[@"听力", @"单词", @"课程"]];
-    titleView.translatesAutoresizingMaskIntoConstraints = false;
-    titleView.topTitleSwitchBlock = ^(NSInteger index) {
-        [self.myScrollView setContentOffset:CGPointMake(SCREEN_WIDTH * (index - 10001), 0) animated:YES];
-        NSLog(@"%ld",(long)index);
-    };
-    [titleView selectIndexBtn:0];
-    self.titleView = titleView;
-    self.navigationItem.titleView = titleView;
+    UIView *titleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH/2 + 20, 44)];
+    titleView.backgroundColor = DRGBCOLOR;
+    
+    BottomLabel *weekLb = [BottomLabel new];
+    [titleView addSubview:weekLb];
+    [weekLb mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(titleView);
+        make.top.equalTo(titleView);
+        make.bottom.equalTo(titleView);
+        make.width.equalTo(@((SCREEN_WIDTH/2 + 20)/6*5));
+    }];
+    weekLb.font = [UIFont systemFontOfSize:26 weight:26];
+    NSString *weekStr = [Tool dateArray][0];
+    weekLb.text = [NSString stringWithFormat:@"%@ %@",weekStr.uppercaseString ,@""];
+    weekLb.verticalAlignment = 2;
+    weekLb.textColor = [UIColor blackColor];
+    weekLb.textAlignment = NSTextAlignmentRight;
+    
+    BottomLabel *monthAndDayLb = [[BottomLabel alloc]init];
+    [titleView addSubview:monthAndDayLb];
+    [monthAndDayLb mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(weekLb.mas_right);
+        make.right.equalTo(titleView.mas_right);
+        make.bottom.equalTo(titleView).offset(-2);
+        make.height.equalTo(weekLb);
+    }];
+    monthAndDayLb.verticalAlignment = 2;
+    monthAndDayLb.font = [UIFont systemFontOfSize:14 weight:18];
+    monthAndDayLb.textColor = [UIColor blackColor];
+    monthAndDayLb.text = [NSString stringWithFormat:@"%@ %@",[Tool dateArray][2],[Tool dateArray][1]];
+    
+    UIBarButtonItem *barItem = [[UIBarButtonItem alloc]initWithCustomView:titleView];
+    self.navigationItem.rightBarButtonItem = barItem;
 }
 - (void)initWithView{
     UIView *tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:255])];
@@ -74,55 +99,12 @@
     backView.layer.cornerRadius = 375;
     backView.layer.masksToBounds = YES;
     backView.clipsToBounds = YES;
-//    [tableHeaderView.layer setMasksToBounds:YES];
-//    [tableHeaderView addSubview:backView];
-//    [self.view addSubview:tableHeaderView];
+    //添加homeviewcontroller
     [self.view insertSubview:backView atIndex:0];
-    UIScrollView *scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-    [self.view addSubview:scrollView];
-    scrollView.backgroundColor = [UIColor clearColor];
-    [scrollView setContentSize:CGSizeMake(SCREEN_WIDTH * 3, SCREEN_HEIGHT)];
-    
     HomeViewController *listenVC = [[HomeViewController alloc]init];
     [self addChildViewController:listenVC];
-    [scrollView addSubview:listenVC.view];
-    [scrollView bringSubviewToFront:listenVC.view];
     listenVC.view.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    
-    LessonViewController *lessonVC = [[LessonViewController alloc]init];
-    [self addChildViewController:lessonVC];
-    [scrollView addSubview:lessonVC.view];
-    [scrollView insertSubview:lessonVC.view atIndex:0];
-    lessonVC.view.frame = CGRectMake(SCREEN_WIDTH * 2, 0, SCREEN_WIDTH , SCREEN_HEIGHT);
-    
-    StartLearnWordViewController *wordVC = [[StartLearnWordViewController alloc]init];
-    [self addChildViewController:wordVC];
-    [scrollView addSubview:wordVC.view];
-    wordVC.view.frame = CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    scrollView.pagingEnabled = YES;
-    scrollView.bounces = NO;
-    scrollView.delegate = self;
-    [scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
-    self.myScrollView = scrollView;
-}
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
-    //获取滑动偏移量
-    float tagetX = targetContentOffset->x;
-    //向左滑动时： 如果滑动后的X为最小（最小的X值），并且 为第一个控制器(contentOffsetX 为最小0)
-    //向右滑动时： 如果滑动后的X为最大（最大的X值），并且为最后一个控制器（contentOffsetX 为最大）
-    if (tagetX == 0 && self.myScrollView.contentOffset.x == 0 * SCREEN_WIDTH) {
-        [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
-    }
-}
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    NSLog(@"%f",scrollView.contentOffset.x / SCREEN_WIDTH);
-    if (scrollView.contentOffset.x / SCREEN_WIDTH == 0) {
-        [self.titleView selectIndexBtn:0];
-    }else if (scrollView.contentOffset.x / SCREEN_WIDTH == 1){
-        [self.titleView selectIndexBtn:1];
-    }else if (scrollView.contentOffset.x / SCREEN_WIDTH == 2){
-        [self.titleView selectIndexBtn:2];
-    }
+    [self.view addSubview:listenVC.view];
 }
 -(void)setupLeftMenuButton{
     self.flatRoundedButton = [[VBFPopFlatButton alloc]initWithFrame:CGRectMake(0, 0, 25, 25)
@@ -140,6 +122,7 @@
     UIBarButtonItem *leftBtn = [[UIBarButtonItem alloc]initWithCustomView:view];
     [self.navigationItem setLeftBarButtonItem:leftBtn animated:YES];
     WeakSelf
+    //控制navigation 左滑动画
     [self.mm_drawerController setDrawerVisualStateBlock:^(MMDrawerController *drawerController, MMDrawerSide drawerSide, CGFloat percentVisible) {
         NSLog(@"%f",percentVisible);
         if (percentVisible == 1) {

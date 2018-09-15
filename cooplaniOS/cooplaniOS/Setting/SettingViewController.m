@@ -59,7 +59,7 @@
         NSString *appDomain = [[NSBundle mainBundle]bundleIdentifier];
         [[NSUserDefaults standardUserDefaults]removePersistentDomainForName:appDomain];
         SVProgressShowStuteText(@"退出成功", YES);
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"homereloaddata" object:nil];
+        [[NSNotificationCenter defaultCenter]postNotificationName:kHomeReloadData object:nil];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"quitLogin" object:nil];
         [self.myTableView reloadData];
         btn.hidden = YES;

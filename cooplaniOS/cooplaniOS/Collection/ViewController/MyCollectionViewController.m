@@ -66,7 +66,7 @@
                 [self.dataArray removeObjectAtIndex:indexPath.row];
                 // 从列表中删除
                 [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"homereloaddata" object:nil];
+                [[NSNotificationCenter defaultCenter]postNotificationName:kHomeReloadData object:nil];
                 SVProgressShowStuteText(@"取消成功", YES);
             }else{
                 SVProgressShowStuteText(@"取消失败", NO);

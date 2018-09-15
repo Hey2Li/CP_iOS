@@ -365,7 +365,7 @@
                     sender.tag = 10;
                     self.onePaperModel.collection = @"0";
                     self.collectionImageView.image = [UIImage imageNamed:@"collection"];
-                     [[NSNotificationCenter defaultCenter]postNotificationName:@"homereloaddata" object:nil];
+                     [[NSNotificationCenter defaultCenter]postNotificationName:kHomeReloadData object:nil];
                 }else{
                     SVProgressShowStuteText(message, NO);
                 }
@@ -387,7 +387,7 @@
                     self.collectionImageView.image = [UIImage imageNamed:@"collection_fill"];
                     self.onePaperModel.collection = @"1";
                     SVProgressShowStuteText(@"收藏成功", YES);
-                    [[NSNotificationCenter defaultCenter]postNotificationName:@"homereloaddata" object:nil];
+                    [[NSNotificationCenter defaultCenter]postNotificationName:kHomeReloadData object:nil];
                 }else{
                     SVProgressShowStuteText(message, NO);
                 }

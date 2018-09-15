@@ -38,7 +38,7 @@
     // Do any additional setup after loading the view.
     [self initWithView];
     [self loadData];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reloadTableView) name:@"homereloaddata" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reloadTableView) name:kHomeReloadData object:nil];
 }
 - (void)reloadTableView{
     [self loadData];
