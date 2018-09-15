@@ -16,6 +16,9 @@
 #import "PaperDetailViewController.h"
 #import "VBFPopFlatButton.h"
 #import "HomeTopTitleView.h"
+#import "HomeCategoryTableViewCell.h"
+#import "HomeWordBookTableViewCell.h"
+#import "HomeBuyLessonTableViewCell.h"
 
 @interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -56,32 +59,6 @@
                 }
             }
         }];
-    [LTHttpManager FindAllWithUseId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
-        if (result == LTHttpResultSuccess) {
-            NSArray *array = data[@"responseData"];
-            NSMutableDictionary *muDict = [NSMutableDictionary dictionary];
-            [self.paperMutableArray removeAllObjects];
-            for (NSDictionary *dic in array) {
-                muDict = [NSMutableDictionary dictionaryWithDictionary:dic[@"tp"]];
-                [muDict addEntriesFromDictionary:@{@"collection":dic[@"type"]}];
-                PaperModel *model = [PaperModel mj_objectWithKeyValues:muDict];
-                [self.paperMutableArray addObject:model];
-            }
-            [USERDEFAULTS setObject:[NSKeyedArchiver archivedDataWithRootObject:self.paperMutableArray]forKey:@"homeData"];
-            [self.myTableView reloadData];
-        }else{
-            [self.paperMutableArray removeAllObjects];
-            NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithData:[USERDEFAULTS objectForKey:@"homeData"]];
-            if (array.count) {
-                self.paperMutableArray = [NSMutableArray arrayWithArray:array];
-                [self.myTableView reloadData];
-            }else{
-                self.myTableView.ly_emptyView = [LTEmpty NoNetworkEmpty:^{
-                    [self loadData];
-                }];
-            }
-        }
-    }];
 }
 
 - (void)initWithView{
@@ -91,15 +68,29 @@
     tableView.separatorStyle = NO;
     tableView.showsVerticalScrollIndicator = NO;
     tableView.backgroundColor = [UIColor clearColor];
-    [tableView registerNib:[UINib nibWithNibName:@"HomeListenCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:@"HOMELISTEN"];
+    [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([HomeListenCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:NSStringFromClass([HomeListenCell class])];
+    [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([HomeCategoryTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([HomeCategoryTableViewCell class])];
+    [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([HomeWordBookTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([HomeWordBookTableViewCell class])];
+    [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([HomeBuyLessonTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([HomeBuyLessonTableViewCell class])];
     
-    UIView *tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:255])];
-
+    UIView *tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:240])];
+    //倒计时
+    UILabel *countdownLabel = [UILabel new];
+    countdownLabel.text = @"距离四家倒计时还有92天";
+    countdownLabel.font = [UIFont boldSystemFontOfSize:14];
+    countdownLabel.textColor = UIColorFromRGB(0x333333);
+    countdownLabel.textAlignment = NSTextAlignmentRight;
+    [tableHeaderView addSubview:countdownLabel];
+    [countdownLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(tableHeaderView.mas_right).offset(-15);
+        make.top.equalTo(tableHeaderView.mas_top).offset(5);
+        make.left.equalTo(tableHeaderView.mas_left).offset(20);
+    }];
     //banner collectionView
     UICollectionViewFlowLayout *flowlayout = [[UICollectionViewFlowLayout alloc]init];
     flowlayout.minimumLineSpacing = 20;
     flowlayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    UICollectionView *collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, -10, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:270]) collectionViewLayout:flowlayout];
+    UICollectionView *collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:210]) collectionViewLayout:flowlayout];
     collectionView.dataSource = self;
     collectionView.delegate = self;
     [collectionView registerNib:[UINib nibWithNibName:@"BannerCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([BannerCollectionViewCell class])];
@@ -121,10 +112,10 @@
     return  self.bannerArray.count;
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake([Tool layoutForAlliPhoneWidth:330], [Tool layoutForAlliPhoneHeight:240]);
+    return CGSizeMake([Tool layoutForAlliPhoneWidth:335], [Tool layoutForAlliPhoneHeight:190]);
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
-    return UIEdgeInsetsMake(0, 20, 0, 10);
+    return UIEdgeInsetsMake(1, 20, 1, 10);
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -163,39 +154,64 @@
 
 #pragma mark -- UITableViewDelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
+    return 3;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.paperMutableArray.count;
+    if (section == 2) {
+        return 1;
+    }else{
+        return 1;
+    }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 78;
+    if (indexPath.section == 1) return 140;
+    if (indexPath.section == 2) return 110;
+    return 80;
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     NSString *isHaveNet = [USERDEFAULTS objectForKey:@"isHaveNet"];
     if ([isHaveNet isEqualToString:@"0"]) {
         return @"";
     }else{
-        return @"四级听力·真题";//17bold
+        if (section == 1) {
+            return @"单词学习";
+        }else{
+            return @"";
+        }
     }
 }
 -(void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section{
     // Background color
-    view.tintColor = UIColorFromRGB(0xF7F7F7);
-    
+//    view.tintColor = UIColorFromRGB(0xF7F7F7);
+    view.tintColor = [UIColor whiteColor];
+
     // Text Color
     UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
     [header.textLabel setTextColor:[UIColor blackColor]];
-    [header.textLabel setFont:[UIFont systemFontOfSize:17 weight:20]];
+    [header.textLabel setFont:[UIFont systemFontOfSize:14 weight:20]];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 40;
+    if (section == 1) {
+        return 40;
+    }else{
+        return 10;
+    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    HomeListenCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HOMELISTEN"];
-    cell.backgroundColor = UIColorFromRGB(0xFFFFFF);
-    cell.Model = self.paperMutableArray[indexPath.row];
-    return cell;
+    if (indexPath.section == 2) {
+        HomeBuyLessonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([HomeBuyLessonTableViewCell class])];
+        return cell;
+    }else if (indexPath.section == 0){
+        HomeCategoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([HomeCategoryTableViewCell class])];
+        cell.selectionStyle = NO;
+        return cell;
+    }else if (indexPath.section == 1){
+        HomeWordBookTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([HomeWordBookTableViewCell class])];
+        return cell;
+    }else{
+        HomeBuyLessonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([HomeBuyLessonTableViewCell class])];
+        return cell;
+    }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     HomeListenCell *cell = [tableView cellForRowAtIndexPath:indexPath];

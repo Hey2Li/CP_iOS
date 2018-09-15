@@ -13,6 +13,10 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    [self.backgroundImg.layer setCornerRadius:8.0f];
+    [self.backgroundImg.layer setMasksToBounds:YES];
+    [self.startBtn.layer setCornerRadius:13];
+    [self.startBtn.layer setMasksToBounds:YES];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

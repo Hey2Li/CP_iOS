@@ -6,47 +6,72 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="137" id="KGk-i7-Jjw" customClass="HomeWordBookTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="322" height="137"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="192" id="KGk-i7-Jjw" customClass="HomeWordBookTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="394" height="192"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="322" height="136.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="394" height="191.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="词书名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cRc-Ra-dpN">
-                        <rect key="frame" x="95" y="11" width="70" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="词书介绍" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uM8-UK-h0n">
-                        <rect key="frame" x="95" y="58" width="70" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lJr-FC-wYk">
-                        <rect key="frame" x="233" y="96" width="62" height="30"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" title="开始学习"/>
-                    </button>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oPL-zL-sy8">
-                        <rect key="frame" x="16" y="14" width="58" height="108"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" red="0.99915176630000002" green="0.82896530629999998" blue="0.29778558020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="单词学习图" translatesAutoresizingMaskIntoConstraints="NO" id="XtG-Hr-6VK">
+                        <rect key="frame" x="16" y="0.0" width="362" height="188.5"/>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1253" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Oq-hu-lsL">
+                        <rect key="frame" x="257" y="26" width="67" height="34"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已学单词/个" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="drz-US-vgl">
+                        <rect key="frame" x="252.5" y="65" width="76" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cTI-Fk-mRE">
+                        <rect key="frame" x="245.5" y="134" width="90" height="27"/>
+                        <color key="backgroundColor" red="0.99915176630000002" green="0.82896530629999998" blue="0.29778558020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="90" id="5wB-ul-QP8"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <state key="normal" title="去学习">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
+                        <connections>
+                            <action selector="startWordClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="b65-bF-lht"/>
+                        </connections>
+                    </button>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="drz-US-vgl" firstAttribute="centerX" secondItem="7Oq-hu-lsL" secondAttribute="centerX" id="1Hw-Ch-dbV"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="cTI-Fk-mRE" secondAttribute="bottom" constant="20" id="8nF-UV-0CX"/>
+                    <constraint firstItem="drz-US-vgl" firstAttribute="top" secondItem="7Oq-hu-lsL" secondAttribute="bottom" constant="5" id="9PW-b5-tlz"/>
+                    <constraint firstItem="XtG-Hr-6VK" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="I7R-WT-gPl"/>
+                    <constraint firstAttribute="bottom" secondItem="XtG-Hr-6VK" secondAttribute="bottom" constant="3" id="NNg-Go-nfm"/>
+                    <constraint firstItem="7Oq-hu-lsL" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="15" id="YDI-9m-MWs"/>
+                    <constraint firstItem="cTI-Fk-mRE" firstAttribute="centerX" secondItem="drz-US-vgl" secondAttribute="centerX" id="Ye1-Er-i8j"/>
+                    <constraint firstAttribute="trailing" secondItem="XtG-Hr-6VK" secondAttribute="trailing" constant="16" id="a90-ne-6JQ"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="7Oq-hu-lsL" secondAttribute="trailing" constant="50" id="dOH-Xx-x9f"/>
+                    <constraint firstItem="XtG-Hr-6VK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="w4W-bZ-EoK"/>
+                </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
-            <point key="canvasLocation" x="26" y="98.5"/>
+            <connections>
+                <outlet property="backgroundImg" destination="XtG-Hr-6VK" id="NlQ-20-6YF"/>
+                <outlet property="gotoLearnBtn" destination="cTI-Fk-mRE" id="W4R-S4-OqQ"/>
+            </connections>
+            <point key="canvasLocation" x="62" y="126"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="单词学习图" width="343" height="136"/>
+    </resources>
 </document>

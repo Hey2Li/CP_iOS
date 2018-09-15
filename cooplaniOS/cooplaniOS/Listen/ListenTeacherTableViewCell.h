@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ListenTeacherTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImg;
+@property (weak, nonatomic) IBOutlet UIButton *startBtn;
 
 @end

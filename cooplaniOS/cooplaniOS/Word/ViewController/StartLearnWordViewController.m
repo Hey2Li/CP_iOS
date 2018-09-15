@@ -80,10 +80,24 @@
     }];
 }
 - (void)initWithView{
-    UIView *tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:255])];
-//    tableHeaderView.backgroundColor = [UIColor clearColor];
-  
-    [self.view addSubview:tableHeaderView];
+    UIView *topBackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:255])];
+    topBackView.backgroundColor = [UIColor whiteColor];
+    //底部背景
+    UIView *backView;
+    if (UI_IS_IPHONE4) {
+        backView = [[UIView alloc]initWithFrame:CGRectMake((-750 + SCREEN_WIDTH)/2 , - 444 - 64 - 100 , 750, 750)];
+    }else{
+        backView = [[UIView alloc]initWithFrame:CGRectMake((-750 + SCREEN_WIDTH)/2 , - 444 - 64 -100, 750, 750)];
+    }
+    backView.backgroundColor = DRGBCOLOR;
+    backView.layer.cornerRadius = 375;
+    backView.layer.masksToBounds = YES;
+    backView.clipsToBounds = YES;
+    topBackView.layer.masksToBounds = YES;
+    topBackView.clipsToBounds = YES;
+    //添加homeviewcontroller
+    [topBackView addSubview:backView];
+    [self.view insertSubview:topBackView atIndex:0];
     
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 5, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
     tableView.delegate = self;
@@ -95,12 +109,12 @@
     [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([TopWordBookTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([TopWordBookTableViewCell class])];
     [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([BottomWordProgressTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([BottomWordProgressTableViewCell class])];
     
-    self.myTableView.backgroundColor = [UIColor clearColor];
+    self.myTableView.backgroundColor = [UIColor whiteColor];
     self.myTableView = tableView;
     
     self.myTableView.tableFooterView = [UIView new];
     
-    self.view.backgroundColor = [UIColor clearColor];
+    self.view.backgroundColor = [UIColor whiteColor];
 }
 - (void)startLearnClick:(UIButton *)btn{
     if (IS_USER_ID) {

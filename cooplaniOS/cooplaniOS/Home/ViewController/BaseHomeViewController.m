@@ -31,7 +31,7 @@
     [self initWithNavi];
     [self initWithView];
     [self setupLeftMenuButton];
-    self.view.backgroundColor = UIColorFromRGB(0xF7F7F7);
+    self.view.backgroundColor = [UIColor whiteColor];
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -87,13 +87,13 @@
 }
 - (void)initWithView{
     UIView *tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:255])];
-    tableHeaderView.backgroundColor = UIColorFromRGB(0xF7F7F7);
+    tableHeaderView.backgroundColor = [UIColor whiteColor];
     //底部背景
     UIView *backView;
     if (UI_IS_IPHONE4) {
         backView = [[UIView alloc]initWithFrame:CGRectMake((-750 + SCREEN_WIDTH)/2 , - 444 - 64 - 100 , 750, 750)];
     }else{
-        backView = [[UIView alloc]initWithFrame:CGRectMake((-750 + SCREEN_WIDTH)/2 , - 444 - 64, 750, 750)];
+        backView = [[UIView alloc]initWithFrame:CGRectMake((-750 + SCREEN_WIDTH)/2 , - 444 - 64 -100, 750, 750)];
     }
     backView.backgroundColor = DRGBCOLOR;
     backView.layer.cornerRadius = 375;

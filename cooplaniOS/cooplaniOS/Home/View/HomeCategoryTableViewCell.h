@@ -9,5 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface HomeCategoryTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIButton *listenBtn;
+@property (weak, nonatomic) IBOutlet UIButton *readBtn;
+@property (weak, nonatomic) IBOutlet UIButton *writeBtn;
+@property (weak, nonatomic) IBOutlet UIButton *fanyiBtn;
 
 @end

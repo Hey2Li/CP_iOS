@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface HomeWordBookTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIButton *gotoLearnBtn;
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImg;
 
 @end

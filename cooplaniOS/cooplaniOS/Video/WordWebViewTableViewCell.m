@@ -9,7 +9,7 @@
 #import "WordWebViewTableViewCell.h"
 #import <WebKit/WebKit.h>
 
-#define kWebViewHeight SCREEN_HEIGHT - 64 - (SCREEN_WIDTH * 9 /16)  - 44 - 48
+#define kWebViewHeight SCREEN_HEIGHT - 64 - (SCREEN_WIDTH * 9 /16) - 48
 @interface WordWebViewTableViewCell ()<WKUIDelegate, UIScrollViewDelegate>
 @property (nonatomic, strong) UIWebView *leftWebView;
 @property (nonatomic, strong) UIWebView *rightWebView;
@@ -29,7 +29,7 @@
         [scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self);
         }];
-        [scrollView setContentSize:CGSizeMake(SCREEN_WIDTH * 2, 0)];
+        [scrollView setContentSize:CGSizeMake(SCREEN_WIDTH, 0)];
         scrollView.delegate = self;
         scrollView.pagingEnabled = YES;
         scrollView.backgroundColor = [UIColor whiteColor];
@@ -117,40 +117,8 @@
                       %@\
                       </div>\
                       </html>",model.handouts];
-    NSString *htmls = [NSString stringWithFormat:@"\
-                      <html lang=\"en\">\
-                      <head>\
-                      <meta name=\"viewport\" content=\"user-scalable=no\">\
-                      <meta charset=\"UTF-8\">\
-                      </head>\
-                      <header>\
-                      <style>\
-                      .hVocabularyTitle{\
-                      color:#ccc;\
-                      font-size:16px;\
-                      font-weight: 550;\
-                      }\
-                      .hVocabularyContent{\
-                      color:rgb(102,102,102);\
-                      font-size: 14px;\
-                      }\
-                      .indent{\
-                      text-indent: 28px;\
-                      }\
-                      p{\
-                      margin-top: 0;\
-                      }\
-                      .flexFixed{\
-                      -webkit-flex: 0 0 42px;\
-                      flex: 0 0 42px;\
-                      }\
-                      </style>\
-                      </header>\
-                      %@\
-                      </div>\
-                      </html>",model.vocabulary];
     [self.leftWebView loadHTMLString:html baseURL:nil];
-    [self.rightWebView loadHTMLString:htmls baseURL:nil];
+//    [self.rightWebView loadHTMLString:htmls baseURL:nil];
 }
 - (void)setLocalVideoModel:(DownloadVideoModel *)localVideoModel{
     _localVideoModel = localVideoModel;

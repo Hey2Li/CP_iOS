@@ -17,6 +17,7 @@
 #import "OneLessonModel.h"
 #import "DownloadVideoModel.h"
 
+#define kAllLessonTableViewHeight SCREEN_HEIGHT - SCREEN_WIDTH * 9 / 16 - 64 - 48
 @interface VideoViewController ()<WMPlayerDelegate, UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIView *bottomView;
@@ -35,9 +36,16 @@
 @property (nonatomic, assign) int clarityIndex;
 @property (nonatomic, strong) UIButton *playBtn;
 @property (nonatomic, strong) DownloadVideoModel *downloadModel;
+@property (nonatomic, strong) NSMutableArray *lessonArray;
 @end
 @implementation VideoViewController
 
+- (NSMutableArray *)lessonArray{
+    if (!_lessonArray) {
+        _lessonArray = [NSMutableArray array];
+    }
+    return _lessonArray;
+}
 -(BOOL)prefersStatusBarHidden{
     if (self.wmPlayer.isFullscreen) {
         return self.wmPlayer.prefersStatusBarHidden;
@@ -215,85 +223,85 @@
     [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([VideoTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([VideoTableViewCell class])];
     [tableView registerClass:[WordWebViewTableViewCell class] forCellReuseIdentifier:NSStringFromClass([WordWebViewTableViewCell class])];
     self.tableView = tableView;
-    
-    VideoBottomView *bottomView = [[VideoBottomView alloc]init];
-    [self.view addSubview:bottomView];
-    [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view);
-        make.right.equalTo(self.view);
-        make.bottom.equalTo(self.view);
-        make.height.equalTo(@50);
-    }];
-    bottomView.layer.shadowColor = [UIColor blackColor].CGColor;
-    bottomView.layer.shadowOffset = CGSizeMake(-3, 0);
-    bottomView.layer.shadowOpacity = 0.4;
-    self.videoBottomView = bottomView;
-    WeakSelf
-    bottomView.selectionClickBlock = ^(UIButton *btn) {
-        btn.selected = !btn.selected;
-        if (btn.selected) {
-            [weakSelf.allSelectionTableView mas_remakeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(self.view);
-                make.right.equalTo(self.view);
-                make.height.equalTo(@(SCREEN_HEIGHT - 220 - 50 - 64 - 48));
-                make.bottom.equalTo(self.videoBottomView.mas_top);
-            }];
-            [UIView animateWithDuration:0.2 animations:^{
-                [self.view layoutIfNeeded];
-            }];
-        }else{
-            [weakSelf.allSelectionTableView mas_remakeConstraints:^(MASConstraintMaker *make) {
-                make.left.equalTo(self.view);
-                make.right.equalTo(self.view);
-                make.top.equalTo(self.view.mas_bottom);
-                make.height.equalTo(@(SCREEN_HEIGHT - 220 - 50 - 64 - 48));
-            }];
-            [UIView animateWithDuration:0.2 animations:^{
-                [self.view layoutIfNeeded];
-            }];
-        }
-    };
-#pragma mark 下载
-    bottomView.downloadClickBlcok = ^(UIButton *btn) {
-        NSString *GPRSDownload = [USERDEFAULTS objectForKey:@"GPRSDownload"];
-        if ([kNetworkState isEqualToString:@"GPRS"] && [GPRSDownload isEqualToString:@"0"]) {
-            LTAlertView *alert = [[LTAlertView alloc]initWithTitle:@"移动网络环境下确定下载吗" sureBtn:@"确定" cancleBtn:@"取消"];
-            [alert show];
-            alert.resultIndex = ^(NSInteger index) {
-                [self downloadVideo:btn];
-            };
-        }else{
-            [self downloadVideo:btn];
-        }
-    };
-    bottomView.shareClickBlock = ^(UIButton *btn) {
-        
-    };
-#pragma mark 清晰度修改
-    bottomView.clarityClickBlock = ^(UIButton *btn) {
-        PopoverAction *action1 = [PopoverAction actionWithTitle:@"标清" handler:^(PopoverAction *action) {
-            // 该Block不会导致内存泄露, Block内代码无需刻意去设置弱引用.
-            [btn setTitle:@"标清" forState:UIControlStateNormal];
-            _clarityIndex = 0;
-            [self.wmPlayer resetWMPlayer];
-            [self videoPlay:self.playBtn];
-        }];
-        PopoverAction *action2 = [PopoverAction actionWithTitle:@"高清" handler:^(PopoverAction *action) {
-            [btn setTitle:@"高清" forState:UIControlStateNormal];
-            _clarityIndex = 1;
-            [self.wmPlayer resetWMPlayer];
-            [self videoPlay:self.playBtn];
-        }];
-        PopoverAction *action3 = [PopoverAction actionWithTitle:@"超清" handler:^(PopoverAction *action) {
-            [btn setTitle:@"超清" forState:UIControlStateNormal];
-            _clarityIndex = 2;
-            [self.wmPlayer resetWMPlayer];
-            [self videoPlay:self.playBtn];
-        }];
-        PopoverView *popoverView = [PopoverView popoverView];
-        popoverView.style = PopoverViewStyleDark;
-        [popoverView showToView:btn withActions:@[action1, action2, action3]];
-    };
+//    
+//    VideoBottomView *bottomView = [[VideoBottomView alloc]init];
+//    [self.view addSubview:bottomView];
+//    [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(self.view);
+//        make.right.equalTo(self.view);
+//        make.bottom.equalTo(self.view);
+//        make.height.equalTo(@50);
+//    }];
+//    bottomView.layer.shadowColor = [UIColor blackColor].CGColor;
+//    bottomView.layer.shadowOffset = CGSizeMake(-3, 0);
+//    bottomView.layer.shadowOpacity = 0.4;
+//    self.videoBottomView = bottomView;
+//    WeakSelf
+//    bottomView.selectionClickBlock = ^(UIButton *btn) {
+//        btn.selected = !btn.selected;
+//        if (btn.selected) {
+//            [weakSelf.allSelectionTableView mas_remakeConstraints:^(MASConstraintMaker *make) {
+//                make.left.equalTo(self.view);
+//                make.right.equalTo(self.view);
+//                make.height.equalTo(@(SCREEN_HEIGHT - 220 - 50 - 64 - 48));
+//                make.bottom.equalTo(self.videoBottomView.mas_top);
+//            }];
+//            [UIView animateWithDuration:0.2 animations:^{
+//                [self.view layoutIfNeeded];
+//            }];
+//        }else{
+//            [weakSelf.allSelectionTableView mas_remakeConstraints:^(MASConstraintMaker *make) {
+//                make.left.equalTo(self.view);
+//                make.right.equalTo(self.view);
+//                make.top.equalTo(self.view.mas_bottom);
+//                make.height.equalTo(@(SCREEN_HEIGHT - 220 - 50 - 64 - 48));
+//            }];
+//            [UIView animateWithDuration:0.2 animations:^{
+//                [self.view layoutIfNeeded];
+//            }];
+//        }
+//    };
+//#pragma mark 下载
+//    bottomView.downloadClickBlcok = ^(UIButton *btn) {
+//        NSString *GPRSDownload = [USERDEFAULTS objectForKey:@"GPRSDownload"];
+//        if ([kNetworkState isEqualToString:@"GPRS"] && [GPRSDownload isEqualToString:@"0"]) {
+//            LTAlertView *alert = [[LTAlertView alloc]initWithTitle:@"移动网络环境下确定下载吗" sureBtn:@"确定" cancleBtn:@"取消"];
+//            [alert show];
+//            alert.resultIndex = ^(NSInteger index) {
+//                [self downloadVideo:btn];
+//            };
+//        }else{
+//            [self downloadVideo:btn];
+//        }
+//    };
+//    bottomView.shareClickBlock = ^(UIButton *btn) {
+//        
+//    };
+//#pragma mark 清晰度修改
+//    bottomView.clarityClickBlock = ^(UIButton *btn) {
+//        PopoverAction *action1 = [PopoverAction actionWithTitle:@"标清" handler:^(PopoverAction *action) {
+//            // 该Block不会导致内存泄露, Block内代码无需刻意去设置弱引用.
+//            [btn setTitle:@"标清" forState:UIControlStateNormal];
+//            _clarityIndex = 0;
+//            [self.wmPlayer resetWMPlayer];
+//            [self videoPlay:self.playBtn];
+//        }];
+//        PopoverAction *action2 = [PopoverAction actionWithTitle:@"高清" handler:^(PopoverAction *action) {
+//            [btn setTitle:@"高清" forState:UIControlStateNormal];
+//            _clarityIndex = 1;
+//            [self.wmPlayer resetWMPlayer];
+//            [self videoPlay:self.playBtn];
+//        }];
+//        PopoverAction *action3 = [PopoverAction actionWithTitle:@"超清" handler:^(PopoverAction *action) {
+//            [btn setTitle:@"超清" forState:UIControlStateNormal];
+//            _clarityIndex = 2;
+//            [self.wmPlayer resetWMPlayer];
+//            [self videoPlay:self.playBtn];
+//        }];
+//        PopoverView *popoverView = [PopoverView popoverView];
+//        popoverView.style = PopoverViewStyleDark;
+//        [popoverView showToView:btn withActions:@[action1, action2, action3]];
+//    };
     
     UITableView *selectionTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 0, 0) style:UITableViewStylePlain];
     selectionTableView.delegate = self;
@@ -301,12 +309,11 @@
     selectionTableView.separatorStyle  =UITableViewCellSeparatorStyleNone;
     [selectionTableView registerNib:[UINib nibWithNibName:NSStringFromClass([LessonListTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([LessonListTableViewCell class])];
     [self.view addSubview:selectionTableView];
-    [self.view insertSubview:selectionTableView belowSubview:self.videoBottomView];
     [selectionTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
-        make.top.equalTo(self.view.mas_bottom);
-        make.height.equalTo(@(SCREEN_HEIGHT - 220 - 50 - 64- 48));
+        make.bottom.equalTo(self.view.mas_bottom);
+        make.height.equalTo(@(kAllLessonTableViewHeight));
     }];
     self.allSelectionTableView = selectionTableView;
     
@@ -360,23 +367,25 @@
     }
 }
 - (void)loadData{
-    self.downloadModel = [[DownloadVideoModel alloc]init];
-    SVProgressShow();
-    [LTHttpManager findOneCurriculumWithUserId:IS_USER_ID CurriculumId:[NSString stringWithFormat:@"%ld",(long)self.videoId] Complete:^(LTHttpResult result, NSString *message, id data) {
+    //课程列表
+    [LTHttpManager findByCurriculumTypeWithUserId:IS_USER_ID CurriculumType:@"1" Complete:^(LTHttpResult result, NSString *message, id data) {
         if (LTHttpResultSuccess == result) {
-            OneLessonModel *model = [OneLessonModel mj_objectWithKeyValues:data[@"responseData"]];
-            self.oneLessonModel = model;
-            self.downloadModel.name = self.oneLessonModel.name;
-            self.downloadModel.videoSize = self.oneLessonModel.bsize;
-            self.downloadModel.videoId = [NSString stringWithFormat:@"%ld",(long)self.oneLessonModel.ID];
-            self.downloadModel.testPaperHtml = self.oneLessonModel.handouts;
-            self.downloadModel.wordHtml = self.oneLessonModel.vocabulary;
-            self.downloadModel.time = self.oneLessonModel.time;
-            J_Insert(self.downloadModel).updateResult;
-            [self.tableView reloadData];
-            SVProgressHiden();
+            NSArray *dataArray = data[@"responseData"];
+            [self.lessonArray removeAllObjects];
+            for (NSDictionary *dict in dataArray) {
+                VideoLessonModel *model = [VideoLessonModel mj_objectWithKeyValues:dict];
+                [self.lessonArray addObject:model];
+            }
+            self.allSelectionTableView.ly_emptyView = [LTEmpty NoDataEmptyWithMessage:@"还没有课程哦"];
+            self.playBtn.hidden = YES;//隐藏播放器
+            [self.allSelectionTableView reloadData];
+            [self changeClick:self.rightBtn];
+            
+        }else{
+            self.allSelectionTableView.ly_emptyView = [LTEmpty NoNetworkEmpty:^{
+                [self loadData];
+            }];
         }
-        SVProgressHiden();
     }];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -385,7 +394,7 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (tableView == self.allSelectionTableView) {
-        return self.dataArray.count;
+        return self.lessonArray.count;
     }
     return 1;
 }
@@ -416,7 +425,7 @@
         changeView.backgroundColor = [UIColor whiteColor];
         UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         leftBtn.titleLabel.font = [UIFont systemFontOfSize:16];
-        [leftBtn setTitle:@"课件" forState:UIControlStateNormal];
+        [leftBtn setTitle:@"本课讲义" forState:UIControlStateNormal];
         [leftBtn setTitleColor:UIColorFromRGB(0x4DAC7D) forState:UIControlStateSelected];
         [leftBtn setTitleColor:UIColorFromRGB(0x666666) forState:UIControlStateNormal];
         [changeView addSubview:leftBtn];
@@ -429,7 +438,7 @@
         
         UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         rightBtn.titleLabel.font = [UIFont systemFontOfSize:16];
-        [rightBtn setTitle:@"词汇" forState:UIControlStateNormal];
+        [rightBtn setTitle:@"课程目录" forState:UIControlStateNormal];
         [rightBtn setTitleColor:UIColorFromRGB(0x4DAC7D) forState:UIControlStateSelected];
         [rightBtn setTitleColor:UIColorFromRGB(0x666666) forState:UIControlStateNormal];
         [changeView addSubview:rightBtn];
@@ -467,8 +476,6 @@
         self.rightBtn = rightBtn;
         [self.leftBtn addTarget:self action:@selector(scrollClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.rightBtn addTarget:self action:@selector(scrollClick:) forControlEvents:UIControlEventTouchUpInside];
-        [self changeClick:self.leftBtn];
-        
         return changeView;
     }else{
         return nil;
@@ -477,9 +484,9 @@
 - (void)scrollClick:(UIButton *)sender{
     [self changeClick:sender];
     if (sender.tag == 101) {
-        [self.scrollCell.scrollView setContentOffset:CGPointMake(0, 0) ];
+        self.allSelectionTableView.hidden = YES;
     }else{
-        [self.scrollCell.scrollView setContentOffset:CGPointMake(SCREEN_WIDTH, 0) ];
+        self.allSelectionTableView.hidden = NO;
     }
 }
 - (void)changeClick:(UIButton *)sender{
@@ -511,15 +518,7 @@
         if (indexPath.section > 0) {
             WordWebViewTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WordWebViewTableViewCell class])];
             if (self.oneLessonModel) cell.model = self.oneLessonModel;
-            cell.scrollSize = ^(CGFloat x) {
-                NSLog(@"%f",x);
-                if (x > SCREEN_WIDTH/2) {
-                    [self changeClick:self.rightBtn];
-                }else{
-                    [self changeClick:self.leftBtn];
-                }
-            };
-            self.scrollCell = cell;
+//            self.scrollCell = cell;
             return cell;
         }else{
             UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
@@ -527,7 +526,7 @@
             }
     }else{
         LessonListTableViewCell *cell  = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([LessonListTableViewCell class])];
-        cell.model = self.dataArray[indexPath.row];
+        cell.model = self.lessonArray[indexPath.row];
         cell.selectionStyle = NO;
         return cell;
     }
@@ -535,21 +534,31 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 //选集
     if (tableView == self.allSelectionTableView) {
-        VideoLessonModel *videoModel = self.dataArray[indexPath.row];
+        VideoLessonModel *videoModel = self.lessonArray[indexPath.row];
         [self.wmPlayer resetWMPlayer];
-        [self.allSelectionTableView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.view);
-            make.right.equalTo(self.view);
-            make.top.equalTo(self.view.mas_bottom);
-            make.height.equalTo(@(SCREEN_HEIGHT - 220 - 50 - 64 - 48));
-        }];
-        [UIView animateWithDuration:0.2 animations:^{
-            [self.view layoutIfNeeded];
-        }];
         [self.videoImg bringSubviewToFront:self.playBtn];
         self.playBtn.hidden = NO;
         self.videoId = videoModel.ID;
-        [self loadData];
+        self.downloadModel = [[DownloadVideoModel alloc]init];
+        SVProgressShow();
+        [LTHttpManager findOneCurriculumWithUserId:IS_USER_ID CurriculumId:[NSString stringWithFormat:@"%ld",(long)self.videoId] Complete:^(LTHttpResult result, NSString *message, id data) {
+            if (LTHttpResultSuccess == result) {
+                OneLessonModel *model = [OneLessonModel mj_objectWithKeyValues:data[@"responseData"]];
+                self.oneLessonModel = model;
+                self.downloadModel.name = self.oneLessonModel.name;
+                self.downloadModel.videoSize = self.oneLessonModel.bsize;
+                self.downloadModel.videoId = [NSString stringWithFormat:@"%ld",(long)self.oneLessonModel.ID];
+                self.downloadModel.testPaperHtml = self.oneLessonModel.handouts;
+                self.downloadModel.wordHtml = self.oneLessonModel.vocabulary;
+                self.downloadModel.time = self.oneLessonModel.time;
+                J_Insert(self.downloadModel).updateResult;
+                [self scrollClick:self.leftBtn];
+                [self.tableView reloadData];
+                self.title = self.oneLessonModel.name;
+                SVProgressHiden();
+            }
+            SVProgressHiden();
+        }];
     }
 }
 #pragma mark 下载视频

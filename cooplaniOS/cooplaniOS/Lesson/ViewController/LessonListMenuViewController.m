@@ -170,13 +170,13 @@
         VideoLessonModel *model = self.lessonArray[indexPath.row];
         vc.videoId = model.ID;
         vc.title = model.name;
-        vc.dataArray = self.lessonArray;
+//        vc.dataArray = self.lessonArray;
         [self.navigationController pushViewController:vc animated:YES];
     }else if (tableView == self.learnedTableView){
         VideoLessonModel *model = self.learnedListArray[indexPath.row];
         vc.videoId = model.course_id;
         vc.title = model.name;
-        vc.dataArray = self.learnedListArray;
+//        vc.dataArray = self.learnedListArray;
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
