@@ -144,6 +144,7 @@
 		9B81D4DE20EB47ED00BFFC39 /* VideoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B81D4DC20EB47ED00BFFC39 /* VideoTableViewCell.xib */; };
 		9B81D4E220EB740B00BFFC39 /* WordWebViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B81D4E020EB740B00BFFC39 /* WordWebViewTableViewCell.m */; };
 		9B892A2220E1DF7100B0D5E5 /* LTDownloadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B892A2120E1DF7100B0D5E5 /* LTDownloadView.m */; };
+		9B8F7634214BA0D900A1FCA9 /* NewCheckWordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B8F7633214BA0D900A1FCA9 /* NewCheckWordView.m */; };
 		9B90287B2138D61400F0564C /* SectionWordNumsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B9028792138D61400F0564C /* SectionWordNumsTableViewCell.m */; };
 		9B90287C2138D61400F0564C /* SectionWordNumsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B90287A2138D61400F0564C /* SectionWordNumsTableViewCell.xib */; };
 		9B90287F2138E2DC00F0564C /* SelectedWBTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B90287E2138E2DC00F0564C /* SelectedWBTableViewController.m */; };
@@ -474,6 +475,8 @@
 		9B81D4E020EB740B00BFFC39 /* WordWebViewTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WordWebViewTableViewCell.m; sourceTree = "<group>"; };
 		9B892A2020E1DF7100B0D5E5 /* LTDownloadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTDownloadView.h; sourceTree = "<group>"; };
 		9B892A2120E1DF7100B0D5E5 /* LTDownloadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTDownloadView.m; sourceTree = "<group>"; };
+		9B8F7632214BA0D900A1FCA9 /* NewCheckWordView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewCheckWordView.h; sourceTree = "<group>"; };
+		9B8F7633214BA0D900A1FCA9 /* NewCheckWordView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewCheckWordView.m; sourceTree = "<group>"; };
 		9B9028782138D61400F0564C /* SectionWordNumsTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SectionWordNumsTableViewCell.h; sourceTree = "<group>"; };
 		9B9028792138D61400F0564C /* SectionWordNumsTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SectionWordNumsTableViewCell.m; sourceTree = "<group>"; };
 		9B90287A2138D61400F0564C /* SectionWordNumsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SectionWordNumsTableViewCell.xib; sourceTree = "<group>"; };
@@ -661,6 +664,8 @@
 				9B16B077208D7DDE00094EE7 /* ListenPlay.xib */,
 				9B1A5B1620BBAC4500DA21A6 /* CheckWordView.h */,
 				9B1A5B1720BBAC4500DA21A6 /* CheckWordView.m */,
+				9B8F7632214BA0D900A1FCA9 /* NewCheckWordView.h */,
+				9B8F7633214BA0D900A1FCA9 /* NewCheckWordView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1819,6 +1824,7 @@
 				9B90287B2138D61400F0564C /* SectionWordNumsTableViewCell.m in Sources */,
 				9B3DA39220F886730028CDA9 /* LessonServerView.m in Sources */,
 				9B3D02D520848878005C923B /* LoginViewController.m in Sources */,
+				9B8F7634214BA0D900A1FCA9 /* NewCheckWordView.m in Sources */,
 				9B26D86320E9BD3300B4FC11 /* VideoViewController.m in Sources */,
 				9BAC4CCE2125661C00A3A58B /* AboutUsViewController.m in Sources */,
 				9BA1CB6920A92A790093C37B /* MyCollectionModel.m in Sources */,
