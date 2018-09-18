@@ -89,10 +89,15 @@
         }
     }];
 }
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.mm_drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
+    self.mm_drawerController.closeDrawerGestureModeMask = MMCloseDrawerGestureModeNone;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"我的收藏";
+    self.title = @"模拟考场";
     self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.myTableView];
     [self loadData];
@@ -100,23 +105,26 @@
 }
 - (void)loadData{
     if (IS_USER_ID) {
-        [LTHttpManager findAllCollectionTestPaperWithUserId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
-            if (LTHttpResultSuccess == result) {
+        [LTHttpManager FindAllWithUseId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
+            if (result == LTHttpResultSuccess) {
                 [self.dataArray removeAllObjects];
-                dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                    for (NSDictionary *dict in data[@"responseData"]) {
-                        MyCollectionModel *model = [MyCollectionModel mj_objectWithKeyValues:dict];
-                        [self.dataArray addObject:model];
-                    }
-                    if (self.dataArray.count == 0) {
-                        SVProgressShowStuteText(@"暂无收藏", NO);
-                    }
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.myTableView reloadData];
-                    });
-                });
+                NSArray *array = data[@"responseData"];
+                NSMutableDictionary *muDict = [NSMutableDictionary dictionary];
+                for (NSDictionary *dic in array) {
+                    muDict = [NSMutableDictionary dictionaryWithDictionary:dic[@"tp"]];
+                    [muDict addEntriesFromDictionary:@{@"collection":dic[@"type"]}];
+                    MyCollectionModel *model = [MyCollectionModel mj_objectWithKeyValues:muDict];
+                    [self.dataArray addObject:model];
+                }
+                if (self.dataArray.count == 0) {
+                    SVProgressShowStuteText(@"暂无收藏", NO);
+                }
+                [self.myTableView reloadData];
             }else{
                 SVProgressShowStuteText(message, NO);
+                self.myTableView.ly_emptyView = [LTEmpty NoNetworkEmpty:^{
+                    [self loadData];
+                }];
             }
         }];
     }else{

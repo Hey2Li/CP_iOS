@@ -41,15 +41,17 @@
         }];
     }
     if (model.isCorrect) {
-        self.shapeImageView.hidden = NO;
-        self.CorrectLb.hidden = YES;
+//        self.shapeImageView.hidden = NO;
+        [self.shapeImageView setImage:[UIImage imageNamed:@"Shape"]];
+//        self.CorrectLb.hidden = YES;
         self.questionView.backgroundColor = UIColorFromRGB(0xFFFFFF);
         self.questionNameLb.textColor = UIColorFromRGB(0x666666);
         self.youAnswerLb.textColor = UIColorFromRGB(0x4DAC7D);
         self.correctAnswerLb.textColor = UIColorFromRGB(0x4DAC7D);
     }else{
-        self.shapeImageView.hidden = YES;
-        self.CorrectLb.hidden = NO;
+//        self.shapeImageView.hidden = YES;
+        [self.shapeImageView setImage:[UIImage imageNamed:@"回答错误"]];
+//        self.CorrectLb.hidden = NO;
         self.questionView.backgroundColor = UIColorFromRGB(0xD76F67);
         self.questionNameLb.textColor = UIColorFromRGB(0xFFFFFF);
         self.youAnswerLb.textColor = UIColorFromRGB(0xD76F67);

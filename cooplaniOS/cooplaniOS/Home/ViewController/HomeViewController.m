@@ -19,6 +19,7 @@
 #import "HomeCategoryTableViewCell.h"
 #import "HomeWordBookTableViewCell.h"
 #import "HomeBuyLessonTableViewCell.h"
+#import "StartLearnWordViewController.h"
 
 @interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -76,7 +77,7 @@
     UIView *tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:240])];
     //倒计时
     UILabel *countdownLabel = [UILabel new];
-    countdownLabel.text = @"距离四家倒计时还有92天";
+    countdownLabel.text = @"距离四级倒计时还有92天";
     countdownLabel.font = [UIFont boldSystemFontOfSize:14];
     countdownLabel.textColor = UIColorFromRGB(0x333333);
     countdownLabel.textAlignment = NSTextAlignmentRight;
@@ -200,6 +201,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 2) {
         HomeBuyLessonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([HomeBuyLessonTableViewCell class])];
+        cell.selectionStyle = NO;
         return cell;
     }else if (indexPath.section == 0){
         HomeCategoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([HomeCategoryTableViewCell class])];
@@ -207,18 +209,19 @@
         return cell;
     }else if (indexPath.section == 1){
         HomeWordBookTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([HomeWordBookTableViewCell class])];
+        cell.selectionStyle = NO;
         return cell;
     }else{
         HomeBuyLessonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([HomeBuyLessonTableViewCell class])];
+        cell.selectionStyle = NO;
         return cell;
     }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    HomeListenCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    PaperDetailViewController *vc = [PaperDetailViewController new];
-    vc.nextTitle = cell.TitleLabel.text;
-    vc.onePaperModel = self.paperMutableArray[indexPath.row];
-    [self.navigationController pushViewController:vc animated:YES];
+    if (indexPath.section == 1) {
+        StartLearnWordViewController *vc =[[StartLearnWordViewController alloc]init];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning{

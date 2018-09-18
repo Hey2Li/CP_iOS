@@ -426,8 +426,8 @@
         UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         leftBtn.titleLabel.font = [UIFont systemFontOfSize:16];
         [leftBtn setTitle:@"本课讲义" forState:UIControlStateNormal];
-        [leftBtn setTitleColor:UIColorFromRGB(0x4DAC7D) forState:UIControlStateSelected];
-        [leftBtn setTitleColor:UIColorFromRGB(0x666666) forState:UIControlStateNormal];
+        [leftBtn setTitleColor:UIColorFromRGB(0xFFCE43) forState:UIControlStateSelected];
+        [leftBtn setTitleColor:UIColorFromRGB(0x333333) forState:UIControlStateNormal];
         [changeView addSubview:leftBtn];
         [leftBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(changeView);
@@ -439,8 +439,8 @@
         UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         rightBtn.titleLabel.font = [UIFont systemFontOfSize:16];
         [rightBtn setTitle:@"课程目录" forState:UIControlStateNormal];
-        [rightBtn setTitleColor:UIColorFromRGB(0x4DAC7D) forState:UIControlStateSelected];
-        [rightBtn setTitleColor:UIColorFromRGB(0x666666) forState:UIControlStateNormal];
+        [rightBtn setTitleColor:UIColorFromRGB(0xFFCE43) forState:UIControlStateSelected];
+        [rightBtn setTitleColor:UIColorFromRGB(0x333333) forState:UIControlStateNormal];
         [changeView addSubview:rightBtn];
         [rightBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.equalTo(changeView);

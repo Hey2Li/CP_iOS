@@ -18,4 +18,5 @@
 @property (nonatomic, strong) NSString * testPaperUrl;
 @property (nonatomic, strong) NSString * type;
 @property (nonatomic, strong) NSString * voiceUrl;
+@property (nonatomic, strong) NSString * size;
 @end

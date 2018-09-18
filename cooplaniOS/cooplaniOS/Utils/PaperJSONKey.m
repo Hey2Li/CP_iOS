@@ -49,5 +49,8 @@ NSString *const kLoadLearnedList = @"loadLearnedList";//加载已学列表
 NSString *const kWordNum = @"beiwordnum";//加载单词的个数
 NSString *const kWordBookId = @"wordbookId";//加载单词的个数
 NSString *const kHomeReloadData = @"homereloaddata";//刷新home数据
-
+NSString *const kOpenTBUser = @"kOpenTBUser";//打开音词联动的tableview用户交互
+NSString *const kCloseTBUser = @"kCloseTBUser";//关掉音词联动的tableview用户交互
+NSString *const kFindWordIsOpen = @"kFindWordIsOpen";//查词页面打开了
+NSString *const kFindWordIsClose = @"kFindWordIsClose";//查词页面关闭了
 @end
