@@ -11,6 +11,13 @@
 #import "NoHighlightedTableViewCell.h"
 
 @interface PracticeModeTiKaCCell ()<UITableViewDelegate, UITableViewDataSource>
+{
+    /**
+     是否触摸到可拖动区域
+     */
+    BOOL isMove;
+    CGPoint _currentPoint;
+}
 @property (nonatomic, strong) UILabel *questionLb;
 @property (nonatomic, strong) UITableView *tableView;
 @end
@@ -19,7 +26,7 @@
 
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
-        self.backgroundColor = UIColorFromRGB(0xf7f7f7);
+        self.backgroundColor = [UIColor clearColor];
         UIView *backView = [[UIView alloc]init];
         backView.backgroundColor = [UIColor whiteColor];
         [self addSubview:backView];
@@ -79,9 +86,11 @@
             make.top.equalTo(tableView.mas_top);
             make.height.equalTo(@30);
         }];
-        [btn setImage:[UIImage imageNamed:@"向下"] forState:UIControlStateNormal];
-        [btn setImage:[UIImage imageNamed:@"向上"] forState:UIControlStateSelected];
+        [btn setImage:[UIImage imageNamed:@"收起"] forState:UIControlStateNormal];
+        [btn setImage:[UIImage imageNamed:@"上拉-2"] forState:UIControlStateSelected];
         [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+        btn.hidden = YES;
+        [self btnClick:btn];
     }
     return self;
 }
@@ -184,4 +193,45 @@
     _questionsModel = questionsModel;
     [self.tableView reloadData];
 }
+/*
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    NSLog(@"---触摸开始");
+    UITouch *touch = [touches anyObject];
+    _currentPoint = [touch locationInView:self];
+}
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    UITouch *touch = [touches anyObject];
+    CGPoint currentPoint = [touch locationInView:nil];//传空获取当前窗口的坐标
+    currentPoint.y += self.height / 2.0f - _currentPoint.y - 64 - 86;
+    if (currentPoint.y < self.height / 2.0f + 20) {
+        currentPoint.y = self.height / 2.0f + 20;
+        //        [[NSNotificationCenter defaultCenter]postNotificationName:kCloseTBUser object:nil];
+    }
+    if (currentPoint.y > SCREEN_HEIGHT - self.height / 2.0f - 64) {
+        currentPoint.y = SCREEN_HEIGHT - self.height / 2.0f - 64;
+        //        [[NSNotificationCenter defaultCenter]postNotificationName:kOpenTBUser object:nil];
+    }
+    currentPoint.x = self.width / 2.0f;
+    [UIView animateWithDuration:0.1 animations:^{
+        self.center = currentPoint;
+    }];
+}
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    NSLog(@"FlyElephant---触摸结束");
+}
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    
+    UIView * fitView = [super hitTest:point withEvent:event];
+    NSLog(@"hitTest:%@",fitView);
+//    UIResponder *nextResponder = [self nextResponder];
+//    do {
+//        if ([nextResponder isKindOfClass:[UICollectionView class]]) {
+//            return (UICollectionView *)nextResponder;
+//        }
+//        nextResponder = [nextResponder nextResponder];
+//    } while (nextResponder != nil);
+//        return ;
+    return fitView;
+}
+*/
 @end

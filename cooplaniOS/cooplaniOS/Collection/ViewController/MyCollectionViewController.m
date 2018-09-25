@@ -10,10 +10,19 @@
 #import "MyCollectionPaperTableViewCell.h"
 #import "myCollectionModel.h"
 #import "PaperDetailViewController.h"
+#import "TestModeViewController.h"
+#import "LTDownloadView.h"
 
 @interface MyCollectionViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
 @property (nonatomic, strong) NSMutableArray *dataArray;
+@property (nonatomic, copy) NSString *downloadVoiceUrl;
+@property (nonatomic, copy) NSString *downloadlrcUrl;
+@property (nonatomic, copy) NSString *downloadJsonUrl;
+@property (nonatomic, strong) DownloadFileModel *downloadModel;
+@property (nonatomic, strong) LTDownloadView *downloadView;
+@property (nonatomic, copy) NSString *voiceSize;
+@property (nonatomic, strong) NSURLSessionDownloadTask *downloadTask;
 @end
 
 @implementation MyCollectionViewController
@@ -34,6 +43,20 @@
     }
     return _myTableView;
 }
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.mm_drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
+    self.mm_drawerController.closeDrawerGestureModeMask = MMCloseDrawerGestureModeNone;
+}
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    self.title = @"模拟考场";
+    self.view.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.myTableView];
+    self.downloadModel = [[DownloadFileModel alloc]init];
+    [self loadData];
+}
 #pragma mark UITableViewDegate&DataSource
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.dataArray.count;
@@ -50,59 +73,71 @@
     };
     return cell;
 }
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
-    return YES;
-}
-- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return @"删除";
-}
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        MyCollectionModel *model = self.dataArray[indexPath.row];
-        [LTHttpManager deleteCollectionTestPaperWithId:@(model.testPaperId) Complete:^(LTHttpResult result, NSString *message, id data) {
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    MyCollectionModel *onePaperModel = self.dataArray[indexPath.row];
+//    NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+//    NSString *urlString = [Dmodel.paperVoiceName stringByRemovingPercentEncoding];
+//    NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//    if ([fileManager fileExistsAtPath:fullPath]) {
+//        [self.dowloadBtn setImage:[UIImage imageNamed:@"downloaded"] forState:UIControlStateNormal];
+//        self.dowloadBtn.enabled = NO;
+//    }
+    DownloadFileModel *model = [DownloadFileModel jr_findByPrimaryKey:[NSString stringWithFormat:@"%ld", onePaperModel.ID]];
+    if (model.paperJsonName == nil || [model.paperJsonName isEqualToString:@""] || [model.paperJsonName hasPrefix:@"http"]) {
+        [LTHttpManager findOneTestPaperWithID:@(onePaperModel.ID) Complete:^(LTHttpResult result, NSString *message, id data) {
             if (LTHttpResultSuccess == result) {
-                // 从数据源中删除
-                //    [_data removeObjectAtIndex:indexPath.row];
-                [self.dataArray removeObjectAtIndex:indexPath.row];
-                // 从列表中删除
-                [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                [[NSNotificationCenter defaultCenter]postNotificationName:kHomeReloadData object:nil];
-                SVProgressShowStuteText(@"取消成功", YES);
+                self.downloadVoiceUrl = data[@"responseData"][@"voiceUrl"];
+                self.downloadlrcUrl = data[@"responseData"][@"lic"];
+                self.downloadJsonUrl = data[@"responseData"][@"testPaperUrl"];
+                self.downloadModel.testPaperId = data[@"responseData"][@"id"];
+                self.downloadModel.name = data[@"responseData"][@"name"];
+                self.downloadModel.info = data[@"responseData"][@"info"];
+                self.downloadModel.number = data[@"responseData"][@"number"];
+                self.voiceSize = data[@"responseData"][@"size"];
+                if (model.paperVoiceName == nil || [model.paperVoiceName isEqualToString:@""]) {
+                    self.downloadModel.paperVoiceName = self.downloadVoiceUrl;
+                    J_Update(self.downloadModel).Columns(@[@"paperVoiceName"]).updateResult;
+                }
+                [USERDEFAULTS setObject:[NSString stringWithFormat:@"%ld", (long)onePaperModel.ID] forKey:@"testPaperId"];
+                [LTHttpManager downloadURL:self.downloadJsonUrl progress:^(NSProgress *downloadProgress) {
+                    
+                } destination:^(NSURL *targetPath) {
+                    NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                    NSString *fileName = [url lastPathComponent];
+                    self.downloadModel.paperJsonName = fileName;
+                    J_Update(self.downloadModel).Columns(@[@"paperJsonName"]).updateResult;
+                } failure:^(NSError *error) {
+                    
+                }];
+                [LTHttpManager downloadURL:self.downloadlrcUrl progress:^(NSProgress *downloadProgress) {
+                    
+                } destination:^(NSURL *targetPath) {
+                    NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                    NSString *fileName = [url lastPathComponent];
+                    self.downloadModel.paperLrcName = fileName;
+                    J_Update(self.downloadModel).Columns(@[@"paperLrcName"]).updateResult;
+                    TestModeViewController *vc = [[TestModeViewController alloc]init];
+                    vc.testPaperId = [NSString stringWithFormat:@"%ld",onePaperModel.ID];
+                    [self.navigationController pushViewController:vc animated:YES];
+                } failure:^(NSError *error) {
+                    
+                }];
+                J_Insert(self.downloadModel).updateResult;
             }else{
-                SVProgressShowStuteText(@"取消失败", NO);
+                [USERDEFAULTS setObject:[NSString stringWithFormat:@"%ld", (long)onePaperModel.ID] forKey:@"testPaperId"];
             }
         }];
+    }else{
+        TestModeViewController *vc = [[TestModeViewController alloc]init];
+        vc.testPaperId = [NSString stringWithFormat:@"%ld",onePaperModel.ID];
+        [self.navigationController pushViewController:vc animated:YES];
     }
+  
 }
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    MyCollectionModel *model = self.dataArray[indexPath.row];
-    PaperDetailViewController *vc = [[PaperDetailViewController alloc]init];
-    [LTHttpManager findOneTestPaperInfoWithUserId:IS_USER_ID ? IS_USER_ID : @"" TestPaperId:@(model.testPaperId) Complete:^(LTHttpResult result, NSString *message, id data) {
-        if (LTHttpResultSuccess == result) {
-            NSMutableDictionary *muDict = [NSMutableDictionary dictionaryWithDictionary:data[@"responseData"][@"tp"]];
-            [muDict addEntriesFromDictionary:@{@"collection":data[@"responseData"][@"type"]}];
-            PaperModel *onePaperModel = [PaperModel mj_objectWithKeyValues:muDict];
-            MyCollectionPaperTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-            vc.title = cell.paperName.text;
-            vc.onePaperModel = onePaperModel;
-            [self.navigationController pushViewController:vc animated:YES];
-        }
-    }];
-}
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    self.mm_drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
-    self.mm_drawerController.closeDrawerGestureModeMask = MMCloseDrawerGestureModeNone;
-}
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    self.title = @"模拟考场";
-    self.view.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:self.myTableView];
-    [self loadData];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loadData) name:@"reloadCollection" object:nil];
-}
+
 - (void)loadData{
     if (IS_USER_ID) {
         [LTHttpManager FindAllWithUseId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {

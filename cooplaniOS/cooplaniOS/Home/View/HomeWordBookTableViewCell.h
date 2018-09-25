@@ -11,5 +11,6 @@
 @interface HomeWordBookTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIButton *gotoLearnBtn;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImg;
+@property (weak, nonatomic) IBOutlet UILabel *wordNum;
 
 @end

@@ -45,7 +45,7 @@
 
 @implementation QuestionsModel
 + (NSDictionary *)mj_objectClassInArray{
-    return @{@"Options":@"OptionsModel"};
+    return @{@"Options":@"OptionsModel",@"options":@"OptionsModel"};
 }
 @end
 

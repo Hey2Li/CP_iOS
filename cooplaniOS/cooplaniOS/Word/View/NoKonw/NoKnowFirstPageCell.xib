@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="拥有；占有某物" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7n3-rO-PLd">
-                        <rect key="frame" x="20" y="20" width="216" height="17"/>
+                        <rect key="frame" x="20" y="20" width="181" height="17"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="17" id="fy2-WO-tT9"/>
                         </constraints>
@@ -28,10 +28,10 @@
                         <color key="textColor" red="0.33725490200000002" green="0.33725490200000002" blue="0.33725490200000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[出现6次]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="46R-Pa-e71">
-                        <rect key="frame" x="246" y="20" width="65" height="14.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[出现6次]" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="46R-Pa-e71">
+                        <rect key="frame" x="211" y="20" width="100" height="14.5"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="65" id="jsH-zb-cae"/>
+                            <constraint firstAttribute="width" constant="100" id="jsH-zb-cae"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.33725490196078434" green="0.33725490196078434" blue="0.33725490196078434" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -75,6 +75,7 @@
                 <constraint firstItem="7n3-rO-PLd" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="8wx-qu-J73"/>
                 <constraint firstAttribute="trailing" secondItem="S1q-9k-oYF" secondAttribute="trailing" constant="20" id="A5Z-VY-4Wl"/>
                 <constraint firstItem="46R-Pa-e71" firstAttribute="leading" secondItem="7n3-rO-PLd" secondAttribute="trailing" constant="10" id="Izg-yY-jC4"/>
+                <constraint firstItem="46R-Pa-e71" firstAttribute="leading" secondItem="7n3-rO-PLd" secondAttribute="trailing" constant="10" id="Lj1-ss-3tg"/>
                 <constraint firstItem="S1q-9k-oYF" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="d5P-5T-IJc"/>
                 <constraint firstItem="YyH-VQ-7Df" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="hgT-5v-G0a"/>
                 <constraint firstItem="7n3-rO-PLd" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="20" id="kNm-mO-yfZ"/>

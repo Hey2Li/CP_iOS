@@ -22,7 +22,7 @@ void SVProgressShowText(NSString *text);
 void SVProgressShowStuteText(NSString *text, BOOL isSucceed);//成功或失败用 0->失败
 void SVProgressHiden(void);
 void SVProgressShowProgress(float progress);
-
++ (NSString *)currentTimeStr;
 + (NSArray *)dateArray;
 NSAttributedString *returnNumAttr(NSString *str,NSInteger fontSize);
 + (NSDictionary *)MD5Dictionary:(NSMutableDictionary *)dic;

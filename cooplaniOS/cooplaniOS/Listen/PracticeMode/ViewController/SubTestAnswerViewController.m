@@ -1,29 +1,35 @@
 //
-//  PMAnswerViewController.m
+//  SubTestAnswerViewController.m
 //  cooplaniOS
 //
-//  Created by Lee on 2018/5/3.
+//  Created by Lee on 2018/9/21.
 //  Copyright © 2018年 Lee. All rights reserved.
 //
 
-#import "PMAnswerViewController.h"
+#import "SubTestAnswerViewController.h"
 #import "AnswerTableViewCell.h"
 #import "answerModel.h"
 #import "AnswerHeadView.h"
 #import "PaperDetailViewController.h"
 #import "PracticeModeViewController.h"
 #import "ListenTrainingViewController.h"
+#import "SubTestPMViewController.h"
 
-@interface PMAnswerViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface SubTestAnswerViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
 @property (nonatomic, assign) BOOL isOpen;
 @property (nonatomic, strong) NSIndexPath *selectIndexPath;
 @property (nonatomic, strong) NSIndexPath *lastSelectedIndexPath;
 @property (nonatomic, strong) NSMutableArray *dataSourceArray;
 @property (nonatomic ,strong) AnswerHeadView *headView;
+
+@property (nonatomic, strong) DownloadFileModel *downloadModel;
+@property (nonatomic, copy) NSString *downloadVoiceUrl;
+@property (nonatomic, copy) NSString *downloadlrcUrl;
+@property (nonatomic, copy) NSString *downloadJsonUrl;
 @end
 
-@implementation PMAnswerViewController
+@implementation SubTestAnswerViewController
 
 - (NSMutableArray *)dataSourceArray{
     if (!_dataSourceArray) {
@@ -46,6 +52,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // Do any additional setup after loading the view.
     self.title = @"成绩单";
     [self initWithView];
     [self initWithNavi];
@@ -67,17 +74,6 @@
 - (void)initWithView{
     [self.view addSubview:self.myTableView];
     [self.dataSourceArray removeAllObjects];
-//    for (int i = 0; i < self.questionsArray.count; i ++) {
-//        QuestionsModel *model = [[QuestionsModel alloc]init];
-//        model.yourAnswer = @"1";
-//        model.correctAnswer = @"2";
-//        model.questionNum = [NSString stringWithFormat:@"Q%d",i];
-//        model.correct = self.correct ? self.correct : @"100%";
-//        model.answerDetail = @"【精析】事实细节题。新闻讲述了Addison卖柠檬水和画为生病的弟弟筹资的故事。新闻开门见山讲到，新墨西哥州9岁的女孩Addison已经为需要做心脏手术的弟弟筹集了500多美元。由此可知，女孩筹钱是为了给弟弟看病。";
-//        model.isCorrect = i%2 ? YES : NO;
-//        model.isSelected = NO;
-//        [self.dataSourceArray addObject:model];
-//    }
     [self.myTableView reloadData];
     NSString *className = NSStringFromClass([AnswerHeadView class]);
     _headView = [[UINib nibWithNibName:className bundle:nil] instantiateWithOwner:nil options:nil].firstObject;
@@ -132,86 +128,105 @@
 }
 #pragma mark 继续
 - (void)continueBtnClick:(UIButton *)btn{
-    PracticeModeViewController *vc = [[PracticeModeViewController alloc]init];
-    vc.testPaperId = self.testPaperId;
-    if (self.mode < 3) {
-        self.mode++;
+    if (!self.sectionType) {
+        return;
     }
-    vc.mode = self.mode;
-    [self.navigationController pushViewController:vc animated:YES];
+    [LTHttpManager getOneNewTestWithUserId:IS_USER_ID Type:@"1" Testpaper_kind:@"1T" Testpaper_type:self.sectionType Complete:^(LTHttpResult result, NSString *message, id data) {
+        if (LTHttpResultSuccess == result) {
+            self.downloadVoiceUrl = data[@"responseData"][@"voiceUrl"];
+            self.downloadlrcUrl = data[@"responseData"][@"lic"];
+            self.downloadJsonUrl = data[@"responseData"][@"testPaperUrl"];
+            self.downloadModel.testPaperId = data[@"responseData"][@"id"];
+            self.downloadModel.name = data[@"responseData"][@"name"];
+            self.downloadModel.info = data[@"responseData"][@"info"];
+            self.downloadModel.number = data[@"responseData"][@"number"];
+            DownloadFileModel *model = [DownloadFileModel jr_findByPrimaryKey:self.downloadModel.testPaperId];
+            if (model.paperVoiceName == nil || [model.paperVoiceName isEqualToString:@""]) {
+                self.downloadModel.paperVoiceName = self.downloadVoiceUrl;
+                J_Update(self.downloadModel).Columns(@[@"paperVoiceName"]).updateResult;
+            }
+            [USERDEFAULTS setObject:self.downloadModel.testPaperId forKey:@"testPaperId"];
+            [LTHttpManager downloadURL:self.downloadJsonUrl progress:^(NSProgress *downloadProgress) {
+                
+            } destination:^(NSURL *targetPath) {
+                NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                NSString *fileName = [url lastPathComponent];
+                self.downloadModel.paperJsonName = fileName;
+                J_Update(self.downloadModel).Columns(@[@"paperJsonName"]).updateResult;
+            } failure:^(NSError *error) {
+                
+            }];
+            [LTHttpManager downloadURL:self.downloadlrcUrl progress:^(NSProgress *downloadProgress) {
+                
+            } destination:^(NSURL *targetPath) {
+                NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                NSString *fileName = [url lastPathComponent];
+                self.downloadModel.paperLrcName = fileName;
+                J_Update(self.downloadModel).Columns(@[@"paperLrcName"]).updateResult;
+                SubTestPMViewController *vc = [[SubTestPMViewController alloc]init];
+                
+                vc.testPaperId = self.downloadModel.testPaperId;
+                //                        vc.subTestPaper = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+            } failure:^(NSError *error) {
+                
+            }];
+            J_Insert(self.downloadModel).updateResult;
+            
+            NSLog(@"%@",self.downloadModel);
+        }
+    }];
 }
 - (void)testAgainBtnClick:(UIButton *)btn{
-    PracticeModeViewController *vc = [[PracticeModeViewController alloc]init];
+    SubTestPMViewController *vc = [[SubTestPMViewController alloc]init];
     vc.testPaperId = self.testPaperId;
-    vc.mode = self.mode;
+    vc.sectionType = self.sectionType;
     [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma mark TableViewDataSource&Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return self.questionsArray.count + 1;
+    return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (section == self.questionsArray.count) {
-        return 0;
-    }else{
-        SectionsModel *model = self.questionsArray[section];//刷题模式只有有一个section
-        return model.Passages.count;
-    }
+    return self.questionsArray.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section < self.questionsArray.count) {
-        SectionsModel *model = self.questionsArray[indexPath.section];
-        QuestionsModel *questionModel = model.Passages[indexPath.row];
-        if (questionModel.isSelected) {
-            return self.myTableView.rowHeight;
-        }else{
-            return 50;
-        }
+    QuestionsModel *questionModel = self.questionsArray[indexPath.row];
+    if (questionModel.isSelected) {
+        return self.myTableView.rowHeight;
     }else{
-        return CGFLOAT_MIN;
+        return 50;
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 40;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    if (section < self.questionsArray.count) {
-        UIView *headerView = [[UIView alloc]init];
-        SectionsModel *model = self.questionsArray[section];
-        headerView.backgroundColor = UIColorFromRGB(0xf7f7f7);
-        UILabel *sectionLb = [UILabel new];
-        sectionLb.text = model.SectionTitle;
-        sectionLb.font = [UIFont boldSystemFontOfSize:14];
-        [headerView addSubview:sectionLb];
-        [sectionLb mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(headerView.mas_left).offset(15);
-            make.right.equalTo(headerView.mas_right).offset(10);
-            make.top.equalTo(headerView);
-            make.height.equalTo(@40);
-        }];
-        return headerView;
-    }else{
-        UIView *headerView = [[UIView alloc]init];
-        headerView.backgroundColor = [UIColor whiteColor];
-        return headerView;
-    }
+    UIView *headerView = [[UIView alloc]init];
+    headerView.backgroundColor = UIColorFromRGB(0xf7f7f7);
+    UILabel *sectionLb = [UILabel new];
+    sectionLb.text = @"Section";
+    sectionLb.font = [UIFont boldSystemFontOfSize:14];
+    [headerView addSubview:sectionLb];
+    [sectionLb mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(headerView.mas_left).offset(15);
+        make.right.equalTo(headerView.mas_right).offset(10);
+        make.top.equalTo(headerView);
+        make.height.equalTo(@40);
+    }];
+    return headerView;
+
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     AnswerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([AnswerTableViewCell class]) forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    if (indexPath.section < self.questionsArray.count) {
-        SectionsModel *model = self.questionsArray[indexPath.section];
-        QuestionsModel *questionModel = model.Passages[indexPath.row];
-        cell.model = questionModel;
-    }else{
-        
-    }
+    QuestionsModel *questionModel = self.questionsArray[indexPath.row];
+    cell.model = questionModel;
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section < self.questionsArray.count) {
-        SectionsModel *model = self.questionsArray[indexPath.section];
-        QuestionsModel *questionModel = model.Passages[indexPath.row];
+        QuestionsModel *questionModel = self.questionsArray[indexPath.row];
         questionModel.isSelected = !questionModel.isSelected;
         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:nil];
     }
@@ -225,11 +240,6 @@
         scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
     }
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 /*
 #pragma mark - Navigation
 

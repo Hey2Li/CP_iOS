@@ -172,7 +172,7 @@
         [cell.dowloadBtn setImage:[UIImage imageNamed:@"更多"] forState:UIControlStateNormal];
         cell.selectionStyle = NO;
         DownloadFileModel *model = self.downloadArray[indexPath.row];
-        cell.downloadModel = model;
+        cell.downloadViewModel = model;
         NSString *path = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
         NSString *filePath = [NSString stringWithFormat:@"%@/%@",path,model.paperVoiceName];
         cell.fileSizeLb.text = filePath.fileSize;

@@ -19,7 +19,14 @@
 /**
  音标
  */
-@property (weak, nonatomic) IBOutlet UILabel *yinBiaoLb;
+@property (weak, nonatomic) IBOutlet UILabel *enYinBiaoLb;
+@property (weak, nonatomic) IBOutlet UILabel *AmYinBiaoLb;
+/**
+ 添加笔记
+ */
+@property (weak, nonatomic) IBOutlet UIButton *addNoteBtn;
+@property (weak, nonatomic) IBOutlet UIButton *playAm;
+@property (weak, nonatomic) IBOutlet UIButton *playEn;
 
 /**
  释义

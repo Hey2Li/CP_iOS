@@ -16,7 +16,7 @@
 #import "ListenTableViewCell.h"
 #import "FeedbackViewController.h"
 #import "CollectionSentenceModel.h"
-#import "CheckWordView.h"
+#import "NewCheckWordView.h"
 #import "CHMagnifierView.h"
 
 @interface ListenPaperViewController ()<UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
@@ -37,7 +37,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *otherVIewBottom;
 @property (nonatomic, assign) NSInteger lastIndex;
 @property (nonatomic, assign) BOOL lastPlaying;
-@property (nonatomic, strong) CheckWordView *checkWordView;
+@property (nonatomic, strong) NewCheckWordView *checkWordView;
 @property (nonatomic, strong) UILabel *wordLabel;
 @property (strong, nonatomic) CHMagnifierView *magnifierView;
 
@@ -64,9 +64,9 @@
     }
     return _magnifierView;
 }
-- (CheckWordView *)checkWordView{
+- (NewCheckWordView *)checkWordView{
     if (!_checkWordView) {
-        _checkWordView = [[CheckWordView alloc]initWithFrame:CGRectMake(0, 0, 214, SCREEN_WIDTH)];
+        _checkWordView = [[NewCheckWordView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_HEIGHT - 64 - 10, SCREEN_WIDTH)];
     }
     return _checkWordView;
 }
@@ -232,12 +232,12 @@
                 [self.checkWordView mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.bottom.equalTo(self.view.mas_bottom);
                     make.width.equalTo(self.view.mas_width);
-                    make.height.equalTo(@214);
+                    make.height.equalTo(@173);
                 }];
                 WeakSelf
-                self.checkWordView.closeBlock = ^{
-                    weakSelf.wordLabel.hidden = YES;
-                };
+//                self.checkWordView.closeBlock = ^{
+//                    weakSelf.wordLabel.hidden = YES;
+//                };
                 //调用查词方法
                 NSLog(@"%@",self.currentWord);
             }

@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *fileSizeLb;
 @property (weak, nonatomic) IBOutlet UIButton *dowloadBtn;
 @property (nonatomic, strong) MyCollectionModel *model;
-@property (nonatomic, strong) DownloadFileModel *downloadModel;
-@property (nonatomic, copy) void (^reloadData)();
+@property (nonatomic, copy) void (^reloadData)(void);
+@property (nonatomic, strong) DownloadFileModel *downloadViewModel;
+
 @end

@@ -54,6 +54,7 @@
 @property (nonatomic, copy) NSString *QuestionAudioStartTime;
 @property (nonatomic, copy) NSString *QuestionAudioEndTime;
 @property (nonatomic, strong) NSArray *Options;
+@property (nonatomic, strong) NSArray *options;
 @property (nonatomic, copy) NSString *Answer;
 @property (nonatomic, copy) NSString *Explanation;
 @property (nonatomic, assign) BOOL isCorrect;

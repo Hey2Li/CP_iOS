@@ -450,7 +450,7 @@
         }];
         
         UIView *bottomView = [UIView new];
-        bottomView.backgroundColor = UIColorFromRGB(0x4DAC7D);
+        bottomView.backgroundColor = UIColorFromRGB(0xFFCE43);
         [changeView addSubview:bottomView];
         [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.width.equalTo(@85);

@@ -9,7 +9,7 @@
 #import "LTHTTPSessionManager.h"
 #import "PaperJSONKey.h"
 
-#define BaseURL @"http://app.cooplan.cn"
+#define BaseURL @"http://192.168.0.25:8080/cooplan-app"
 //http://192.168.0.63:8080/cooplan-app
 @interface LTHttpManager : LTHTTPSessionManager
 
@@ -434,4 +434,51 @@ url: /client/public/user/modifyOpenBook
  @param complete block
  */
 + (void)changeUserOpenWordbookWithUser_id:(NSString *)user_id BookId:(NSString *)open_book Complete:(completeBlock)complete;
+
+
+/**
+ 查询展示的广告, 只查询状态为1的 mlg 9/12
+
+ @param complete block
+ */
++ (void)showHomeAdWithComplete:(completeBlock)complete;
+
+
+/**
+ 添加一个专项训练 mlg 9/21url: /app/specialized/addSpecialized
+ 
+
+ @param user_id 用户ID
+ @param testpaper_id 试卷ID
+ @param type 1:四级听力专项训练
+ @param testpaper_type 4-A 4-B 4-C
+ @param complete block
+ */
++ (void)addOnlyTestWithUserId:(NSString *)user_id TestPaperId:(NSNumber *)testpaper_id Type:(NSString *)type Testpaper_type:(NSString *)testpaper_type Complete:(completeBlock)complete;
+
+
+/**
+ 获取一个专项训练 mlg 9/21url: /app/specialized/getOneNewSpecialized
+
+ @param user_id 用户ID
+ @param type 4-A:sectionA;4-B:sectionB; 4-C:sectionC
+ @param testpaper_kind 0T:完整的听力试卷;1T:听力专项训练
+ 2018/9-25mlg 改
+ @param testpaper_type  4-A:sectionA;4-B:sectionB; 4-C:sectionC 9/25 mlg改
+ @param complete block
+ */
++ (void)getOneNewTestWithUserId:(NSString *)user_id Type:(NSString *)type Testpaper_kind:(NSString *)testpaper_kind Testpaper_type:(NSString *)testpaper_type Complete:(completeBlock)complete;
+
+
+/**
+ 查看用户学习的专项训练的个数,及原数据个数 mlg 9/21
+
+ @param user_id 用户ID
+ @param type 1:专项训练
+ @param testpaper_kind 0T:完整的听力试卷;1T:听力专项训练
+ 2018/9-25mlg 改
+ @param complete block
+ 2018/9-25mlg 改
+ */
++ (void)getCategoryTestNumWithUserId:(NSString *)user_id Type:(NSString *)type Testpaper_kind:(NSString *)testpaper_kind Complete:(completeBlock)complete;
 @end

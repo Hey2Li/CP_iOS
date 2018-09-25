@@ -20,6 +20,7 @@
 #import "HomeWordBookTableViewCell.h"
 #import "HomeBuyLessonTableViewCell.h"
 #import "StartLearnWordViewController.h"
+#import "HomeBuyLessonModel.h"
 
 @interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -27,10 +28,18 @@
 @property (nonatomic, strong) NSArray *bannerArray;
 @property (nonatomic, strong) NSMutableArray *paperMutableArray;
 @property (nonatomic, strong) VBFPopFlatButton *flatRoundedButton;
+@property (nonatomic, strong) NSMutableArray *adArray;//课程数据数组
+@property (nonatomic, copy) NSString *residueStr; //剩余词书
 @end
 
 @implementation HomeViewController
 
+- (NSMutableArray *)adArray{
+    if (!_adArray) {
+        _adArray = [NSMutableArray array];
+    }
+    return _adArray;
+}
 - (NSMutableArray *)paperMutableArray{
     if (!_paperMutableArray) {
         _paperMutableArray = [NSMutableArray array];
@@ -60,6 +69,34 @@
                 }
             }
         }];
+    [LTHttpManager showHomeAdWithComplete:^(LTHttpResult result, NSString *message, id data) {
+        if (result == LTHttpResultSuccess) {
+            [self.adArray removeAllObjects];
+            for (NSDictionary *dic in data[@"responseData"]) {
+                HomeBuyLessonModel *model = [HomeBuyLessonModel mj_objectWithKeyValues:dic];
+                [self.adArray addObject:model];
+                [self.myTableView reloadData];
+            }
+        }else{
+        }
+    }];
+    NSString *wordbookId = [[NSUserDefaults standardUserDefaults]objectForKey:kWordBookId];
+    if (!wordbookId) {
+        wordbookId = @"1";
+    }
+    [LTHttpManager getReciteWordProgressWithUser_id:IS_USER_ID ? IS_USER_ID : @"" WordbookId:wordbookId Complete:^(LTHttpResult result, NSString *message, id data) {
+        if (LTHttpResultSuccess == result) {
+            NSString *memory_num = data[@"responseData"][@"memory_num"];
+            NSString *mistake_num = data[@"responseData"][@"mistake_num"];
+            NSString *proficiency_num = data[@"responseData"][@"proficiency_num"];
+            NSInteger num = [memory_num integerValue] + [mistake_num integerValue] + [proficiency_num integerValue];
+            _residueStr = [NSString stringWithFormat:@"%ld", num];
+            [self.myTableView reloadData];
+        }else{
+            
+        }
+    }];
+
 }
 
 - (void)initWithView{
@@ -77,7 +114,8 @@
     UIView *tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:240])];
     //倒计时
     UILabel *countdownLabel = [UILabel new];
-    countdownLabel.text = @"距离四级倒计时还有92天";
+    NSInteger days = [self computeDaysWithDataFromString:@"2018-12-15"];
+    countdownLabel.text = [NSString stringWithFormat:@"距离四级倒计时还有%ld天", days];
     countdownLabel.font = [UIFont boldSystemFontOfSize:14];
     countdownLabel.textColor = UIColorFromRGB(0x333333);
     countdownLabel.textAlignment = NSTextAlignmentRight;
@@ -107,6 +145,20 @@
     self.myTableView = tableView;
     self.view.backgroundColor = [UIColor clearColor];
     [self.view addSubview:tableView];
+}
+//计算日期间隔天数
+- (NSInteger)computeDaysWithDataFromString:(NSString *)time{
+    // 1.将时间转换为date
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"yyyy-MM-dd";
+    NSDate *date2 = [formatter dateFromString:time];
+    // 2.创建日历
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSCalendarUnit type =  NSCalendarUnitDay;
+    // 3.利用日历对象比较两个时间的差值
+    NSDateComponents *cmps = [calendar components:type fromDate:[NSDate date] toDate:date2 options:0];
+    // 4.输出结果
+    return cmps.day;
 }
 #pragma mark UICollectionViewDelegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
@@ -159,7 +211,7 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 2) {
-        return 1;
+        return self.adArray.count;
     }else{
         return 1;
     }
@@ -201,6 +253,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 2) {
         HomeBuyLessonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([HomeBuyLessonTableViewCell class])];
+        cell.model = self.adArray[indexPath.row];
         cell.selectionStyle = NO;
         return cell;
     }else if (indexPath.section == 0){
@@ -209,6 +262,11 @@
         return cell;
     }else if (indexPath.section == 1){
         HomeWordBookTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([HomeWordBookTableViewCell class])];
+        if (_residueStr) {
+            cell.wordNum.text = [NSString stringWithFormat:@"%@", _residueStr];
+        }else{
+            cell.wordNum.text = [NSString stringWithFormat:@"%d", 0];
+        }
         cell.selectionStyle = NO;
         return cell;
     }else{

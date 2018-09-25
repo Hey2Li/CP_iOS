@@ -19,4 +19,5 @@
 @property (nonatomic, strong) NSString * type;
 @property (nonatomic, strong) NSString * voiceUrl;
 @property (nonatomic, strong) NSString * size;
+@property (nonatomic, strong) NSString * coverUrl;
 @end

@@ -8,10 +8,20 @@
 
 #import "MyCollectionPaperTableViewCell.h"
 #import "NSString+FileSize.h"
+#import "LTDownloadView.h"
+
 
 @interface MyCollectionPaperTableViewCell ()
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) DownloadFileModel *collectionDownloadModel;
+@property (nonatomic, strong) MyCollectionModel *collectionDownloadModel;
+@property (nonatomic, copy) NSString *downloadVoiceUrl;
+@property (nonatomic, copy) NSString *downloadlrcUrl;
+@property (nonatomic, copy) NSString *downloadJsonUrl;
+@property (nonatomic, strong) LTDownloadView *downloadView;
+@property (nonatomic, copy) NSString *voiceSize;
+@property (nonatomic, strong) NSURLSessionDownloadTask *downloadTask;
+@property (nonatomic, strong) DownloadFileModel *downloadModel;
+
 @end
 
 @implementation MyCollectionPaperTableViewCell
@@ -28,93 +38,114 @@
 }
 - (void)setModel:(MyCollectionModel *)model{
     _model = model;
+    self.downloadModel = [[DownloadFileModel alloc]init];
+    self.collectionDownloadModel = model;
     _paperName.text = model.name;
-    DownloadFileModel *downloadModel = [DownloadFileModel jr_findByPrimaryKey:[NSString stringWithFormat:@"%ld",(long)_model.testPaperId]];
-    NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *urlString = [downloadModel.paperVoiceName stringByRemovingPercentEncoding];
-    NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if ([fileManager fileExistsAtPath:fullPath]) {
-        _dowloadBtn.enabled = NO;
-        [_dowloadBtn setImage:[UIImage imageNamed:@"downloaded"] forState:UIControlStateNormal];
-        _fileSizeLb.text = fullPath.fileSize;
+    [_paperImageView sd_setImageWithURL:[NSURL URLWithString:model.coverUrl]];
+    _fileSizeLb.text = [NSString stringWithFormat:@"%@", model.size];
+    self.voiceSize = [NSString stringWithFormat:@"%@", model.size];
+    self.downloadModel.testPaperId = [NSString stringWithFormat:@"%ld", (long)model.ID];
+    DownloadFileModel *Dmodel = [DownloadFileModel jr_findByPrimaryKey:self.downloadModel.testPaperId];
+    if (Dmodel.paperVoiceName == nil || [Dmodel.paperVoiceName isEqualToString:@""]) {
+        self.downloadModel.paperVoiceName = model.voiceUrl;
     }else{
-        _fileSizeLb.text = @"0.0M";
+        NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+        NSString *urlString = [Dmodel.paperVoiceName stringByRemovingPercentEncoding];
+        NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if ([fileManager fileExistsAtPath:fullPath]) {
+            [self.dowloadBtn setImage:[UIImage imageNamed:@"downloaded"] forState:UIControlStateNormal];
+            self.dowloadBtn.enabled = NO;
+        }
     }
+    if (Dmodel.paperJsonName == nil || [Dmodel.paperJsonName isEqualToString:@""]){
+        self.downloadModel.paperLrcName = model.lic;
+        self.downloadModel.paperJsonName = model.testPaperUrl;
+    }
+    J_Insert(self.downloadModel).updateResult;
+    [USERDEFAULTS setObject:[NSString stringWithFormat:@"%ld", (long)model.ID] forKey:@"testPaperId"];
 }
-- (void)setDownloadModel:(DownloadFileModel *)downloadModel{
-    _downloadModel = downloadModel;
-    _paperName.text = downloadModel.name;
+
+- (void)setDownloadViewModel:(DownloadFileModel *)downloadViewModel{
+    _downloadModel = downloadViewModel;
+    _paperName.text = _downloadModel.name;
 }
 #pragma mark 下载
 - (IBAction)downloadPaper:(UIButton *)sender {
-    sender.enabled = NO;
-    //下载试卷音频JSON lrc 并且存到数据库
-    self.collectionDownloadModel = [DownloadFileModel jr_findByPrimaryKey:[NSString stringWithFormat:@"%ld",(long)_model.testPaperId]];
-    if (self.collectionDownloadModel == nil) {
-        self.collectionDownloadModel = [[DownloadFileModel alloc]init];
-        self.collectionDownloadModel.testPaperId = [NSString stringWithFormat:@"%ld",(long)_model.testPaperId];
-        self.collectionDownloadModel.name = _model.name;
-        self.collectionDownloadModel.info = _model.info;
-        self.collectionDownloadModel.number = _model.number;
-    }
-    NSLog(@"Model:%@",self.collectionDownloadModel);
-    SVProgressShowText(@"请稍后...");
-    //下载音频
-    [LTHttpManager downloadURL:_model.voiceUrl progress:^(NSProgress *downloadProgress) {
-        [SVProgressHUD showProgress:downloadProgress.fractionCompleted];
-        if (downloadProgress.completedUnitCount/downloadProgress.totalUnitCount == 1.0) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [SVProgressHUD dismiss];
-                SVProgressShowStuteText(@"下载成功", YES);
-                [sender setImage:[UIImage imageNamed:@"downloaded"] forState:UIControlStateNormal];
-                sender.enabled = NO;
-            });
-        }
-    } destination:^(NSURL *targetPath) {
-        NSString *url = [NSString stringWithFormat:@"%@",targetPath];
-        NSString *fileName = [url lastPathComponent];
-        _fileSizeLb.text = url.fileSize;
-        if (self.reloadData) {
-            self.reloadData();
+    NSString *GPRSDownload = [USERDEFAULTS objectForKey:@"GPRSDownload"];
+    if ([kNetworkState isEqualToString:@"GPRS"] && [GPRSDownload isEqualToString:@"0"]) {
+        LTAlertView *alert = [[LTAlertView alloc]initWithTitle:@"移动网络确定下载吗" sureBtn:@"确定" cancleBtn:@"取消"];
+        [alert show];
+        alert.resultIndex = ^(NSInteger index) {
+            
         };
-        self.collectionDownloadModel.paperVoiceName = fileName;
-        NSLog(@"%@",self.collectionDownloadModel.paperVoiceName);
-        NSLog(@"paperVoiceName");
-        if (J_Update(self.collectionDownloadModel).Columns(@[@"paperVoiceName"]).updateResult) {
-            SVProgressShowStuteText(@"下载成功", YES);
-        }
-    } failure:^(NSError *error) {
-        SVProgressShowStuteText(@"下载失败请重新下载", NO);
-        sender.enabled = YES;
-    }];
-    //下载试卷JSON
-    [LTHttpManager downloadURL:_model.testPaperUrl progress:^(NSProgress *downloadProgress) {
-        
-    } destination:^(NSURL *targetPath) {
-        NSString *url = [NSString stringWithFormat:@"%@",targetPath];
-        NSString *fileName = [url lastPathComponent];
-        self.collectionDownloadModel.paperJsonName = fileName;
-        J_Update(self.collectionDownloadModel).Columns(@[@"paperJsonName"]).updateResult;
-        NSLog(@"jsonName");
-    } failure:^(NSError *error) {
-        
-    }];
-    //下载lrc
-    [LTHttpManager downloadURL:_model.lic progress:^(NSProgress *downloadProgress) {
-        
-    } destination:^(NSURL *targetPath) {
-        NSString *url = [NSString stringWithFormat:@"%@",targetPath];
-        NSString *fileName = [url lastPathComponent];
-        self.collectionDownloadModel.paperLrcName = fileName;
-        J_Update(self.collectionDownloadModel).Columns(@[@"paperLrcName"]).updateResult;
-        NSLog(@"paperLrcName");
-    } failure:^(NSError *error) {
-        
-    }];
-    BOOL result = J_Insert(self.collectionDownloadModel).updateResult;
-    if (!result) {
-        SVProgressShowStuteText(@"下载失败", NO);
     }
+    self.downloadView = [[LTDownloadView alloc]initWithTitle:@"是否下载此资源" sureBtn:@"立即下载" fileSize:self.voiceSize];
+    [self.downloadView show];
+    __block MyCollectionPaperTableViewCell *blockSelf = self;
+    self.downloadView.resultIndex = ^(NSInteger index) {
+        if (index == 2000) {
+            sender.enabled = NO;
+            DownloadFileModel *dModel = [DownloadFileModel jr_findByPrimaryKey:[NSString stringWithFormat:@"%ld",blockSelf.collectionDownloadModel.ID]];
+            NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+            NSString *urlString = [dModel.paperVoiceName stringByRemovingPercentEncoding];
+            NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            if ([fileManager fileExistsAtPath:fullPath]) {
+                [blockSelf.dowloadBtn setImage:[UIImage imageNamed:@"downloaded"] forState:UIControlStateNormal];
+                sender.enabled = NO;
+                SVProgressShowStuteText(@"您已经下载过了", NO);
+                [blockSelf.downloadView dismiss];
+                [blockSelf.downloadTask cancel];;
+                return;
+            }else{
+                NSString* encodedString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+                [LTHttpManager downloadURL:blockSelf.downloadModel.paperJsonName progress:^(NSProgress *downloadProgress) {
+                    
+                } destination:^(NSURL *targetPath) {
+                    NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                    NSString *fileName = [url lastPathComponent];
+                    blockSelf.downloadModel.paperJsonName = fileName;
+                    J_Update(blockSelf.downloadModel).Columns(@[@"paperJsonName"]).updateResult;
+                } failure:^(NSError *error) {
+                    
+                }];
+                [LTHttpManager downloadURL:blockSelf.downloadModel.paperLrcName progress:^(NSProgress *downloadProgress) {
+                    
+                } destination:^(NSURL *targetPath) {
+                    NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                    NSString *fileName = [url lastPathComponent];
+                    blockSelf.downloadModel.paperLrcName = fileName;
+                    J_Update(blockSelf.downloadModel).Columns(@[@"paperLrcName"]).updateResult;
+                } failure:^(NSError *error) {
+                    
+                }];
+                blockSelf.downloadTask = [LTHttpManager downloadURL:encodedString progress:^(NSProgress *downloadProgress) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [blockSelf.downloadView.progressView setProgress:downloadProgress.fractionCompleted];
+                        blockSelf.downloadView.progressLb.text = [NSString stringWithFormat:@"%.1f%%",downloadProgress.fractionCompleted * 100];
+                    });
+                    if (downloadProgress.completedUnitCount/downloadProgress.totalUnitCount == 1.0) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [blockSelf.downloadView dismiss];
+                            SVProgressShowStuteText(@"下载成功", YES);
+                            [blockSelf.dowloadBtn setImage:[UIImage imageNamed:@"downloaded"] forState:UIControlStateNormal];
+                            sender.enabled = NO;
+                        });
+                    }
+                } destination:^(NSURL *targetPath) {
+                    NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                    NSString *fileName = [url lastPathComponent];
+                    blockSelf.downloadModel.paperVoiceName = fileName;
+                    J_Update(blockSelf.downloadModel).Columns(@[@"paperVoiceName"]).updateResult;
+                    NSLog(@"%@",fileName);
+                } failure:^(NSError *error) {
+                    sender.enabled = YES;
+                }];
+            }
+        }else{
+            [blockSelf.downloadTask cancel];;
+        }
+    };
 }
 @end

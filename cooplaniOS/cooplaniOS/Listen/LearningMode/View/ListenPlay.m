@@ -15,7 +15,7 @@
 #import "ListenTableViewCell.h"
 #import "FeedbackViewController.h"
 #import "collectionSentenceModel.h"
-#import "CheckWordView.h"
+#import "NewCheckWordView.h"
 
 @interface ListenPlay ()<UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
 @property (nonatomic, strong) CADisplayLink *timer;//界面刷新定时器
@@ -34,7 +34,7 @@
 @property (nonatomic, strong) UIView *wordView;
 @property (nonatomic, copy)NSString *currentWord;
 @property (nonatomic, assign) NSInteger lastIndex;
-@property (nonatomic, strong) CheckWordView *checkWordView;
+@property (nonatomic, strong) NewCheckWordView *checkWordView;
 @property (nonatomic, strong) UILabel *wordLabel;
 @end
 
@@ -58,9 +58,9 @@
     }
     return _wordLabel;
 }
-- (CheckWordView *)checkWordView{
+- (NewCheckWordView *)checkWordView{
     if (!_checkWordView) {
-        _checkWordView = [[CheckWordView alloc]initWithFrame:CGRectMake(0, 0, 214, SCREEN_WIDTH)];
+        _checkWordView = [[NewCheckWordView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64 - 130)];
     }
     return _checkWordView;
 }
@@ -187,12 +187,15 @@
     NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if ([fileManager fileExistsAtPath:fullPath]) {
+        NSData *data = [NSData dataWithContentsOfFile:fullPath];
+        unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
         NSString *lrcString = [[NSString alloc]initWithContentsOfFile:fullPath encoding:NSUTF8StringEncoding error:nil];
+        NSString *lrcStr = [[NSString alloc]initWithData:data encoding:encode];
         lyricArray = [NSMutableArray array];
         timeArray = [NSMutableArray array];
         lengthArray = [NSMutableArray array];
         
-        NSArray *lycArray = [lrcString componentsSeparatedByString:@"\n"];
+        NSArray *lycArray = [lrcString ? lrcString : lrcStr componentsSeparatedByString:@"\n"];
         [lycArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj hasPrefix:@"["]) {
                 NSRange starRange = [obj rangeOfString:@"["];
@@ -210,11 +213,26 @@
                 NSString *lyricString  =[obj substringFromIndex:10];
                 [lyricArray addObject:lyricString];
             }else{
+                if (lyricArray.count == 0) {
+                    return ;
+                }
                 NSString *lyricString = [NSString stringWithFormat:@"%@\n%@",lyricArray[lyricArray.count-1], obj];
                 [lyricArray replaceObjectAtIndex:lyricArray.count-1 withObject:lyricString];
             }
         }];
 
+    }else{
+        [LTHttpManager downloadURL:model.paperLrcName progress:^(NSProgress *downloadProgress) {
+            
+        } destination:^(NSURL *targetPath) {
+            NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+            NSString *fileName = [url lastPathComponent];
+            model.paperLrcName = fileName;
+            J_Update(model).Columns(@[@"paperLrcName"]).updateResult;
+            [self parseLrc];
+        } failure:^(NSError *error) {
+            
+        }];
     }
 }
 - (void)startRoll{
@@ -331,12 +349,15 @@
             //获取cell 及其label上的单词
             [self wordsOnCell:point];
             if (self.wordLabel.isHidden == NO) {
+                [[NSNotificationCenter defaultCenter]postNotificationName:kFindWordIsOpen object:nil];
+                 self.checkWordView = [[NewCheckWordView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200)];
                 [self addSubview:self.checkWordView];
                 self.checkWordView.word = self.currentWord;
                 [self.checkWordView mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.bottom.equalTo(self.mas_bottom);
                     make.width.equalTo(self.mas_width);
-                    make.height.equalTo(@214);
+                    make.height.equalTo(@140);
+                    make.left.equalTo(self.mas_left);
                 }];
                 WeakSelf
                 self.checkWordView.closeBlock = ^{

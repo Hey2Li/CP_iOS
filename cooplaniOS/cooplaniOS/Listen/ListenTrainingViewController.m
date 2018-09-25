@@ -17,7 +17,7 @@
 #import "UIImage+mask.h"
 #import "PracticeModeViewController.h"
 #import "TestModeViewController.h"
-
+#import "SubTestPMViewController.h"
 
 @interface ListenTrainingViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -35,6 +35,8 @@
 @property (nonatomic, copy) NSString *downloadVoiceUrl;
 @property (nonatomic, copy) NSString *downloadlrcUrl;
 @property (nonatomic, copy) NSString *downloadJsonUrl;
+@property (nonatomic, strong) NSDictionary *categoryDict;
+@property (nonatomic, strong) NSNumber *testPaperId;
 @end
 
 @implementation ListenTrainingViewController
@@ -124,7 +126,6 @@
     [self initWithView];
     self.downloadModel = [[DownloadFileModel alloc]init];
     [self loadData];
-    [self loadTestPaper];
 }
 - (void)initWithView{
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64) style:UITableViewStylePlain];
@@ -138,32 +139,43 @@
     self.myTableView = tableView;
 }
 - (void)loadData{
-    [LTHttpManager FindAllWithUseId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
-        if (result == LTHttpResultSuccess) {
-            NSArray *array = data[@"responseData"];
-            NSMutableDictionary *muDict = [NSMutableDictionary dictionary];
-            [self.paperMutableArray removeAllObjects];
-            for (NSDictionary *dic in array) {
-                muDict = [NSMutableDictionary dictionaryWithDictionary:dic[@"tp"]];
-                [muDict addEntriesFromDictionary:@{@"collection":dic[@"type"]}];
-                PaperModel *model = [PaperModel mj_objectWithKeyValues:muDict];
-                [self.paperMutableArray addObject:model];
-            }
-            [USERDEFAULTS setObject:[NSKeyedArchiver archivedDataWithRootObject:self.paperMutableArray]forKey:@"homeData"];
-            [self.myTableView reloadData];
-        }else{
-            [self.paperMutableArray removeAllObjects];
-            NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithData:[USERDEFAULTS objectForKey:@"homeData"]];
-            if (array.count) {
-                self.paperMutableArray = [NSMutableArray arrayWithArray:array];
+    if (IS_USER_ID) {
+        [LTHttpManager FindAllWithUseId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
+            if (result == LTHttpResultSuccess) {
+                NSArray *array = data[@"responseData"];
+                NSMutableDictionary *muDict = [NSMutableDictionary dictionary];
+                [self.paperMutableArray removeAllObjects];
+                for (NSDictionary *dic in array) {
+                    muDict = [NSMutableDictionary dictionaryWithDictionary:dic[@"tp"]];
+                    [muDict addEntriesFromDictionary:@{@"collection":dic[@"type"]}];
+                    PaperModel *model = [PaperModel mj_objectWithKeyValues:muDict];
+                    [self.paperMutableArray addObject:model];
+                }
+                [USERDEFAULTS setObject:[NSKeyedArchiver archivedDataWithRootObject:self.paperMutableArray]forKey:@"homeData"];
                 [self.myTableView reloadData];
             }else{
-                self.myTableView.ly_emptyView = [LTEmpty NoNetworkEmpty:^{
-                    [self loadData];
-                }];
+                [self.paperMutableArray removeAllObjects];
+                NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithData:[USERDEFAULTS objectForKey:@"homeData"]];
+                if (array.count) {
+                    self.paperMutableArray = [NSMutableArray arrayWithArray:array];
+                    [self.myTableView reloadData];
+                }else{
+                    self.myTableView.ly_emptyView = [LTEmpty NoNetworkEmpty:^{
+                        [self loadData];
+                    }];
+                }
             }
-        }
-    }];
+        }];
+        [LTHttpManager getCategoryTestNumWithUserId:IS_USER_ID Type:@"1" Testpaper_kind:@"1T" Complete:^(LTHttpResult result, NSString *message, id data) {
+            if (result == LTHttpResultSuccess) {
+                NSDictionary *categoryDict = data[@"responseData"];
+                _categoryDict = categoryDict;
+                [self.myTableView reloadData];
+            }
+        }];
+    }else{
+        [Tool gotoLogin:self];
+    }
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 3;
@@ -272,15 +284,15 @@
         if (indexPath.row == 0) {
             cell.textLabel.text = @"短篇新闻";
             cell.imageView.image = [UIImage imageNamed:@"短篇新闻"];
-            cell.detailTextLabel.text = @"已练习1/80道";
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"已练习%@/%@道",_categoryDict[@"special1"][@"4-A"]?_categoryDict[@"special1"][@"4-A"]:@"0", _categoryDict[@"testpaper1T"][@"4-A"]];
         }else if (indexPath.row == 1){
             cell.textLabel.text = @"长对话";
             cell.imageView.image = [UIImage imageNamed:@"长对话"];
-            cell.detailTextLabel.text = @"已练习1/80道";
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"已练习%@/%@道",_categoryDict[@"special1"][@"4-B"]?_categoryDict[@"special1"][@"4-B"]:@"0", _categoryDict[@"testpaper1T"][@"4-B"]];
         }else{
             cell.textLabel.text = @"听力篇章";
             cell.imageView.image = [UIImage imageNamed:@"听力篇章"];
-            cell.detailTextLabel.text = @"已练习1/80道";
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"已练习%@/%@道",_categoryDict[@"special1"][@"4-C"]?_categoryDict[@"special1"][@"4-C"]:@"0", _categoryDict[@"testpaper1T"][@"4-C"]];
         }
         return cell;
     }else{
@@ -292,18 +304,64 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 2) {
-//        HomeListenCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-//        PaperDetailViewController *vc = [PaperDetailViewController new];
-//        vc.nextTitle = cell.TitleLabel.text;
-//        vc.onePaperModel = self.paperMutableArray[indexPath.row];
-//        [self.navigationController pushViewController:vc animated:YES];
         if (self.rightBtn.selected) {
             [self selectMode];
+            PaperModel *model = self.paperMutableArray[indexPath.row];
+            self.testPaperId = model.ID;
+            [self loadTestPaperWithPaperId:model.ID];
         }else{
-            SVProgressShowStuteText(@"暂无数据", NO);
-            return;
-            TestModeViewController *vc = [[TestModeViewController alloc]init];
-            [self.navigationController pushViewController:vc animated:YES];
+            NSString *sectionType;
+            if (indexPath.row == 1) {
+                sectionType = @"4-A";
+            }else if (indexPath.row == 2){
+                sectionType = @"4-B";
+            }else{
+                sectionType = @"4-C";
+            }
+            [LTHttpManager getOneNewTestWithUserId:IS_USER_ID Type:@"1" Testpaper_kind:@"1T" Testpaper_type:sectionType Complete:^(LTHttpResult result, NSString *message, id data) {
+                if (LTHttpResultSuccess == result) {
+                    self.downloadVoiceUrl = data[@"responseData"][@"voiceUrl"];
+                    self.downloadlrcUrl = data[@"responseData"][@"lic"];
+                    self.downloadJsonUrl = data[@"responseData"][@"testPaperUrl"];
+                    self.downloadModel.testPaperId = data[@"responseData"][@"id"];
+                    self.downloadModel.name = data[@"responseData"][@"name"];
+                    self.downloadModel.info = data[@"responseData"][@"info"];
+                    self.downloadModel.number = data[@"responseData"][@"number"];
+                    DownloadFileModel *model = [DownloadFileModel jr_findByPrimaryKey:self.downloadModel.testPaperId];
+                    if (model.paperVoiceName == nil || [model.paperVoiceName isEqualToString:@""]) {
+                        self.downloadModel.paperVoiceName = self.downloadVoiceUrl;
+                        J_Update(self.downloadModel).Columns(@[@"paperVoiceName"]).updateResult;
+                    }
+                    [USERDEFAULTS setObject:self.downloadModel.testPaperId forKey:@"testPaperId"];
+                    [LTHttpManager downloadURL:self.downloadJsonUrl progress:^(NSProgress *downloadProgress) {
+                        
+                    } destination:^(NSURL *targetPath) {
+                        NSString *url = [NSString stringWithFormat:@"%@",targetPath]; 
+                        NSString *fileName = [url lastPathComponent];
+                        self.downloadModel.paperJsonName = fileName;
+                        J_Update(self.downloadModel).Columns(@[@"paperJsonName"]).updateResult;
+                    } failure:^(NSError *error) {
+                        
+                    }];
+                    [LTHttpManager downloadURL:self.downloadlrcUrl progress:^(NSProgress *downloadProgress) {
+                        
+                    } destination:^(NSURL *targetPath) {
+                        NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                        NSString *fileName = [url lastPathComponent];
+                        self.downloadModel.paperLrcName = fileName;
+                        J_Update(self.downloadModel).Columns(@[@"paperLrcName"]).updateResult;
+                        SubTestPMViewController *vc = [[SubTestPMViewController alloc]init];
+                        vc.sectionType = sectionType;
+                        vc.testPaperId = self.downloadModel.testPaperId;
+                        [self.navigationController pushViewController:vc animated:YES];
+                    } failure:^(NSError *error) {
+                        
+                    }];
+                    J_Insert(self.downloadModel).updateResult;
+                    
+                    NSLog(@"%@",self.downloadModel);
+                }
+            }];
         }
     }else if (indexPath.section == 0){
         VideoViewController *vc = [[VideoViewController alloc]init];
@@ -430,18 +488,12 @@
     [self.maskView removeFromSuperview];
     PracticeModeViewController *vc = [[PracticeModeViewController alloc]init];
     vc.mode = btn.tag;
-    vc.testPaperId = @"24";
+    vc.testPaperId = [NSString stringWithFormat:@"%@", self.testPaperId];
     [self.navigationController pushViewController:vc animated:YES];
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
 #pragma mark 提前加载试卷信息
-- (void)loadTestPaper{
-    [LTHttpManager findOneTestPaperWithID:@24 Complete:^(LTHttpResult result, NSString *message, id data) {
+- (void)loadTestPaperWithPaperId:(NSNumber *)testPaperId{
+    [LTHttpManager findOneTestPaperWithID:testPaperId Complete:^(LTHttpResult result, NSString *message, id data) {
         if (LTHttpResultSuccess == result) {
             self.downloadVoiceUrl = data[@"responseData"][@"voiceUrl"];
             self.downloadlrcUrl = data[@"responseData"][@"lic"];
@@ -482,6 +534,11 @@
         }else{
         }
     }];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 /*
 #pragma mark - Navigation

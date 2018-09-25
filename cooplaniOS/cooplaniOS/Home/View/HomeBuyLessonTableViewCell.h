@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HomeBuyLessonModel.h"
 
 @interface HomeBuyLessonTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *lessonNameLb;
+@property (weak, nonatomic) IBOutlet UILabel *lessonTimeLb;
+@property (weak, nonatomic) IBOutlet UILabel *lessonDetailLb;
+@property (weak, nonatomic) IBOutlet UIImageView *lessonImg;
 
+@property (nonatomic, strong) HomeBuyLessonModel *model;
 @end

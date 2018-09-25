@@ -11,6 +11,10 @@
 #import "DictionaryViewController.h"
 
 @interface CheckWordView()<UITableViewDelegate, UITableViewDataSource>
+{
+    CGPoint _currentPoint;
+    CGPoint _oldPoint;
+}
 @property (nonatomic, strong) UILabel *wordLabel;
 @property (nonatomic, strong) UIButton *addWordBtn;
 @property (nonatomic, strong) UILabel *enVoiceLb;
@@ -306,6 +310,53 @@
     cell.textLabel.text = [NSString stringWithFormat:@"%@%@",dict[@"part"],[arr componentsJoinedByString:@","]];
     return cell;
 }
+//- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+//    NSLog(@"---触摸开始");
+//    UITouch *touch = [touches anyObject];
+//    _currentPoint = [touch locationInView:self];
+//    _oldPoint = [touch previousLocationInView:self];
+//}
+//- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+//    
+//    UITouch *touch = [touches anyObject];
+//    
+//    CGPoint currentPoint = [touch locationInView:nil];//传空获取当前窗口的坐标
+//    currentPoint.y += self.height / 2.0f - _currentPoint.y - 64;
+//    if (currentPoint.y < self.height / 2.0f + 20) {
+//        currentPoint.y = self.height / 2.0f + 20;
+//    }
+//    if (currentPoint.y > SCREEN_HEIGHT - self.height / 2.0f - 64) {
+//        currentPoint.y = SCREEN_HEIGHT - self.height / 2.0f - 64;
+//    }
+//    currentPoint.x = self.width / 2.0f;
+//    [UIView animateWithDuration:0.1 animations:^{
+//        self.center = currentPoint;
+//    }];
+//    NSLog(@"%f---%f", currentPoint.y, _currentPoint.y);
+//    if (self.frame.origin.y < 120) {
+//        currentPoint.y = 120 + _currentPoint.y;
+//    }
+//    if (self.frame.origin.y > SCREEN_HEIGHT - self.height) {
+//        currentPoint.y = SCREEN_HEIGHT - self.height - _currentPoint.y;
+//    }
+    
+//    CGPoint prePoint = [touch previousLocationInView:nil];
+//    if (prePoint.y < 120 + _oldPoint.y) {
+//        prePoint.y = 120 + _oldPoint.y;
+//    }
+//    if (prePoint.y > SCREEN_HEIGHT - self.height - _oldPoint.y) {
+//        prePoint.y = SCREEN_HEIGHT - self.height - _oldPoint.y;
+//    }
+//    CGFloat offsetY = currentPoint.y - prePoint.y;
+//
+//    NSLog(@"offset:%f-- prePoint:%f-- self.y:%f", offsetY, prePoint.y, self.frame.origin.y);
+//    NSLog(@"FlyElephant----当前位置:%@---之前的位置:%@",NSStringFromCGPoint(currentPoint),NSStringFromCGPoint(prePoint));
+//    self.transform = CGAffineTransformTranslate(self.transform, 0, offsetY);
+//}
+//
+//- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+//    NSLog(@"FlyElephant---触摸结束");
+//}
 //- (void)setWordLabel:(UILabel *)wordLabel{
 //    _wordLabel = wordLabel;
 //}

@@ -14,7 +14,14 @@
 #import "PMAnswerViewController.h"
 #import "FeedbackViewController.h"
 
-@interface PracticeModeViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
+@interface PracticeModeViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>
+{
+    /**
+     是否触摸到可拖动区域
+     */
+    BOOL isMove;
+    CGPoint _currentPoint;
+}
 @property (nonatomic, strong) UISwipeGestureRecognizer *swipeDownGR;
 @property (nonatomic, strong) UISwipeGestureRecognizer *swipeUpGR;
 @property (nonatomic, assign) BOOL isOpen;
@@ -35,6 +42,7 @@
 @property (nonatomic, strong) NSIndexPath *collectionIndexPath;
 @property (nonatomic, assign) BOOL lastPlaying;
 @property (nonatomic, assign) BOOL isFinish;//判断听力是否完成
+@property (nonatomic, assign) CGPoint collectionCenter;
 @end
 
 @implementation PracticeModeViewController
@@ -100,6 +108,20 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(listenPause) name:@"listenBackground" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(listenPlay) name:@"listenForeground" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playFinished:) name:@"playFinished" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(findWordIsOpen) name:kFindWordIsOpen object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(findWordIsClose) name:kFindWordIsClose object:nil];
+}
+- (void)findWordIsOpen{
+    [UIView animateWithDuration:0.2 animations:^{
+        self.tikaCollectionView.hidden = YES;
+    }];
+}
+- (void)findWordIsClose{
+    [UIView animateWithDuration:0.2 animations:^{
+        self.tikaCollectionView.hidden = NO;
+    } completion:^(BOOL finished) {
+        self.tikaCollectionView.center = _collectionCenter;
+    }];
 }
 - (void)loadData{
     DownloadFileModel *model = [DownloadFileModel  jr_findByPrimaryKey:self.testPaperId];
@@ -198,7 +220,8 @@
                         }
                     }
                 }else{
-                    SectionsModel *secModel = self.sectionsModelArray[0];                       for (QuestionsModel *quesModel in secModel.Passages) {
+                    SectionsModel *secModel = self.sectionsModelArray[0];
+                    for (QuestionsModel *quesModel in secModel.Passages) {
                         NSString *question = quesModel.QuestionNo;
                         NSString *paperId = _testPaperModel.PaperSerialNumber;
                         NSDictionary *dict = @{@"testPaperNum":paperId,@"topicNum":question};
@@ -285,7 +308,7 @@
         make.top.equalTo(self.headerView.mas_bottom);
     }];
     
-    collectionView.backgroundColor = UIColorFromRGB(0xf7f7f7);
+    collectionView.backgroundColor = [UIColor clearColor];
     collectionView.dataSource = self;
     collectionView.delegate = self;
     [collectionView registerClass:[PracticeModeTiKaCCell class] forCellWithReuseIdentifier:NSStringFromClass([PracticeModeTiKaCCell class])];
@@ -294,7 +317,50 @@
     self.tikaCollectionView = collectionView;
     [self scrollViewDidScroll:collectionView];
     _isOpen = YES;
+    
+    UIPanGestureRecognizer *panGr = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handlePan:)];
+    panGr.delegate = self;
+    [self.tikaCollectionView addGestureRecognizer:panGr];
 }
+- (void)handlePan:(UIPanGestureRecognizer *)gr{
+    //获取拖拽手势在self.view 的拖拽姿态
+    CGPoint translation = [gr translationInView:self.tikaCollectionView];
+   
+    CGFloat minY = 130 + 59;
+    CGFloat maxY = SCREEN_HEIGHT - 135;
+    NSLog(@"minX:%f,maxY:%f,gr.center.y:%f", minY,maxY, gr.view.center.y);
+    NSLog(@"%f",translation.y);
+    CGFloat tranY = gr.view.center.y + translation.y;
+    if (tranY == maxY) {
+        _isOpen = NO;
+    }
+    if (tranY == minY) {
+        _isOpen = YES;
+    }
+    if (tranY - 1 <= maxY && tranY + 1 >= minY) {
+        //改变panGestureRecognizer.view的中心点 就是self.imageView的中心点
+        gr.view.center = CGPointMake(gr.view.center.x, tranY);
+        _collectionCenter = CGPointMake(gr.view.center.x, tranY);
+        //重置拖拽手势的姿态
+        [gr setTranslation:CGPointZero inView:self.view];
+    }
+    [gr setTranslation:CGPointZero inView:self.view];
+}
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
+    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        CGPoint translation = [(UIPanGestureRecognizer *)gestureRecognizer translationInView:self.tikaCollectionView];
+        CGFloat absX = fabs(translation.x);
+        CGFloat absY = fabs(translation.y);
+        if (absX > absY ) {
+            return YES;
+        } else if (absY > absX) {
+            return NO;
+        }
+    }
+    NSLog(@"当前手势:%@; 另一个手势:%@", gestureRecognizer, otherGestureRecognizer);
+    return NO;
+}
+
 #pragma mark 播放完成
 - (void)playFinished:(NSNotification *)notifi{
     _isFinish = YES;
@@ -473,6 +539,8 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    self.mm_drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
+    self.mm_drawerController.closeDrawerGestureModeMask = MMCloseDrawerGestureModeNone;
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];

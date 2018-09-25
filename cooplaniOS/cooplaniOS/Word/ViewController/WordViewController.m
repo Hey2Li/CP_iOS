@@ -22,6 +22,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self initWithView];
+    self.title = @"单词学习";
     _isSelectedWordBook = NO;
 }
 - (void)initWithView{

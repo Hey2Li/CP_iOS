@@ -416,6 +416,7 @@
     [self.notKonwView.addNoteLb setText:@"添加到笔记"];
     [self.notKonwView.addNoteLb  setTextColor:UIColorFromRGB(0xFFCE43)];
     self.notKonwView.addNoteBtn.enabled = YES;
+    [self.notKonwView.exampleCollection scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];//collection回归原处
     [self.myTableView reloadData];
 }
 - (void)didReceiveMemoryWarning {

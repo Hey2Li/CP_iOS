@@ -11,6 +11,7 @@
 #import "answerModel.h"
 #import "AnswerHeadView.h"
 #import "PaperDetailViewController.h"
+#import "MyCollectionViewController.h"
 
 @interface AnswerViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -46,6 +47,52 @@
     _headView.paperNameLb.text = [self.paperName substringFromIndex:7];
     self.myTableView.tableHeaderView = _headView;
     [self initWithNavi];
+//    [self initWithView];
+}
+- (void)initWithView{
+    UIView *bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 46 - 64, SCREEN_WIDTH, 46)];
+    bottomView.backgroundColor =[UIColor whiteColor];
+    [self.view addSubview:bottomView];
+    UIButton *continueBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [continueBtn setTitle:@"继续" forState:UIControlStateNormal];
+    [continueBtn setBackgroundColor:[UIColor whiteColor]];
+    [continueBtn setTitleColor:UIColorFromRGB(0xFFCD43) forState:UIControlStateNormal];
+    [bottomView addSubview:continueBtn];
+    [continueBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view);
+        make.right.equalTo(self.view.mas_centerX);
+        make.bottom.equalTo(self.view);
+        make.height.equalTo(@45);
+    }];
+    [continueBtn addTarget:self action:@selector(continueBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *testAgainBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [testAgainBtn setTitle:@"再次练习" forState:UIControlStateNormal];
+    [testAgainBtn setBackgroundColor:[UIColor whiteColor]];
+    [testAgainBtn setTitleColor:UIColorFromRGB(0xFFCD43) forState:UIControlStateNormal];
+    [bottomView addSubview:testAgainBtn];
+    [testAgainBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view.mas_centerX);
+        make.right.equalTo(self.view);
+        make.bottom.equalTo(self.view);
+        make.height.equalTo(@45);
+    }];
+    [testAgainBtn addTarget:self action:@selector(testAgainBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UILabel *lineLb = [UILabel new];
+    [bottomView addSubview:lineLb];
+    [bottomView bringSubviewToFront:lineLb];
+    [lineLb mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(bottomView.mas_centerX);
+        make.centerY.equalTo(bottomView.mas_centerY);
+        make.height.equalTo(@24);
+        make.width.equalTo(@2);
+    }];
+    [lineLb setBackgroundColor:UIColorFromRGB(0xEEEEEE)];
+    
+    [bottomView.layer setShadowOpacity:0.4];
+    [bottomView.layer setShadowColor:[UIColor blackColor].CGColor];
+    [bottomView.layer setShadowOffset:CGSizeMake(0, 3)];
 }
 - (void)initWithNavi{
     self.navigationItem.hidesBackButton = YES;
@@ -55,8 +102,8 @@
 }
 - (void)back{
     for (UIViewController *controller in self.navigationController.viewControllers) {
-        if ([controller isKindOfClass:[PaperDetailViewController class]]) {
-            PaperDetailViewController *revise = (PaperDetailViewController *)controller;
+        if ([controller isKindOfClass:[MyCollectionViewController class]]) {
+            MyCollectionViewController *revise = (MyCollectionViewController *)controller;
             [self.navigationController popToViewController:revise animated:YES];
         }
     }

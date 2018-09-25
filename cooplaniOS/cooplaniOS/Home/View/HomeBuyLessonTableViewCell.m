@@ -14,7 +14,13 @@
     [super awakeFromNib];
     // Initialization code
 }
-
+- (void)setModel:(HomeBuyLessonModel *)model{
+    _model = model;
+    [self.lessonImg sd_setImageWithURL:[NSURL URLWithString:model.img] placeholderImage:[UIImage imageNamed:@"全程班图"]];
+    self.lessonNameLb.text = [NSString stringWithFormat:@"%@", model.course_name];
+    self.lessonTimeLb.text = [NSString stringWithFormat:@"%@", model.indate];
+    self.lessonDetailLb.text = [NSString stringWithFormat:@"%@", model.info];
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
