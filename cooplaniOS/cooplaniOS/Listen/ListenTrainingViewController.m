@@ -313,10 +313,13 @@
             NSString *sectionType;
             if (indexPath.row == 1) {
                 sectionType = @"4-A";
+                [MobClick endEvent:@"listeningpage_sectionA"];
             }else if (indexPath.row == 2){
                 sectionType = @"4-B";
+                [MobClick endEvent:@"listeningpage_sectionB"];
             }else{
                 sectionType = @"4-C";
+                [MobClick endEvent:@"listeningpage_sectionC"];
             }
             [LTHttpManager getOneNewTestWithUserId:IS_USER_ID Type:@"1" Testpaper_kind:@"1T" Testpaper_type:sectionType Complete:^(LTHttpResult result, NSString *message, id data) {
                 if (LTHttpResultSuccess == result) {
@@ -364,10 +367,12 @@
             }];
         }
     }else if (indexPath.section == 0){
+        [MobClick endEvent:@"listeningpage_course"];
         VideoViewController *vc = [[VideoViewController alloc]init];
         vc.title = @"听力训练";
         [self.navigationController pushViewController:vc animated:YES];
     }else if (indexPath.section == 1){
+        [MobClick endEvent:@"listeningpage_examination"];
         MyCollectionViewController *vc = [[MyCollectionViewController alloc]init];
         vc.title = @"听力训练";
         [self.navigationController pushViewController:vc animated:YES];
@@ -482,6 +487,16 @@
     [tap.view removeFromSuperview];
 }
 - (void)selectedBtnClick:(UIButton *)btn{
+    if (btn.tag == 0) {
+        [MobClick endEvent:@"choosingtypepage_sectionA"];
+    }else if (btn.tag == 1){
+        [MobClick endEvent:@"choosingtypepage_sectionB"];
+    }else if (btn.tag == 2){
+        [MobClick endEvent:@"choosingtypepage_sectionC"];
+    }else{
+        [MobClick endEvent:@"choosingtypepage_total"];
+    }
+    [MobClick endEvent:@"listeningpage_subject"];
     btn.selected = !btn.selected;
     [btn setBackgroundColor:DRGBCOLOR];
     [btn setTitleColor:UIColorFromRGB(0x666666) forState:UIControlStateSelected];

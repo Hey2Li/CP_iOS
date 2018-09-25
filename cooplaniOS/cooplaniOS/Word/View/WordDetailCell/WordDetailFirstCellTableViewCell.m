@@ -46,7 +46,9 @@
 }
 #pragma mark 添加笔记
 - (IBAction)addNoteClick:(UIButton *)btn {
+    
     if (IS_USER_ID) {
+        [MobClick endEvent:@"doingpracticeApage_addnote"];
         btn.selected = !btn.selected;
         if (btn.selected) {
 //            [LTHttpManager addWordsWithUserId:IS_USER_ID Word:_word Tranlate:[Tool arrayToJSONString:self.dataArray] Ph_en_mp3:_partsDict[@"ph_en_mp3"] Ph_am_mp3:_partsDict[@"ph_am_mp3"] Ph_am:_partsDict[@"ph_am"] Ph_en:_partsDict[@"ph_en"] Complete:^(LTHttpResult result, NSString *message, id data) {

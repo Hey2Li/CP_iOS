@@ -131,6 +131,7 @@
     if (!self.sectionType) {
         return;
     }
+    [MobClick event:@"practicetranscriptpage_continue"];
     [LTHttpManager getOneNewTestWithUserId:IS_USER_ID Type:@"1" Testpaper_kind:@"1T" Testpaper_type:self.sectionType Complete:^(LTHttpResult result, NSString *message, id data) {
         if (LTHttpResultSuccess == result) {
             self.downloadVoiceUrl = data[@"responseData"][@"voiceUrl"];
@@ -178,6 +179,7 @@
     }];
 }
 - (void)testAgainBtnClick:(UIButton *)btn{
+    [MobClick event:@"practicetranscriptpage_retry"];
     SubTestPMViewController *vc = [[SubTestPMViewController alloc]init];
     vc.testPaperId = self.testPaperId;
     vc.sectionType = self.sectionType;
@@ -226,6 +228,7 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section < self.questionsArray.count) {
+        [MobClick endEvent:@"practicetranscriptpage_analysis"];
         QuestionsModel *questionModel = self.questionsArray[indexPath.row];
         questionModel.isSelected = !questionModel.isSelected;
         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:nil];

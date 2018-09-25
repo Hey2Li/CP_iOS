@@ -85,6 +85,7 @@
 //        [self.dowloadBtn setImage:[UIImage imageNamed:@"downloaded"] forState:UIControlStateNormal];
 //        self.dowloadBtn.enabled = NO;
 //    }
+    [MobClick event:[NSString stringWithFormat:@"examinationpage_subject+%@", onePaperModel.name]];
     DownloadFileModel *model = [DownloadFileModel jr_findByPrimaryKey:[NSString stringWithFormat:@"%ld", onePaperModel.ID]];
     if (model.paperJsonName == nil || [model.paperJsonName isEqualToString:@""] || [model.paperJsonName hasPrefix:@"http"]) {
         [LTHttpManager findOneTestPaperWithID:@(onePaperModel.ID) Complete:^(LTHttpResult result, NSString *message, id data) {

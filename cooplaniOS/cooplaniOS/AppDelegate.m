@@ -16,6 +16,8 @@
 #import "DownloadVideoModel.h"
 #import <KeyboardManager.h>
 #import <UMShare/UMShare.h>
+#import <UMAnalytics/MobClick.h>
+#import <UMCommon/UMCommon.h>
 #import <AVFoundation/AVFoundation.h>
 #import "WXApi.h"
 #import "WXApiManager.h"
@@ -29,7 +31,7 @@
 #import <AdSupport/AdSupport.h>
 #import <AlibcTradeSDK/AlibcTradeSDK.h>
 
-#define USHARE_DEMO_APPKEY @"5861e5daf5ade41326001eab"
+#define USHARE_DEMO_APPKEY @"5ba9c432f1f556370d0002b7"
 
 @interface AppDelegate ()<JPUSHRegisterDelegate>
 @property(nonatomic,strong) MMDrawerController * drawerController;
@@ -176,7 +178,8 @@
     [[UMSocialManager defaultManager] openLog:YES];
     
     /* 设置友盟appkey */
-    [[UMSocialManager defaultManager] setUmSocialAppkey:USHARE_DEMO_APPKEY];
+    [UMConfigure initWithAppkey:USHARE_DEMO_APPKEY channel:@"App Store"];
+
     // U-Share 平台设置
     [self configUSharePlatforms];
     [self confitUShareSettings];

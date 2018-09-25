@@ -43,6 +43,16 @@
 - (IBAction)listenClick:(UIButton *)sender {
     ListenTrainingViewController *vc = [[ListenTrainingViewController alloc]init];
     [self.viewController.navigationController pushViewController:vc animated:YES];
+    [MobClick event:@"homepage_listening"];
+}
+- (IBAction)readClick:(UIButton *)sender {
+    [MobClick event:@"homepage_reading"];
+}
+- (IBAction)writeClick:(UIButton *)sender {
+    [MobClick event:@"homepage_writing"];
+}
+- (IBAction)fanyiClick:(UIButton *)sender {
+    [MobClick event:@"homepage_translation"];
 }
 
 @end

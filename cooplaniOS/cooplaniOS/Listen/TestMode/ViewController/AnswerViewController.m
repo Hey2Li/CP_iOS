@@ -161,6 +161,7 @@
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [MobClick endEvent:@"examinationtranscriptpage_analysis"];
     SectionsModel *model = self.questionsArray[indexPath.section];
     QuestionsModel *questionModel = model.Passages[indexPath.row];
     questionModel.isSelected = !questionModel.isSelected;

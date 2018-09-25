@@ -426,6 +426,7 @@
 }
 #pragma mark 变速播放
 - (IBAction)roteWithPlay:(UIButton *)sender {
+    [MobClick endEvent:@"doingpracticeApage_speed"];//倍速按钮点击量
     _RateTag++;
     switch (_RateTag % 6) {
         case 0:
@@ -459,6 +460,7 @@
 #pragma mark 单句收藏
 - (IBAction)collectionOneSentence:(UIButton *)sender {
     ListenTableViewCell *cell = [self.lyricTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0]];
+    [MobClick endEvent:@"doingpracticeApage_favour"];//收藏按钮点击量
     if (IS_USER_ID) {
         NSArray *array = [cell.listenLb.text componentsSeparatedByString:@"\n"];
         [LTHttpManager collectionSectenceWithUserId:IS_USER_ID SectenceEN:array.count ? array[0]:@"" SentenceCN:array.count > 1 ? array[1]:@"" TestPaperName:self.paperName Complete:^(LTHttpResult result, NSString *message, id data) {
@@ -480,12 +482,14 @@
 }
 #pragma mark 内容纠错
 - (IBAction)contentError:(UIButton *)sender {
+    [MobClick endEvent:@"doingpracticeApage_correction"];//倍速按钮点击量
     if (self.contentError) {
         self.contentError();
     }
 }
 #pragma mark 中英文切换
 - (IBAction)ENAndCN:(UIButton *)sender {
+    [MobClick endEvent:@"doingpracticeApage_translation"];//译文按钮点击量
     _CNTag++;
     switch (_CNTag % 4) {
         case 0:

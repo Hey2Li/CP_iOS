@@ -43,6 +43,9 @@
 		9B1EDCE1208891BA0033183F /* ListenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B1EDCDF208891BA0033183F /* ListenTableViewCell.xib */; };
 		9B1EDCE42089C06D0033183F /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1EDCE32089C06C0033183F /* UIView+Toast.m */; };
 		9B1EDCE72089CEAE0033183F /* NoContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1EDCE62089CEAD0033183F /* NoContentViewController.m */; };
+		9B26125221549B1A00AD2E75 /* SubTestPaperModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B26125121549B1A00AD2E75 /* SubTestPaperModel.m */; };
+		9B2612552154B57B00AD2E75 /* SubTestPMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2612542154B57B00AD2E75 /* SubTestPMViewController.m */; };
+		9B2612582154CC0800AD2E75 /* SubTestAnswerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B2612572154CC0800AD2E75 /* SubTestAnswerViewController.m */; };
 		9B26D86320E9BD3300B4FC11 /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B26D86220E9BD3300B4FC11 /* VideoViewController.m */; };
 		9B286A1A2111ADDE00C7A2D4 /* ReciteWordTbFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B286A192111ADDE00C7A2D4 /* ReciteWordTbFooterView.xib */; };
 		9B286A1D2111ADEB00C7A2D4 /* ReciteWordTbFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B286A1C2111ADEB00C7A2D4 /* ReciteWordTbFooterView.m */; };
@@ -163,6 +166,7 @@
 		9BA1CB5D20A5677D0093C37B /* collectionSentenceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1CB5C20A5677D0093C37B /* collectionSentenceModel.m */; };
 		9BA1CB6320A6BD730093C37B /* LTAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1CB6220A6BD730093C37B /* LTAlertView.m */; };
 		9BA1CB6920A92A790093C37B /* MyCollectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1CB6820A92A790093C37B /* MyCollectionModel.m */; };
+		9BA9868D2153722200E63355 /* HomeBuyLessonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA9868C2153722200E63355 /* HomeBuyLessonModel.m */; };
 		9BAC4CC521254D3A00A3A58B /* LTEmpty.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BAC4CC421254D3A00A3A58B /* LTEmpty.m */; };
 		9BAC4CCE2125661C00A3A58B /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BAC4CCC2125661C00A3A58B /* AboutUsViewController.m */; };
 		9BAC4CCF2125661C00A3A58B /* AboutUsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BAC4CCD2125661C00A3A58B /* AboutUsViewController.xib */; };
@@ -301,6 +305,12 @@
 		9B1EDCE32089C06C0033183F /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
 		9B1EDCE52089CEAD0033183F /* NoContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoContentViewController.h; sourceTree = "<group>"; };
 		9B1EDCE62089CEAD0033183F /* NoContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoContentViewController.m; sourceTree = "<group>"; };
+		9B26125021549B1A00AD2E75 /* SubTestPaperModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SubTestPaperModel.h; sourceTree = "<group>"; };
+		9B26125121549B1A00AD2E75 /* SubTestPaperModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SubTestPaperModel.m; sourceTree = "<group>"; };
+		9B2612532154B57B00AD2E75 /* SubTestPMViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SubTestPMViewController.h; sourceTree = "<group>"; };
+		9B2612542154B57B00AD2E75 /* SubTestPMViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SubTestPMViewController.m; sourceTree = "<group>"; };
+		9B2612562154CC0800AD2E75 /* SubTestAnswerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SubTestAnswerViewController.h; sourceTree = "<group>"; };
+		9B2612572154CC0800AD2E75 /* SubTestAnswerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SubTestAnswerViewController.m; sourceTree = "<group>"; };
 		9B26D86120E9BD3300B4FC11 /* VideoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
 		9B26D86220E9BD3300B4FC11 /* VideoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoViewController.m; sourceTree = "<group>"; };
 		9B286A192111ADDE00C7A2D4 /* ReciteWordTbFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReciteWordTbFooterView.xib; sourceTree = "<group>"; };
@@ -507,6 +517,8 @@
 		9BA1CB6220A6BD730093C37B /* LTAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTAlertView.m; sourceTree = "<group>"; };
 		9BA1CB6720A92A790093C37B /* MyCollectionModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyCollectionModel.h; sourceTree = "<group>"; };
 		9BA1CB6820A92A790093C37B /* MyCollectionModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyCollectionModel.m; sourceTree = "<group>"; };
+		9BA9868B2153722200E63355 /* HomeBuyLessonModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeBuyLessonModel.h; sourceTree = "<group>"; };
+		9BA9868C2153722200E63355 /* HomeBuyLessonModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeBuyLessonModel.m; sourceTree = "<group>"; };
 		9BAC4CC321254D3A00A3A58B /* LTEmpty.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTEmpty.h; sourceTree = "<group>"; };
 		9BAC4CC421254D3A00A3A58B /* LTEmpty.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTEmpty.m; sourceTree = "<group>"; };
 		9BAC4CCB2125661C00A3A58B /* AboutUsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AboutUsViewController.h; sourceTree = "<group>"; };
@@ -649,6 +661,8 @@
 				9B60C8D520B2B06A00373EA2 /* DownloadFileModel.m */,
 				9B7AD3CB20FF219B00C224CC /* LessonModel.h */,
 				9B7AD3CC20FF219B00C224CC /* LessonModel.m */,
+				9BA9868B2153722200E63355 /* HomeBuyLessonModel.h */,
+				9BA9868C2153722200E63355 /* HomeBuyLessonModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -737,6 +751,8 @@
 				9BB0A07D209C762C00089C4A /* TestPaperModel.m */,
 				9B16B0952091B63900094EE7 /* answerModel.h */,
 				9B16B0962091B63900094EE7 /* answerModel.m */,
+				9B26125021549B1A00AD2E75 /* SubTestPaperModel.h */,
+				9B26125121549B1A00AD2E75 /* SubTestPaperModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -777,6 +793,10 @@
 				9B16B08E20905BF100094EE7 /* PracticeModeViewController.m */,
 				9BB3E26F209AD05600FDBE77 /* PMAnswerViewController.h */,
 				9BB3E270209AD05600FDBE77 /* PMAnswerViewController.m */,
+				9B2612532154B57B00AD2E75 /* SubTestPMViewController.h */,
+				9B2612542154B57B00AD2E75 /* SubTestPMViewController.m */,
+				9B2612562154CC0800AD2E75 /* SubTestAnswerViewController.h */,
+				9B2612572154CC0800AD2E75 /* SubTestAnswerViewController.m */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1745,6 +1765,7 @@
 				9B3DA38320F8543E0028CDA9 /* LessonListMenuViewController.m in Sources */,
 				9B16B0932090623E00094EE7 /* QuestionTableViewCell.m in Sources */,
 				9BF8A4BE211070B40079784F /* ReciteWordsViewController.m in Sources */,
+				9B26125221549B1A00AD2E75 /* SubTestPaperModel.m in Sources */,
 				9B3DA38020F83C3A0028CDA9 /* LessonListViewController.m in Sources */,
 				9B4ED8D820C3BC3C007521BD /* WordTableViewCell.m in Sources */,
 				9B81D4DD20EB47ED00BFFC39 /* VideoTableViewCell.m in Sources */,
@@ -1779,6 +1800,7 @@
 				9B7AD3BD20FC3D3F00C224CC /* SettingViewController.m in Sources */,
 				9B32167C20DA3FFE0038FEAE /* NoHighlightedTableViewCell.m in Sources */,
 				9B3CF26020CFA65C00A52E14 /* CHMagnifierView.m in Sources */,
+				9B2612552154B57B00AD2E75 /* SubTestPMViewController.m in Sources */,
 				9B3D02DA208488A3005C923B /* LoginNextViewController.m in Sources */,
 				9B16B0972091B63900094EE7 /* answerModel.m in Sources */,
 				9B32CB19209C410700FCEED3 /* UIView+YYAdd.m in Sources */,
@@ -1797,6 +1819,7 @@
 				9B3DA36B20F74C980028CDA9 /* AddressTableViewCell.m in Sources */,
 				9B135CBB207C6B1D0040A883 /* UIImage+mask.m in Sources */,
 				9B4BB737207B6EDC0029015F /* NSString+SULoader.m in Sources */,
+				9B2612582154CC0800AD2E75 /* SubTestAnswerViewController.m in Sources */,
 				9BDFE0C4208833B500B59B3B /* LeftViweTableViewCell.m in Sources */,
 				9BC4158320C5329D002851E6 /* collectionWordModel.m in Sources */,
 				9B3DA35D20F631A10028CDA9 /* LessonTableViewCell.m in Sources */,
@@ -1820,6 +1843,7 @@
 				9B1D31C320735804007674CF /* LeftViewController.m in Sources */,
 				9BB0B89421142FA40063054A /* ReciteWordTableViewCell.m in Sources */,
 				9B6FB85F207F3D7B00BC07F3 /* HYWord.m in Sources */,
+				9BA9868D2153722200E63355 /* HomeBuyLessonModel.m in Sources */,
 				9B1D31BF20734891007674CF /* HomeViewController.m in Sources */,
 				9B90287B2138D61400F0564C /* SectionWordNumsTableViewCell.m in Sources */,
 				9B3DA39220F886730028CDA9 /* LessonServerView.m in Sources */,

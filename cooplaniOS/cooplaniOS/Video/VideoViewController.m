@@ -484,8 +484,10 @@
 - (void)scrollClick:(UIButton *)sender{
     [self changeClick:sender];
     if (sender.tag == 101) {
+        [MobClick event:@"listeningcoursepage_tab1"];
         self.allSelectionTableView.hidden = YES;
     }else{
+        [MobClick event:@"listeningcoursepage_tab2"];
         self.allSelectionTableView.hidden = NO;
     }
 }
@@ -534,6 +536,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 //选集
     if (tableView == self.allSelectionTableView) {
+        [MobClick event:@"listeningcoursepage_course"];
         VideoLessonModel *videoModel = self.lessonArray[indexPath.row];
         [self.wmPlayer resetWMPlayer];
         [self.videoImg bringSubviewToFront:self.playBtn];
@@ -621,6 +624,13 @@
     [super viewWillAppear:animated];
     self.mm_drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
     self.mm_drawerController.closeDrawerGestureModeMask = MMCloseDrawerGestureModeNone;
+    [MobClick beginLogPageView:@"听力讲解课页面"];
+
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"听力讲解课页面"];
 }
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];

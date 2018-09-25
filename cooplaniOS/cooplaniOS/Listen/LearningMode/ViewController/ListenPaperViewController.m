@@ -640,6 +640,7 @@
 }
 #pragma mark 更多按钮
 - (IBAction)moreBtnClick:(UIButton *)sender {
+    [MobClick endEvent:@"doingpracticeApage_dots"];//“三个点”点击量
     sender.selected = !sender.selected;
     [self.view layoutIfNeeded];
     if (sender.selected) {

@@ -46,6 +46,16 @@
     }
     return _paperMutableArray;
 }
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"首页"];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"首页"];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -180,6 +190,7 @@
     return cell;
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    [MobClick event:@"homepage_banner"];
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@",self.bannerArray[indexPath.row][@"skipUrl"]]];
     NSLog(@"%@",url);
     if([[UIDevice currentDevice].systemVersion floatValue] >= 10.0){
@@ -277,8 +288,11 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 1) {
+        [MobClick event:@"homepage_vocabulary"];
         StartLearnWordViewController *vc =[[StartLearnWordViewController alloc]init];
         [self.navigationController pushViewController:vc animated:YES];
+    }else if (indexPath.section == 2){
+        [MobClick event:@"homepage_advertisement"];
     }
 }
 

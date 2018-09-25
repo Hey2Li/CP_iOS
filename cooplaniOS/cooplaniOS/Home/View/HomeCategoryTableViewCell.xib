@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -44,6 +44,9 @@
                         <state key="normal" title="阅读" image="阅读">
                             <color key="titleColor" red="0.35686274509999999" green="0.35686274509999999" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
+                        <connections>
+                            <action selector="readClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="M7f-tz-DVv"/>
+                        </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dVV-DK-P09">
                         <rect key="frame" x="329.5" y="65.5" width="76" height="60"/>
@@ -56,6 +59,9 @@
                         <state key="normal" title="翻译" image="翻译">
                             <color key="titleColor" red="0.35686274509999999" green="0.35686274509999999" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
+                        <connections>
+                            <action selector="fanyiClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="CDi-HD-dbQ"/>
+                        </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WLG-V9-7Nc">
                         <rect key="frame" x="239.5" y="65.5" width="76" height="60"/>
@@ -68,6 +74,9 @@
                         <state key="normal" title="写作" image="写作">
                             <color key="titleColor" red="0.35686274509999999" green="0.35686274509999999" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
+                        <connections>
+                            <action selector="writeClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="OLY-Yh-e1K"/>
+                        </connections>
                     </button>
                 </subviews>
                 <constraints>
@@ -101,6 +110,6 @@
         <image name="写作" width="30" height="26"/>
         <image name="听力" width="30" height="26"/>
         <image name="翻译" width="30" height="26"/>
-        <image name="阅读" width="30" height="26"/>
+        <image name="阅读" width="29" height="26"/>
     </resources>
 </document>

@@ -298,6 +298,7 @@
 }
 #pragma mark -- 交卷
 - (void)donePaperClick:(UIButton *)btn{
+    [MobClick event:@"doingexaminationpage_submit"];
     LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"确定交卷" sureBtn:@"确定" cancleBtn:@"取消"];
     alertView.resultIndex = ^(NSInteger index) {
         float correctFloat = (float)_correctInt/(float)(_NoCorrectInt);
