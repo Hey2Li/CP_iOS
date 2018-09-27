@@ -44,6 +44,8 @@ static NSDateFormatter *cachedDateFormatter;
         layoutHeight = ( height / iPhone6Height ) * iPhone6Height;
     } else if (UI_IS_IPHONE6PLUS) {
         layoutHeight = ( height / iPhone6Height ) * iPhone6PlusHeight;
+    } else if (UI_IS_IPHONEX){
+        layoutHeight = ( height / iPhone6Height ) * SCREEN_HEIGHT;
     } else {
         layoutHeight = height;
     }
@@ -60,6 +62,10 @@ static NSDateFormatter *cachedDateFormatter;
         layoutWidth = ( width / iPhone6Width ) * iPhone6Width;
     } else if (UI_IS_IPHONE6PLUS) {
         layoutWidth = ( width / iPhone6Width ) * iPhone6PlusWidth;
+    } else if (UI_IS_IPHONEX){
+        layoutWidth = ( width / iPhone6Width ) * SCREEN_WIDTH;
+    } else {
+        layoutWidth = width;
     }
     return layoutWidth;
 }

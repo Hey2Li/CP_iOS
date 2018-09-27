@@ -11,4 +11,5 @@
 @interface PracticeModeViewController : UIViewController
 @property (nonatomic, assign) NSInteger mode;//刷题类型
 @property (nonatomic, copy) NSString *testPaperId;
+@property (nonatomic, copy) NSString *listenPaperName;
 @end

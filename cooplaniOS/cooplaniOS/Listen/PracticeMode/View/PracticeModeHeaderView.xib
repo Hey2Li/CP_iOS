@@ -19,14 +19,14 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iOy-3X-nWX">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="86"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ListeningComprehension" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Guv-kY-ysE">
-                            <rect key="frame" x="35" y="15" width="305" height="24"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Listening Comprehension" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Guv-kY-ysE">
+                            <rect key="frame" x="16" y="15" width="343" height="24"/>
                             <fontDescription key="fontDescription" type="system" weight="black" pointSize="20"/>
                             <color key="textColor" red="0.39942303299999998" green="0.39974853399999999" blue="0.3994735479" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Section" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0cD-OR-9DN">
-                            <rect key="frame" x="35" y="54" width="305" height="17"/>
+                            <rect key="frame" x="16" y="54" width="343" height="17"/>
                             <fontDescription key="fontDescription" type="system" weight="black" pointSize="14"/>
                             <color key="textColor" red="0.39942303299999998" green="0.39974853399999999" blue="0.3994735479" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
@@ -34,11 +34,11 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstItem="0cD-OR-9DN" firstAttribute="leading" secondItem="iOy-3X-nWX" secondAttribute="leading" constant="35" id="74J-Za-3ai"/>
-                        <constraint firstAttribute="trailing" secondItem="Guv-kY-ysE" secondAttribute="trailing" constant="35" id="9hu-zB-DEb"/>
+                        <constraint firstItem="0cD-OR-9DN" firstAttribute="leading" secondItem="iOy-3X-nWX" secondAttribute="leading" constant="16" id="74J-Za-3ai"/>
+                        <constraint firstAttribute="trailing" secondItem="Guv-kY-ysE" secondAttribute="trailing" constant="16" id="9hu-zB-DEb"/>
                         <constraint firstItem="Guv-kY-ysE" firstAttribute="top" secondItem="iOy-3X-nWX" secondAttribute="top" constant="15" id="Fmg-LK-hA3"/>
-                        <constraint firstItem="Guv-kY-ysE" firstAttribute="leading" secondItem="iOy-3X-nWX" secondAttribute="leading" constant="35" id="JfA-8F-AzJ"/>
-                        <constraint firstAttribute="trailing" secondItem="0cD-OR-9DN" secondAttribute="trailing" constant="35" id="cDO-JT-FwB"/>
+                        <constraint firstItem="Guv-kY-ysE" firstAttribute="leading" secondItem="iOy-3X-nWX" secondAttribute="leading" constant="16" id="JfA-8F-AzJ"/>
+                        <constraint firstAttribute="trailing" secondItem="0cD-OR-9DN" secondAttribute="trailing" constant="16" id="cDO-JT-FwB"/>
                         <constraint firstItem="0cD-OR-9DN" firstAttribute="top" secondItem="Guv-kY-ysE" secondAttribute="bottom" constant="15" id="tYg-B0-4ad"/>
                     </constraints>
                 </view>

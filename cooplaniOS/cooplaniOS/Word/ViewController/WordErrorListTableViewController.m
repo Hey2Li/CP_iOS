@@ -53,6 +53,10 @@
                 [self.dataArray addObject:model];
             }
             [self.tableView reloadData];
+        }else{
+            self.tableView.ly_emptyView = [LTEmpty NoNetworkEmpty:^{
+                [self loadData];
+            }];
         }
     }];
 }

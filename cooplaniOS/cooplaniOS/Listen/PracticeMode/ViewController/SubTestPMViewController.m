@@ -76,9 +76,6 @@
     _correctInt = 0;
     _NoCorrectInt = 0;
     [self.player.player play];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.player.player pause];
-    });
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(listenPause) name:@"listenBackground" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(listenPlay) name:@"listenForeground" object:nil];
@@ -264,7 +261,13 @@
     PracticeModeTiKaCCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([PracticeModeTiKaCCell class]) forIndexPath:indexPath];
 //    SectionsModel *sectionModel = self.sectionsModelArray[indexPath.section];
 //    dispatch_async(dispatch_get_main_queue(), ^{
-//        self.headerView.practiceModeSubTitleLb.text = sectionModel.SectionTitle;
+    if ([self.sectionType isEqualToString:@"4-A"]) {
+        self.headerView.practiceModeSubTitleLb.text = @"Section A";
+    }else if ([self.sectionType isEqualToString:@"4-B"]){
+        self.headerView.practiceModeSubTitleLb.text = @"Section B";
+    }else{
+        self.headerView.practiceModeSubTitleLb.text = @"Section C";
+    }
 //    });
     //监听滑到那个section
     QuestionsModel *questionsModel = self.questionsModelArray[indexPath.row];
@@ -353,7 +356,7 @@
     //    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
     //        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     //    }
-
+    [self.player.player pause];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

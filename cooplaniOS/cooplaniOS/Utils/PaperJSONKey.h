@@ -48,7 +48,7 @@ extern NSString *const kQuestionVoice;//答题音效
 extern NSString *const kLoadWordHomePageData;//加载单词首页数据
 extern NSString *const kLoadLearnedList;//加载已学列表
 extern NSString *const kWordNum;//加载单词的个数
-extern NSString *const kWordBookId;//加载单词的个数
+extern NSString *const kWordBookId;//词书IDkey
 extern NSString *const kHomeReloadData;//刷新home数据
 extern NSString *const kOpenTBUser;//打开音词联动的tableview用户交互
 extern NSString *const kCloseTBUser;//关掉音词联动的tableview用户交互

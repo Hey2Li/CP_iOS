@@ -69,6 +69,7 @@
         _myTableView.scrollEnabled = NO;
         _myTableView.tableFooterView = [UIView new];
         [_myTableView registerNib:[UINib nibWithNibName:NSStringFromClass([ReciteWordTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([ReciteWordTableViewCell class])];
+        [self.view addSubview:_myTableView];
     }
     return _myTableView;
 }
@@ -294,7 +295,7 @@
     return 4;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return ceilf((SCREEN_HEIGHT - kTBViewFooterHeight - kTBViewHeaderHeight - 64)/4);
+    return ceilf((SCREEN_HEIGHT - kTBViewFooterHeight - kTBViewHeaderHeight - SafeAreaTopHeight)/4);
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     ReciteWordTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ReciteWordTableViewCell class])];
@@ -449,6 +450,7 @@
             if (LTHttpResultSuccess == result) {
                 NSLog(@"用户单词数据保存成功");
                 [[NSNotificationCenter defaultCenter]postNotificationName:kLoadWordHomePageData object:nil];
+                [[NSNotificationCenter defaultCenter]postNotificationName:kHomeReloadData object:nil];
             }
         }];
     }

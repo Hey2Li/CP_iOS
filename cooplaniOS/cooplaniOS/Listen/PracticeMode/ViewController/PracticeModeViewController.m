@@ -533,6 +533,10 @@
     };
     return cell;
 }
+- (void)setListenPaperName:(NSString *)listenPaperName{
+    _listenPaperName = listenPaperName;
+    self.player.paperName = listenPaperName;
+}
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if (scrollView == self.tikaCollectionView) {
     }

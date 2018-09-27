@@ -101,7 +101,7 @@
             NSString *mistake_num = data[@"responseData"][@"mistake_num"];
             NSString *proficiency_num = data[@"responseData"][@"proficiency_num"];
             NSInteger num = [memory_num integerValue] + [mistake_num integerValue] + [proficiency_num integerValue];
-            _residueStr = [NSString stringWithFormat:@"%ld", num];
+            _residueStr = [NSString stringWithFormat:@"%ld", (long)num];
             [self.myTableView reloadData];
         }else{
             
@@ -127,9 +127,9 @@
     UILabel *countdownLabel = [UILabel new];
     countdownLabel.font = [UIFont boldSystemFontOfSize:12];
     NSInteger days = [self computeDaysWithDataFromString:@"2018-12-15"];
-    NSMutableAttributedString *contentStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"距离四级倒计时还有%ld天", days]];
+    NSMutableAttributedString *contentStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"距离四级倒计时还有%ld天", (long)days]];
     //找出特定字符在整个字符串中的位置
-    NSRange redRange = NSMakeRange([[contentStr string] rangeOfString:[NSString stringWithFormat:@"%ld", days]].location, [[contentStr string] rangeOfString:[NSString stringWithFormat:@"%ld", days]].length);
+    NSRange redRange = NSMakeRange([[contentStr string] rangeOfString:[NSString stringWithFormat:@"%ld", (long)days]].location, [[contentStr string] rangeOfString:[NSString stringWithFormat:@"%ld", days]].length);
     //修改特定字符的字体大小
     [contentStr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:14] range:redRange];
     countdownLabel.attributedText = contentStr;

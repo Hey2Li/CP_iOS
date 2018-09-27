@@ -55,7 +55,7 @@
     return 2;
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return  CGSizeMake(SCREEN_WIDTH, 250);
+    return  CGSizeMake(SCREEN_WIDTH, UI_IS_IPHONEX ? 250 : [Tool layoutForAlliPhoneHeight:250]);
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
     return UIEdgeInsetsMake(0, 0, 0, 0);

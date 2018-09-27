@@ -309,23 +309,24 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 2) {
         if (self.rightBtn.selected) {
-            [self selectMode];
+            kPreventRepeatClickTime(3);
             PaperModel *model = self.paperMutableArray[indexPath.row];
             self.testPaperId = model.ID;
-            [self loadTestPaperWithPaperId:model.ID];
+            [self selectMode];
         }else{
             SubTestPMViewController *vc = [[SubTestPMViewController alloc]init];
+            kPreventRepeatClickTime(3);
             NSString *sectionType;
-            if (indexPath.row == 1) {
-                sectionType = @"4-B";
+            if (indexPath.row == 0) {
+                sectionType = @"4-A";
                 [MobClick endEvent:@"listeningpage_sectionB"];
                 vc.title = @"短篇新闻";
-            }else if (indexPath.row == 2){
-                sectionType = @"4-C";
+            }else if (indexPath.row == 1){
+                sectionType = @"4-B";
                 [MobClick endEvent:@"listeningpage_sectionC"];
                 vc.title = @"长对话";
             }else{
-                sectionType = @"4-A";
+                sectionType = @"4-C";
                 [MobClick endEvent:@"listeningpage_sectionA"];
                 vc.title = @"听力篇章";
             }
@@ -510,13 +511,10 @@
     [btn setBackgroundColor:DRGBCOLOR];
     [btn setTitleColor:UIColorFromRGB(0x666666) forState:UIControlStateSelected];
     [self.maskView removeFromSuperview];
-    PracticeModeViewController *vc = [[PracticeModeViewController alloc]init];
-    vc.mode = btn.tag;
-    vc.testPaperId = [NSString stringWithFormat:@"%@", self.testPaperId];
-    [self.navigationController pushViewController:vc animated:YES];
+    [self loadTestPaperWithPaperId:self.testPaperId Tag:btn.tag];
 }
 #pragma mark 提前加载试卷信息
-- (void)loadTestPaperWithPaperId:(NSNumber *)testPaperId{
+- (void)loadTestPaperWithPaperId:(NSNumber *)testPaperId Tag:(NSInteger)tag{
     [LTHttpManager findOneTestPaperWithID:testPaperId Complete:^(LTHttpResult result, NSString *message, id data) {
         if (LTHttpResultSuccess == result) {
             self.downloadVoiceUrl = data[@"responseData"][@"voiceUrl"];
@@ -532,6 +530,7 @@
                 J_Update(self.downloadModel).Columns(@[@"paperVoiceName"]).updateResult;
             }
             [USERDEFAULTS setObject:self.downloadModel.testPaperId forKey:@"testPaperId"];
+            [USERDEFAULTS setObject:self.downloadModel.name forKey:@"testPaperName"];
             [LTHttpManager downloadURL:self.downloadJsonUrl progress:^(NSProgress *downloadProgress) {
                 
             } destination:^(NSURL *targetPath) {
@@ -539,19 +538,25 @@
                 NSString *fileName = [url lastPathComponent];
                 self.downloadModel.paperJsonName = fileName;
                 J_Update(self.downloadModel).Columns(@[@"paperJsonName"]).updateResult;
+                [LTHttpManager downloadURL:self.downloadlrcUrl progress:^(NSProgress *downloadProgress) {
+                    
+                } destination:^(NSURL *targetPath) {
+                    NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                    NSString *fileName = [url lastPathComponent];
+                    self.downloadModel.paperLrcName = fileName;
+                    J_Update(self.downloadModel).Columns(@[@"paperLrcName"]).updateResult;
+                    PracticeModeViewController *vc = [[PracticeModeViewController alloc]init];
+                    vc.mode = tag;
+                    vc.listenPaperName = self.downloadModel.name;
+                    vc.testPaperId = [NSString stringWithFormat:@"%@", self.testPaperId];
+                    [self.navigationController pushViewController:vc animated:YES];
+                } failure:^(NSError *error) {
+                    
+                }];
             } failure:^(NSError *error) {
                 
             }];
-            [LTHttpManager downloadURL:self.downloadlrcUrl progress:^(NSProgress *downloadProgress) {
-                
-            } destination:^(NSURL *targetPath) {
-                NSString *url = [NSString stringWithFormat:@"%@",targetPath];
-                NSString *fileName = [url lastPathComponent];
-                self.downloadModel.paperLrcName = fileName;
-                J_Update(self.downloadModel).Columns(@[@"paperLrcName"]).updateResult;
-            } failure:^(NSError *error) {
-                
-            }];
+          
             J_Insert(self.downloadModel).updateResult;
             
             NSLog(@"%@",self.downloadModel);

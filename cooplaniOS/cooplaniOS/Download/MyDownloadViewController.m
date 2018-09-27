@@ -77,10 +77,10 @@
     topSegment.delegate = self;
     self.topSegment = topSegment;
     
-    UIScrollView *scrolleView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 40, SCREEN_WIDTH, SCREEN_HEIGHT - 40)];
+    UIScrollView *scrolleView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     [self.view addSubview:scrolleView];
     scrolleView.backgroundColor = [UIColor whiteColor];
-    [scrolleView setContentSize:CGSizeMake(SCREEN_WIDTH * 2, scrolleView.height)];
+    [scrolleView setContentSize:CGSizeMake(SCREEN_WIDTH, scrolleView.height)];
     
     [scrolleView addSubview:self.myTableView];
     [scrolleView addSubview:self.listenTableView];
@@ -223,33 +223,33 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == self.myTableView) {
-        PaperDetailViewController *vc = [[PaperDetailViewController alloc]init];
-        DownloadFileModel *model = self.downloadArray[indexPath.row];
-        [LTHttpManager findOneTestPaperInfoWithUserId:IS_USER_ID ? IS_USER_ID : @"" TestPaperId:@([model.testPaperId integerValue]) Complete:^(LTHttpResult result, NSString *message, id data) {
-            if (LTHttpResultSuccess == result) {
-                NSMutableDictionary *muDict = [NSMutableDictionary dictionaryWithDictionary:data[@"responseData"][@"tp"]];
-                [muDict addEntriesFromDictionary:@{@"collection":data[@"responseData"][@"type"]}];
-                PaperModel *onePaperModel = [PaperModel mj_objectWithKeyValues:muDict];
-                vc.onePaperModel = onePaperModel;
-                vc.nextTitle = onePaperModel.name;
-                [self.navigationController pushViewController:vc animated:YES];
-            }else{
-                NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithData:[USERDEFAULTS objectForKey:@"homeData"]];
-                [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    PaperModel *pmodel = (PaperModel *)obj;
-                    if ([[NSString stringWithFormat:@"%@",pmodel.ID] isEqualToString:model.testPaperId]) {
-                        vc.onePaperModel = pmodel;
-                        vc.nextTitle = pmodel.name;
-                        [self.navigationController pushViewController:vc animated:YES];
-                    }
-                }];
-            }
-        }];
+//        PaperDetailViewController *vc = [[PaperDetailViewController alloc]init];
+//        DownloadFileModel *model = self.downloadArray[indexPath.row];
+//        [LTHttpManager findOneTestPaperInfoWithUserId:IS_USER_ID ? IS_USER_ID : @"" TestPaperId:@([model.testPaperId integerValue]) Complete:^(LTHttpResult result, NSString *message, id data) {
+//            if (LTHttpResultSuccess == result) {
+//                NSMutableDictionary *muDict = [NSMutableDictionary dictionaryWithDictionary:data[@"responseData"][@"tp"]];
+//                [muDict addEntriesFromDictionary:@{@"collection":data[@"responseData"][@"type"]}];
+//                PaperModel *onePaperModel = [PaperModel mj_objectWithKeyValues:muDict];
+//                vc.onePaperModel = onePaperModel;
+//                vc.nextTitle = onePaperModel.name;
+//                [self.navigationController pushViewController:vc animated:YES];
+//            }else{
+//                NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithData:[USERDEFAULTS objectForKey:@"homeData"]];
+//                [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//                    PaperModel *pmodel = (PaperModel *)obj;
+//                    if ([[NSString stringWithFormat:@"%@",pmodel.ID] isEqualToString:model.testPaperId]) {
+//                        vc.onePaperModel = pmodel;
+//                        vc.nextTitle = pmodel.name;
+//                        [self.navigationController pushViewController:vc animated:YES];
+//                    }
+//                }];
+//            }
+//        }];
     }else{
-        DownloadVideoModel *model = self.videoDownloadArray[indexPath.row];
-        LocalVideoViewController *vc = [[LocalVideoViewController alloc]init];
-        vc.localVideoModel = model;
-        [self.navigationController pushViewController:vc animated:YES];
+//        DownloadVideoModel *model = self.videoDownloadArray[indexPath.row];
+//        LocalVideoViewController *vc = [[LocalVideoViewController alloc]init];
+//        vc.localVideoModel = model;
+//        [self.navigationController pushViewController:vc animated:YES];
     }
     
 }

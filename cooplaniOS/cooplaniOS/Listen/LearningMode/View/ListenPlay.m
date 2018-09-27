@@ -111,6 +111,8 @@
     self.lyricTableView.delegate = self;
     self.lyricTableView.dataSource = self;
     self.lyricTableView.separatorStyle = NO;
+    UIView *bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 100)];
+    self.lyricTableView.tableFooterView = bottomView;
     self.lyricTableView.estimatedRowHeight = 50.0f;
     self.lyricTableView.rowHeight = UITableViewAutomaticDimension;
     self.lyricTableView.showsVerticalScrollIndicator = NO;
@@ -135,7 +137,12 @@
             CGFloat minTime = 100;
             for (NSInteger i = 0; i < timeArray.count; i++) {
                 NSString *time = [timeArray[i] substringWithRange:NSMakeRange(0, 5)];
-                NSArray *timeArray = [time componentsSeparatedByString:@":"];
+                NSArray *timeArray;
+                if ([time rangeOfString:@"."].location != NSNotFound) {
+                    timeArray = [time componentsSeparatedByString:@"."];
+                }else{
+                    timeArray = [time componentsSeparatedByString:@":"];
+                }
                 CGFloat allTime = [timeArray[0] floatValue] * 60 + [timeArray[1] floatValue];
                 CGFloat otherTime = fabs(allTime - seekTime);
                 if (minTime > otherTime) {
@@ -162,7 +169,12 @@
             CGFloat minTime = 100;
             for (NSInteger i = 0; i < timeArray.count; i++) {
                 NSString *time = [timeArray[i] substringWithRange:NSMakeRange(0, 5)];
-                NSArray *timeArray = [time componentsSeparatedByString:@":"];
+                NSArray *timeArray;
+                if ([time rangeOfString:@"."].location != NSNotFound) {
+                    timeArray = [time componentsSeparatedByString:@"."];
+                }else{
+                    timeArray = [time componentsSeparatedByString:@":"];
+                }
                 CGFloat allTime = [timeArray[0] floatValue] * 60 + [timeArray[1] floatValue];
                 CGFloat otherTime = fabs(allTime - seekTime);
                 if (minTime > otherTime) {
@@ -190,7 +202,9 @@
     if ([fileManager fileExistsAtPath:fullPath]) {
         NSData *data = [NSData dataWithContentsOfFile:fullPath];
         unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-        NSString *lrcString = [[NSString alloc]initWithContentsOfFile:fullPath encoding:NSUTF8StringEncoding error:nil];
+        NSError *error;
+        NSString *lrcString = [[NSString alloc]initWithContentsOfFile:fullPath encoding:NSUTF8StringEncoding error:&error];
+        NSLog(@"lrc error:%@", [error localizedDescription]);
         NSString *lrcStr = [[NSString alloc]initWithData:data encoding:encode];
         lyricArray = [NSMutableArray array];
         timeArray = [NSMutableArray array];
@@ -379,7 +393,6 @@
                 };
                 self.checkWordView.findViewIsOpenBlock = ^(UIButton *btn) {
                     if (btn.selected) {
-                    
                         [UIView animateWithDuration:0.2 animations:^{
                             [weakSelf.checkWordView mas_remakeConstraints:^(MASConstraintMaker *make) {
                                 make.top.equalTo(weakSelf.mas_bottom).offset(-(SCREEN_HEIGHT - SafeAreaTopHeight - 12));
@@ -497,11 +510,14 @@
 }
 #pragma mark 单句收藏
 - (IBAction)collectionOneSentence:(UIButton *)sender {
+    NSString *testPaperId = [USERDEFAULTS objectForKey:@"testPaperId"];
+    NSString *testPaperName = [USERDEFAULTS objectForKey:@"testPaperName"];
+    DownloadFileModel *model = [DownloadFileModel  jr_findByPrimaryKey:testPaperId];
     ListenTableViewCell *cell = [self.lyricTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0]];
     [MobClick endEvent:@"doingpracticeApage_favour"];//收藏按钮点击量
     if (IS_USER_ID) {
         NSArray *array = [cell.listenLb.text componentsSeparatedByString:@"\n"];
-        [LTHttpManager collectionSectenceWithUserId:IS_USER_ID SectenceEN:array.count ? array[0]:@"" SentenceCN:array.count > 1 ? array[1]:@"" TestPaperName:self.paperName ? self.paperName : _downloadModel.name Complete:^(LTHttpResult result, NSString *message, id data) {
+        [LTHttpManager collectionSectenceWithUserId:IS_USER_ID SectenceEN:array.count ? array[0]:@"" SentenceCN:array.count > 1 ? array[1]:@"" TestPaperName: model.name ? model.name : testPaperName Complete:^(LTHttpResult result, NSString *message, id data) {
             if (result == LTHttpResultSuccess) {
 //                collectionSentenceModel *model = [[collectionSentenceModel alloc]init];
 //                model.sentenceEN = array.count ? array[0]:@"";

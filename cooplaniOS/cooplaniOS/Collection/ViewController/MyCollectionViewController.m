@@ -35,7 +35,7 @@
 }
 - (UITableView *)myTableView{
     if (!_myTableView) {
-        _myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
+        _myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight) style:UITableViewStylePlain];
         _myTableView.delegate = self;
         _myTableView.dataSource = self;
         _myTableView.separatorStyle = NO;
@@ -74,7 +74,6 @@
     return cell;
 }
 
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     MyCollectionModel *onePaperModel = self.dataArray[indexPath.row];
 //    NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
@@ -85,67 +84,65 @@
 //        [self.dowloadBtn setImage:[UIImage imageNamed:@"downloaded"] forState:UIControlStateNormal];
 //        self.dowloadBtn.enabled = NO;
 //    }
-    [MobClick event:[NSString stringWithFormat:@"examinationpage_subject+%@", onePaperModel.name]];
-    DownloadFileModel *model = [DownloadFileModel jr_findByPrimaryKey:[NSString stringWithFormat:@"%ld", onePaperModel.ID]];
-    if (model.paperJsonName == nil || [model.paperJsonName isEqualToString:@""] || [model.paperJsonName hasPrefix:@"http"]) {
-        [LTHttpManager findOneTestPaperWithID:@(onePaperModel.ID) Complete:^(LTHttpResult result, NSString *message, id data) {
-            if (LTHttpResultSuccess == result) {
-                self.downloadVoiceUrl = data[@"responseData"][@"voiceUrl"];
-                self.downloadlrcUrl = data[@"responseData"][@"lic"];
-                self.downloadJsonUrl = data[@"responseData"][@"testPaperUrl"];
-                self.downloadModel.testPaperId = data[@"responseData"][@"id"];
-                self.downloadModel.name = data[@"responseData"][@"name"];
-                self.downloadModel.info = data[@"responseData"][@"info"];
-                self.downloadModel.number = data[@"responseData"][@"number"];
-                self.voiceSize = data[@"responseData"][@"size"];
-                if (model.paperVoiceName == nil || [model.paperVoiceName isEqualToString:@""]) {
-                    self.downloadModel.paperVoiceName = self.downloadVoiceUrl;
-                    J_Update(self.downloadModel).Columns(@[@"paperVoiceName"]).updateResult;
-                }
-                [USERDEFAULTS setObject:[NSString stringWithFormat:@"%ld", (long)onePaperModel.ID] forKey:@"testPaperId"];
-                [LTHttpManager downloadURL:self.downloadJsonUrl progress:^(NSProgress *downloadProgress) {
-                    
-                } destination:^(NSURL *targetPath) {
-                    NSString *url = [NSString stringWithFormat:@"%@",targetPath];
-                    NSString *fileName = [url lastPathComponent];
-                    self.downloadModel.paperJsonName = fileName;
-                    J_Update(self.downloadModel).Columns(@[@"paperJsonName"]).updateResult;
-                    [LTHttpManager downloadURL:self.downloadlrcUrl progress:^(NSProgress *downloadProgress) {
+    LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"模拟考场需要一鼓作气的完成准备好了吗？" sureBtn:@"准备好了！" cancleBtn:@"取消"];
+    alertView.resultIndex = ^(NSInteger index) {
+        kPreventRepeatClickTime(3);
+        [MobClick event:[NSString stringWithFormat:@"examinationpage_subject+%@", onePaperModel.name]];
+        DownloadFileModel *model = [DownloadFileModel jr_findByPrimaryKey:[NSString stringWithFormat:@"%ld", onePaperModel.ID]];
+        if (model.paperJsonName == nil || [model.paperJsonName isEqualToString:@""] || [model.paperJsonName hasPrefix:@"http"]) {
+            [LTHttpManager findOneTestPaperWithID:@(onePaperModel.ID) Complete:^(LTHttpResult result, NSString *message, id data) {
+                if (LTHttpResultSuccess == result) {
+                    self.downloadVoiceUrl = data[@"responseData"][@"voiceUrl"];
+                    self.downloadlrcUrl = data[@"responseData"][@"lic"];
+                    self.downloadJsonUrl = data[@"responseData"][@"testPaperUrl"];
+                    self.downloadModel.testPaperId = data[@"responseData"][@"id"];
+                    self.downloadModel.name = data[@"responseData"][@"name"];
+                    self.downloadModel.info = data[@"responseData"][@"info"];
+                    self.downloadModel.number = data[@"responseData"][@"number"];
+                    self.voiceSize = data[@"responseData"][@"size"];
+                    if (model.paperVoiceName == nil || [model.paperVoiceName isEqualToString:@""]) {
+                        self.downloadModel.paperVoiceName = self.downloadVoiceUrl;
+                        J_Update(self.downloadModel).Columns(@[@"paperVoiceName"]).updateResult;
+                    }
+                    [USERDEFAULTS setObject:[NSString stringWithFormat:@"%ld", (long)onePaperModel.ID] forKey:@"testPaperId"];
+                    [LTHttpManager downloadURL:self.downloadJsonUrl progress:^(NSProgress *downloadProgress) {
                         
                     } destination:^(NSURL *targetPath) {
                         NSString *url = [NSString stringWithFormat:@"%@",targetPath];
                         NSString *fileName = [url lastPathComponent];
-                        self.downloadModel.paperLrcName = fileName;
-                        J_Update(self.downloadModel).Columns(@[@"paperLrcName"]).updateResult;
-                        LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"模拟考场需要一鼓作气的完成准备好了吗？" sureBtn:@"准备好了！" cancleBtn:@"取消"];
-                        alertView.resultIndex = ^(NSInteger index) {
+                        self.downloadModel.paperJsonName = fileName;
+                        J_Update(self.downloadModel).Columns(@[@"paperJsonName"]).updateResult;
+                        [LTHttpManager downloadURL:self.downloadlrcUrl progress:^(NSProgress *downloadProgress) {
+                            
+                        } destination:^(NSURL *targetPath) {
+                            NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                            NSString *fileName = [url lastPathComponent];
+                            self.downloadModel.paperLrcName = fileName;
+                            J_Update(self.downloadModel).Columns(@[@"paperLrcName"]).updateResult;
                             TestModeViewController *vc = [[TestModeViewController alloc]init];
                             vc.testPaperId = [NSString stringWithFormat:@"%ld",onePaperModel.ID];
                             [self.navigationController pushViewController:vc animated:YES];
-                        };
-                        [alertView show];
-                        
+                            
+                        } failure:^(NSError *error) {
+                            
+                        }];
                     } failure:^(NSError *error) {
                         
                     }];
-                } failure:^(NSError *error) {
                     
-                }];
-               
-                J_Insert(self.downloadModel).updateResult;
-            }else{
-                [USERDEFAULTS setObject:[NSString stringWithFormat:@"%ld", (long)onePaperModel.ID] forKey:@"testPaperId"];
-            }
-        }];
-    }else{
-        LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"模拟考场需要一鼓作气的完成准备好了吗？" sureBtn:@"准备好了！" cancleBtn:@"取消"];
-        alertView.resultIndex = ^(NSInteger index) {
+                    J_Insert(self.downloadModel).updateResult;
+                }else{
+                    [USERDEFAULTS setObject:[NSString stringWithFormat:@"%ld", (long)onePaperModel.ID] forKey:@"testPaperId"];
+                }
+            }];
+        }else{
             TestModeViewController *vc = [[TestModeViewController alloc]init];
             vc.testPaperId = [NSString stringWithFormat:@"%ld",onePaperModel.ID];
             [self.navigationController pushViewController:vc animated:YES];
-        };
-        [alertView show];
-    }
+        }
+    };
+    [alertView show];
+   
   
 }
 

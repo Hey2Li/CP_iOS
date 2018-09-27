@@ -14,6 +14,12 @@
     [super awakeFromNib];
     // Initialization code
     self.backgroundColor = [UIColor whiteColor];
+    NSString *wordbookId = [[NSUserDefaults standardUserDefaults]objectForKey:kWordBookId];
+    if ([wordbookId isEqualToString:@"1"]) {
+        self.wordCountLb.hidden = YES;
+    }else{
+        self.wordCountLb.hidden = NO;
+    }
 }
 
 @end

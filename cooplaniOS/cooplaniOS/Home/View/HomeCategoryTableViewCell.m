@@ -47,12 +47,15 @@
 }
 - (IBAction)readClick:(UIButton *)sender {
     [MobClick event:@"homepage_reading"];
+    SVProgressShowStuteText(@"暂未开放", NO);
 }
 - (IBAction)writeClick:(UIButton *)sender {
     [MobClick event:@"homepage_writing"];
+    SVProgressShowStuteText(@"暂未开放", NO);
 }
 - (IBAction)fanyiClick:(UIButton *)sender {
     [MobClick event:@"homepage_translation"];
+    SVProgressShowStuteText(@"暂未开放", NO);
 }
 
 @end

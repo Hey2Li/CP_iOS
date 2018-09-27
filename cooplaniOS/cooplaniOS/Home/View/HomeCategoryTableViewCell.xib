@@ -19,81 +19,61 @@
                 <rect key="frame" x="0.0" y="0.0" width="556" height="277.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bug-0h-pwa" customClass="TopImgBottomWordBtn">
-                        <rect key="frame" x="105" y="109" width="76" height="60"/>
-                        <color key="backgroundColor" red="0.96470588235294119" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="60" id="Qvf-W1-Llh"/>
-                            <constraint firstAttribute="width" constant="76" id="tQx-Bt-wk4"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <state key="normal" title="听力" image="听力">
-                            <color key="titleColor" red="0.35686274509803922" green="0.35686274509803922" blue="0.35686274509803922" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </state>
-                        <connections>
-                            <action selector="listenClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="oNW-nN-9vQ"/>
-                        </connections>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nz1-HS-51h">
-                        <rect key="frame" x="195" y="109" width="76" height="60"/>
-                        <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="60" id="WTo-WE-cDr"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <state key="normal" title="阅读" image="阅读">
-                            <color key="titleColor" red="0.35686274509999999" green="0.35686274509999999" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </state>
-                        <connections>
-                            <action selector="readClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="M7f-tz-DVv"/>
-                        </connections>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dVV-DK-P09">
-                        <rect key="frame" x="375" y="109" width="76" height="60"/>
-                        <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="60" id="8mT-E8-ooT"/>
-                            <constraint firstAttribute="width" constant="76" id="hpq-ML-F9Y"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <state key="normal" title="翻译" image="翻译">
-                            <color key="titleColor" red="0.35686274509999999" green="0.35686274509999999" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </state>
-                        <connections>
-                            <action selector="fanyiClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="CDi-HD-dbQ"/>
-                        </connections>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WLG-V9-7Nc">
-                        <rect key="frame" x="285" y="109" width="76" height="60"/>
-                        <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="76" id="agY-lq-sgD"/>
-                            <constraint firstAttribute="height" constant="60" id="vYt-MV-qRc"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <state key="normal" title="写作" image="写作">
-                            <color key="titleColor" red="0.35686274509999999" green="0.35686274509999999" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </state>
-                        <connections>
-                            <action selector="writeClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="OLY-Yh-e1K"/>
-                        </connections>
-                    </button>
+                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="bGd-hJ-gCj">
+                        <rect key="frame" x="28" y="11" width="500" height="256"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bug-0h-pwa" customClass="TopImgBottomWordBtn">
+                                <rect key="frame" x="0.0" y="0.0" width="114.5" height="256"/>
+                                <color key="backgroundColor" red="0.96470588235294119" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="听力" image="听力">
+                                    <color key="titleColor" red="0.35686274509803922" green="0.35686274509803922" blue="0.35686274509803922" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="listenClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="oNW-nN-9vQ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nz1-HS-51h">
+                                <rect key="frame" x="128.5" y="0.0" width="114.5" height="256"/>
+                                <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="阅读" image="阅读">
+                                    <color key="titleColor" red="0.35686274509999999" green="0.35686274509999999" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="readClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="M7f-tz-DVv"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WLG-V9-7Nc">
+                                <rect key="frame" x="257" y="0.0" width="114.5" height="256"/>
+                                <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="写作" image="写作">
+                                    <color key="titleColor" red="0.35686274509999999" green="0.35686274509999999" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="writeClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="OLY-Yh-e1K"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dVV-DK-P09">
+                                <rect key="frame" x="385.5" y="0.0" width="114.5" height="256"/>
+                                <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <state key="normal" title="翻译" image="翻译">
+                                    <color key="titleColor" red="0.35686274509999999" green="0.35686274509999999" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="fanyiClick:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="CDi-HD-dbQ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Nz1-HS-51h" firstAttribute="leading" secondItem="bug-0h-pwa" secondAttribute="trailing" constant="14" id="44L-zh-kwP"/>
-                    <constraint firstItem="Nz1-HS-51h" firstAttribute="height" secondItem="bug-0h-pwa" secondAttribute="height" id="9GG-l6-WGC"/>
-                    <constraint firstItem="WLG-V9-7Nc" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" constant="45" id="LPW-4s-2kx"/>
-                    <constraint firstItem="WLG-V9-7Nc" firstAttribute="height" secondItem="bug-0h-pwa" secondAttribute="height" id="Wd7-oa-Bta"/>
-                    <constraint firstItem="WLG-V9-7Nc" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="b8J-GA-giC"/>
-                    <constraint firstItem="dVV-DK-P09" firstAttribute="width" secondItem="bug-0h-pwa" secondAttribute="width" id="d63-Sv-AWg"/>
-                    <constraint firstItem="dVV-DK-P09" firstAttribute="height" secondItem="bug-0h-pwa" secondAttribute="height" id="ehC-hz-gVN"/>
-                    <constraint firstItem="Nz1-HS-51h" firstAttribute="width" secondItem="bug-0h-pwa" secondAttribute="width" id="iaA-nE-58I"/>
-                    <constraint firstItem="Nz1-HS-51h" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="mSZ-oy-CKD"/>
-                    <constraint firstItem="Nz1-HS-51h" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" constant="-45" id="mjd-to-XW9"/>
-                    <constraint firstItem="dVV-DK-P09" firstAttribute="leading" secondItem="WLG-V9-7Nc" secondAttribute="trailing" constant="14" id="nXr-Za-0ar"/>
-                    <constraint firstItem="WLG-V9-7Nc" firstAttribute="width" secondItem="bug-0h-pwa" secondAttribute="width" id="nhu-pH-cbs"/>
-                    <constraint firstItem="bug-0h-pwa" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="tMb-Vf-WFu"/>
-                    <constraint firstItem="dVV-DK-P09" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="yoN-UM-dwj"/>
+                    <constraint firstItem="bGd-hJ-gCj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="5nd-Z1-fI6"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="bGd-hJ-gCj" secondAttribute="trailing" constant="8" id="9KM-xh-j61"/>
+                    <constraint firstItem="bGd-hJ-gCj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="eg2-tU-d4h"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="bGd-hJ-gCj" secondAttribute="bottom" id="pMo-ik-Ckg"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>

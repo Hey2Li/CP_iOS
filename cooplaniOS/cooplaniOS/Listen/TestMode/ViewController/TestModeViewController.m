@@ -15,6 +15,7 @@
 #import "QuestionTableViewCell.h"
 #import "SUPlayer.h"
 
+#define kCollectionHeight SCREEN_HEIGHT - [Tool layoutForAlliPhoneHeight:210] - SafeAreaTopHeight - 25
 @interface TestModeViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UICollectionView *tikaCollectionView;
 @property (nonatomic, strong) UITableView *questionTableView;
@@ -125,7 +126,11 @@
             make.left.equalTo(self.view);
             make.right.equalTo(self.view);
             make.height.equalTo(@50);
-            make.bottom.equalTo(self.view);
+            if (UI_IS_IPHONEX) {
+                make.bottom.equalTo(self.view.mas_bottom).offset(-20);
+            }else{
+                make.bottom.equalTo(self.view);
+            }
         }];
     }
     return _bottomView;
@@ -285,7 +290,7 @@
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
         make.bottom.equalTo(self.bottomView.mas_top).offset(-10);
-        make.height.equalTo(@(SCREEN_HEIGHT/2 - 25));
+        make.height.equalTo(@(kCollectionHeight));
     }];
 
     collectionView.backgroundColor = UIColorFromRGB(0xf7f7f7);
@@ -328,7 +333,7 @@
     return model.Passages.count;
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT/2 - 25);
+    return CGSizeMake(SCREEN_WIDTH, kCollectionHeight);
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
     return UIEdgeInsetsMake(0, 0, 0, 0);

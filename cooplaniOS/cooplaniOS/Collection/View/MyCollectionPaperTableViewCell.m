@@ -37,6 +37,7 @@
     // Configure the view for the selected state
 }
 - (void)setModel:(MyCollectionModel *)model{
+    self.dowloadBtn.hidden = NO;
     _model = model;
     self.downloadModel = [[DownloadFileModel alloc]init];
     self.collectionDownloadModel = model;
@@ -67,10 +68,9 @@
 }
 
 - (void)setDownloadViewModel:(DownloadFileModel *)downloadViewModel{
+    self.dowloadBtn.hidden = YES;
     _downloadModel = downloadViewModel;
     self.paperName.text = [_downloadModel.paperVoiceName stringByRemovingPercentEncoding];
-    
-
 }
 #pragma mark 下载
 - (IBAction)downloadPaper:(UIButton *)sender {

@@ -149,7 +149,7 @@
             cell.wordBookDetailLb.text = self.wordbookArray[0][@"info"];
             [cell.wordBookImg sd_setImageWithURL:[NSURL URLWithString:self.wordbookArray[0][@"img"]] placeholderImage:nil];
             cell.wordBookNumLb.text = [NSString stringWithFormat:@"%@",_residueStr ? _residueStr : @"0"];
-            cell.noKonwWordNum.text = [NSString stringWithFormat:@"%ld", self.noKnowArray.count];
+            cell.noKonwWordNum.text = [NSString stringWithFormat:@"%lu", (unsigned long)self.noKnowArray.count];
         }
         return cell;
     }else if (indexPath.row == 1){

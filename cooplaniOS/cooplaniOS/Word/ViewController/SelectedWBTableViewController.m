@@ -88,6 +88,7 @@
         }
         [LTHttpManager changeUserOpenWordbookWithUser_id:IS_USER_ID BookId:self.dataArray[indexPath.row][@"id"] Complete:^(LTHttpResult result, NSString *message, id data) {
             if (LTHttpResultSuccess == result) {
+                [[NSUserDefaults standardUserDefaults]setObject:[NSString stringWithFormat:@"%@", self.dataArray[indexPath.row][@"id"]] forKey:kWordBookId];
                 [[NSNotificationCenter defaultCenter]postNotificationName:kLoadWordHomePageData object:nil];
                 [[NSNotificationCenter defaultCenter]postNotificationName:kHomeReloadData object:nil];
                 [self.navigationController popViewControllerAnimated:YES];

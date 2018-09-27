@@ -241,7 +241,7 @@
         {
             //设置
             SettingViewController *vc = [[SettingViewController alloc]init];
-            vc.title = @"我的下载";
+            vc.title = @"设置";
             //拿到我们的ViewController，让它去push
             UINavigationController* nav = (UINavigationController*)self.mm_drawerController.centerViewController;
             [nav pushViewController:vc animated:NO];

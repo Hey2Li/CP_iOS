@@ -222,6 +222,7 @@
         if (self.closeBlock) {
             self.closeBlock();
         }
+        [[NSNotificationCenter defaultCenter]postNotificationName:kFindWordIsClose object:nil];
     }
     return fitView;
 }

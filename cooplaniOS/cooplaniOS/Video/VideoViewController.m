@@ -17,7 +17,7 @@
 #import "OneLessonModel.h"
 #import "DownloadVideoModel.h"
 
-#define kAllLessonTableViewHeight SCREEN_HEIGHT - SCREEN_WIDTH * 9 / 16 - 64 - 48
+#define kAllLessonTableViewHeight SCREEN_HEIGHT - SCREEN_WIDTH * 9 / 16 - SafeAreaTopHeight - 48
 @interface VideoViewController ()<WMPlayerDelegate, UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIView *bottomView;
@@ -212,6 +212,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onDeviceOrientationChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
     [self loadData];
     _clarityIndex = 0;
+    self.title = @"听力·讲解课";
 }
 - (void)initWithView{
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
