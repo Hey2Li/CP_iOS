@@ -11,7 +11,9 @@
 #import "WordDetailSecondTableViewCell.h"
 #import "WordDetailThirdTableViewCell.h"
 #import "WordDetailFooterView.h"
+#import "FindWordTopTableViewCell.h"
 
+#define kFindWordHeight  SCREEN_HEIGHT - SafeAreaTopHeight - 12
 @interface NewCheckWordView()<UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 {
     /**
@@ -23,6 +25,9 @@
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIButton *clickBtn;
 @property (nonatomic, strong) UIButton *closeBtn;
+@property (nonatomic, strong) UIView *bottomView;
+@property (nonatomic, strong) NSDictionary *partsDict;
+@property (nonatomic, strong) NSArray *dataArray;
 @end
 
 @implementation NewCheckWordView
@@ -40,6 +45,9 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
+        self.layer.shadowColor = [UIColor blackColor].CGColor;
+        self.layer.shadowOffset = CGSizeMake(0, -3);
+        self.layer.shadowOpacity = 0.15;
         [self initWithView];
     }
     return self;
@@ -49,20 +57,7 @@
     [LTHttpManager searchWordWithWord:word Complete:^(LTHttpResult result, NSString *message, id data) {
         if (LTHttpResultSuccess == result) {
             NSArray *array = data[@"responseData"][@"symbols"];
-            if ([data[@"responseData"][@"state"] isEqualToString:@"0"]) {
-            }else if ([data[@"responseData"][@"state"] isEqualToString:@"1"]){
-            }
-            NSDictionary *parts = array[0];
-            NSString *enStr = parts[@"ph_en"];
-            enStr = [enStr stringByReplacingOccurrencesOfString:@" " withString:@""];
-            NSString *amStr = parts[@"ph_am"];
-            amStr = [amStr stringByReplacingOccurrencesOfString:@" " withString:@""];
-
-            if ([parts[@"ph_am_mp3"] isEqualToString:@""]) {
-              
-            }else{
-               
-            }
+            self.partsDict = array[0];
             [_tableView reloadData];
         }else{
             //
@@ -70,47 +65,46 @@
     }];
 }
 - (void)initWithView{
-    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 30, SCREEN_WIDTH, SCREEN_HEIGHT - 64 - 130) style:UITableViewStylePlain];
+    UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, kFindWordHeight) style:UITableViewStylePlain];
     tableView.delegate = self;
     tableView.dataSource = self;
     tableView.separatorStyle = NO;
-    
-    UIButton *clickBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [clickBtn setImage:[UIImage imageNamed:@"上拉-2"] forState:UIControlStateNormal];
-    [clickBtn setImage:[UIImage imageNamed:@"收起"] forState:UIControlStateSelected];
-    [self addSubview:clickBtn];
-    [clickBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self);
-        make.height.equalTo(@30);
-        make.width.equalTo(@30);
-        make.centerX.equalTo(self);
-    }];
-    [clickBtn addTarget:self action:@selector(TopAndDown:) forControlEvents:UIControlEventTouchUpInside];
-    self.clickBtn = clickBtn;
-    
     [self addSubview:tableView];
-    
     [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([WordDetailFirstCellTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([WordDetailFirstCellTableViewCell class])];
     [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([WordDetailSecondTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([WordDetailSecondTableViewCell class])];
     [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([WordDetailThirdTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([WordDetailThirdTableViewCell class])];
-    
+    [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([FindWordTopTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([FindWordTopTableViewCell class])];
     tableView.estimatedRowHeight = 140.0f;
     tableView.rowHeight = UITableViewAutomaticDimension;
-    self.tableView = tableView;
     
-    _closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self addSubview:_closeBtn];
-    [_closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.mas_right).offset(-15);
-        make.top.equalTo(self.mas_top).offset(10);
-        make.height.equalTo(@18);
-        make.width.equalTo(@50);
+    UIView *bottomView= [UIView new];
+    bottomView.backgroundColor = [UIColor whiteColor];
+    [self addSubview:bottomView];
+    [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.mas_left);
+        make.right.equalTo(self.mas_right);
+        make.bottom.equalTo(tableView.mas_bottom);
+        make.height.equalTo(@(47));
     }];
-    [_closeBtn setTitle:@"关闭" forState:UIControlStateNormal];
-    [_closeBtn setTitleColor:UIColorFromRGB(0x666666) forState:UIControlStateNormal];
-    _closeBtn.titleLabel.font = [UIFont systemFontOfSize:12];
-    [_closeBtn setImage:[UIImage imageNamed:@"关闭"] forState:UIControlStateNormal];
-    [_closeBtn addTarget:self action:@selector(closeClick:) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [closeBtn addTarget:self action:@selector(closeClick:) forControlEvents:UIControlEventTouchUpInside];
+    [closeBtn setTitle:@"X 关闭详情" forState:UIControlStateNormal];
+    [closeBtn setTitleColor:UIColorFromRGB(0xFFCE43) forState:UIControlStateNormal];
+    closeBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+    [bottomView addSubview:closeBtn];
+    [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(bottomView.mas_centerX);
+        make.centerY.equalTo(bottomView.mas_centerY);
+        make.width.equalTo(@(78));
+        make.height.equalTo(@(22));
+    }];
+    [closeBtn.layer setBorderWidth:1.0f];
+    [closeBtn.layer setBorderColor:UIColorFromRGB(0xFFCE43).CGColor];
+    [closeBtn.layer setCornerRadius:11.0f];
+    _bottomView = bottomView;
+    _bottomView.hidden = YES;
+    self.tableView = tableView;
+    self.tableView.scrollEnabled = NO;
 }
 #pragma mark - Table view data source
 
@@ -118,89 +112,88 @@
     return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0) {
-        self.tableView.estimatedRowHeight = 144.0f;
-        self.tableView.rowHeight = UITableViewAutomaticDimension;
-        return self.tableView.rowHeight;
+    if (!self.clickBtn.selected) {
+        return 143;
     }else{
-        self.tableView.estimatedRowHeight = 110.0f;
-        self.tableView.rowHeight = UITableViewAutomaticDimension;
-        return  self.tableView.rowHeight;
+        if (indexPath.row == 0) {
+            self.tableView.estimatedRowHeight = 144.0f;
+            self.tableView.rowHeight = UITableViewAutomaticDimension;
+            return self.tableView.rowHeight;
+        }else if (indexPath.row == 4){
+            return 47;
+        }else{
+            self.tableView.estimatedRowHeight = 110.0f;
+            self.tableView.rowHeight = UITableViewAutomaticDimension;
+            return  self.tableView.rowHeight;
+        }
     }
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return self.clickBtn.selected ? 5 : 1;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0) {
-        WordDetailFirstCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WordDetailFirstCellTableViewCell class])];
-//        cell.model = self.model;
-        return cell;
-    }else if (indexPath.row == 1){
-        WordDetailSecondTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WordDetailSecondTableViewCell class])];
-//        cell.enAndZhLb.text = [NSString stringWithFormat:@"%@\n%@",self.model.eg_en ? self.model.eg_en : @"", self.model.eg_cn ? self.model.eg_cn : @""];
-        return cell;
-    }else if (indexPath.row == 2){
-        WordDetailThirdTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WordDetailThirdTableViewCell class])];
-//        cell.helpMemoryLb.text = [NSString stringWithFormat:@"%@", self.model.mnemonic ? self.model.mnemonic : @""];
-        return cell;
+    if (self.clickBtn.selected) {
+        if (indexPath.row == 0) {
+            WordDetailFirstCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WordDetailFirstCellTableViewCell class])];
+            cell.wordNameLb.text = [NSString stringWithFormat:@"%@", self.word];
+            cell.dataDict = self.partsDict;
+            return cell;
+        }else if (indexPath.row == 1){
+            WordDetailSecondTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WordDetailSecondTableViewCell class])];
+            //        cell.enAndZhLb.text = [NSString stringWithFormat:@"%@\n%@",self.model.eg_en ? self.model.eg_en : @"", self.model.eg_cn ? self.model.eg_cn : @""];
+            return cell;
+        }else if (indexPath.row == 2){
+            WordDetailThirdTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WordDetailThirdTableViewCell class])];
+            //        cell.helpMemoryLb.text = [NSString stringWithFormat:@"%@", self.model.mnemonic ? self.model.mnemonic : @""];
+            return cell;
+        }else if (indexPath.row == 3){
+            WordDetailThirdTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WordDetailThirdTableViewCell class])];
+            cell.cellTitleCell.text = @"提示";
+            //        cell.helpMemoryLb.text = [NSString stringWithFormat:@"%@", self.model.prompt ? self.model.prompt : @""];
+            return cell;
+        }else{
+            UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+            cell.selectionStyle = NO;
+            return cell;
+        }
     }else{
-        WordDetailThirdTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([WordDetailThirdTableViewCell class])];
-        cell.cellTitleCell.text = @"提示";
-//        cell.helpMemoryLb.text = [NSString stringWithFormat:@"%@", self.model.prompt ? self.model.prompt : @""];
+        //未展开的时候
+        FindWordTopTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FindWordTopTableViewCell class])];
+        [cell.lookForDetailBtn addTarget:self action:@selector(TopAndDown:) forControlEvents:UIControlEventTouchUpInside];
+        self.clickBtn = cell.lookForDetailBtn;
+        cell.wordName.text = [NSString stringWithFormat:@"%@", self.word];
+        cell.dataDict = self.partsDict;
         return cell;
     }
 }
-#pragma mark 拖拽手势
-/*
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    NSLog(@"---触摸开始");
-    UITouch *touch = [touches anyObject];
-    _currentPoint = [touch locationInView:self];
-}
-- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    UITouch *touch = [touches anyObject];
-    CGPoint currentPoint = [touch locationInView:nil];//传空获取当前窗口的坐标
-    currentPoint.y += self.height / 2.0f - _currentPoint.y - 64 - 86;
-    if (currentPoint.y < self.height / 2.0f + 20) {
-        currentPoint.y = self.height / 2.0f + 20;
-        self.clickBtn.selected = YES;//上拉到顶部
-//        [[NSNotificationCenter defaultCenter]postNotificationName:kCloseTBUser object:nil];
-    }
-    if (currentPoint.y > SCREEN_HEIGHT - self.height / 2.0f - 64) {
-        currentPoint.y = SCREEN_HEIGHT - self.height / 2.0f - 64;
-        self.clickBtn.selected = NO;//下拉到底部
-//        [[NSNotificationCenter defaultCenter]postNotificationName:kOpenTBUser object:nil];
-    }
-    currentPoint.x = self.width / 2.0f;
-    [UIView animateWithDuration:0.1 animations:^{
-        self.center = currentPoint;
-    }];
-}
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    NSLog(@"FlyElephant---触摸结束");
-}
- */
-
 - (void)TopAndDown:(UIButton *)btn{
+    NSLog(@"findWordViewFrame:%@,%f",NSStringFromCGRect(self.frame), SCREEN_HEIGHT);
     btn.selected = !btn.selected;
-    if (btn.selected) {
-        [UIView animateWithDuration:0.2 animations:^{
-            self.height = SCREEN_HEIGHT - 64 - 130;
-            self.transform = CGAffineTransformMakeTranslation(0, - (SCREEN_HEIGHT - 64 - 100 - 140));
-        } completion:^(BOOL finished) {
-        }];
-    }else{
-        [UIView animateWithDuration:0.2 animations:^{
-            self.height = 200;
-            self.transform = CGAffineTransformIdentity;
-        } completion:^(BOOL finished) {
-        }];
+    if (self.findViewIsOpenBlock) {
+        self.findViewIsOpenBlock(btn);
     }
+    if (btn.selected) {
+        self.tableView.scrollEnabled = YES;
+        self.bottomView.hidden = NO;
+//        [UIView animateWithDuration:0.2 animations:^{
+//            self.height = kFindWordHeight;
+//            self.transform = CGAffineTransformMakeTranslation(0, -(kFindWordHeight) + 143);
+//        } completion:^(BOOL finished) {
+//        }];
+    }else{
+        self.tableView.scrollEnabled = NO;
+        self.bottomView.hidden = YES;
+//        [UIView animateWithDuration:0.2 animations:^{
+//            self.height = 143;
+//            self.transform = CGAffineTransformIdentity;
+//        } completion:^(BOOL finished) {
+//        }];
+    }
+    [self.tableView reloadData];
 }
 - (void)closeClick:(UIButton *)btn{
     [UIView animateWithDuration:0.2 animations:^{
-        self.transform = CGAffineTransformMakeTranslation(0, 140);
+        self.transform = CGAffineTransformMakeTranslation(0, kFindWordHeight);
     } completion:^(BOOL finished) {
         if (self.closeBlock) {
             self.closeBlock();
@@ -211,5 +204,25 @@
 }
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    
+    UIView * fitView = [super hitTest:point withEvent:event];
+    NSLog(@"hitTest:%@",fitView);
+    //    UIResponder *nextResponder = [self nextResponder];
+    //    do {
+    //        if ([nextResponder isKindOfClass:[UICollectionView class]]) {
+    //            return (UICollectionView *)nextResponder;
+    //        }
+    //        nextResponder = [nextResponder nextResponder];
+    //    } while (nextResponder != nil);
+    //        return ;
+    if (fitView == nil) {
+        [self removeFromSuperview];
+        if (self.closeBlock) {
+            self.closeBlock();
+        }
+    }
+    return fitView;
 }
 @end

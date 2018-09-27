@@ -40,4 +40,5 @@
 @property (weak, nonatomic) IBOutlet UIImageView *playImageView;
 @property (nonatomic, strong) ReciteWordModel *model;
 
+@property (nonatomic, strong) NSDictionary *dataDict;
 @end

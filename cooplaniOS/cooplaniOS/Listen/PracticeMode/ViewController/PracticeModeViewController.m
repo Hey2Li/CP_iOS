@@ -125,17 +125,22 @@
 }
 - (void)loadData{
     DownloadFileModel *model = [DownloadFileModel  jr_findByPrimaryKey:self.testPaperId];
-    self.title = model.name;
+    self.title = [[model.paperJsonName stringByRemovingPercentEncoding]stringByDeletingPathExtension];//去掉后缀
     NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
     NSString *urlString = [model.paperJsonName stringByRemovingPercentEncoding];
     NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if ([fileManager fileExistsAtPath:fullPath]) {
+        NSDictionary *dict;
         NSData *data = [NSData dataWithContentsOfFile:fullPath];
-//        unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-//        NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
-//        NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+        NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
+        NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
+        if (data2 == nil) {
+            dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        }else{
+            dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:nil];
+        }
         TestPaperModel *model = [TestPaperModel mj_objectWithKeyValues:dict];
         _testPaperModel = model;
         [self.partModelArray removeAllObjects];
@@ -303,8 +308,7 @@
     [collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
-//        make.bottom.equalTo(self.player.bottomView.mas_top);
-        make.height.equalTo(@(SCREEN_HEIGHT - 86 - 120 - 64));
+        make.height.equalTo(@(SCREEN_HEIGHT - self.headerView.height - 120 - SafeAreaTopHeight));
         make.top.equalTo(self.headerView.mas_bottom);
     }];
     
@@ -326,9 +330,9 @@
     //获取拖拽手势在self.view 的拖拽姿态
     CGPoint translation = [gr translationInView:self.tikaCollectionView];
    
-    CGFloat minY = 130 + 59;
-    CGFloat maxY = SCREEN_HEIGHT - 135;
-    NSLog(@"minX:%f,maxY:%f,gr.center.y:%f", minY,maxY, gr.view.center.y);
+    CGFloat minY = [Tool layoutForAlliPhoneHeight:185];//可拖动题卡的上限
+    CGFloat maxY = [Tool layoutForAlliPhoneHeight:SCREEN_HEIGHT - 200];//可拖动题卡的下限
+//    NSLog(@"minX:%f,maxY:%f,gr.center.y:%f", minY,maxY, gr.view.center.y);
     NSLog(@"%f",translation.y);
     CGFloat tranY = gr.view.center.y + translation.y;
     if (tranY == maxY) {

@@ -40,7 +40,11 @@
     [self footerLoadData];
 }
 - (void)loadData{
-    [LTHttpManager searchOldWordWithUserId:IS_USER_ID ? IS_USER_ID : @"" WordBookId:@"1" Type:@(self.type) PageNum:@(_page_num) Complete:^(LTHttpResult result, NSString *message, id data) {
+    NSString *wordbookId = [[NSUserDefaults standardUserDefaults]objectForKey:kWordBookId];
+    if (!wordbookId) {
+        wordbookId = @"1";
+    }
+    [LTHttpManager searchOldWordWithUserId:IS_USER_ID ? IS_USER_ID : @"" WordBookId:wordbookId Type:@(self.type) PageNum:@(_page_num) Complete:^(LTHttpResult result, NSString *message, id data) {
         if (LTHttpResultSuccess == result) {
             NSArray *array = data[@"responseData"];
             [self.dataArray removeAllObjects];
@@ -53,9 +57,13 @@
     }];
 }
 - (void)footerLoadData{
+    NSString *wordbookId = [[NSUserDefaults standardUserDefaults]objectForKey:kWordBookId];
+    if (!wordbookId) {
+        wordbookId = @"1";
+    }
     MJRefreshBackNormalFooter *footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         _page_num++;
-        [LTHttpManager searchOldWordWithUserId:IS_USER_ID ? IS_USER_ID : @"" WordBookId:@"1" Type:@(self.type) PageNum:@(_page_num) Complete:^(LTHttpResult result, NSString *message, id data) {
+        [LTHttpManager searchOldWordWithUserId:IS_USER_ID ? IS_USER_ID : @"" WordBookId:wordbookId Type:@(self.type) PageNum:@(_page_num) Complete:^(LTHttpResult result, NSString *message, id data) {
             if (LTHttpResultSuccess == result) {
                 NSArray *array = data[@"responseData"];
                 for (NSDictionary *dict in array) {

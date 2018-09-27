@@ -68,7 +68,9 @@
 
 - (void)setDownloadViewModel:(DownloadFileModel *)downloadViewModel{
     _downloadModel = downloadViewModel;
-    _paperName.text = _downloadModel.name;
+    self.paperName.text = [_downloadModel.paperVoiceName stringByRemovingPercentEncoding];
+    
+
 }
 #pragma mark 下载
 - (IBAction)downloadPaper:(UIButton *)sender {

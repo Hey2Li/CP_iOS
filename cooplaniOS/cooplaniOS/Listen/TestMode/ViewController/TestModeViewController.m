@@ -146,7 +146,10 @@
     UIImage *image = [[UIImage imageNamed:@"back"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:image style:UIBarButtonItemStyleDone target:self action:@selector(back)];
     self.navigationItem.leftItemsSupplementBackButton = YES;
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+}
+- (CGSize)intrinsicContentSize{
+    return UILayoutFittingExpandedSize;
 }
 #pragma mark 返回
 - (void)back{
@@ -158,17 +161,20 @@
 }
 - (void)loadData{
     DownloadFileModel *model = [DownloadFileModel  jr_findByPrimaryKey:self.testPaperId];
+    self.title = [[model.paperJsonName stringByRemovingPercentEncoding]stringByDeletingPathExtension];//去掉后缀
     NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
     NSString *urlString = [model.paperJsonName stringByRemovingPercentEncoding];
     NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if ([fileManager fileExistsAtPath:fullPath]) {
+//        NSDictionary *dict;
         NSData *data = [NSData dataWithContentsOfFile:fullPath];
-//        unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-//        NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
-//        NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
+        //        unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+        //        NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
+        //        NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
         NSError *error;
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+        NSLog(@"json error:%@", [error localizedDescription]);
         TestPaperModel *model = [TestPaperModel mj_objectWithKeyValues:dict];
         _testPaperModel = model;
         [self.partModelArray removeAllObjects];

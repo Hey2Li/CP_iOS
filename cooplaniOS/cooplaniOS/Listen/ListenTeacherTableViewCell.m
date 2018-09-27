@@ -17,6 +17,7 @@
     [self.backgroundImg.layer setMasksToBounds:YES];
     [self.startBtn.layer setCornerRadius:13];
     [self.startBtn.layer setMasksToBounds:YES];
+    self.startBtn.userInteractionEnabled = NO;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

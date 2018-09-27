@@ -276,4 +276,15 @@ NSAttributedString *returnNumAttr(NSString *str,NSInteger fontSize){
         [viewController.navigationController pushViewController:vc animated:YES];
     };
 }
++ (void)gotoLogin:(UIViewController *)viewController CancelClick:(loginCancelBlock)block{
+    LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"请先登录" sureBtn:@"去登录" cancleBtn:@"取消"];
+    [alertView show];
+    alertView.resultIndex = ^(NSInteger index) {
+        LoginViewController *vc = [[LoginViewController alloc]init];
+        [viewController.navigationController pushViewController:vc animated:YES];
+    };
+    alertView.cancelClick = ^(NSInteger index) {
+        block();
+    };
+}
 @end

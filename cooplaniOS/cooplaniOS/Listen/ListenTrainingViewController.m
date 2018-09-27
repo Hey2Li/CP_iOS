@@ -136,6 +136,7 @@
     [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([HomeListenCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([HomeListenCell class])];
     [self.view addSubview:tableView];
     tableView.tableFooterView = [UIView new];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loadData) name:kLoadListenTraining object:nil];
     self.myTableView = tableView;
 }
 - (void)loadData{
@@ -174,7 +175,10 @@
             }
         }];
     }else{
-        [Tool gotoLogin:self];
+        WeakSelf
+        [Tool gotoLogin:self CancelClick:^{
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        }];
     }
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -310,16 +314,20 @@
             self.testPaperId = model.ID;
             [self loadTestPaperWithPaperId:model.ID];
         }else{
+            SubTestPMViewController *vc = [[SubTestPMViewController alloc]init];
             NSString *sectionType;
             if (indexPath.row == 1) {
-                sectionType = @"4-A";
-                [MobClick endEvent:@"listeningpage_sectionA"];
-            }else if (indexPath.row == 2){
                 sectionType = @"4-B";
                 [MobClick endEvent:@"listeningpage_sectionB"];
-            }else{
+                vc.title = @"短篇新闻";
+            }else if (indexPath.row == 2){
                 sectionType = @"4-C";
                 [MobClick endEvent:@"listeningpage_sectionC"];
+                vc.title = @"长对话";
+            }else{
+                sectionType = @"4-A";
+                [MobClick endEvent:@"listeningpage_sectionA"];
+                vc.title = @"听力篇章";
             }
             [LTHttpManager getOneNewTestWithUserId:IS_USER_ID Type:@"1" Testpaper_kind:@"1T" Testpaper_type:sectionType Complete:^(LTHttpResult result, NSString *message, id data) {
                 if (LTHttpResultSuccess == result) {
@@ -336,27 +344,27 @@
                         J_Update(self.downloadModel).Columns(@[@"paperVoiceName"]).updateResult;
                     }
                     [USERDEFAULTS setObject:self.downloadModel.testPaperId forKey:@"testPaperId"];
-                    [LTHttpManager downloadURL:self.downloadJsonUrl progress:^(NSProgress *downloadProgress) {
-                        
-                    } destination:^(NSURL *targetPath) {
-                        NSString *url = [NSString stringWithFormat:@"%@",targetPath]; 
-                        NSString *fileName = [url lastPathComponent];
-                        self.downloadModel.paperJsonName = fileName;
-                        J_Update(self.downloadModel).Columns(@[@"paperJsonName"]).updateResult;
-                    } failure:^(NSError *error) {
-                        
-                    }];
+                   
                     [LTHttpManager downloadURL:self.downloadlrcUrl progress:^(NSProgress *downloadProgress) {
                         
                     } destination:^(NSURL *targetPath) {
+                        [LTHttpManager downloadURL:self.downloadJsonUrl progress:^(NSProgress *downloadProgress) {
+                            
+                        } destination:^(NSURL *targetPath) {
+                            NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                            NSString *fileName = [url lastPathComponent];
+                            self.downloadModel.paperJsonName = fileName;
+                            J_Update(self.downloadModel).Columns(@[@"paperJsonName"]).updateResult;
+                            vc.sectionType = sectionType;
+                            vc.testPaperId = self.downloadModel.testPaperId;
+                            [self.navigationController pushViewController:vc animated:YES];
+                        } failure:^(NSError *error) {
+                            
+                        }];
                         NSString *url = [NSString stringWithFormat:@"%@",targetPath];
                         NSString *fileName = [url lastPathComponent];
                         self.downloadModel.paperLrcName = fileName;
                         J_Update(self.downloadModel).Columns(@[@"paperLrcName"]).updateResult;
-                        SubTestPMViewController *vc = [[SubTestPMViewController alloc]init];
-                        vc.sectionType = sectionType;
-                        vc.testPaperId = self.downloadModel.testPaperId;
-                        [self.navigationController pushViewController:vc animated:YES];
                     } failure:^(NSError *error) {
                         
                     }];
@@ -370,6 +378,7 @@
         [MobClick endEvent:@"listeningpage_course"];
         VideoViewController *vc = [[VideoViewController alloc]init];
         vc.title = @"听力训练";
+        vc.lessonType = @"1";
         [self.navigationController pushViewController:vc animated:YES];
     }else if (indexPath.section == 1){
         [MobClick endEvent:@"listeningpage_examination"];
@@ -408,7 +417,7 @@
     }];
     
     UIButton *sectionABtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [sectionABtn setTitle:@"新闻题" forState:UIControlStateNormal];
+    [sectionABtn setTitle:@"Section A" forState:UIControlStateNormal];
     sectionABtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [sectionABtn setTitleColor:UIColorFromRGB(0xA4A4A4) forState:UIControlStateNormal];
     [sectionABtn setBackgroundImage:[UIImage imageWithColor:UIColorFromRGB(0xf7f7f7)] forState:UIControlStateNormal];
@@ -424,7 +433,7 @@
     }];
     
     UIButton *sectionBBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [sectionBBtn setTitle:@"长对话" forState:UIControlStateNormal];
+    [sectionBBtn setTitle:@"Section B" forState:UIControlStateNormal];
     sectionBBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [sectionBBtn setTitleColor:UIColorFromRGB(0xA4A4A4) forState:UIControlStateNormal];
     [sectionBBtn setBackgroundColor:UIColorFromRGB(0xf7f7f7)];
@@ -440,7 +449,7 @@
     }];
     
     UIButton *sectionCBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [sectionCBtn setTitle:@"短文篇章" forState:UIControlStateNormal];
+    [sectionCBtn setTitle:@"Section C" forState:UIControlStateNormal];
     sectionCBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [sectionCBtn setTitleColor:UIColorFromRGB(0xA4A4A4) forState:UIControlStateNormal];
     [sectionCBtn setBackgroundColor:UIColorFromRGB(0xf7f7f7)];
@@ -554,6 +563,9 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 /*
 #pragma mark - Navigation

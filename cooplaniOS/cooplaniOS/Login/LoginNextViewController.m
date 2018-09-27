@@ -197,6 +197,7 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     NSLog(@"%@,%lu",self.textString, (unsigned long)self.textString.length);
     if([string isEqualToString:@""]) {
+        if (self.textString.length == 0) return YES;
         switch (self.textString.length) {
             case 6:
                 self.sixthLb.text = nil;
@@ -223,6 +224,8 @@
         [self.loginBtn setBackgroundColor:UIColorFromRGB(0xFDF6C1)];
         self.loginBtn.userInteractionEnabled = NO;
         [self.loginBtn setTitleColor:UIColorFromRGB(0x9b9b9b) forState:UIControlStateNormal];
+        return YES;
+    }else if (string.length == 6){
         return YES;
     }else{
         if (self.textString.length <= 5) {

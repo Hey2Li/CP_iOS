@@ -74,6 +74,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.mm_drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
     self.mm_drawerController.closeDrawerGestureModeMask = MMCloseDrawerGestureModeNone;
 }

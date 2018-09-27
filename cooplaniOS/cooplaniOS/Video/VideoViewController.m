@@ -367,8 +367,10 @@
     }
 }
 - (void)loadData{
-    //课程列表
-    [LTHttpManager findByCurriculumTypeWithUserId:IS_USER_ID CurriculumType:@"1" Complete:^(LTHttpResult result, NSString *message, id data) {
+    if (self.lessonType.length == 0) {
+        self.lessonType = @"1";
+    }
+    [LTHttpManager getCategoryLessonWithCourse_type:self.lessonType Complete:^(LTHttpResult result, NSString *message, id data) {
         if (LTHttpResultSuccess == result) {
             NSArray *dataArray = data[@"responseData"];
             [self.lessonArray removeAllObjects];
@@ -387,6 +389,10 @@
             }];
         }
     }];
+    //课程列表
+//    [LTHttpManager findByCurriculumTypeWithUserId:IS_USER_ID CurriculumType:@"1" Complete:^(LTHttpResult result, NSString *message, id data) {
+//       
+//    }];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     if (tableView == self.allSelectionTableView) return 1;

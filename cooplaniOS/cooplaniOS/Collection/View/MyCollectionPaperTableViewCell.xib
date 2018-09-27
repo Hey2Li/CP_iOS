@@ -29,15 +29,15 @@
                         <color key="textColor" red="0.64346855879999998" green="0.64396888019999998" blue="0.64354604479999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image" translatesAutoresizingMaskIntoConstraints="NO" id="Rse-IW-efj">
-                        <rect key="frame" x="18" y="9" width="56" height="56"/>
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image" translatesAutoresizingMaskIntoConstraints="NO" id="Rse-IW-efj">
+                        <rect key="frame" x="18" y="9" width="1" height="56"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="56" id="CfS-nC-miG"/>
-                            <constraint firstAttribute="width" constant="56" id="cFC-c5-BJy"/>
+                            <constraint firstAttribute="width" constant="1" id="cFC-c5-BJy"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2017年12月 大学英语四级考试真题（一）" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i0C-0i-Uv4">
-                        <rect key="frame" x="88" y="9" width="186" height="39"/>
+                        <rect key="frame" x="33" y="9" width="241" height="39"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="39" id="HnB-30-7Jg"/>
                         </constraints>
@@ -46,7 +46,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3.5M " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FPt-5w-Znu">
-                        <rect key="frame" x="105" y="50.5" width="27" height="12"/>
+                        <rect key="frame" x="50" y="50.5" width="27" height="12"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="12" id="cCc-l6-f6Z"/>
                         </constraints>
@@ -55,7 +55,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="file" translatesAutoresizingMaskIntoConstraints="NO" id="hzC-J8-1uj">
-                        <rect key="frame" x="88" y="52" width="10" height="9"/>
+                        <rect key="frame" x="33" y="52" width="10" height="9"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="9" id="WWA-WB-z3I"/>
                             <constraint firstAttribute="width" constant="10" id="cIc-dr-GHQ"/>

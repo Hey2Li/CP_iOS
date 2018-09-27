@@ -14,5 +14,6 @@
 @interface VideoViewController : UIViewController
 //@property (nonatomic, strong) NSArray *dataArray;
 @property (nonatomic, assign) NSInteger videoId;
+@property (nonatomic, copy) NSString *lessonType;
 @end
 

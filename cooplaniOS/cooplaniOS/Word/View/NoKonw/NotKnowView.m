@@ -70,7 +70,7 @@
     }else{
         NoKnowSecondPageCell *cell  =[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([NoKnowSecondPageCell class]) forIndexPath:indexPath];
         cell.helpMemoryLb.text = [NSString stringWithFormat:@"%@",self.model.mnemonic];
-        cell.tipsLb.text = [NSString stringWithFormat:@"%@", self.model.mnemonic];
+        cell.tipsLb.text = [NSString stringWithFormat:@"%@", self.model.prompt];
         return cell;
     }
 }

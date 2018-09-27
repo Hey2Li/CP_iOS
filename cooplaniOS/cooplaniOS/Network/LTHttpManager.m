@@ -829,4 +829,18 @@
                                  };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/specialized/getSpecializedNum",BaseURL]parameters:paramters complete:complete];
 }
+
+/**
+ 根据课程类型查询该类型下的所有课程 听读写译 mlg 9/12
+ 
+ @param course_type 课程类型1:听力,2:读,3:写,4.译
+ @param complete block
+ */
++ (void)getCategoryLessonWithCourse_type:(NSString *)course_type Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"version_2_2":kVersion_2_2,
+                                 @"course_type":course_type,
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/curriculum/getCurriculum",BaseURL]parameters:paramters complete:complete];
+}
 @end

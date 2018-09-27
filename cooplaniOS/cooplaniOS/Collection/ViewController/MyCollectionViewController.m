@@ -110,31 +110,41 @@
                     NSString *fileName = [url lastPathComponent];
                     self.downloadModel.paperJsonName = fileName;
                     J_Update(self.downloadModel).Columns(@[@"paperJsonName"]).updateResult;
+                    [LTHttpManager downloadURL:self.downloadlrcUrl progress:^(NSProgress *downloadProgress) {
+                        
+                    } destination:^(NSURL *targetPath) {
+                        NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                        NSString *fileName = [url lastPathComponent];
+                        self.downloadModel.paperLrcName = fileName;
+                        J_Update(self.downloadModel).Columns(@[@"paperLrcName"]).updateResult;
+                        LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"模拟考场需要一鼓作气的完成准备好了吗？" sureBtn:@"准备好了！" cancleBtn:@"取消"];
+                        alertView.resultIndex = ^(NSInteger index) {
+                            TestModeViewController *vc = [[TestModeViewController alloc]init];
+                            vc.testPaperId = [NSString stringWithFormat:@"%ld",onePaperModel.ID];
+                            [self.navigationController pushViewController:vc animated:YES];
+                        };
+                        [alertView show];
+                        
+                    } failure:^(NSError *error) {
+                        
+                    }];
                 } failure:^(NSError *error) {
                     
                 }];
-                [LTHttpManager downloadURL:self.downloadlrcUrl progress:^(NSProgress *downloadProgress) {
-                    
-                } destination:^(NSURL *targetPath) {
-                    NSString *url = [NSString stringWithFormat:@"%@",targetPath];
-                    NSString *fileName = [url lastPathComponent];
-                    self.downloadModel.paperLrcName = fileName;
-                    J_Update(self.downloadModel).Columns(@[@"paperLrcName"]).updateResult;
-                    TestModeViewController *vc = [[TestModeViewController alloc]init];
-                    vc.testPaperId = [NSString stringWithFormat:@"%ld",onePaperModel.ID];
-                    [self.navigationController pushViewController:vc animated:YES];
-                } failure:^(NSError *error) {
-                    
-                }];
+               
                 J_Insert(self.downloadModel).updateResult;
             }else{
                 [USERDEFAULTS setObject:[NSString stringWithFormat:@"%ld", (long)onePaperModel.ID] forKey:@"testPaperId"];
             }
         }];
     }else{
-        TestModeViewController *vc = [[TestModeViewController alloc]init];
-        vc.testPaperId = [NSString stringWithFormat:@"%ld",onePaperModel.ID];
-        [self.navigationController pushViewController:vc animated:YES];
+        LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"模拟考场需要一鼓作气的完成准备好了吗？" sureBtn:@"准备好了！" cancleBtn:@"取消"];
+        alertView.resultIndex = ^(NSInteger index) {
+            TestModeViewController *vc = [[TestModeViewController alloc]init];
+            vc.testPaperId = [NSString stringWithFormat:@"%ld",onePaperModel.ID];
+            [self.navigationController pushViewController:vc animated:YES];
+        };
+        [alertView show];
     }
   
 }

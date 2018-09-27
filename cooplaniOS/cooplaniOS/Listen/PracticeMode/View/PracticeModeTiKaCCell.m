@@ -31,8 +31,8 @@
         backView.backgroundColor = [UIColor whiteColor];
         [self addSubview:backView];
         [backView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.mas_left).offset(17);
-            make.right.equalTo(self.mas_right).offset(-17);
+            make.left.equalTo(self.mas_left).offset(10);
+            make.right.equalTo(self.mas_right).offset(-10);
             make.top.equalTo(self.mas_top).offset(20);
             make.bottom.equalTo(self.mas_bottom).offset(-20);
         }];
@@ -83,13 +83,11 @@
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(tableView.mas_left).offset(10);
             make.right.equalTo(tableView.mas_right).offset(-10);
-            make.top.equalTo(tableView.mas_top);
+            make.top.equalTo(self.mas_top).offset(20);
             make.height.equalTo(@30);
         }];
-        [btn setImage:[UIImage imageNamed:@"收起"] forState:UIControlStateNormal];
-        [btn setImage:[UIImage imageNamed:@"上拉-2"] forState:UIControlStateSelected];
-        [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-        btn.hidden = YES;
+        [btn setImage:[UIImage imageNamed:@"上下拉动"] forState:UIControlStateNormal];
+        btn.userInteractionEnabled = YES;
         [self btnClick:btn];
     }
     return self;

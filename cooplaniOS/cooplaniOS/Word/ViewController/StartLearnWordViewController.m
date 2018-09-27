@@ -37,6 +37,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.title = @"单词学习";
     [self initWithView];
     [self loadData];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loadData) name:kLoadWordHomePageData object:nil];
@@ -85,7 +86,7 @@
     //底部背景
     UIView *backView;
     if (UI_IS_IPHONE4) {
-        backView = [[UIView alloc]initWithFrame:CGRectMake((-750 + SCREEN_WIDTH)/2 , - 444 - 64 - 100 , 750, 750)];
+        backView = [[UIView alloc]initWithFrame:CGRectMake((-750 + SCREEN_WIDTH)/2 , - 444 - 64 , 750, 750)];
     }else{
         backView = [[UIView alloc]initWithFrame:CGRectMake((-750 + SCREEN_WIDTH)/2 , - 444 - 64 -100, 750, 750)];
     }

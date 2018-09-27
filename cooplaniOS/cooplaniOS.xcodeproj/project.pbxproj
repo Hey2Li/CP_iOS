@@ -188,6 +188,8 @@
 		9BC4158620C620D9002851E6 /* DictionaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC4158520C620D9002851E6 /* DictionaryViewController.m */; };
 		9BC4158A20C6270E002851E6 /* DictionaryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC4158820C6270E002851E6 /* DictionaryTableViewCell.m */; };
 		9BC4158B20C6270E002851E6 /* DictionaryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BC4158920C6270E002851E6 /* DictionaryTableViewCell.xib */; };
+		9BC62A7E215B4F580072F01F /* FindWordTopTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BC62A7C215B4F580072F01F /* FindWordTopTableViewCell.m */; };
+		9BC62A7F215B4F580072F01F /* FindWordTopTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BC62A7D215B4F580072F01F /* FindWordTopTableViewCell.xib */; };
 		9BDFE0C4208833B500B59B3B /* LeftViweTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BDFE0C2208833B500B59B3B /* LeftViweTableViewCell.m */; };
 		9BDFE0C5208833B500B59B3B /* LeftViweTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BDFE0C3208833B500B59B3B /* LeftViweTableViewCell.xib */; };
 		9BEA0A322071D9190026AF2C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BEA0A312071D9190026AF2C /* AppDelegate.m */; };
@@ -557,6 +559,9 @@
 		9BC4158720C6270E002851E6 /* DictionaryTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DictionaryTableViewCell.h; sourceTree = "<group>"; };
 		9BC4158820C6270E002851E6 /* DictionaryTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DictionaryTableViewCell.m; sourceTree = "<group>"; };
 		9BC4158920C6270E002851E6 /* DictionaryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DictionaryTableViewCell.xib; sourceTree = "<group>"; };
+		9BC62A7B215B4F580072F01F /* FindWordTopTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FindWordTopTableViewCell.h; sourceTree = "<group>"; };
+		9BC62A7C215B4F580072F01F /* FindWordTopTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FindWordTopTableViewCell.m; sourceTree = "<group>"; };
+		9BC62A7D215B4F580072F01F /* FindWordTopTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FindWordTopTableViewCell.xib; sourceTree = "<group>"; };
 		9BDFE0C1208833B500B59B3B /* LeftViweTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeftViweTableViewCell.h; sourceTree = "<group>"; };
 		9BDFE0C2208833B500B59B3B /* LeftViweTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeftViweTableViewCell.m; sourceTree = "<group>"; };
 		9BDFE0C3208833B500B59B3B /* LeftViweTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeftViweTableViewCell.xib; sourceTree = "<group>"; };
@@ -680,6 +685,9 @@
 				9B1A5B1720BBAC4500DA21A6 /* CheckWordView.m */,
 				9B8F7632214BA0D900A1FCA9 /* NewCheckWordView.h */,
 				9B8F7633214BA0D900A1FCA9 /* NewCheckWordView.m */,
+				9BC62A7B215B4F580072F01F /* FindWordTopTableViewCell.h */,
+				9BC62A7C215B4F580072F01F /* FindWordTopTableViewCell.m */,
+				9BC62A7D215B4F580072F01F /* FindWordTopTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1606,6 +1614,7 @@
 				9BEA0A382071D9190026AF2C /* Main.storyboard in Resources */,
 				9B90287C2138D61400F0564C /* SectionWordNumsTableViewCell.xib in Resources */,
 				9BA08EC02093174A0026935E /* FeedbackPhoneTableViewCell.xib in Resources */,
+				9BC62A7F215B4F580072F01F /* FindWordTopTableViewCell.xib in Resources */,
 				9B13AD6220807B8E0000C750 /* BannerCollectionViewCell.xib in Resources */,
 				9B3DA35E20F631A10028CDA9 /* LessonTableViewCell.xib in Resources */,
 				9B32CB0C209BF00300FCEED3 /* SentenceTableViewCell.xib in Resources */,
@@ -1845,6 +1854,7 @@
 				9B6FB85F207F3D7B00BC07F3 /* HYWord.m in Sources */,
 				9BA9868D2153722200E63355 /* HomeBuyLessonModel.m in Sources */,
 				9B1D31BF20734891007674CF /* HomeViewController.m in Sources */,
+				9BC62A7E215B4F580072F01F /* FindWordTopTableViewCell.m in Sources */,
 				9B90287B2138D61400F0564C /* SectionWordNumsTableViewCell.m in Sources */,
 				9B3DA39220F886730028CDA9 /* LessonServerView.m in Sources */,
 				9B3D02D520848878005C923B /* LoginViewController.m in Sources */,

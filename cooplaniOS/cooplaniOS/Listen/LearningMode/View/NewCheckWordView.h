@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^FindViewIsOpne)(UIButton *btn);
 @interface NewCheckWordView : UIView
 @property (nonatomic, copy) NSString *word;
 @property (nonatomic, copy) void (^closeBlock)(void);
+@property (nonatomic, copy) FindViewIsOpne findViewIsOpenBlock;
 @end

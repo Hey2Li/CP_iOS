@@ -21,6 +21,7 @@
 #import "HomeBuyLessonTableViewCell.h"
 #import "StartLearnWordViewController.h"
 #import "HomeBuyLessonModel.h"
+#import <AlibcTradeSDK/AlibcTradeSDK.h>
 
 @interface HomeViewController ()<UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -124,14 +125,19 @@
     UIView *tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:240])];
     //倒计时
     UILabel *countdownLabel = [UILabel new];
+    countdownLabel.font = [UIFont boldSystemFontOfSize:12];
     NSInteger days = [self computeDaysWithDataFromString:@"2018-12-15"];
-    countdownLabel.text = [NSString stringWithFormat:@"距离四级倒计时还有%ld天", days];
-    countdownLabel.font = [UIFont boldSystemFontOfSize:14];
+    NSMutableAttributedString *contentStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"距离四级倒计时还有%ld天", days]];
+    //找出特定字符在整个字符串中的位置
+    NSRange redRange = NSMakeRange([[contentStr string] rangeOfString:[NSString stringWithFormat:@"%ld", days]].location, [[contentStr string] rangeOfString:[NSString stringWithFormat:@"%ld", days]].length);
+    //修改特定字符的字体大小
+    [contentStr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:14] range:redRange];
+    countdownLabel.attributedText = contentStr;
     countdownLabel.textColor = UIColorFromRGB(0x333333);
     countdownLabel.textAlignment = NSTextAlignmentRight;
     [tableHeaderView addSubview:countdownLabel];
     [countdownLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(tableHeaderView.mas_right).offset(-15);
+        make.right.equalTo(tableHeaderView.mas_right).offset(-[Tool layoutForAlliPhoneWidth:15]);
         make.top.equalTo(tableHeaderView.mas_top).offset(5);
         make.left.equalTo(tableHeaderView.mas_left).offset(20);
     }];
@@ -142,7 +148,7 @@
     UICollectionView *collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:210]) collectionViewLayout:flowlayout];
     collectionView.dataSource = self;
     collectionView.delegate = self;
-    [collectionView registerNib:[UINib nibWithNibName:@"BannerCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([BannerCollectionViewCell class])];
+    [collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([BannerCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([BannerCollectionViewCell class])];
     [collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:NSStringFromClass([UICollectionViewCell class])];
     collectionView.backgroundColor = [UIColor clearColor];
     collectionView.showsHorizontalScrollIndicator = NO;
@@ -252,7 +258,7 @@
     // Text Color
     UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
     [header.textLabel setTextColor:[UIColor blackColor]];
-    [header.textLabel setFont:[UIFont systemFontOfSize:14 weight:20]];
+    [header.textLabel setFont:[UIFont systemFontOfSize:16 weight:20]];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 1) {
@@ -288,11 +294,34 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 1) {
-        [MobClick event:@"homepage_vocabulary"];
-        StartLearnWordViewController *vc =[[StartLearnWordViewController alloc]init];
-        [self.navigationController pushViewController:vc animated:YES];
+        if (IS_USER_ID) {
+            [MobClick event:@"homepage_vocabulary"];
+            StartLearnWordViewController *vc =[[StartLearnWordViewController alloc]init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }else{
+            [Tool gotoLogin:self];
+        }
     }else if (indexPath.section == 2){
         [MobClick event:@"homepage_advertisement"];
+        AlibcWebViewController* view = [[AlibcWebViewController alloc] init];
+        
+        AlibcTradeShowParams* showParam = [[AlibcTradeShowParams alloc] init];
+        showParam.openType = AlibcOpenTypeNative;
+        //8位数appkey
+        showParam.backUrl=@"tbopen24996842";
+        showParam.isNeedPush=YES;
+        showParam.linkKey = @"taobao_scheme";
+        showParam.nativeFailMode=AlibcNativeFailModeJumpH5;
+        id<AlibcTradePage> page = [AlibcTradePageFactory itemDetailPage:@"576108307333"];
+        
+        //    0:  标识跳转到手淘打开了
+        //    1:  标识用h5打开
+        //    -1:  标识出错
+        NSInteger ret =[[AlibcTradeSDK sharedInstance].tradeService show:self webView:view.webView page:page showParams:showParam taoKeParams:nil trackParam:nil tradeProcessSuccessCallback:nil tradeProcessFailedCallback:nil];
+        NSLog(@"ret-----%ld",ret);
+        if (ret == 1) {
+            [self.navigationController pushViewController:view animated:YES];
+        }
     }
 }
 

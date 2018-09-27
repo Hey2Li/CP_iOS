@@ -76,6 +76,9 @@
     _correctInt = 0;
     _NoCorrectInt = 0;
     [self.player.player play];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.player.player pause];
+    });
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(listenPause) name:@"listenBackground" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(listenPlay) name:@"listenForeground" object:nil];
@@ -97,17 +100,24 @@
 }
 - (void)loadData{
     DownloadFileModel *model = [DownloadFileModel  jr_findByPrimaryKey:self.testPaperId];
-    self.title = model.name;
+//    self.title = model.name;
     NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
     NSString *urlString = [model.paperJsonName stringByRemovingPercentEncoding];
     NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if ([fileManager fileExistsAtPath:fullPath]) {
+        NSDictionary *dict = [[NSDictionary alloc]init];
         NSData *data = [NSData dataWithContentsOfFile:fullPath];
         unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
         NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
         NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:nil];
+        NSError *error;
+        if (data2 == nil) {
+            dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+        }else{
+           dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:&error];
+        }
+        NSLog(@" json error:%@",[error localizedDescription]);
         [self.passageModelArray removeAllObjects];
         [self.questionsModelArray removeAllObjects];
         [self.optionsModelArray removeAllObjects];
@@ -176,11 +186,9 @@
     [collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
-        //        make.bottom.equalTo(self.player.bottomView.mas_top);
-        make.height.equalTo(@(SCREEN_HEIGHT - 86 - 120 - 64));
+        make.height.equalTo(@(SCREEN_HEIGHT - self.headerView.height - 120 - SafeAreaTopHeight));
         make.top.equalTo(self.headerView.mas_bottom);
     }];
-    
     collectionView.backgroundColor = [UIColor clearColor];
     collectionView.dataSource = self;
     collectionView.delegate = self;
@@ -199,9 +207,9 @@
     //获取拖拽手势在self.view 的拖拽姿态
     CGPoint translation = [gr translationInView:self.tikaCollectionView];
     
-    CGFloat minY = 130 + 59;
-    CGFloat maxY = SCREEN_HEIGHT - 135;
-    NSLog(@"minX:%f,maxY:%f,gr.center.y:%f", minY,maxY, gr.view.center.y);
+    CGFloat minY = [Tool layoutForAlliPhoneHeight:185];//可拖动题卡的上限
+    CGFloat maxY = [Tool layoutForAlliPhoneHeight:SCREEN_HEIGHT - 200];//可拖动题卡的下限
+//    NSLog(@"minX:%f,maxY:%f,gr.center.y:%f", minY,maxY, gr.view.center.y);
     NSLog(@"%f",translation.y);
     CGFloat tranY = gr.view.center.y + translation.y;
     if (tranY == maxY) {
@@ -315,10 +323,11 @@
     return cell;
 }
 - (void)gotoNextVC:(CGFloat)correctFloat{
+    DownloadFileModel *model = [DownloadFileModel  jr_findByPrimaryKey:self.testPaperId];
     SubTestAnswerViewController *vc = [[SubTestAnswerViewController alloc]init];
     vc.correct = [NSString stringWithFormat:@"%0.f",correctFloat * 100];
     vc.testPaperId = self.testPaperId;
-    vc.paperName = self.title;
+    vc.paperName = model.name;
     vc.questionsArray = self.questionsModelArray;
     vc.sectionType = self.sectionType;
     [self.navigationController pushViewController:vc animated:YES];
@@ -344,7 +353,7 @@
     //    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
     //        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     //    }
-    [self.player.player pause];
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -13,7 +13,7 @@
 @interface WordWebViewTableViewCell ()<WKUIDelegate, UIScrollViewDelegate>
 @property (nonatomic, strong) UIWebView *leftWebView;
 @property (nonatomic, strong) UIWebView *rightWebView;
-
+@property (nonatomic, strong) UIImageView *imageV;
 @end
 
 @implementation WordWebViewTableViewCell
@@ -65,6 +65,17 @@
         leftWebView.backgroundColor = [UIColor whiteColor];
         self.rightWebView = rightWebView;
         self.leftWebView = leftWebView;
+        UIImageView *imageView = [[UIImageView alloc]init];
+        imageView.image = [UIImage imageNamed:@"无讲义"];
+        [self.leftWebView addSubview:imageView];
+        [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self).offset(50);
+            make.right.equalTo(self).offset(-50);
+            make.top.equalTo(self).offset(50);
+            make.height.equalTo(@(kWebViewHeight - 100));
+        }];
+        _imageV.contentMode = UIViewContentModeCenter;
+        _imageV = imageView;
     }
     return self;
 }
@@ -84,6 +95,7 @@
     
 }
 - (void)setModel:(OneLessonModel *)model{
+    _imageV.hidden = YES;
     _model = model;
     NSString *html = [NSString stringWithFormat:@"\
                       <html lang=\"en\">\

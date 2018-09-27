@@ -18,6 +18,8 @@
 @property (nonatomic , copy) NSString              * us_mp3;
 @property (nonatomic , copy) NSString              * result;
 @property (nonatomic , copy) NSString              * state;
+@property (nonatomic , copy) NSString              * options;
+
 @property (nonatomic , strong) NSMutableArray <NSString *>              * arr_options;
 @property (nonatomic , assign) NSInteger              word_book_id;
 @property (nonatomic , assign) NSInteger              score;

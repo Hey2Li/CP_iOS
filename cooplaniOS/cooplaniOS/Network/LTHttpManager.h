@@ -9,8 +9,8 @@
 #import "LTHTTPSessionManager.h"
 #import "PaperJSONKey.h"
 
-#define BaseURL @"http://192.168.0.25:8080/cooplan-app"
-//http://192.168.0.63:8080/cooplan-app
+#define BaseURL @"http://app.cooplan.cn"
+//http://192.168.0.101:8080/cooplan-app
 @interface LTHttpManager : LTHTTPSessionManager
 
 
@@ -481,4 +481,12 @@ url: /client/public/user/modifyOpenBook
  2018/9-25mlg 改
  */
 + (void)getCategoryTestNumWithUserId:(NSString *)user_id Type:(NSString *)type Testpaper_kind:(NSString *)testpaper_kind Complete:(completeBlock)complete;
+
+/**
+ 根据课程类型查询该类型下的所有课程 听读写译 mlg 9/12
+ 
+ @param course_type 课程类型1:听力,2:读,3:写,4.译
+ @param complete block
+ */
++ (void)getCategoryLessonWithCourse_type:(NSString *)course_type Complete:(completeBlock)complete;
 @end

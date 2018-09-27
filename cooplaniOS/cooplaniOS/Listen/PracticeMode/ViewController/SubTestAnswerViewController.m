@@ -56,6 +56,7 @@
     self.title = @"成绩单";
     [self initWithView];
     [self initWithNavi];
+    self.downloadModel = [[DownloadFileModel alloc]init];
 }
 - (void)initWithNavi{
     self.navigationItem.hidesBackButton = YES;
@@ -154,34 +155,51 @@
                 NSString *fileName = [url lastPathComponent];
                 self.downloadModel.paperJsonName = fileName;
                 J_Update(self.downloadModel).Columns(@[@"paperJsonName"]).updateResult;
+                [LTHttpManager downloadURL:self.downloadlrcUrl progress:^(NSProgress *downloadProgress) {
+                    
+                } destination:^(NSURL *targetPath) {
+                    NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                    NSString *fileName = [url lastPathComponent];
+                    self.downloadModel.paperLrcName = fileName;
+                    J_Update(self.downloadModel).Columns(@[@"paperLrcName"]).updateResult;
+                    SubTestPMViewController *vc = [[SubTestPMViewController alloc]init];
+                    vc.sectionType = self.sectionType;
+                    if ([self.sectionType isEqualToString: @"4-B"]) {
+                        vc.title = @"短篇新闻";
+                    }else if ([self.sectionType isEqualToString: @"4-C"]){
+                        vc.title = @"长对话";
+                    }else{
+                        vc.title = @"听力篇章";
+                    }
+                    vc.testPaperId = self.downloadModel.testPaperId;
+                    //                        vc.subTestPaper = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
+                } failure:^(NSError *error) {
+                    
+                }];
             } failure:^(NSError *error) {
                 
             }];
-            [LTHttpManager downloadURL:self.downloadlrcUrl progress:^(NSProgress *downloadProgress) {
-                
-            } destination:^(NSURL *targetPath) {
-                NSString *url = [NSString stringWithFormat:@"%@",targetPath];
-                NSString *fileName = [url lastPathComponent];
-                self.downloadModel.paperLrcName = fileName;
-                J_Update(self.downloadModel).Columns(@[@"paperLrcName"]).updateResult;
-                SubTestPMViewController *vc = [[SubTestPMViewController alloc]init];
-                
-                vc.testPaperId = self.downloadModel.testPaperId;
-                //                        vc.subTestPaper = YES;
-                [self.navigationController pushViewController:vc animated:YES];
-            } failure:^(NSError *error) {
-                
-            }];
+            
             J_Insert(self.downloadModel).updateResult;
             
             NSLog(@"%@",self.downloadModel);
         }
     }];
+    [[NSNotificationCenter defaultCenter]postNotificationName:kLoadListenTraining object:nil];
 }
 - (void)testAgainBtnClick:(UIButton *)btn{
+    [[NSNotificationCenter defaultCenter]postNotificationName:kLoadListenTraining object:nil];
     [MobClick event:@"practicetranscriptpage_retry"];
     SubTestPMViewController *vc = [[SubTestPMViewController alloc]init];
     vc.testPaperId = self.testPaperId;
+    if ([self.sectionType isEqualToString: @"4-B"]) {
+        vc.title = @"短篇新闻";
+    }else if ([self.sectionType isEqualToString: @"4-C"]){
+        vc.title = @"长对话";
+    }else{
+        vc.title = @"听力篇章";
+    }
     vc.sectionType = self.sectionType;
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -242,6 +260,9 @@
     } else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
         scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
     }
+}
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 /*
 #pragma mark - Navigation

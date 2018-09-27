@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-
+typedef void(^loginCancelBlock)(void);
 @interface Tool : NSObject
 typedef NS_ENUM(NSInteger, IPhoneType) {
     iPhone4Type = 0,
@@ -16,7 +16,6 @@ typedef NS_ENUM(NSInteger, IPhoneType) {
     iPhone6Type,
     iPhone6PlusType
 };
-
 void SVProgressShow(void);
 void SVProgressShowText(NSString *text);
 void SVProgressShowStuteText(NSString *text, BOOL isSucceed);//成功或失败用 0->失败
@@ -51,4 +50,5 @@ NSAttributedString *returnNumAttr(NSString *str,NSInteger fontSize);
 + (NSString *)getAppVersion;
 + (NSString *)arrayToJSONString:(NSArray *)array;
 + (void)gotoLogin:(UIViewController *)viewController;
++ (void)gotoLogin:(UIViewController *)viewController CancelClick:(loginCancelBlock)block;
 @end

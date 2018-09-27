@@ -36,6 +36,7 @@
 @property (nonatomic, assign) NSInteger lastIndex;
 @property (nonatomic, strong) NewCheckWordView *checkWordView;
 @property (nonatomic, strong) UILabel *wordLabel;
+@property (nonatomic, strong) DownloadFileModel *downloadModel;
 @end
 
 @implementation ListenPlay
@@ -79,7 +80,7 @@
     DownloadFileModel *model = [DownloadFileModel  jr_findByPrimaryKey:testPaperId];
     NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
     NSString *urlString = [model.paperVoiceName stringByRemovingPercentEncoding];
-   
+    _downloadModel = model;
     if ([urlString hasPrefix:@"http"]) {
         _player = [[SUPlayer alloc]initWithURL:[NSURL URLWithString:model.paperVoiceName]];
         [_player addObserver:self forKeyPath:@"progress" options:NSKeyValueObservingOptionNew context:nil];
@@ -121,8 +122,8 @@
     [self bringSubviewToFront:self.otherView];
     
     [self parseLrc];
+    [self.lyricTableView addSubview:self.backImageView];
     self.backImageView.hidden = YES;
-    [self bringSubviewToFront:self.backImageView];
 }
 #pragma mark 播放器相关
 - (void)changeProgress:(UISlider *)slider {
@@ -268,7 +269,12 @@
     }else{
         [self stopRoll];
         NSString *timeStr = self.timeArray[_currentIndex];
-        NSArray *timeArray = [timeStr componentsSeparatedByString:@":"];
+        NSArray *timeArray;
+        if ([timeStr rangeOfString:@"."].location != NSNotFound) {
+            timeArray = [timeStr componentsSeparatedByString:@"."];
+        }else{
+            timeArray = [timeStr componentsSeparatedByString:@":"];
+        }
         CGFloat min = [timeArray[0] floatValue] * 60;
         CGFloat sec = [timeArray[1] floatValue];
         [self.player seekToTime:min + sec];
@@ -289,7 +295,12 @@
         return;
     }else{
         NSString *timeStr = self.timeArray[_currentIndex];
-        NSArray *timeArray = [timeStr componentsSeparatedByString:@":"];
+        NSArray *timeArray;
+        if ([timeStr rangeOfString:@"."].location != NSNotFound) {
+            timeArray = [timeStr componentsSeparatedByString:@"."];
+        }else{
+            timeArray = [timeStr componentsSeparatedByString:@":"];
+        }
         CGFloat min = [timeArray[0] floatValue] * 60;
         CGFloat sec = [timeArray[1] floatValue];
         [self.player seekToTime:min + sec];
@@ -307,15 +318,18 @@
     sender.selected = !sender.selected;
     [self layoutIfNeeded];
     if (sender.selected) {
-        [UIView animateWithDuration:0.2 animations:^{
-            self.otherViewBottom.constant = 0;
+        [UIView animateWithDuration:0.4 delay:0.2 usingSpringWithDamping:0.4f initialSpringVelocity:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+//            self.otherViewBottom.constant = 0;
+            self.otherView.transform = CGAffineTransformMakeTranslation(0, -50);
+            self.bottomView.transform = CGAffineTransformMakeTranslation(0, -50);
             [self layoutIfNeeded];
-        }];
+        } completion:nil];
     }else{
-        [UIView animateWithDuration:0.2 animations:^{
-            self.otherViewBottom.constant = -50;
+        [UIView animateWithDuration:0.4 delay:0.2 usingSpringWithDamping:0.4f initialSpringVelocity:0.0f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            self.otherView.transform = CGAffineTransformIdentity;
+            self.bottomView.transform = CGAffineTransformIdentity;
             [self layoutIfNeeded];
-        }];
+        } completion:nil];
     }
 }
 #pragma mark 查词
@@ -350,18 +364,42 @@
             [self wordsOnCell:point];
             if (self.wordLabel.isHidden == NO) {
                 [[NSNotificationCenter defaultCenter]postNotificationName:kFindWordIsOpen object:nil];
-                 self.checkWordView = [[NewCheckWordView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200)];
-                [self addSubview:self.checkWordView];
+                 self.checkWordView = [[NewCheckWordView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight - 12)];
+                [self.superview addSubview:self.checkWordView];
                 self.checkWordView.word = self.currentWord;
                 [self.checkWordView mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.bottom.equalTo(self.mas_bottom);
+                    make.top.equalTo(self.mas_bottom).offset(-143);
                     make.width.equalTo(self.mas_width);
-                    make.height.equalTo(@140);
+                    make.height.equalTo(@(SCREEN_HEIGHT - SafeAreaTopHeight - 12));
                     make.left.equalTo(self.mas_left);
                 }];
                 WeakSelf
                 self.checkWordView.closeBlock = ^{
                     weakSelf.wordLabel.hidden = YES;
+                };
+                self.checkWordView.findViewIsOpenBlock = ^(UIButton *btn) {
+                    if (btn.selected) {
+                    
+                        [UIView animateWithDuration:0.2 animations:^{
+                            [weakSelf.checkWordView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                                make.top.equalTo(weakSelf.mas_bottom).offset(-(SCREEN_HEIGHT - SafeAreaTopHeight - 12));
+                                make.width.equalTo(weakSelf.mas_width);
+                                make.height.equalTo(@(SCREEN_HEIGHT - SafeAreaTopHeight - 12));
+                                make.left.equalTo(weakSelf.mas_left);
+                            }];
+                        } completion:^(BOOL finished) {
+                        }];
+                    }else{
+                        [UIView animateWithDuration:0.2 animations:^{
+                            [weakSelf.checkWordView mas_remakeConstraints:^(MASConstraintMaker *make) {
+                                make.top.equalTo(weakSelf.mas_bottom).offset(-143);
+                                make.width.equalTo(weakSelf.mas_width);
+                                make.height.equalTo(@(SCREEN_HEIGHT - SafeAreaTopHeight - 12));
+                                make.left.equalTo(weakSelf.mas_left);
+                            }];
+                        } completion:^(BOOL finished) {
+                        }];
+                    }
                 };
                 //调用查词方法
                 NSLog(@"%@",self.currentWord);
@@ -463,7 +501,7 @@
     [MobClick endEvent:@"doingpracticeApage_favour"];//收藏按钮点击量
     if (IS_USER_ID) {
         NSArray *array = [cell.listenLb.text componentsSeparatedByString:@"\n"];
-        [LTHttpManager collectionSectenceWithUserId:IS_USER_ID SectenceEN:array.count ? array[0]:@"" SentenceCN:array.count > 1 ? array[1]:@"" TestPaperName:self.paperName Complete:^(LTHttpResult result, NSString *message, id data) {
+        [LTHttpManager collectionSectenceWithUserId:IS_USER_ID SectenceEN:array.count ? array[0]:@"" SentenceCN:array.count > 1 ? array[1]:@"" TestPaperName:self.paperName ? self.paperName : _downloadModel.name Complete:^(LTHttpResult result, NSString *message, id data) {
             if (result == LTHttpResultSuccess) {
 //                collectionSentenceModel *model = [[collectionSentenceModel alloc]init];
 //                model.sentenceEN = array.count ? array[0]:@"";
