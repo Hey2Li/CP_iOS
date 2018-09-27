@@ -359,14 +359,19 @@
             nextIndexPath = [NSIndexPath indexPathForItem:cellIndexPath.item + 1 inSection:cellIndexPath.section];
         }
         questionsModel.isCorrect = isCorrect;
-        if (isCorrect) {
-            _correctInt++;
-        }
+//        if (isCorrect) {
+//            _correctInt++;
+//        }
         if (cellIndexPath.row + 1 < sectionModel.Passages.count) {
             [weakSelf.view layoutIfNeeded];
             [weakSelf.tikaCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
         }else if (cellIndexPath.row + 1 == sectionModel.Passages.count && cellIndexPath.section == self.sectionsModelArray.count - 1){
             if (_isFinish) {
+                for (QuestionsModel *quModel in sectionModel.Passages) {
+                    if (quModel.isCorrect) {
+                        _correctInt++;
+                    }
+                }
                 float correctFloat = (float)_correctInt/(float)(_NoCorrectInt);
                 AnswerViewController *vc = [[AnswerViewController alloc]init];
                 vc.correct = [NSString stringWithFormat:@"%0.f",correctFloat * 100 ? correctFloat * 100 : 0];
@@ -377,6 +382,11 @@
             }else{
                 LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"听力还在进行中，确定交卷吗" sureBtn:@"交卷" cancleBtn:@"再检查下" ];
                 finishView.resultIndex = ^(NSInteger index) {
+                    for (QuestionsModel *quModel in sectionModel.Passages) {
+                        if (quModel.isCorrect) {
+                            _correctInt++;
+                        }
+                    }
                     float correctFloat = (float)_correctInt/(float)(_NoCorrectInt);
                     AnswerViewController *vc = [[AnswerViewController alloc]init];
                     vc.correct = [NSString stringWithFormat:@"%0.f",correctFloat * 100 ? correctFloat * 100 : 0];

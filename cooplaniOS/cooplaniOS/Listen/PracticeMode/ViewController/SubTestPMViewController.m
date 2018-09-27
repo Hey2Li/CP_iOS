@@ -295,14 +295,12 @@
         NSIndexPath *nextIndexPath;
         nextIndexPath = [NSIndexPath indexPathForItem:cellIndexPath.item + 1 inSection:cellIndexPath.section];
         questionsModel.isCorrect = isCorrect;
-        if (isCorrect) {
-            _correctInt++;
-        }
         if (cellIndexPath.row + 1 < self.questionsModelArray.count) {
             [weakSelf.view layoutIfNeeded];
             [weakSelf.tikaCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
         }else if (cellIndexPath.row + 1 == self.questionsModelArray.count){
             if (_isFinish) {
+                
                 float correctFloat = (float)_correctInt/(float)(_NoCorrectInt);
                 [LTHttpManager addOnlyTestWithUserId:IS_USER_ID TestPaperId:@([self.testPaperId integerValue]) Type:@"1" Testpaper_type:self.sectionType Complete:^(LTHttpResult result, NSString *message, id data) {
                     if (result == LTHttpResultSuccess) {
@@ -312,6 +310,11 @@
             }else{
                 LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"听力还在进行中，确定交卷吗" sureBtn:@"交卷" cancleBtn:@"再检查下" ];
                 finishView.resultIndex = ^(NSInteger index) {
+                    for (QuestionsModel *quModel in self.questionsModelArray) {
+                        if (quModel.isCorrect) {
+                            _correctInt++;
+                        }
+                    }
                     float correctFloat = (float)_correctInt/(float)(_NoCorrectInt);
                     [LTHttpManager addOnlyTestWithUserId:IS_USER_ID TestPaperId:@([self.testPaperId integerValue]) Type:@"1" Testpaper_type:self.sectionType Complete:^(LTHttpResult result, NSString *message, id data) {
                         if (result == LTHttpResultSuccess) {
