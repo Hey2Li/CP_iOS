@@ -164,9 +164,9 @@
                     J_Update(self.downloadModel).Columns(@[@"paperLrcName"]).updateResult;
                     SubTestPMViewController *vc = [[SubTestPMViewController alloc]init];
                     vc.sectionType = self.sectionType;
-                    if ([self.sectionType isEqualToString: @"4-B"]) {
+                    if ([self.sectionType isEqualToString: @"4-A"]) {
                         vc.title = @"短篇新闻";
-                    }else if ([self.sectionType isEqualToString: @"4-C"]){
+                    }else if ([self.sectionType isEqualToString: @"4-B"]){
                         vc.title = @"长对话";
                     }else{
                         vc.title = @"听力篇章";
@@ -193,9 +193,9 @@
     [MobClick event:@"practicetranscriptpage_retry"];
     SubTestPMViewController *vc = [[SubTestPMViewController alloc]init];
     vc.testPaperId = self.testPaperId;
-    if ([self.sectionType isEqualToString: @"4-B"]) {
+    if ([self.sectionType isEqualToString: @"4-A"]) {
         vc.title = @"短篇新闻";
-    }else if ([self.sectionType isEqualToString: @"4-C"]){
+    }else if ([self.sectionType isEqualToString: @"4-B"]){
         vc.title = @"长对话";
     }else{
         vc.title = @"听力篇章";

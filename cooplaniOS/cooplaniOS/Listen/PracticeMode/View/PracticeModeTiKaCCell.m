@@ -49,7 +49,11 @@
         [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(backView.mas_left);
             make.right.equalTo(backView.mas_right);
-            make.top.equalTo(self.mas_top).offset(30);
+            if (UI_IS_IPHONE5) {
+                make.top.equalTo(self.mas_top).offset(0);
+            }else{
+                make.top.equalTo(self.mas_top).offset(30);
+            }
             make.bottom.equalTo(backView.mas_bottom);
         }];
         tableView.scrollEnabled = NO;
@@ -65,14 +69,14 @@
         questionLb.numberOfLines = 2;
         questionLb.textColor = UIColorFromRGB(0x666666);
         questionLb.font = [UIFont boldSystemFontOfSize:14];
-        tableView.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 80)];
+        tableView.tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, UI_IS_IPHONE4 ? 50 : 80)];
         [tableView.tableHeaderView setBackgroundColor:[UIColor whiteColor]];
         [tableView.tableHeaderView addSubview:questionLb];
         [questionLb mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(backView).offset(20);
             make.right.equalTo(backView).offset(-20);
-            make.height.equalTo(@80);
-            make.top.equalTo(backView).offset(35);
+            make.height.equalTo(@(UI_IS_IPHONE5 ? 50 : 80));
+            make.top.equalTo(backView).offset(UI_IS_IPHONE5 ? 20 : 35);
         }];
         self.questionLb = questionLb;
         
@@ -83,7 +87,7 @@
         [btn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(tableView.mas_left).offset(10);
             make.right.equalTo(tableView.mas_right).offset(-10);
-            make.top.equalTo(self.mas_top).offset(20);
+            make.top.equalTo(self.mas_top).offset(UI_IS_IPHONE5 ? 0 : 20);
             make.height.equalTo(@30);
         }];
         [btn setImage:[UIImage imageNamed:@"上下拉动"] forState:UIControlStateNormal];
@@ -105,10 +109,10 @@
 }
 #pragma mark UITableViewDataSource&Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return _questionsModel.Options.count + 1;
+    return UI_IS_IPHONE5 ? _questionsModel.Options.count : _questionsModel.Options.count + 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 50;
+    return UI_IS_IPHONE5 ? (self.tableView.height - 80)/4 : 50;
 
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -118,11 +122,7 @@
     UIView *view = [[UIView alloc]init];
     view.backgroundColor = DRGBCOLOR;
     cell.selectedBackgroundView = view;
-    if (indexPath.row == 0) {
-        cell.textLabel.text = [NSString stringWithFormat:@"Q%ld",self.collectionIndexPath.row + 1];
-        cell.textLabel.textColor = UIColorFromRGB(0xBBBBBB);
-        cell.selectionStyle = NO;
-    }else{
+    if (UI_IS_IPHONE5) {
         UILabel *label = [UILabel new];
         [cell addSubview:label];
         [label mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -132,13 +132,36 @@
             make.height.equalTo(@1);
         }];
         label.backgroundColor = UIColorFromRGB(0xE9E9E9);
-        OptionsModel *model = _questionsModel.Options[indexPath.row - 1];
+        OptionsModel *model = _questionsModel.Options[indexPath.row];
         dispatch_async(dispatch_get_main_queue(), ^{
             [cell setSelected:model.isSelecteOption animated:YES];
         });
         cell.selectionStyle = YES;
         cell.textLabel.numberOfLines = 2;
         cell.textLabel.text = [NSString stringWithFormat:@"%@. %@",model.Alphabet,model.Text];
+    }else{
+        if (indexPath.row == 0) {
+            cell.textLabel.text = [NSString stringWithFormat:@"Q%ld",self.collectionIndexPath.row + 1];
+            cell.textLabel.textColor = UIColorFromRGB(0xBBBBBB);
+            cell.selectionStyle = NO;
+        }else{
+            UILabel *label = [UILabel new];
+            [cell addSubview:label];
+            [label mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(cell);
+                make.right.equalTo(cell);
+                make.bottom.equalTo(cell.mas_bottom).offset(-1);
+                make.height.equalTo(@1);
+            }];
+            label.backgroundColor = UIColorFromRGB(0xE9E9E9);
+            OptionsModel *model = _questionsModel.Options[indexPath.row - 1];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [cell setSelected:model.isSelecteOption animated:YES];
+            });
+            cell.selectionStyle = YES;
+            cell.textLabel.numberOfLines = 2;
+            cell.textLabel.text = [NSString stringWithFormat:@"%@. %@",model.Alphabet,model.Text];
+        }
     }
 
     return cell;
@@ -148,42 +171,81 @@
         if (self.questionCellClick) {
 //            UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
 //            cell.selected = YES;
-            switch (indexPath.row) {
-                case 1:
-                    NSLog(@"A");
-                    _questionsModel.youAnswer = @"A";
-                    self.questionCellClick(self.collectionIndexPath,[@"A" isEqualToString:_questionsModel.Answer]);
-                    break;
-                case 2:
-                    NSLog(@"B");
-                    _questionsModel.youAnswer = @"B";
-                    self.questionCellClick(self.collectionIndexPath,[@"B" isEqualToString:_questionsModel.Answer]);
-                    break;
-                case 3:
-                    NSLog(@"C");
-                    _questionsModel.youAnswer = @"C";
-                    self.questionCellClick(self.collectionIndexPath,[@"C" isEqualToString:_questionsModel.Answer]);
-                    break;
-                case 4:
-                    NSLog(@"D");
-                    _questionsModel.youAnswer = @"D";
-                    self.questionCellClick(self.collectionIndexPath,[@"D" isEqualToString:_questionsModel.Answer]);
-                    break;
-                default:
-                    break;
-            }
-            OptionsModel *model = _questionsModel.Options[indexPath.row - 1];
-            model.isSelecteOption = YES;
-            dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                for (OptionsModel *otherModel in _questionsModel.Options) {
-                    if (otherModel != model) {
-                        otherModel.isSelecteOption = NO;
-                    }
+            if (UI_IS_IPHONE5) {
+                switch (indexPath.row) {
+                    case 0:
+                        NSLog(@"A");
+                        _questionsModel.youAnswer = @"A";
+                        self.questionCellClick(self.collectionIndexPath,[@"A" isEqualToString:_questionsModel.Answer]);
+                        break;
+                    case 1:
+                        NSLog(@"B");
+                        _questionsModel.youAnswer = @"B";
+                        self.questionCellClick(self.collectionIndexPath,[@"B" isEqualToString:_questionsModel.Answer]);
+                        break;
+                    case 2:
+                        NSLog(@"C");
+                        _questionsModel.youAnswer = @"C";
+                        self.questionCellClick(self.collectionIndexPath,[@"C" isEqualToString:_questionsModel.Answer]);
+                        break;
+                    case 3:
+                        NSLog(@"D");
+                        _questionsModel.youAnswer = @"D";
+                        self.questionCellClick(self.collectionIndexPath,[@"D" isEqualToString:_questionsModel.Answer]);
+                        break;
+                    default:
+                        break;
                 }
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [tableView reloadData];
+                OptionsModel *model = _questionsModel.Options[indexPath.row];
+                model.isSelecteOption = YES;
+                dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                    for (OptionsModel *otherModel in _questionsModel.Options) {
+                        if (otherModel != model) {
+                            otherModel.isSelecteOption = NO;
+                        }
+                    }
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [tableView reloadData];
+                    });
                 });
-            });
+            }else{
+                switch (indexPath.row) {
+                    case 1:
+                        NSLog(@"A");
+                        _questionsModel.youAnswer = @"A";
+                        self.questionCellClick(self.collectionIndexPath,[@"A" isEqualToString:_questionsModel.Answer]);
+                        break;
+                    case 2:
+                        NSLog(@"B");
+                        _questionsModel.youAnswer = @"B";
+                        self.questionCellClick(self.collectionIndexPath,[@"B" isEqualToString:_questionsModel.Answer]);
+                        break;
+                    case 3:
+                        NSLog(@"C");
+                        _questionsModel.youAnswer = @"C";
+                        self.questionCellClick(self.collectionIndexPath,[@"C" isEqualToString:_questionsModel.Answer]);
+                        break;
+                    case 4:
+                        NSLog(@"D");
+                        _questionsModel.youAnswer = @"D";
+                        self.questionCellClick(self.collectionIndexPath,[@"D" isEqualToString:_questionsModel.Answer]);
+                        break;
+                    default:
+                        break;
+                }
+                OptionsModel *model = _questionsModel.Options[indexPath.row - 1];
+                model.isSelecteOption = YES;
+                dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                    for (OptionsModel *otherModel in _questionsModel.Options) {
+                        if (otherModel != model) {
+                            otherModel.isSelecteOption = NO;
+                        }
+                    }
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [tableView reloadData];
+                    });
+                });
+            }
         }
     }
 }
