@@ -34,7 +34,6 @@
     self.tableView.separatorStyle = NO;
     self.tableView.estimatedRowHeight = 60.0f;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-    self.tableView.ly_emptyView = [LTEmpty NoDataEmptyWithMessage:@"您还没有单词"];
     _page_num = 1;
     [self loadData];
     [self footerLoadData];
@@ -44,6 +43,8 @@
     if (!wordbookId) {
         wordbookId = @"1";
     }
+    [self.tableView ly_startLoading];
+    //4.刷新UI时调用（保证在刷新UI后调用）
     [LTHttpManager searchOldWordWithUserId:IS_USER_ID ? IS_USER_ID : @"" WordBookId:wordbookId Type:@(self.type) PageNum:@(_page_num) Complete:^(LTHttpResult result, NSString *message, id data) {
         if (LTHttpResultSuccess == result) {
             NSArray *array = data[@"responseData"];
@@ -53,10 +54,13 @@
                 [self.dataArray addObject:model];
             }
             [self.tableView reloadData];
+            self.tableView.ly_emptyView = [LTEmpty NoDataEmptyWithMessage:@"您还没有单词"];
+            [self.tableView ly_endLoading];
         }else{
             self.tableView.ly_emptyView = [LTEmpty NoNetworkEmpty:^{
                 [self loadData];
             }];
+            [self.tableView ly_endLoading];
         }
     }];
 }
@@ -76,9 +80,11 @@
                 }
                 [self.tableView.mj_footer endRefreshing];
                 [self.tableView reloadData];
+                [self.tableView ly_endLoading];
             }else{
                 [self.tableView.mj_footer endRefreshing];
                 _page_num--;
+                [self.tableView ly_endLoading];
             }
         }];
     }];

@@ -82,6 +82,9 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playFinished:) name:@"playFinished" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(findWordIsOpen) name:kFindWordIsOpen object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(findWordIsClose) name:kFindWordIsClose object:nil];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.player.player pause];
+    });
 }
 - (void)findWordIsOpen{
     [UIView animateWithDuration:0.2 animations:^{
@@ -184,7 +187,7 @@
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
         make.height.equalTo(@(SCREEN_HEIGHT - self.headerView.height - 120 - SafeAreaTopHeight));
-        make.top.equalTo(self.headerView.mas_bottom);
+        make.top.equalTo(self.player.bottomView.mas_top).offset(-[Tool layoutForAlliPhoneHeight:130]);
     }];
     collectionView.backgroundColor = [UIColor clearColor];
     collectionView.dataSource = self;
@@ -193,6 +196,8 @@
     collectionView.pagingEnabled = YES;
     collectionView.showsHorizontalScrollIndicator = NO;
     self.tikaCollectionView = collectionView;
+    _collectionCenter = CGPointMake(SCREEN_WIDTH/2, [Tool layoutForAlliPhoneHeight:SCREEN_HEIGHT - 220]);
+    NSLog(@"%@,%@", NSStringFromCGPoint(_collectionCenter), NSStringFromCGPoint(self.tikaCollectionView.center));
     [self scrollViewDidScroll:collectionView];
     _isOpen = YES;
     
@@ -205,9 +210,9 @@
     CGPoint translation = [gr translationInView:self.tikaCollectionView];
     
     CGFloat minY = [Tool layoutForAlliPhoneHeight:185];//可拖动题卡的上限
-    CGFloat maxY = [Tool layoutForAlliPhoneHeight:SCREEN_HEIGHT - 200];//可拖动题卡的下限
+    CGFloat maxY = UI_IS_IPHONE5 ? [Tool layoutForAlliPhoneHeight:SCREEN_HEIGHT - 150] :[Tool layoutForAlliPhoneHeight:SCREEN_HEIGHT - 200];//可拖动题卡的下限
 //    NSLog(@"minX:%f,maxY:%f,gr.center.y:%f", minY,maxY, gr.view.center.y);
-    NSLog(@"%f",translation.y);
+//    NSLog(@"%f",translation.y);
     CGFloat tranY = gr.view.center.y + translation.y;
     if (tranY == maxY) {
         _isOpen = NO;
@@ -300,7 +305,11 @@
             [weakSelf.tikaCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
         }else if (cellIndexPath.row + 1 == self.questionsModelArray.count){
             if (_isFinish) {
-                
+                for (QuestionsModel *quModel in self.questionsModelArray) {
+                    if (quModel.isCorrect) {
+                        _correctInt++;
+                    }
+                }
                 float correctFloat = (float)_correctInt/(float)(_NoCorrectInt);
                 [LTHttpManager addOnlyTestWithUserId:IS_USER_ID TestPaperId:@([self.testPaperId integerValue]) Type:@"1" Testpaper_type:self.sectionType Complete:^(LTHttpResult result, NSString *message, id data) {
                     if (result == LTHttpResultSuccess) {
@@ -359,7 +368,6 @@
     //    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
     //        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     //    }
-    [self.player.player pause];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

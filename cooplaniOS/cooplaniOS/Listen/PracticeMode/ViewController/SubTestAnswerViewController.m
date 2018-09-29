@@ -129,6 +129,7 @@
 }
 #pragma mark 继续
 - (void)continueBtnClick:(UIButton *)btn{
+    kPreventRepeatClickTime(3);
     if (!self.sectionType) {
         return;
     }
@@ -189,6 +190,7 @@
     [[NSNotificationCenter defaultCenter]postNotificationName:kLoadListenTraining object:nil];
 }
 - (void)testAgainBtnClick:(UIButton *)btn{
+    kPreventRepeatClickTime(3);
     [[NSNotificationCenter defaultCenter]postNotificationName:kLoadListenTraining object:nil];
     [MobClick event:@"practicetranscriptpage_retry"];
     SubTestPMViewController *vc = [[SubTestPMViewController alloc]init];
@@ -225,7 +227,13 @@
     UIView *headerView = [[UIView alloc]init];
     headerView.backgroundColor = UIColorFromRGB(0xf7f7f7);
     UILabel *sectionLb = [UILabel new];
-    sectionLb.text = @"Section";
+    if ([self.sectionType isEqualToString: @"4-A"]) {
+        sectionLb.text = @"Section A";
+    }else if ([self.sectionType isEqualToString: @"4-B"]){
+        sectionLb.text = @"Section B";
+    }else{
+        sectionLb.text = @"Section C";
+    }
     sectionLb.font = [UIFont boldSystemFontOfSize:14];
     [headerView addSubview:sectionLb];
     [sectionLb mas_makeConstraints:^(MASConstraintMaker *make) {

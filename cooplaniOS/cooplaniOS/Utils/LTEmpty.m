@@ -18,7 +18,7 @@
 }
 */
 - (void)prepare{
-    
+    self.ly_emptyView.autoShowEmptyView = NO;
 }
 + (instancetype)NoNetworkEmpty:(reloadDataBlock)reload{
     return [LTEmpty emptyActionViewWithImageStr:@"空"

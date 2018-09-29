@@ -152,6 +152,10 @@
     [self.listenTableView reloadData];
     self.myTableView.ly_emptyView = [LTEmpty NoDataEmptyWithMessage:@"您还没有下载"];
     self.listenTableView.ly_emptyView = [LTEmpty NoDataEmptyWithMessage:@"您还没有下载"];
+    //3.网络请求时调用
+    [self.myTableView ly_startLoading];
+    //4.刷新UI时调用（保证在刷新UI后调用）
+    [self.myTableView ly_endLoading];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
@@ -206,6 +210,7 @@
             [self.downloadArray removeObjectAtIndex:indexPath.row];
             // 从列表中删除
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [self.myTableView ly_endLoading];
         }
     }else{
         if (editingStyle == UITableViewCellEditingStyleDelete) {

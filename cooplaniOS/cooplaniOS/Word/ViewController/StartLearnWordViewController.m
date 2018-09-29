@@ -88,7 +88,7 @@
     if (UI_IS_IPHONE4) {
         backView = [[UIView alloc]initWithFrame:CGRectMake((-750 + SCREEN_WIDTH)/2 , - 444 - 64 , 750, 750)];
     }else{
-        backView = [[UIView alloc]initWithFrame:CGRectMake((-750 + SCREEN_WIDTH)/2 , - 444 - 64 -100, 750, 750)];
+        backView = [[UIView alloc]initWithFrame:CGRectMake((-750 + SCREEN_WIDTH)/2 , - 444 - 64 - 50, 750, 750)];
     }
     backView.backgroundColor = DRGBCOLOR;
     backView.layer.cornerRadius = 375;

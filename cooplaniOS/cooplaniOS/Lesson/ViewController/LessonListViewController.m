@@ -33,6 +33,7 @@
 }
 - (void)loadData{
     if (IS_USER_ID) {
+        [self.myTableView ly_startLoading];
         [LTHttpManager findAllMyCommodityWithUserId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
             if (LTHttpResultSuccess == result) {
                 NSArray *dataArray = data[@"responseData"];
@@ -43,10 +44,12 @@
                 }
                 self.myTableView.ly_emptyView = [LTEmpty NoDataEmptyWithMessage:@"暂无数据"];
                 [self.myTableView reloadData];
+                [self.myTableView ly_endLoading];
             }else{
                 self.myTableView.ly_emptyView = [LTEmpty NoNetworkEmpty:^{
                     [self loadData];
                 }];
+                [self.myTableView ly_endLoading];
             }
         }];        
     }else{

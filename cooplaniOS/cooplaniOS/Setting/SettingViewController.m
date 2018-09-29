@@ -244,7 +244,11 @@
     NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
     if ([application canOpenURL:url]) {
         if ([application respondsToSelector:@selector(openURL:options:completionHandler:)]) {
-            [application openURL:url options:@{} completionHandler:nil];
+            if (@available(iOS 10.0, *)) {
+                [application openURL:url options:@{} completionHandler:nil];
+            } else {
+                // Fallback on earlier versions
+            }
         } else {
             [application openURL:url];
         }
@@ -263,8 +267,8 @@
     CGFloat size = 0;
     if ([manager fileExistsAtPath:path]) {
         // 目录下的文件计算大小
-        NSArray *childrenFile = [manager subpathsAtPath:path];
-        for (NSString *fileName in childrenFile) {
+        NSArray *fileList = [[manager contentsOfDirectoryAtPath:path error:nil] pathsMatchingExtensions:@[@"json",@"lrc"]];
+        for (NSString *fileName in fileList) {
             NSString *absolutePath = [path stringByAppendingPathComponent:fileName];
             size += [manager attributesOfItemAtPath:absolutePath error:nil].fileSize;
         }
@@ -276,6 +280,19 @@
     return 0;
 }
 - (void)cleanCaches:(NSString *)path{
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSArray *fileListArray = [fileManager contentsOfDirectoryAtPath:path error:nil];
+    for (NSString *file in fileListArray)
+    {
+        NSString *subPath = [path stringByAppendingPathComponent:file];
+        NSString *extension = [file pathExtension];
+        if (([extension compare:@"json" options:NSCaseInsensitiveSearch] == NSOrderedSame) || ([extension compare:@"lrc" options:NSCaseInsensitiveSearch] == NSOrderedSame)){
+            [fileManager removeItemAtPath:subPath error:nil];
+        }
+    }
+    SVProgressShowStuteText(@"缓存清理成功", YES);
+    [self.myTableView reloadData];
     //SDWebImage的清除功能
     [[SDImageCache sharedImageCache] clearDisk];
     [[SDImageCache sharedImageCache] clearMemory];
@@ -287,7 +304,7 @@
     {
         [storage deleteCookie:cookie];
     }
-    SVProgressShowStuteText(@"缓存清理成功", YES);
+
 }
 
 - (void)didReceiveMemoryWarning {

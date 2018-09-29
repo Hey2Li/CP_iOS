@@ -265,6 +265,8 @@
 }
 - (void)loadData{
     if (IS_USER_ID) {
+        [self.wordTableView ly_startLoading];
+        [self.myTableView ly_startLoading];
         [LTHttpManager findSectenceNoteWIthUserId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
             if (LTHttpResultSuccess == result) {
                 NSArray *array = data[@"responseData"];
@@ -279,10 +281,12 @@
                     });
                 }
                 self.myTableView.ly_emptyView = [LTEmpty NoDataEmptyWithMessage:@"您还没有笔记"];
+                [self.myTableView ly_endLoading];
             }else{
                 self.myTableView.ly_emptyView = [LTEmpty NoNetworkEmpty:^{
                     [self loadData];
                 }];
+                [self.myTableView ly_endLoading];
             }
            
         }];
@@ -300,10 +304,12 @@
                     });
                 }];
                 self.wordTableView.ly_emptyView = [LTEmpty NoDataEmptyWithMessage:@"您还没有笔记"];
+                [self.wordTableView ly_endLoading];
             }else{
                 self.wordTableView.ly_emptyView = [LTEmpty NoNetworkEmpty:^{
                     [self loadData];
                 }];
+                [self.wordTableView ly_endLoading];
             }
         }];
     }else{

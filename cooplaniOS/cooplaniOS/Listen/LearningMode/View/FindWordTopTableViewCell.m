@@ -10,7 +10,7 @@
 #import "SUPlayer.h"
 
 @interface FindWordTopTableViewCell ()
-@property (nonatomic, strong) SUPlayer *player;
+@property (nonatomic, strong) AVPlayer *player;
 @end
 
 @implementation FindWordTopTableViewCell
@@ -54,18 +54,14 @@
 
 }
 - (IBAction)playUS:(UIButton *)sender {
-    sender.enabled = NO;
-    [self playVocieWithUrl:_dataDict[@"ph_am_mp3"]];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        sender.enabled = YES;
-    });
+    AVPlayerItem *item = [[AVPlayerItem alloc]initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",_dataDict[@"ph_am_mp3"]]]];
+    [self.player replaceCurrentItemWithPlayerItem:item];
+    [self.player play];
 }
 - (IBAction)playUK:(UIButton *)sender {
-    sender.enabled = NO;
-    [self playVocieWithUrl:_dataDict[@"ph_en_mp3"]];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        sender.enabled = YES;
-    });
+    AVPlayerItem *item = [[AVPlayerItem alloc]initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",_dataDict[@"ph_en_mp3"]]]];
+    [self.player replaceCurrentItemWithPlayerItem:item];
+    [self.player play];
 }
 - (void)playVocieWithUrl:(NSString *)url{
     if (url) {
@@ -73,11 +69,12 @@
     }
 }
 - (void)dealloc{
-    [self.player stop];
+//    [self.player stop];
 }
-- (SUPlayer *)player{
-    if (!_player) {
-        _player = [[SUPlayer alloc]init];
+- (AVPlayer *)player {
+    if (_player == nil) {
+        _player = [[AVPlayer alloc] init];
+        _player.volume = 1.0; // 默认最大音量
     }
     return _player;
 }

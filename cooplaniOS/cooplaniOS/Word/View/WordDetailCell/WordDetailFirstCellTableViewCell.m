@@ -10,7 +10,7 @@
 #import "SUPlayer.h"
 
 @interface WordDetailFirstCellTableViewCell ()
-@property (nonatomic, strong) SUPlayer *player;
+@property (nonatomic, strong) AVPlayer *player;
 @property (nonatomic, assign) BOOL isFindWord;
 @end
 @implementation WordDetailFirstCellTableViewCell
@@ -35,24 +35,28 @@
 - (IBAction)palyAm:(UIButton *)sender {
     sender.enabled = NO;
     if (_isFindWord) {
-        [self playVocieWithUrl:_dataDict[@"ph_am_mp3"]];
+        AVPlayerItem *item = [[AVPlayerItem alloc]initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",_dataDict[@"ph_am_mp3"]]]];
+        [self.player replaceCurrentItemWithPlayerItem:item];
+        [self.player play];
     }else{
-        [self playVocieWithUrl:self.model.us_mp3];
+        AVPlayerItem *item = [[AVPlayerItem alloc]initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",self.model.us_mp3]]];
+        [self.player replaceCurrentItemWithPlayerItem:item];
+        [self.player play];
     }
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         sender.enabled = YES;
     });
 }
 - (IBAction)playEn:(UIButton *)sender {
-    sender.enabled = NO;
     if (_isFindWord) {
-        [self playVocieWithUrl:_dataDict[@"ph_en_mp3"]];
+        AVPlayerItem *item = [[AVPlayerItem alloc]initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",_dataDict[@"ph_en_mp3"]]]];
+        [self.player replaceCurrentItemWithPlayerItem:item];
+        [self.player play];
     }else{
-        [self playVocieWithUrl:self.model.uk_mp3];
+        AVPlayerItem *item = [[AVPlayerItem alloc]initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",_model.uk_mp3]]];
+        [self.player replaceCurrentItemWithPlayerItem:item];
+        [self.player play];
     }
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        sender.enabled = YES;
-    });
 }
 #pragma mark 添加笔记
 - (IBAction)addNoteClick:(UIButton *)btn {
@@ -128,11 +132,12 @@
     }
 }
 - (void)dealloc{
-    [self.player stop];
+//    [self.player stop];
 }
-- (SUPlayer *)player{
-    if (!_player) {
-        _player = [[SUPlayer alloc]init];
+- (AVPlayer *)player {
+    if (_player == nil) {
+        _player = [[AVPlayer alloc] init];
+        _player.volume = 1.0; // 默认最大音量
     }
     return _player;
 }

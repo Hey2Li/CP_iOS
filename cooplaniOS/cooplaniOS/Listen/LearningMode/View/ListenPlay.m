@@ -138,7 +138,7 @@
             for (NSInteger i = 0; i < timeArray.count; i++) {
                 NSString *time = [timeArray[i] substringWithRange:NSMakeRange(0, 5)];
                 NSArray *timeArray;
-                if ([time rangeOfString:@"."].location != NSNotFound) {
+                if ([[time substringWithRange:NSMakeRange(2, 1)] isEqualToString:@"."]) {
                     timeArray = [time componentsSeparatedByString:@"."];
                 }else{
                     timeArray = [time componentsSeparatedByString:@":"];
@@ -170,7 +170,7 @@
             for (NSInteger i = 0; i < timeArray.count; i++) {
                 NSString *time = [timeArray[i] substringWithRange:NSMakeRange(0, 5)];
                 NSArray *timeArray;
-                if ([time rangeOfString:@"."].location != NSNotFound) {
+                if ([[time substringWithRange:NSMakeRange(2, 1)] isEqualToString:@"."]) {
                     timeArray = [time componentsSeparatedByString:@"."];
                 }else{
                     timeArray = [time componentsSeparatedByString:@":"];
@@ -284,7 +284,7 @@
         [self stopRoll];
         NSString *timeStr = self.timeArray[_currentIndex];
         NSArray *timeArray;
-        if ([timeStr rangeOfString:@"."].location != NSNotFound) {
+        if ([[timeStr substringWithRange:NSMakeRange(2, 1)] isEqualToString:@"."]) {
             timeArray = [timeStr componentsSeparatedByString:@"."];
         }else{
             timeArray = [timeStr componentsSeparatedByString:@":"];
@@ -310,7 +310,7 @@
     }else{
         NSString *timeStr = self.timeArray[_currentIndex];
         NSArray *timeArray;
-        if ([timeStr rangeOfString:@"."].location != NSNotFound) {
+        if ([[timeStr substringWithRange:NSMakeRange(2, 1)] isEqualToString:@"."]) {
             timeArray = [timeStr componentsSeparatedByString:@"."];
         }else{
             timeArray = [timeStr componentsSeparatedByString:@":"];

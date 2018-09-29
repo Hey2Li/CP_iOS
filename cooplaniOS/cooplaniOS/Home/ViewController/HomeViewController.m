@@ -127,7 +127,7 @@
     UILabel *countdownLabel = [UILabel new];
     countdownLabel.font = [UIFont boldSystemFontOfSize:12];
     NSInteger days = [self computeDaysWithDataFromString:@"2018-12-15"];
-    NSMutableAttributedString *contentStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"距离四级倒计时还有%ld天", (long)days]];
+    NSMutableAttributedString *contentStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"距离四级考试还有%ld天", (long)days]];
     //找出特定字符在整个字符串中的位置
     NSRange redRange = NSMakeRange([[contentStr string] rangeOfString:[NSString stringWithFormat:@"%ld", (long)days]].location, [[contentStr string] rangeOfString:[NSString stringWithFormat:@"%ld", days]].length);
     //修改特定字符的字体大小
@@ -181,7 +181,7 @@
     return  self.bannerArray.count;
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake([Tool layoutForAlliPhoneWidth:335], [Tool layoutForAlliPhoneHeight:190]);
+    return CGSizeMake([Tool layoutForAlliPhoneWidth:315], [Tool layoutForAlliPhoneHeight:190]);
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
     return UIEdgeInsetsMake(1, 20, 1, 10);

@@ -309,7 +309,7 @@
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
         make.height.equalTo(@(SCREEN_HEIGHT - self.headerView.height - 120 - SafeAreaTopHeight));
-        make.top.equalTo(self.headerView.mas_bottom);
+        make.top.equalTo(self.player.bottomView.mas_top).offset(-[Tool layoutForAlliPhoneHeight:130]);
     }];
     
     collectionView.backgroundColor = [UIColor clearColor];
@@ -319,6 +319,7 @@
     collectionView.pagingEnabled = YES;
     collectionView.showsHorizontalScrollIndicator = NO;
     self.tikaCollectionView = collectionView;
+    _collectionCenter = CGPointMake(SCREEN_WIDTH/2, [Tool layoutForAlliPhoneHeight:SCREEN_HEIGHT - 220]);
     [self scrollViewDidScroll:collectionView];
     _isOpen = YES;
     
@@ -331,7 +332,7 @@
     CGPoint translation = [gr translationInView:self.tikaCollectionView];
    
     CGFloat minY = [Tool layoutForAlliPhoneHeight:185];//可拖动题卡的上限
-    CGFloat maxY = [Tool layoutForAlliPhoneHeight:SCREEN_HEIGHT - 200];//可拖动题卡的下限
+    CGFloat maxY = UI_IS_IPHONE5 ? [Tool layoutForAlliPhoneHeight:SCREEN_HEIGHT - 150] :[Tool layoutForAlliPhoneHeight:SCREEN_HEIGHT - 200];//可拖动题卡的下限
 //    NSLog(@"minX:%f,maxY:%f,gr.center.y:%f", minY,maxY, gr.view.center.y);
     NSLog(@"%f",translation.y);
     CGFloat tranY = gr.view.center.y + translation.y;
@@ -438,9 +439,11 @@
                 [weakSelf.tikaCollectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
             }else if (cellIndexPath.row + 1 == sectionModel.Passages.count && cellIndexPath.section == self.sectionsModelArray.count - 1){
                 if (_isFinish) {
-                    for (QuestionsModel *quModel in sectionModel.Passages) {
-                        if (quModel.isCorrect) {
-                            _correctInt++;
+                    for (SectionsModel *secModel in self.sectionsModelArray) {
+                        for (QuestionsModel *quModel in secModel.Passages) {
+                            if (quModel.isCorrect) {
+                                _correctInt++;
+                            }
                         }
                     }
                     float correctFloat = (float)_correctInt/(float)(_NoCorrectInt);
@@ -455,9 +458,11 @@
                 }else{
                     LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"听力还在进行中，确定交卷吗" sureBtn:@"交卷" cancleBtn:@"再检查下" ];
                     finishView.resultIndex = ^(NSInteger index) {
-                        for (QuestionsModel *quModel in sectionModel.Passages) {
-                            if (quModel.isCorrect) {
-                                _correctInt++;
+                        for (SectionsModel *secModel in self.sectionsModelArray) {
+                            for (QuestionsModel *quModel in secModel.Passages) {
+                                if (quModel.isCorrect) {
+                                    _correctInt++;
+                                }
                             }
                         }
                         float correctFloat = (float)_correctInt/(float)(_NoCorrectInt);

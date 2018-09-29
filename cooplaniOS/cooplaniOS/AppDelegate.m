@@ -176,6 +176,7 @@
 - (void)setUMManager{
     /* 打开调试日志 */
     [[UMSocialManager defaultManager] openLog:YES];
+    [UMConfigure setLogEnabled:YES];
     
     /* 设置友盟appkey */
     [UMConfigure initWithAppkey:USHARE_DEMO_APPKEY channel:@"App Store"];
