@@ -110,6 +110,7 @@
     SectionWordNumsTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
     cell.numberLb.text = [NSString stringWithFormat:@"%@个", self.rowIndex];
     [self.userDefaults setObject:[NSString stringWithFormat:@"%@",self.rowIndex] forKey:kWordNum];
+    [self.tableView reloadData];
     [self.maskView removeFromSuperview];
 }
 
@@ -192,7 +193,12 @@
             return cell;
         }else{
             SectionWordNumsTableViewCell *subcell = [tableView  dequeueReusableCellWithIdentifier:NSStringFromClass([SectionWordNumsTableViewCell class])];
-            subcell.numberLb.text = @"20个";
+            NSString *wordum = [self.userDefaults objectForKey:kWordNum];
+            if (wordum) {
+                subcell.numberLb.text = wordum;
+            }else{
+                subcell.numberLb.text = @"20个";
+            }
             return subcell;
         }
     }else{

@@ -364,26 +364,23 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     NSString *urlStr    = @"http://itunes.apple.com/lookup?id=1404189437";//id替换即可
     NSURL *url          = [NSURL URLWithString:urlStr];
     NSURLRequest *req   = [NSURLRequest requestWithURL:url];
-    [NSURLConnection connectionWithRequest:req delegate:self];
-}
-//2. 网络连接
--(void)connection:(NSURLConnection *)connection didReceiveData:(nonnull NSData *)data
-{
-    NSError *error;
-    id jsonObject           = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-    NSDictionary *appInfo   = (NSDictionary*)jsonObject;
-    NSArray *infoContent    = [appInfo objectForKey:@"results"];
-    NSString * version      = [[infoContent objectAtIndex:0]objectForKey:@"version"];//线上最新版本
-    // 获取当前版本
-    NSString *currentVersion    = [self version];//当前用户版本
-    BOOL result          = [currentVersion compare:version] == NSOrderedAscending;
-    if (result) {//需要更新
-        NSLog(@"不是最新版本需要更新");
-        NSString *updateStr = [NSString stringWithFormat:@"发现新版本V%@\n是否更新？",version];
-        [self creatAlterView:updateStr];
-    } else {//已经是最新版；
-        NSLog(@"最新版本不需要更新");
-    }
+    NSURLSessionDataTask * task = [[NSURLSession sharedSession]dataTaskWithRequest:req completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        id jsonObject           = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+        NSDictionary *appInfo   = (NSDictionary*)jsonObject;
+        NSArray *infoContent    = [appInfo objectForKey:@"results"];
+        NSString * version      = [[infoContent objectAtIndex:0]objectForKey:@"version"];//线上最新版本
+        // 获取当前版本
+        NSString *currentVersion    = [self version];//当前用户版本
+        BOOL result          = [currentVersion compare:version] == NSOrderedAscending;
+        if (result) {//需要更新
+            NSLog(@"不是最新版本需要更新");
+            NSString *updateStr = [NSString stringWithFormat:@"发现新版本V%@\n是否更新？",version];
+            [self creatAlterView:updateStr];
+        } else {//已经是最新版；
+            NSLog(@"最新版本不需要更新");
+        }
+    }];
+    [task resume];
 }
 //3. 弹框提示
 -(void)creatAlterView:(NSString *)msg{

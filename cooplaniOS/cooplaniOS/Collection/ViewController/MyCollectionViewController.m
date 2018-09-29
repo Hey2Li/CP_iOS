@@ -84,7 +84,7 @@
 //        [self.dowloadBtn setImage:[UIImage imageNamed:@"downloaded"] forState:UIControlStateNormal];
 //        self.dowloadBtn.enabled = NO;
 //    }
-    LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"模拟考场需要一鼓作气的完成准备好了吗？" sureBtn:@"准备好了！" cancleBtn:@"取消"];
+    LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"模拟考场需要一鼓作气的完成准备好了吗？" sureBtn:@"准备好了！" cancleBtn:@"改日再战"];
     alertView.resultIndex = ^(NSInteger index) {
         kPreventRepeatClickTime(3);
         [MobClick event:[NSString stringWithFormat:@"examinationpage_subject+%@", onePaperModel.name]];

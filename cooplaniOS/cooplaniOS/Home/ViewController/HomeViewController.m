@@ -109,7 +109,15 @@
     }];
 
 }
-
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if (scrollView == self.myTableView) {
+        if (scrollView.contentOffset.y < 0) {
+            scrollView.contentOffset = CGPointMake(scrollView.contentOffset.x, 0);
+        }else if (scrollView.contentOffset.y > 100){
+            scrollView.contentOffset = CGPointMake(scrollView.contentOffset.x, 100);
+        }
+    }
+}
 - (void)initWithView{
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64) style:UITableViewStylePlain];
     tableView.delegate = self;
@@ -131,7 +139,7 @@
     //找出特定字符在整个字符串中的位置
     NSRange redRange = NSMakeRange([[contentStr string] rangeOfString:[NSString stringWithFormat:@"%ld", (long)days]].location, [[contentStr string] rangeOfString:[NSString stringWithFormat:@"%ld", days]].length);
     //修改特定字符的字体大小
-    [contentStr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:14] range:redRange];
+    [contentStr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:16] range:redRange];
     countdownLabel.attributedText = contentStr;
     countdownLabel.textColor = UIColorFromRGB(0x333333);
     countdownLabel.textAlignment = NSTextAlignmentRight;
@@ -181,10 +189,10 @@
     return  self.bannerArray.count;
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return CGSizeMake([Tool layoutForAlliPhoneWidth:315], [Tool layoutForAlliPhoneHeight:190]);
+    return CGSizeMake([Tool layoutForAlliPhoneWidth:335], [Tool layoutForAlliPhoneHeight:190]);
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
-    return UIEdgeInsetsMake(1, 20, 1, 10);
+    return UIEdgeInsetsMake(1, 10, 1, 10);
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -197,27 +205,50 @@
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     [MobClick event:@"homepage_banner"];
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@",self.bannerArray[indexPath.row][@"skipUrl"]]];
-    NSLog(@"%@",url);
-    if([[UIDevice currentDevice].systemVersion floatValue] >= 10.0){
-        if ([[UIApplication sharedApplication] respondsToSelector:@selector(openURL:options:completionHandler:)]) {
-            if (@available(iOS 10.0, *)) {
-                [[UIApplication sharedApplication] openURL:url options:@{}
-                                         completionHandler:^(BOOL success) {
-                                             NSLog(@"Open %d",success);
-                                         }];
+    //跳转URL或者淘宝
+    NSString *urlStr = [NSString stringWithFormat:@"%@",self.bannerArray[indexPath.row][@"skipUrl"]];
+    if ([urlStr hasPrefix:@"http"] ) {
+        NSURL *url = [NSURL URLWithString:urlStr];
+        if([[UIDevice currentDevice].systemVersion floatValue] >= 10.0){
+            if ([[UIApplication sharedApplication] respondsToSelector:@selector(openURL:options:completionHandler:)]) {
+                if (@available(iOS 10.0, *)) {
+                    [[UIApplication sharedApplication] openURL:url options:@{}
+                                             completionHandler:^(BOOL success) {
+                                                 NSLog(@"Open %d",success);
+                                             }];
+                } else {
+                    // Fallback on earlier versions
+                }
             } else {
-                // Fallback on earlier versions
+                BOOL success = [[UIApplication sharedApplication] openURL:url];
+                NSLog(@"Open  %d",success);
             }
-        } else {
-            BOOL success = [[UIApplication sharedApplication] openURL:url];
-            NSLog(@"Open  %d",success);
+            
+        } else{
+            bool can = [[UIApplication sharedApplication] canOpenURL:url];
+            if(can){
+                [[UIApplication sharedApplication] openURL:url];
+            }
         }
+    }else{
+        AlibcWebViewController* view = [[AlibcWebViewController alloc] init];
         
-    } else{
-        bool can = [[UIApplication sharedApplication] canOpenURL:url];
-        if(can){
-            [[UIApplication sharedApplication] openURL:url];
+        AlibcTradeShowParams* showParam = [[AlibcTradeShowParams alloc] init];
+        showParam.openType = AlibcOpenTypeNative;
+        //8位数appkey
+        showParam.backUrl=@"tbopen24996842";
+        showParam.isNeedPush=YES;
+        showParam.linkKey = @"taobao_scheme";
+        showParam.nativeFailMode=AlibcNativeFailModeJumpH5;
+        id<AlibcTradePage> page = [AlibcTradePageFactory itemDetailPage:urlStr];
+        
+        //    0:  标识跳转到手淘打开了
+        //    1:  标识用h5打开
+        //    -1:  标识出错
+        NSInteger ret =[[AlibcTradeSDK sharedInstance].tradeService show:self webView:view.webView page:page showParams:showParam taoKeParams:nil trackParam:nil tradeProcessSuccessCallback:nil tradeProcessFailedCallback:nil];
+        NSLog(@"ret-----%ld",ret);
+        if (ret == 1) {
+            [self.navigationController pushViewController:view animated:YES];
         }
     }
 }
