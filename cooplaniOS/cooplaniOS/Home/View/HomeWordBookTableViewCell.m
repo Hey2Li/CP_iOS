@@ -27,8 +27,12 @@
     // Configure the view for the selected state
 }
 - (IBAction)startWordClick:(UIButton *)sender {
-    StartLearnWordViewController *vc = [[StartLearnWordViewController alloc]init];
-    [self.viewController.navigationController pushViewController:vc animated:YES];
+    if (IS_USER_ID) {
+        StartLearnWordViewController *vc = [[StartLearnWordViewController alloc]init];
+        [self.viewController.navigationController pushViewController:vc animated:YES];
+    }else{
+        [Tool gotoLogin:self.viewController];
+    }
 }
 
 @end
