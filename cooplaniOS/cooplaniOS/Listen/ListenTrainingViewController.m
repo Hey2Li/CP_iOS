@@ -288,15 +288,15 @@
         if (indexPath.row == 0) {
             cell.textLabel.text = @"短篇新闻";
             cell.imageView.image = [UIImage imageNamed:@"短篇新闻"];
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"已练习%@/%@道",_categoryDict[@"special1"][@"4-A"]?_categoryDict[@"special1"][@"4-A"]:@"0", _categoryDict[@"testpaper1T"][@"4-A"]];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"已练习%@/%@篇",_categoryDict[@"special1"][@"4-A"]?_categoryDict[@"special1"][@"4-A"]:@"0", _categoryDict[@"testpaper1T"][@"4-A"]];
         }else if (indexPath.row == 1){
             cell.textLabel.text = @"长对话";
             cell.imageView.image = [UIImage imageNamed:@"长对话"];
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"已练习%@/%@道",_categoryDict[@"special1"][@"4-B"]?_categoryDict[@"special1"][@"4-B"]:@"0", _categoryDict[@"testpaper1T"][@"4-B"]];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"已练习%@/%@篇",_categoryDict[@"special1"][@"4-B"]?_categoryDict[@"special1"][@"4-B"]:@"0", _categoryDict[@"testpaper1T"][@"4-B"]];
         }else{
             cell.textLabel.text = @"听力篇章";
             cell.imageView.image = [UIImage imageNamed:@"听力篇章"];
-            cell.detailTextLabel.text = [NSString stringWithFormat:@"已练习%@/%@道",_categoryDict[@"special1"][@"4-C"]?_categoryDict[@"special1"][@"4-C"]:@"0", _categoryDict[@"testpaper1T"][@"4-C"]];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"已练习%@/%@篇",_categoryDict[@"special1"][@"4-C"]?_categoryDict[@"special1"][@"4-C"]:@"0", _categoryDict[@"testpaper1T"][@"4-C"]];
         }
         return cell;
     }else{
@@ -378,7 +378,7 @@
     }else if (indexPath.section == 0){
         [MobClick endEvent:@"listeningpage_course"];
         VideoViewController *vc = [[VideoViewController alloc]init];
-        vc.title = @"听力训练";
+        vc.title = @"听力·讲解课";
         vc.lessonType = @"1";
         [self.navigationController pushViewController:vc animated:YES];
     }else if (indexPath.section == 1){

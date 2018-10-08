@@ -55,4 +55,5 @@ extern NSString *const kCloseTBUser;//关掉音词联动的tableview用户交互
 extern NSString *const kFindWordIsOpen;//查词页面打开了
 extern NSString *const kFindWordIsClose;//查词页面关闭了
 extern NSString *const kLoadListenTraining;//加载听力训练页
+extern NSString *const kReadOpenQuestion;//选词填空打开题卡
 @end

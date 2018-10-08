@@ -17,6 +17,7 @@ target 'cooplaniOS' do
 	pod 'IQKeyboardManager', '~> 3.3.4'
     pod 'MMDrawerController', '~> 0.5.7'
     pod 'TYAttributedLabel', '~> 2.6.2'
+    pod 'YYText'
     pod 'LYEmptyView'
     pod 'YJLocationPicker'
     pod 'WMPlayer'

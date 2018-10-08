@@ -95,6 +95,7 @@ PODS:
     - Masonry
   - YJLocationPicker (0.0.2):
     - Masonry
+  - YYText (1.0.7)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.1.0)
@@ -119,6 +120,7 @@ DEPENDENCIES:
   - VBFPopFlatButton
   - WMPlayer
   - YJLocationPicker
+  - YYText
 
 SPEC REPOS:
   http://repo.baichuan-ios.taobao.com/baichuanSDK/AliBCSpecs.git:
@@ -158,6 +160,7 @@ SPEC REPOS:
     - VBFPopFlatButton
     - WMPlayer
     - YJLocationPicker
+    - YYText
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
@@ -195,7 +198,8 @@ SPEC CHECKSUMS:
   VBFPopFlatButton: 39e48ab56277f3d056734a9b5ec5d0cc60d69778
   WMPlayer: a914f80ed5dca7cd9e3a94ec07a2b02eec8c15c0
   YJLocationPicker: 8cbdc99433435b17562de6f5d965cc52c8873355
+  YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: a3d8689d600fff89a04980e7c8241d9ae99237b2
+PODFILE CHECKSUM: 127469dfeb82dbcfa8ced187ec7c56ab7d748181
 
 COCOAPODS: 1.5.3

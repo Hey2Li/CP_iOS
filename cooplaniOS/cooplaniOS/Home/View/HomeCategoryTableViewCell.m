@@ -8,6 +8,7 @@
 
 #import "HomeCategoryTableViewCell.h"
 #import "ListenTrainingViewController.h"
+#import "ReadTrainingViewController.h"
 
 @implementation HomeCategoryTableViewCell
 
@@ -47,7 +48,7 @@
 }
 - (IBAction)readClick:(UIButton *)sender {
     [MobClick event:@"homepage_reading"];
-    SVProgressShowStuteText(@"暂未开放", NO);
+    [self.viewController.navigationController pushViewController:ReadTrainingViewController.new animated:YES];
 }
 - (IBAction)writeClick:(UIButton *)sender {
     [MobClick event:@"homepage_writing"];
