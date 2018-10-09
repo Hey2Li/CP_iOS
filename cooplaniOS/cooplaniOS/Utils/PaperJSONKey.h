@@ -56,4 +56,5 @@ extern NSString *const kFindWordIsOpen;//查词页面打开了
 extern NSString *const kFindWordIsClose;//查词页面关闭了
 extern NSString *const kLoadListenTraining;//加载听力训练页
 extern NSString *const kReadOpenQuestion;//选词填空打开题卡
+extern NSString *const kClickReadCard;//点击选词填空题卡
 @end

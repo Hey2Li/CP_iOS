@@ -68,8 +68,8 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
     [self.collectionView.layer setMasksToBounds:NO];
     
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view.mas_left).offset(16);
-        make.right.equalTo(self.view.mas_right).offset(-16);
+        make.left.equalTo(self.view.mas_left);
+        make.right.equalTo(self.view.mas_right);
         make.top.equalTo(self.view.mas_top);
         make.bottom.equalTo(self.view.mas_bottom).offset(-130);
     }];
@@ -78,18 +78,18 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
     panGr.delegate = self;
     [self.collectionView addGestureRecognizer:panGr];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(openQuestionCard) name:kReadOpenQuestion object:nil];
-    
+    WeakSelf
     MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self.tableView.mj_header endRefreshing];
+            [weakSelf.tableView.mj_header endRefreshing];
         });
     }];
     self.tableView.mj_header = header;
     
     MJRefreshBackNormalFooter *footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:NO];
-            [self.tableView.mj_footer endRefreshing];
+            [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:NO];
+            [weakSelf.tableView.mj_footer endRefreshing];
         });
     }];
     [footer setTitle:@"要再来一题吗" forState:MJRefreshStateIdle];
@@ -99,7 +99,7 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
 }
 - (void)openQuestionCard{
     [UIView animateWithDuration:0.2 animations:^{
-        self.collectionView.transform = CGAffineTransformMakeTranslation(0, -[Tool layoutForAlliPhoneHeight:480 - 130]);
+        self.collectionView.center = self.view.center;
     }];
 }
 -(void)handlePan:(UIPanGestureRecognizer *)gr{
@@ -108,7 +108,7 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
     
     CGFloat minY = SafeAreaTopHeight + [Tool layoutForAlliPhoneHeight:480]/2;//可拖动题卡的上限
     CGFloat maxY = SCREEN_HEIGHT - 130 - SafeAreaTopHeight + [Tool layoutForAlliPhoneHeight:480]/2;//可拖动题卡的下限
-    NSLog(@"minX:%f,maxY:%f,gr.center.y:%f", minY,maxY, gr.view.center.y);
+//    NSLog(@"minX:%f,maxY:%f,gr.center.y:%f", minY,maxY, gr.view.center.y);
     CGFloat tranY = gr.view.center.y + translation.y;
 //    if (tranY == maxY) {
 //        _isOpen = NO;
@@ -116,12 +116,20 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
 //    if (tranY == minY) {
 //        _isOpen = YES;
 //    }
-//    if (tranY - 1 <= maxY && tranY + 1 >= minY) {
+    if (tranY <= minY) {
         //改变panGestureRecognizer.view的中心点 就是self.imageView的中心点
+        tranY = minY;
         gr.view.center = CGPointMake(gr.view.center.x, tranY);
         //重置拖拽手势的姿态
         [gr setTranslation:CGPointZero inView:self.view];
-//    }
+    }
+    if (tranY >= maxY) {
+        tranY = maxY;
+        gr.view.center = CGPointMake(gr.view.center.x, tranY);
+        //重置拖拽手势的姿态
+        [gr setTranslation:CGPointZero inView:self.view];
+    }
+    gr.view.center = CGPointMake(gr.view.center.x, tranY);
     [gr setTranslation:CGPointZero inView:self.view];
 }
 #pragma mark UITableViewDelegate&DataSource
@@ -129,13 +137,13 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
     return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 30, MAXFLOAT);
+    CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 32, MAXFLOAT);
     NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:sstring];
-    [textStr yy_setFont:[UIFont systemFontOfSize:20] range:textStr.yy_rangeOfAll];
+    [textStr yy_setFont:[UIFont systemFontOfSize:15] range:textStr.yy_rangeOfAll];
     //计算文本尺寸
     YYTextLayout *layout = [YYTextLayout layoutWithContainerSize:maxSize text:textStr];
     CGFloat introHeight = layout.textBoundingSize.height;
-    return introHeight + 10;
+    return introHeight + 30;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     ReadSATableViewCell *cell = [[ReadSATableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
@@ -188,8 +196,19 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
         return cell;
     }else{
         SAOptionsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([SAOptionsCollectionViewCell class]) forIndexPath:indexPath];
+        cell.optionsLb.text = [NSString stringWithFormat:@"%ldoptions", indexPath.row];
         return cell;
     }
+}
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 2) {
+        SAOptionsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([SAOptionsCollectionViewCell class]) forIndexPath:indexPath];
+        [[NSNotificationCenter defaultCenter]postNotificationName:kClickReadCard object:nil userInfo:@{@"options":[NSString stringWithFormat:@"%ldoptions", indexPath.row], @"index":@(indexPath.row)}];
+        NSLog(@"%@", cell.optionsLb.text);
+    }
+}
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 /*
 #pragma mark - Navigation
