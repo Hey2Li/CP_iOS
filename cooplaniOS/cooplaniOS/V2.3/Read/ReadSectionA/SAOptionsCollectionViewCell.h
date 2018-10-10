@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <YYLabel.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SAOptionsCollectionViewCell : UICollectionViewCell
-@property (weak, nonatomic) IBOutlet UILabel *optionsLb;
+@property (weak, nonatomic) IBOutlet YYLabel *optionLb;
 
 @end
 

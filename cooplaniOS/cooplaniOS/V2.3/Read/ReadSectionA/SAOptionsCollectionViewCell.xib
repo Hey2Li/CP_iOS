@@ -19,25 +19,31 @@
                 <rect key="frame" x="0.0" y="0.0" width="192" height="82"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A. accommodations" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ooM-xX-2ip">
-                        <rect key="frame" x="20" y="0.0" width="152" height="82"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" red="0.35686274509999999" green="0.35686274509999999" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pWv-Z5-1c6" customClass="YYLabel">
+                        <rect key="frame" x="10" y="5" width="172" height="72"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="text" value="A. accommodations"/>
+                            <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                <color key="value" red="0.35686274509999999" green="0.35686274509999999" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="fontSize_">
+                                <real key="value" value="14"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
                 </subviews>
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="ooM-xX-2ip" secondAttribute="trailing" constant="20" id="5sq-av-NNE"/>
-                <constraint firstItem="ooM-xX-2ip" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="bA9-32-hO7"/>
-                <constraint firstItem="ooM-xX-2ip" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="mSQ-E5-q3u"/>
-                <constraint firstAttribute="bottom" secondItem="ooM-xX-2ip" secondAttribute="bottom" id="xtR-tq-68g"/>
+                <constraint firstItem="pWv-Z5-1c6" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="drx-FU-ZSE"/>
+                <constraint firstAttribute="trailing" secondItem="pWv-Z5-1c6" secondAttribute="trailing" constant="10" id="kMA-Vz-NAv"/>
+                <constraint firstAttribute="bottom" secondItem="pWv-Z5-1c6" secondAttribute="bottom" constant="5" id="lDS-AS-2NI"/>
+                <constraint firstItem="pWv-Z5-1c6" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="pHI-e8-gaD"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="SEy-5g-ep8"/>
             <size key="customSize" width="192" height="82"/>
             <connections>
-                <outlet property="optionsLb" destination="ooM-xX-2ip" id="O8V-8F-9wY"/>
+                <outlet property="optionLb" destination="pWv-Z5-1c6" id="gv4-QX-kZa"/>
             </connections>
             <point key="canvasLocation" x="246.40000000000001" y="158.32083958020991"/>
         </collectionViewCell>

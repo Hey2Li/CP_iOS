@@ -16,6 +16,7 @@ NSString* passage=  @"The method for making beer has changed over time. Hops (�
 @property (nonatomic, copy) YYLabel *textLabel;
 @property (nonatomic, strong) NSMutableDictionary *rangeDict;
 @property (nonatomic, assign) NSRange clickCurrentRange;
+@property (nonatomic, assign) NSInteger clickIndex;
 @end
 
 @implementation ReadSATableViewCell
@@ -32,14 +33,18 @@ NSString* passage=  @"The method for making beer has changed over time. Hops (�
 }
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        self.contentView.backgroundColor  =UIColorFromRGB(0xF7F7F7);
+        self.backgroundColor = UIColorFromRGB(0xF7F7F7);
         _clickCurrentRange = NSMakeRange(0, 0);
         textLabel = [YYLabel new];
         textLabel.numberOfLines = 0;
+        textLabel.backgroundColor  =UIColorFromRGB(0xF7F7F7);
         //给下划线替换成点击答题
         NSString *replaceStr = [passage stringByReplacingOccurrencesOfString:@"_______" withString:@"点击答题"];
         NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:replaceStr];
         [textStr yy_setFont:[UIFont systemFontOfSize:15] range:textStr.yy_rangeOfAll];
-        [textStr setYy_color:[UIColor blackColor]];
+        [textStr setYy_color:UIColorFromRGB(0x666666)];
+        textStr.yy_lineSpacing = 8;//行间距
         
         CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 32, MAXFLOAT);
         //计算文本尺寸
@@ -60,11 +65,12 @@ NSString* passage=  @"The method for making beer has changed over time. Hops (�
             NSValue *value = obj;
             NSRange subRange = [value rangeValue];
             //添加下划线
-            YYTextDecoration* deco=[YYTextDecoration decorationWithStyle:(YYTextLineStyleSingle) width:[NSNumber numberWithInt:1] color:UIColorFromRGB(0x3F3F3F)];
+            YYTextDecoration* deco=[YYTextDecoration decorationWithStyle:(YYTextLineStyleSingle) width:[NSNumber numberWithInt:1] color:DRGBCOLOR];
             [textStr yy_setTextUnderline:deco range:subRange];
             //为label添加点击事件
-            [textStr yy_setTextHighlightRange:subRange color:UIColorFromRGB(0x3F3F3F) backgroundColor:nil userInfo:nil tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
+            [textStr yy_setTextHighlightRange:subRange color:DRGBCOLOR backgroundColor:nil userInfo:nil tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
                 weakSelf.clickCurrentRange = range;
+                weakSelf.clickIndex = idx;
                 NSRange questionRange = NSMakeRange(range.location - 4, 4);
                 NSLog(@"点击的第%@题 idx:%ld", [text.string substringWithRange:questionRange],idx);
                 [[NSNotificationCenter defaultCenter]postNotificationName:kReadOpenQuestion object:nil];
@@ -85,36 +91,51 @@ NSString* passage=  @"The method for making beer has changed over time. Hops (�
         return;
     }
     if ([notifi.userInfo allKeys]) {
-        NSString *index = [NSString stringWithFormat:@"%@", notifi.userInfo[@"index"]];
+//        NSString *index = [NSString stringWithFormat:@"%@", notifi.userInfo[@"index"]];
         NSString *option = notifi.userInfo[@"options"];//获取选项
         NSString *string = [_readStr.string stringByReplacingCharactersInRange:_clickCurrentRange withString:option];//替换文章选项处
-        NSMutableArray *rangeArray = [NSMutableArray arrayWithArray:[self rangeOfSubString:@"点击答题" inString:string]];//重新获取需要点击处
-        [self.rangeDict setObject:[NSValue valueWithRange:NSMakeRange(_clickCurrentRange.location, option.length)] forKey:index];//把已选择的题目加入字典
-        NSArray *aswneredRangeArray = [self.rangeDict allValues];
-        [rangeArray addObjectsFromArray:aswneredRangeArray];//把已经答过题的range加入数组
-        NSLog(@"rangeArray:%@, answerArray:%@ Dict:%@", rangeArray, aswneredRangeArray, self.rangeDict);
+        NSValue *value = _clickAnswerArray[self.clickIndex];
+        NSRange answerRange = [value rangeValue];
+        NSInteger afterLength = option.length - answerRange.length;//获取答案和点击答题的长度差距
+        answerRange.length = option.length;
+        NSMutableArray *afterRangeArray = [NSMutableArray array];
+        for (int i = 0; i < _clickAnswerArray.count; i ++) {
+            if (i == self.clickIndex) {
+                [afterRangeArray addObject:[NSValue valueWithRange:answerRange]];
+            }else{
+                NSValue *subValue = _clickAnswerArray[i];
+                NSRange subAnswerRange = [subValue rangeValue];
+                if (i > self.clickIndex) {
+                    subAnswerRange.location = subAnswerRange.location + afterLength;//为每个location添加长度差距
+                }
+                [afterRangeArray addObject:[NSValue valueWithRange:subAnswerRange]];
+            }
+        }
+      
         NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:string];
         [textStr yy_setFont:[UIFont systemFontOfSize:15] range:textStr.yy_rangeOfAll];
-        [textStr setYy_color:[UIColor blackColor]];
+        [textStr setYy_color:UIColorFromRGB(0x666666)];
+        textStr.yy_lineSpacing = 8;//行间距
         textLabel.attributedText = textStr;
         WeakSelf
         //获取所有点击答题位置
-        [rangeArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [afterRangeArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             NSValue *value = obj;
             NSRange subRange = [value rangeValue];
             //添加下划线
-            YYTextDecoration* deco=[YYTextDecoration decorationWithStyle:(YYTextLineStyleSingle) width:[NSNumber numberWithInt:1] color:UIColorFromRGB(0x3F3F3F)];
+            YYTextDecoration* deco=[YYTextDecoration decorationWithStyle:(YYTextLineStyleSingle) width:[NSNumber numberWithInt:1] color:DRGBCOLOR];
             [textStr yy_setTextUnderline:deco range:subRange];
             //为label添加点击事件
-            [textStr yy_setTextHighlightRange:subRange color:UIColorFromRGB(0x3F3F3F) backgroundColor:nil userInfo:nil tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
+            [textStr yy_setTextHighlightRange:subRange color:DRGBCOLOR backgroundColor:nil userInfo:nil tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
                 weakSelf.clickCurrentRange = range;
+                weakSelf.clickIndex = idx;
                 [[NSNotificationCenter defaultCenter]postNotificationName:kReadOpenQuestion object:nil];
             } longPressAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
             }];
         }];
         textLabel.attributedText = textStr;
         _readStr = textStr;
-        _clickAnswerArray = rangeArray;
+        _clickAnswerArray = afterRangeArray;
         _clickCurrentRange = NSMakeRange(0, 0);
     }
 }

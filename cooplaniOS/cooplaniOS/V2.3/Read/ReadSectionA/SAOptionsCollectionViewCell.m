@@ -13,6 +13,21 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    [self.optionLb setBackgroundColor:[UIColor clearColor]];
 }
-
+- (void)setSelected:(BOOL)selected{
+    if (selected) {
+        YYTextDecoration* deco =[YYTextDecoration decorationWithStyle:(YYTextLineStyleSingle) width:[NSNumber numberWithInt:1] color:UIColorFromRGB(0xFFCE43)];
+        NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:self.optionLb.text];
+        [textStr yy_setTextStrikethrough:deco range:NSMakeRange(0, textStr.length)];
+        [textStr setYy_font:[UIFont systemFontOfSize:14]];
+        [textStr setYy_color:UIColorFromRGB(0x666666)];
+        self.optionLb.attributedText = textStr;
+    }else{
+        NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:self.optionLb.text];
+        [textStr setYy_font:[UIFont systemFontOfSize:14]];
+        [textStr setYy_color:UIColorFromRGB(0x666666)];
+        self.optionLb.attributedText = textStr;
+    }
+}
 @end
