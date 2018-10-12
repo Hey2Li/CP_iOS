@@ -41,7 +41,7 @@
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
         make.height.equalTo(@48);
-        make.bottom.equalTo(self.view).offset(-220);
+        make.bottom.equalTo(self.view).offset(-170);
     }];
     [quitBtn setTitle:@"退出登录" forState:UIControlStateNormal];
     [quitBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

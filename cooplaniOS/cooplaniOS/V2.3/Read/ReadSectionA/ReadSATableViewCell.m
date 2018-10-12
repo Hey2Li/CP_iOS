@@ -74,8 +74,7 @@ NSString* passage=  @"The method for making beer has changed over time. Hops (�
                 NSRange questionRange = NSMakeRange(range.location - 4, 4);
                 NSLog(@"点击的第%@题 idx:%ld", [text.string substringWithRange:questionRange],idx);
                 [[NSNotificationCenter defaultCenter]postNotificationName:kReadOpenQuestion object:nil];
-            } longPressAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
-            }];
+            } longPressAction:nil];
         }];
         textLabel.attributedText = textStr;
         _readStr = textStr;
@@ -130,8 +129,7 @@ NSString* passage=  @"The method for making beer has changed over time. Hops (�
                 weakSelf.clickCurrentRange = range;
                 weakSelf.clickIndex = idx;
                 [[NSNotificationCenter defaultCenter]postNotificationName:kReadOpenQuestion object:nil];
-            } longPressAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
-            }];
+            } longPressAction:nil];
         }];
         textLabel.attributedText = textStr;
         _readStr = textStr;

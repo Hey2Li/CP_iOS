@@ -13,6 +13,8 @@
 #import "VideoViewController.h"
 #import "MyCollectionViewController.h"
 #import "ReadSectionA/ReadSectionAViewController.h"
+#import "ReadSectionB/ReadSectionBViewController.h"
+#import "ReadSectionC/ReadSectionCViewController.h"
 
 @interface ReadTrainingViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -133,9 +135,9 @@
         if (indexPath.row == 0) {
             [self.navigationController pushViewController:ReadSectionAViewController.new animated:YES];
         }else if (indexPath.row == 1){
-            
+            [self.navigationController pushViewController:ReadSectionBViewController.new animated:YES];
         }else{
-            
+            [self.navigationController pushViewController:ReadSectionCViewController.new animated:YES];
         }
     }else if (indexPath.section == 0){
         [MobClick endEvent:@"listeningpage_course"];
