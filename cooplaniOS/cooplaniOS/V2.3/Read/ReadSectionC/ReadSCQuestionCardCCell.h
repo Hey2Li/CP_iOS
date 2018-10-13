@@ -11,7 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ReadSCQuestionCardCCell : UICollectionViewCell
-
+@property (nonatomic, strong) NSIndexPath *superIndexPath;
+@property (nonatomic, copy) void (^cellClick)(NSIndexPath *nextIndexPath);
 @end
 
 NS_ASSUME_NONNULL_END

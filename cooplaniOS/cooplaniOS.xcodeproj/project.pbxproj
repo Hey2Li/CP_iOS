@@ -34,6 +34,7 @@
 		9B16C502216F469800A72236 /* ReadSCQuestionCardCCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B16C501216F469800A72236 /* ReadSCQuestionCardCCell.m */; };
 		9B16C50621702F3D00A72236 /* ReadSBOptionsCCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B16C50421702F3D00A72236 /* ReadSBOptionsCCell.m */; };
 		9B16C50721702F3D00A72236 /* ReadSBOptionsCCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B16C50521702F3D00A72236 /* ReadSBOptionsCCell.xib */; };
+		9B16C50A2171861800A72236 /* ReadSAResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B16C5092171861800A72236 /* ReadSAResultsViewController.m */; };
 		9B1A5B1820BBAC4500DA21A6 /* CheckWordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1A5B1720BBAC4500DA21A6 /* CheckWordView.m */; };
 		9B1D31BC2073487F007674CF /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1D31BB2073487F007674CF /* BaseViewController.m */; };
 		9B1D31BF20734891007674CF /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1D31BE20734891007674CF /* HomeViewController.m */; };
@@ -135,6 +136,8 @@
 		9B60C8D920B3B2C000373EA2 /* NSString+FileSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B60C8D820B3B2C000373EA2 /* NSString+FileSize.m */; };
 		9B65BD26216EE45A00C5F174 /* ReadSBQuestionCardCCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B65BD25216EE45A00C5F174 /* ReadSBQuestionCardCCell.m */; };
 		9B65BD29216F3FAC00C5F174 /* ReadSectionCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B65BD28216F3FAC00C5F174 /* ReadSectionCViewController.m */; };
+		9B6877CC2171D55500F07595 /* ReadSAResultsHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6877C92171D55400F07595 /* ReadSAResultsHeaderView.m */; };
+		9B6877CD2171D55500F07595 /* ReadSAResultsHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B6877CB2171D55500F07595 /* ReadSAResultsHeaderView.xib */; };
 		9B6ECC31216B21550009DB8F /* SAQuestionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B6ECC2F216B21550009DB8F /* SAQuestionCollectionViewCell.xib */; };
 		9B6ECC34216B22200009DB8F /* SAQuestionCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6ECC32216B22200009DB8F /* SAQuestionCollectionViewCell.m */; };
 		9B6ECC38216B229C0009DB8F /* SAOptionsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B6ECC36216B229C0009DB8F /* SAOptionsCollectionViewCell.m */; };
@@ -302,6 +305,8 @@
 		9B16C50321702F3D00A72236 /* ReadSBOptionsCCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReadSBOptionsCCell.h; sourceTree = "<group>"; };
 		9B16C50421702F3D00A72236 /* ReadSBOptionsCCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReadSBOptionsCCell.m; sourceTree = "<group>"; };
 		9B16C50521702F3D00A72236 /* ReadSBOptionsCCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReadSBOptionsCCell.xib; sourceTree = "<group>"; };
+		9B16C5082171861800A72236 /* ReadSAResultsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReadSAResultsViewController.h; sourceTree = "<group>"; };
+		9B16C5092171861800A72236 /* ReadSAResultsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReadSAResultsViewController.m; sourceTree = "<group>"; };
 		9B1A5B1620BBAC4500DA21A6 /* CheckWordView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CheckWordView.h; sourceTree = "<group>"; };
 		9B1A5B1720BBAC4500DA21A6 /* CheckWordView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CheckWordView.m; sourceTree = "<group>"; };
 		9B1D31BA2073487F007674CF /* BaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
@@ -480,6 +485,9 @@
 		9B65BD25216EE45A00C5F174 /* ReadSBQuestionCardCCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReadSBQuestionCardCCell.m; sourceTree = "<group>"; };
 		9B65BD27216F3FAC00C5F174 /* ReadSectionCViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReadSectionCViewController.h; sourceTree = "<group>"; };
 		9B65BD28216F3FAC00C5F174 /* ReadSectionCViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReadSectionCViewController.m; sourceTree = "<group>"; };
+		9B6877C92171D55400F07595 /* ReadSAResultsHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReadSAResultsHeaderView.m; sourceTree = "<group>"; };
+		9B6877CA2171D55400F07595 /* ReadSAResultsHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReadSAResultsHeaderView.h; sourceTree = "<group>"; };
+		9B6877CB2171D55500F07595 /* ReadSAResultsHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReadSAResultsHeaderView.xib; sourceTree = "<group>"; };
 		9B6ECC2F216B21550009DB8F /* SAQuestionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SAQuestionCollectionViewCell.xib; sourceTree = "<group>"; };
 		9B6ECC32216B22200009DB8F /* SAQuestionCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAQuestionCollectionViewCell.m; sourceTree = "<group>"; };
 		9B6ECC33216B22200009DB8F /* SAQuestionCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SAQuestionCollectionViewCell.h; sourceTree = "<group>"; };
@@ -1230,6 +1238,11 @@
 				9B6ECC35216B229C0009DB8F /* SAOptionsCollectionViewCell.h */,
 				9B6ECC36216B229C0009DB8F /* SAOptionsCollectionViewCell.m */,
 				9B6ECC37216B229C0009DB8F /* SAOptionsCollectionViewCell.xib */,
+				9B16C5082171861800A72236 /* ReadSAResultsViewController.h */,
+				9B16C5092171861800A72236 /* ReadSAResultsViewController.m */,
+				9B6877CA2171D55400F07595 /* ReadSAResultsHeaderView.h */,
+				9B6877C92171D55400F07595 /* ReadSAResultsHeaderView.m */,
+				9B6877CB2171D55500F07595 /* ReadSAResultsHeaderView.xib */,
 			);
 			path = ReadSectionA;
 			sourceTree = "<group>";
@@ -1714,6 +1727,7 @@
 				9B02C4C921193D01008F22B6 /* YES.mp3 in Resources */,
 				9B4ECDCB21412030009D770D /* WordListTableViewCell.xib in Resources */,
 				9B7AD3C720FC6FED00C224CC /* SureChangePhoneViewController.xib in Resources */,
+				9B6877CD2171D55500F07595 /* ReadSAResultsHeaderView.xib in Resources */,
 				9B3DA39420F886960028CDA9 /* LessonServerView.xib in Resources */,
 				9B4ECDC62140FF92009D770D /* NoKnowSecondPageCell.xib in Resources */,
 				9B16B080208F140A00094EE7 /* AnswerTableViewCell.xib in Resources */,
@@ -1850,6 +1864,7 @@
 				9B286A2D2112F91F00C7A2D4 /* ReciteWordTbHeaderView.m in Sources */,
 				9B70C76721003044006C594A /* WXApiManager.m in Sources */,
 				9B4BB72E207B6E9D0029015F /* SURequestTask.m in Sources */,
+				9B6877CC2171D55500F07595 /* ReadSAResultsHeaderView.m in Sources */,
 				9B6ECC34216B22200009DB8F /* SAQuestionCollectionViewCell.m in Sources */,
 				9BA08EBA209313B00026935E /* FeedbackContentTableViewCell.m in Sources */,
 				9B3DA38E20F880910028CDA9 /* LessonListTableViewCell.m in Sources */,
@@ -1882,6 +1897,7 @@
 				9B286A1D2111ADEB00C7A2D4 /* ReciteWordTbFooterView.m in Sources */,
 				9B3DA38320F8543E0028CDA9 /* LessonListMenuViewController.m in Sources */,
 				9B16B0932090623E00094EE7 /* QuestionTableViewCell.m in Sources */,
+				9B16C50A2171861800A72236 /* ReadSAResultsViewController.m in Sources */,
 				9BF8A4BE211070B40079784F /* ReciteWordsViewController.m in Sources */,
 				9B26125221549B1A00AD2E75 /* SubTestPaperModel.m in Sources */,
 				9B3DA38020F83C3A0028CDA9 /* LessonListViewController.m in Sources */,

@@ -19,7 +19,22 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor clearColor];
-        UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 32, 150)];
+        UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 32, 0) style:UITableViewStylePlain];
+        tableView.delegate = self;
+        tableView.dataSource = self;
+        [self addSubview:tableView];
+        [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(self.mas_left).offset(16);
+            make.width.equalTo(@(SCREEN_WIDTH - 32));
+            make.top.equalTo(self);
+            make.bottom.equalTo(self.mas_bottom).offset(-10);
+        }];
+        tableView.scrollEnabled = NO;
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        tableView.backgroundColor = [UIColor whiteColor];
+        tableView.tableFooterView = [UIView new];
+        
+        UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, tableView.width, 150)];
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.backgroundColor = [UIColor whiteColor];
         [headerView addSubview:btn];
@@ -29,6 +44,7 @@
             make.top.equalTo(headerView.mas_top);
             make.height.equalTo(@30);
         }];
+        
         [btn setImage:[UIImage imageNamed:@"上下拉动"] forState:UIControlStateNormal];
         btn.userInteractionEnabled = YES;
         
@@ -62,28 +78,14 @@
         questionLb.textColor = UIColorFromRGB(0x444444);
         questionLb.font = [UIFont systemFontOfSize:14];
         questionLb.numberOfLines = 2;
-        [questionNoLb mas_makeConstraints:^(MASConstraintMaker *make) {
+        [headerView addSubview:questionLb];
+        [questionLb mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(passageNoLb);
             make.right.equalTo(passageNoLb);
             make.height.equalTo(@40);
             make.top.equalTo(questionNoLb.mas_bottom);
         }];
         
-        UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 0, 0) style:UITableViewStylePlain];
-        tableView.delegate = self;
-        tableView.dataSource = self;
-        [self addSubview:tableView];
-        [tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(self.mas_left).offset(16);
-            make.right.equalTo(self.mas_right).offset(-16);
-            make.top.equalTo(self);
-            make.bottom.equalTo(self.mas_bottom).offset(-10);
-        }];
-        tableView.scrollEnabled = NO;
-        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        [tableView.layer setCornerRadius:8];
-        tableView.backgroundColor = [UIColor whiteColor];
-        tableView.tableFooterView = [UIView new];
         tableView.tableHeaderView = headerView;
         [tableView registerClass:[NoHighlightedTableViewCell class] forCellReuseIdentifier:NSStringFromClass([NoHighlightedTableViewCell class])];
         [tableView.layer setCornerRadius:12];
@@ -128,5 +130,10 @@
     cell.textLabel.numberOfLines = 2;
     cell.textLabel.text = [NSString stringWithFormat:@"B.    She found birds and dolphins sleep in much"];
     return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (self.cellClick) {
+        self.cellClick(self.superIndexPath);
+    }
 }
 @end

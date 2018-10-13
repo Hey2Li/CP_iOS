@@ -10,6 +10,8 @@
 #import "ReadSATableViewCell.h"
 #import "SAQuestionCollectionViewCell.h"
 #import "SAOptionsCollectionViewCell.h"
+#import "ReadSAResultsViewController.h"
+
 NSString* sstring =  @"The method for making beer has changed over time. Hops (啤酒花)，for example, which give many amodern beer its bitter flavor, are a (26)_______ recent addition to the beverage. This was first mentioned in reference to brewing in the ninth century. Now, researchers have found a (27)_______ ingredient in residue (残留物) from 5,000-year-old beer brewing equipment. While digging two pits at a site in the central plains of China, scientists discovered fragments from pots and vessels. The different shapes of the containers (28)_______    they were used to brew, filter, and store beer. They may be ancient “beer-making tools,” and the earliest (29)_______ evidence of beer brewing in China, the researchers reported in the Proceedings of the National Academy of Sciences. To (30)_______    that theory, the team examined the yellowish, dried (31)_______    inside the vessels. The majority of the grains, about 80%, were from cereal crops like barley(大麦), and about 10% were bits of roots, (32)_______ lily, which would have made the beer sweeter, the scientists say. Barley was an unexpected find: the crop was domesticated in Western Eurasia and didn't become a (33)_______ food in central China until about 2,000 years ago, according to the researchers. Based on that timing, they indicate barley may have (34)_______ in the region not as food, but as (35)_______ material for beer brewing.";
 
 @interface ReadSectionAViewController ()<UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,UIGestureRecognizerDelegate>
@@ -131,8 +133,9 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
     loadTimeLb.font = [UIFont systemFontOfSize:12];
     loadTimeLb.text = @"00:00";
     self.timeLb = loadTimeLb;
-//    [self myTimer];
-//    [[NSRunLoop mainRunLoop] addTimer:self.myTimer forMode:NSRunLoopCommonModes];
+    [self myTimer];
+    [[NSRunLoop mainRunLoop] addTimer:self.myTimer forMode:NSRunLoopCommonModes];
+    
     UIButton *takePaperBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [takePaperBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
     [takePaperBtn setTitle:@"交卷" forState:UIControlStateNormal];
@@ -164,9 +167,18 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
     [bottomView.layer setShadowOffset:CGSizeMake(0, -2)];
     [bottomView.layer setShadowOpacity:0.2];
     [bottomView.layer setMasksToBounds:NO];
+    
+    [takePaperBtn addTarget:self action:@selector(takePaperClick:) forControlEvents:UIControlEventTouchUpInside];
+}
+- (void)takePaperClick:(UIButton *)btn{
+    LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"确定交卷吗" sureBtn:@"交卷" cancleBtn:@"再检查下" ];
+    finishView.resultIndex = ^(NSInteger index) {
+        [self.navigationController pushViewController:ReadSAResultsViewController.new animated:YES];
+    };
+    [finishView show];
 }
 - (void)time{
-    self.timeLb.text = [self getMMSSFromSS:[NSString stringWithFormat:@"%ld", (long)_seconds++]];
+            self.timeLb.text = [self getMMSSFromSS:[NSString stringWithFormat:@"%ld", (long)_seconds++]];
 }
 //传入 秒  得到  xx分钟xx秒
 -(NSString *)getMMSSFromSS:(NSString *)totalTime{
@@ -320,7 +332,11 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
     //设置(Nomal)正常状态下的颜色
     [cell setBackgroundColor:[UIColor whiteColor]];
 }
-
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.mm_drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
+    self.mm_drawerController.closeDrawerGestureModeMask = MMCloseDrawerGestureModeNone;
+}
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
     [self.myTimer invalidate];

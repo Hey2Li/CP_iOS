@@ -10,6 +10,7 @@
 #import "SAQuestionCollectionViewCell.h"
 #import "ReadSBTableViewCell.h"
 #import "ReadSCQuestionCardCCell.h"
+#import "ReadSAResultsViewController.h"
 
 NSString* sssstring =  @"[A] I have always been a poor test-taker. So it may seem rather strange that I have returned to college to finish the degree I left undone some four decades ago. I am making my way through Columbia University, surrounded by students who quickly supply the verbal answer while I am still processing the question.";
 
@@ -50,6 +51,9 @@ NSString* sssstring =  @"[A] I have always been a poor test-taker. So it may see
         _collectionView.showsHorizontalScrollIndicator = NO;
     }
     return _collectionView;
+}
+- (void)viewWillLayoutSubviews{
+    NSLog(@"collectionViewCenter:%@", NSStringFromCGPoint(self.collectionView.center));
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -153,6 +157,14 @@ NSString* sssstring =  @"[A] I have always been a poor test-taker. So it may see
     [bottomView.layer setShadowOffset:CGSizeMake(0, -2)];
     [bottomView.layer setShadowOpacity:0.2];
     [bottomView.layer setMasksToBounds:NO];
+    [takePaperBtn addTarget:self action:@selector(takePaperClick:) forControlEvents:UIControlEventTouchUpInside];
+}
+- (void)takePaperClick:(UIButton *)btn{
+    LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"确定交卷吗" sureBtn:@"交卷" cancleBtn:@"再检查下" ];
+    finishView.resultIndex = ^(NSInteger index) {
+        [self.navigationController pushViewController:ReadSAResultsViewController.new animated:YES];
+    };
+    [finishView show];
 }
 //传入 秒  得到  xx分钟xx秒
 -(NSString *)getMMSSFromSS:(NSString *)totalTime{
@@ -240,10 +252,27 @@ NSString* sssstring =  @"[A] I have always been a poor test-taker. So it may see
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     ReadSCQuestionCardCCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([ReadSCQuestionCardCCell class]) forIndexPath:indexPath];
+    cell.superIndexPath = indexPath;
+    cell.cellClick = ^(NSIndexPath * _Nonnull nextIndexPath) {
+        if (nextIndexPath.row + 1 <= 9) {
+            [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:nextIndexPath.row + 1 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
+        }else{
+            LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"确定交卷吗" sureBtn:@"交卷" cancleBtn:@"再检查下" ];
+            finishView.resultIndex = ^(NSInteger index) {
+                [self.navigationController pushViewController:ReadSAResultsViewController.new animated:YES];
+            };
+            [finishView show];
+        }
+    };
     return cell;
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.mm_drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
+    self.mm_drawerController.closeDrawerGestureModeMask = MMCloseDrawerGestureModeNone;
 }
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
