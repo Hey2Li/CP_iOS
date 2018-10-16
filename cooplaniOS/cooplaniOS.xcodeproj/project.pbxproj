@@ -183,6 +183,10 @@
 		9BA1CB5D20A5677D0093C37B /* collectionSentenceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1CB5C20A5677D0093C37B /* collectionSentenceModel.m */; };
 		9BA1CB6320A6BD730093C37B /* LTAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1CB6220A6BD730093C37B /* LTAlertView.m */; };
 		9BA1CB6920A92A790093C37B /* MyCollectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA1CB6820A92A790093C37B /* MyCollectionModel.m */; };
+		9BA33FA821742AB90030F038 /* ReadRefreshGifHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA33FA721742AB90030F038 /* ReadRefreshGifHeader.m */; };
+		9BA33FAB217431DD0030F038 /* ReadRfreshBackGifFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA33FAA217431DD0030F038 /* ReadRfreshBackGifFooter.m */; };
+		9BA33FAD2174748E0030F038 /* 2012年第一套 (4).json in Resources */ = {isa = PBXBuildFile; fileRef = 9BA33FAC2174748E0030F038 /* 2012年第一套 (4).json */; };
+		9BA33FB0217477420030F038 /* ReadSAModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA33FAF217477420030F038 /* ReadSAModel.m */; };
 		9BA9868D2153722200E63355 /* HomeBuyLessonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA9868C2153722200E63355 /* HomeBuyLessonModel.m */; };
 		9BAC4CC521254D3A00A3A58B /* LTEmpty.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BAC4CC421254D3A00A3A58B /* LTEmpty.m */; };
 		9BAC4CCE2125661C00A3A58B /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BAC4CCC2125661C00A3A58B /* AboutUsViewController.m */; };
@@ -566,6 +570,13 @@
 		9BA1CB6220A6BD730093C37B /* LTAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTAlertView.m; sourceTree = "<group>"; };
 		9BA1CB6720A92A790093C37B /* MyCollectionModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyCollectionModel.h; sourceTree = "<group>"; };
 		9BA1CB6820A92A790093C37B /* MyCollectionModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyCollectionModel.m; sourceTree = "<group>"; };
+		9BA33FA621742AB90030F038 /* ReadRefreshGifHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReadRefreshGifHeader.h; sourceTree = "<group>"; };
+		9BA33FA721742AB90030F038 /* ReadRefreshGifHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReadRefreshGifHeader.m; sourceTree = "<group>"; };
+		9BA33FA9217431DD0030F038 /* ReadRfreshBackGifFooter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReadRfreshBackGifFooter.h; sourceTree = "<group>"; };
+		9BA33FAA217431DD0030F038 /* ReadRfreshBackGifFooter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReadRfreshBackGifFooter.m; sourceTree = "<group>"; };
+		9BA33FAC2174748E0030F038 /* 2012年第一套 (4).json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "2012年第一套 (4).json"; sourceTree = "<group>"; };
+		9BA33FAE217477420030F038 /* ReadSAModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReadSAModel.h; sourceTree = "<group>"; };
+		9BA33FAF217477420030F038 /* ReadSAModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReadSAModel.m; sourceTree = "<group>"; };
 		9BA9868B2153722200E63355 /* HomeBuyLessonModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeBuyLessonModel.h; sourceTree = "<group>"; };
 		9BA9868C2153722200E63355 /* HomeBuyLessonModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeBuyLessonModel.m; sourceTree = "<group>"; };
 		9BAC4CC321254D3A00A3A58B /* LTEmpty.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTEmpty.h; sourceTree = "<group>"; };
@@ -1216,11 +1227,16 @@
 		9B821A40215F112A00CEA4BF /* Read */ = {
 			isa = PBXGroup;
 			children = (
+				9BA33FAC2174748E0030F038 /* 2012年第一套 (4).json */,
 				9B821A43215F40DC00CEA4BF /* ReadSectionC */,
 				9B821A42215F40D400CEA4BF /* ReadSectionB */,
 				9B821A41215F40CC00CEA4BF /* ReadSectionA */,
 				9B821A44215F4C2E00CEA4BF /* ReadTrainingViewController.h */,
 				9B821A45215F4C2E00CEA4BF /* ReadTrainingViewController.m */,
+				9BA33FA621742AB90030F038 /* ReadRefreshGifHeader.h */,
+				9BA33FA721742AB90030F038 /* ReadRefreshGifHeader.m */,
+				9BA33FA9217431DD0030F038 /* ReadRfreshBackGifFooter.h */,
+				9BA33FAA217431DD0030F038 /* ReadRfreshBackGifFooter.m */,
 			);
 			path = Read;
 			sourceTree = "<group>";
@@ -1243,6 +1259,8 @@
 				9B6877CA2171D55400F07595 /* ReadSAResultsHeaderView.h */,
 				9B6877C92171D55400F07595 /* ReadSAResultsHeaderView.m */,
 				9B6877CB2171D55500F07595 /* ReadSAResultsHeaderView.xib */,
+				9BA33FAE217477420030F038 /* ReadSAModel.h */,
+				9BA33FAF217477420030F038 /* ReadSAModel.m */,
 			);
 			path = ReadSectionA;
 			sourceTree = "<group>";
@@ -1696,6 +1714,7 @@
 				9B3DA37C20F76E0D0028CDA9 /* WXPayTableViewCell.xib in Resources */,
 				9BA08EBB209313B00026935E /* FeedbackContentTableViewCell.xib in Resources */,
 				9BB3E26520998A6000FDBE77 /* PracticeModeHeaderView.xib in Resources */,
+				9BA33FAD2174748E0030F038 /* 2012年第一套 (4).json in Resources */,
 				9BEA0A3D2071D9190026AF2C /* LaunchScreen.storyboard in Resources */,
 				9B9B08BC21007912000E110A /* VideoBottomView.xib in Resources */,
 				9B16B0992091C7AE00094EE7 /* AnswerHeadView.xib in Resources */,
@@ -1880,12 +1899,15 @@
 				9BB0B899211435B90063054A /* WordBookSettingTableViewController.m in Sources */,
 				9B3D02CF20847C5A005C923B /* PaperDetailTableViewCell.m in Sources */,
 				9B16C502216F469800A72236 /* ReadSCQuestionCardCCell.m in Sources */,
+				9BA33FAB217431DD0030F038 /* ReadRfreshBackGifFooter.m in Sources */,
+				9BA33FA821742AB90030F038 /* ReadRefreshGifHeader.m in Sources */,
 				9BB0A07E209C762C00089C4A /* TestPaperModel.m in Sources */,
 				9B1EDCE42089C06D0033183F /* UIView+Toast.m in Sources */,
 				9B60C8D920B3B2C000373EA2 /* NSString+FileSize.m in Sources */,
 				9B3DA38A20F859290028CDA9 /* LessonTopSegment.m in Sources */,
 				9B4362202137B61900A429C0 /* LTPickView.m in Sources */,
 				9BA1CB5D20A5677D0093C37B /* collectionSentenceModel.m in Sources */,
+				9BA33FB0217477420030F038 /* ReadSAModel.m in Sources */,
 				9B32CB0B209BF00300FCEED3 /* SentenceTableViewCell.m in Sources */,
 				9BAC4CC521254D3A00A3A58B /* LTEmpty.m in Sources */,
 				9B4ECDD5214123CF009D770D /* WordDetailSecondTableViewCell.m in Sources */,

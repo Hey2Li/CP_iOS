@@ -1,0 +1,52 @@
+{
+    "Direction": "asdas",
+    "Question": "awfawfwafawfawf",
+    "Passage": "Technological changes brought dramatic new options to Americans living in the 1990s. During this decade new forms of entertainment, commerce, research, and communication became commonplace in the U. S. The driving force behind much of this change was a (n)(26)_______ popularly known as the Internet.\nThe Internet was developed during the 1970s by the Department of Defense. In the case of an attack, military advisers suggested the(27)_______of being able to operate one computer from another terminal. In the early days, the Internet was used mainly by scientists to communicate with other scientists. The Internet(28)_______under government control until 1984.\nOne early problem faced by Internet users was speed. Phone lines could only transmit information at a(29)_______rate. The development of fiber-optic (光纤�?cables allowed for billions of bits of information to be received every minute. Companies like Intel developed faster microprocessors, so personal computers could process the(30)_______signals at a more rapid rate.\nIn the early 1990s, the World Wide Web was developed, in large part, for (31)_______purposes. Corporations created home pages where they could place text and graphics to sell products. Soon airline tickets, hotel(32)_______,and even cars and homes could be purchased online. Universities （33）_______ research data on the Internet, so students could find (34)_______information without leaving their dormitories. Companies soon discovered that work could be done at home and (35)_______ online, so a whole new class of telecommuters began to earn a living from home offices unshaven and wearing pajamas (睡衣).",
+    "Options": [{
+        "Alphabet": "A",
+        "Text": "advantage"
+    }, {
+        "Alphabet": "B",
+        "Text": "commercial"
+    }, {
+        "Alphabet": "C",
+        "Text": "conservation"
+    }, {
+        "Alphabet": "D",
+        "Text": "equipped"
+    }, {
+        "Alphabet": "E",
+        "Text": "incoming"
+    }, {
+        "Alphabet": "F",
+        "Text": "innovation"
+    }, {
+        "Alphabet": "G",
+        "Text": "limited"
+    }, {
+        "Alphabet": "H",
+        "Text": "local"
+    }, {
+        "Alphabet": "I",
+        "Text": "occupations"
+    }, {
+        "Alphabet": "J",
+        "Text": "posted"
+    }, {
+        "Alphabet": "K",
+        "Text": "remained"
+    }, {
+        "Alphabet": "L",
+        "Text": "reservations"
+    }, {
+        "Alphabet": "M",
+        "Text": "submitted"
+    }, {
+        "Alphabet": "N",
+        "Text": "valuable"
+    }, {
+        "Alphabet": "O",
+        "Text": "submitted"
+    }],
+    "Answer": ["A", "B", "C", "D", "E", "F", "G"]
+}

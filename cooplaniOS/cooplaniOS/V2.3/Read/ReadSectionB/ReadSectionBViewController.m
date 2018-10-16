@@ -25,6 +25,12 @@ NSString* ssstring =  @"[A] I have always been a poor test-taker. So it may seem
 @end
 
 @implementation ReadSectionBViewController
+- (NSTimer *)myTimer{
+    if (!_myTimer) {
+        _myTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(time) userInfo:nil repeats:YES];
+    }
+    return _myTimer;
+}
 - (UITableView *)tableView{
     if (!_tableView) {
         _tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
@@ -42,7 +48,7 @@ NSString* ssstring =  @"[A] I have always been a poor test-taker. So it may seem
         UICollectionViewFlowLayout *flowlayout = [[UICollectionViewFlowLayout alloc]init];
         flowlayout.minimumLineSpacing = 0;
         flowlayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-        _collectionView = [[UICollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:flowlayout];
+        _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 130 - SafeAreaTopHeight, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:480]) collectionViewLayout:flowlayout];
         [_collectionView registerClass:[ReadSBQuestionCardCCell class] forCellWithReuseIdentifier:NSStringFromClass([ReadSBQuestionCardCCell class])];
         [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:NSStringFromClass([UICollectionViewCell class])];
         [_collectionView setBackgroundColor:[UIColor clearColor]];
@@ -63,12 +69,6 @@ NSString* ssstring =  @"[A] I have always been a poor test-taker. So it may seem
     self.view.backgroundColor = UIColorFromRGB(0xF7F7F7);
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.collectionView];
-    [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_bottom).offset(-130);
-        make.left.equalTo(self.view);
-        make.right.equalTo(self.view);
-        make.height.equalTo(@([Tool layoutForAlliPhoneHeight:480]));
-    }];
     
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.mas_left);
@@ -121,8 +121,9 @@ NSString* ssstring =  @"[A] I have always been a poor test-taker. So it may seem
     loadTimeLb.font = [UIFont systemFontOfSize:12];
     loadTimeLb.text = @"00:00";
     self.timeLb = loadTimeLb;
-    //    [self myTimer];
-    //    [[NSRunLoop mainRunLoop] addTimer:self.myTimer forMode:NSRunLoopCommonModes];
+    [self myTimer];
+    [[NSRunLoop mainRunLoop] addTimer:self.myTimer forMode:NSRunLoopCommonModes];
+    
     UIButton *takePaperBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [takePaperBtn.titleLabel setFont:[UIFont systemFontOfSize:15]];
     [takePaperBtn setTitle:@"交卷" forState:UIControlStateNormal];
@@ -175,7 +176,9 @@ NSString* ssstring =  @"[A] I have always been a poor test-taker. So it may seem
     NSString *format_time = [NSString stringWithFormat:@"%@:%@",str_minute,str_second];
     return format_time;
 }
-
+- (void)time{
+    self.timeLb.text = [self getMMSSFromSS:[NSString stringWithFormat:@"%ld", (long)_seconds++]];
+}
 - (void)openQuestionCard{
     [UIView animateWithDuration:0.2 animations:^{
         self.collectionView.center = self.view.center;
@@ -286,6 +289,7 @@ NSString* ssstring =  @"[A] I have always been a poor test-taker. So it may seem
 }
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter]removeObserver:self];
+    [self.myTimer invalidate];
 }
 /*
 #pragma mark - Navigation

@@ -11,6 +11,9 @@
 #import "SAQuestionCollectionViewCell.h"
 #import "SAOptionsCollectionViewCell.h"
 #import "ReadSAResultsViewController.h"
+#import "ReadRefreshGifHeader.h"
+#import "ReadRfreshBackGifFooter.h"
+#import "ReadSAModel.h"
 
 NSString* sstring =  @"The method for making beer has changed over time. Hops (啤酒花)，for example, which give many amodern beer its bitter flavor, are a (26)_______ recent addition to the beverage. This was first mentioned in reference to brewing in the ninth century. Now, researchers have found a (27)_______ ingredient in residue (残留物) from 5,000-year-old beer brewing equipment. While digging two pits at a site in the central plains of China, scientists discovered fragments from pots and vessels. The different shapes of the containers (28)_______    they were used to brew, filter, and store beer. They may be ancient “beer-making tools,” and the earliest (29)_______ evidence of beer brewing in China, the researchers reported in the Proceedings of the National Academy of Sciences. To (30)_______    that theory, the team examined the yellowish, dried (31)_______    inside the vessels. The majority of the grains, about 80%, were from cereal crops like barley(大麦), and about 10% were bits of roots, (32)_______ lily, which would have made the beer sweeter, the scientists say. Barley was an unexpected find: the crop was domesticated in Western Eurasia and didn't become a (33)_______ food in central China until about 2,000 years ago, according to the researchers. Based on that timing, they indicate barley may have (34)_______ in the region not as food, but as (35)_______ material for beer brewing.";
 
@@ -21,6 +24,7 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
 @property (nonatomic, strong) NSTimer *myTimer;
 @property (nonatomic, strong) UILabel *timeLb;
 @property (nonatomic, assign) NSInteger seconds;
+@property (nonatomic, strong) ReadSAModel *readModel;
 @end
 
 @implementation ReadSectionAViewController
@@ -47,7 +51,7 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
         UICollectionViewFlowLayout *flowlayout = [[UICollectionViewFlowLayout alloc]init];
         flowlayout.minimumLineSpacing = 0;
         flowlayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-        _collectionView = [[UICollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:flowlayout];
+        _collectionView = [[UICollectionView alloc]initWithFrame:CGRectMake(16, SCREEN_HEIGHT - 130 - SafeAreaTopHeight, SCREEN_WIDTH - 32, [Tool layoutForAlliPhoneHeight:480]) collectionViewLayout:flowlayout];
         [_collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([SAQuestionCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([SAQuestionCollectionViewCell class])];
         [_collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([SAOptionsCollectionViewCell class]) bundle:nil] forCellWithReuseIdentifier:NSStringFromClass([SAOptionsCollectionViewCell class])];
         [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:NSStringFromClass([UICollectionViewCell class])];
@@ -65,17 +69,19 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
     self.title = @"选词填空";
     [self initWithView];
     _seconds = 0;
+    // 获取文件路径
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"2012年第一套 (4)" ofType:@"json"];
+    // 将文件数据化
+    NSData *data = [[NSData alloc] initWithContentsOfFile:path];
+    // 对数据进行JSON格式化并返回字典形式
+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+    self.readModel = [ReadSAModel mj_objectWithKeyValues:dict];
 }
 - (void)initWithView{
     self.view.backgroundColor = UIColorFromRGB(0xF7F7F7);
     [self.view addSubview:self.tableView];
     [self.view addSubview:self.collectionView];
-    [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_bottom).offset(-130);
-        make.left.equalTo(self.view).offset(16);
-        make.right.equalTo(self.view).offset(-16);
-        make.height.equalTo(@([Tool layoutForAlliPhoneHeight:480]));
-    }];
+
     [self.collectionView.layer setCornerRadius:12];
     [self.collectionView.layer setShadowOpacity:0.2];
     [self.collectionView.layer setShadowColor:[UIColor blackColor].CGColor];
@@ -93,24 +99,21 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
     panGr.delegate = self;
     [self.collectionView addGestureRecognizer:panGr];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(openQuestionCard) name:kReadOpenQuestion object:nil];
-    WeakSelf
-    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [weakSelf.tableView.mj_header endRefreshing];
-        });
-    }];
-    self.tableView.mj_header = header;
-    
-    MJRefreshBackNormalFooter *footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:NO];
-            [weakSelf.tableView.mj_footer endRefreshing];
-        });
-    }];
-    [footer setTitle:@"要再来一题吗" forState:MJRefreshStateIdle];
-    [footer setTitle:@"松开加载下一题" forState:MJRefreshStatePulling];
-    [footer setTitle:@"正在为您加载" forState:MJRefreshStateRefreshing];
-    self.tableView.mj_footer = footer;
+//    WeakSelf
+//    ReadRefreshGifHeader *header = [ReadRefreshGifHeader headerWithRefreshingBlock:^{
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            [weakSelf.tableView.mj_header endRefreshing];
+//        });
+//    }];
+//    self.tableView.mj_header = header;
+//
+//    ReadRfreshBackGifFooter *footer = [ReadRfreshBackGifFooter footerWithRefreshingBlock:^{
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:NO];
+//            [weakSelf.tableView.mj_footer endRefreshing];
+//        });
+//    }];
+//    self.tableView.mj_footer = footer;
     
     UIView *bottomView = [UIView new];
     bottomView.backgroundColor = [UIColor whiteColor];
@@ -178,7 +181,7 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
     [finishView show];
 }
 - (void)time{
-            self.timeLb.text = [self getMMSSFromSS:[NSString stringWithFormat:@"%ld", (long)_seconds++]];
+    self.timeLb.text = [self getMMSSFromSS:[NSString stringWithFormat:@"%ld", (long)_seconds++]];
 }
 //传入 秒  得到  xx分钟xx秒
 -(NSString *)getMMSSFromSS:(NSString *)totalTime{
@@ -206,12 +209,6 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
     CGFloat maxY = SCREEN_HEIGHT - 130 - SafeAreaTopHeight + [Tool layoutForAlliPhoneHeight:480]/2;//可拖动题卡的下限
 //    NSLog(@"minX:%f,maxY:%f,gr.center.y:%f", minY,maxY, gr.view.center.y);
     CGFloat tranY = gr.view.center.y + translation.y;
-//    if (tranY == maxY) {
-//        _isOpen = NO;
-//    }
-//    if (tranY == minY) {
-//        _isOpen = YES;
-//    }
     if (tranY <= minY) {
         //改变panGestureRecognizer.view的中心点 就是self.imageView的中心点
         tranY = minY;
@@ -234,16 +231,17 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 32, MAXFLOAT);
-    NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:sstring];
+    NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:self.readModel.Passage];
     [textStr yy_setFont:[UIFont systemFontOfSize:15] range:textStr.yy_rangeOfAll];
     textStr.yy_lineSpacing = 8;
     //计算文本尺寸
     YYTextLayout *layout = [YYTextLayout layoutWithContainerSize:maxSize text:textStr];
     CGFloat introHeight = layout.textBoundingSize.height;
-    return introHeight + 50;
+    return introHeight + 100;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     ReadSATableViewCell *cell = [[ReadSATableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    cell.passage = self.readModel.Passage;
     cell.selectionStyle = NO;
     return cell;
 }
@@ -257,7 +255,7 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
     }else if (section == 1){
         return 1;
     }else{
-        return 15;
+        return self.readModel.Options.count;
     }
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -290,25 +288,27 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
         return cell;
     }else if (indexPath.section == 1){
         SAQuestionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([SAQuestionCollectionViewCell class]) forIndexPath:indexPath];
+        cell.questionLb.text = [NSString stringWithFormat:@"%@", self.readModel.Question];
         return cell;
     }else{
         SAOptionsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([SAOptionsCollectionViewCell class]) forIndexPath:indexPath];
-        cell.optionLb.text = [NSString stringWithFormat:@"%ldoptions", indexPath.row];
+        if (indexPath.row < self.readModel.Options.count) {
+            cell.model = self.readModel.Options[indexPath.row];
+        }
         return cell;
     }
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 2) {
-        SAOptionsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([SAOptionsCollectionViewCell class]) forIndexPath:indexPath];
-        [[NSNotificationCenter defaultCenter]postNotificationName:kClickReadCard object:nil userInfo:@{@"options":[NSString stringWithFormat:@"%ldoptions", indexPath.row], @"index":@(indexPath.row)}];
-        cell.selected = !cell.selected;
+        ReadSAOptionsModel *model = self.readModel.Options[indexPath.row];
+        [[NSNotificationCenter defaultCenter]postNotificationName:kClickReadCard object:nil userInfo:@{@"options":[NSString stringWithFormat:@"%@", model.Text], @"index":@(indexPath.row)}];
+        model.isSelectedOption = YES;
+        [collectionView reloadData];
         [self.view setNeedsUpdateConstraints];
         [self.view updateConstraints];
         [self.view layoutIfNeeded];
-        [UIView animateWithDuration:0.5 animations:^{
-            [self.collectionView mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(self.view.mas_bottom).offset(-130);
-            }];
+        [UIView animateWithDuration:0.2 animations:^{
+            self.collectionView.frame = CGRectMake(16, SCREEN_HEIGHT - 130 - SafeAreaTopHeight, SCREEN_WIDTH - 32, [Tool layoutForAlliPhoneHeight:480]);
             _questionCardIsOpen = NO;
         }];
     }

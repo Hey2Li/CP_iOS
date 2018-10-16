@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import <YYLabel.h>
+#import "ReadSAModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SAOptionsCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet YYLabel *optionLb;
-
+@property (nonatomic, strong) ReadSAOptionsModel *model;
 @end
 
 NS_ASSUME_NONNULL_END
