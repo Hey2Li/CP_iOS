@@ -1,0 +1,74 @@
+{
+    "Question": "Questions 46 and 50 are based on the following passage.",
+    "Passage": "That people often experience trouble sleeping in a different bed in unfamiliar surroundings is a phenomenon known as the \"first-night\" effect. If a person stays in the same room the following night they tend to sleep more soundly. Yuka Sasaki and her colleagues at Brown University set out to investigate the origins of this effect.\n„Ä?„Ä?Dr. Sasaki knew the first-night effect probably has something to do with how humans evolved. The puzzle was what benefit would be gained from it when performance might be affected the following day. She also knew from previous work conducted on birds and dolphins that these animals put half of their brains to sleep at a time so that they can rest while remaining alert enough to avoid predators (ÊçïÈ£üËÄ?). This led her to wonder if people might be doing the same thing. To take a closer look, her team studied 35 healthy people as they slept in the unfamiliar environment of the university‚Ä?s Department of Psychological Sciences. The participants each slept in the department for two nights and were carefully monitored with techniques that looked at the activity of their brains. Dr. Sasaki found, as expected, the participants slept less well on their first night than they did on their second, taking more than twice as long to fall asleep and sleeping less overall. During deep sleep, the participants‚Ä? brains behaved in a similar manner seen in birds and dolphins. On the first night only, the left hemispheres (ÂçäÁêÉ) of their brains did not sleep nearly as deeply as their right hemispheres did.\n„Ä?„Ä?Curious if the left hemispheres were indeed remaining awake to process information detected in the surrounding environment, Dr. Sasaki re-ran the experiment while presenting the sleeping participants with a mix of regularly timed beeps (ËúÇÈ∏£Â£?) of the same tone and irregular beeps of a different tone during the night. She worked out that, if the left hemisphere was staying alert to keep guard in a strange environment, then it would react to the irregular beeps by stirring people from sleep and would ignore the regularly timed ones. This is precisely what she found.",
+    "PassageId": "Passage One",
+    "Questions": [{
+        "Question": "What did researchers find puzzling about the first-night effect?",
+        "QuestionNumber": "46",
+        "Options": [{
+            "Alphabet": "A",
+            "Text": "To what extent it can trouble people."
+        }, {
+            "Alphabet": "B",
+            "Text": "What role it has played in evolution."
+        }, {
+            "Alphabet": "C",
+            "Text": "What circumstances may trigger it."
+        }, {
+            "Alphabet": "D",
+            "Text": "What circumstances may trigger it."
+        }],
+        "Answer": "A"
+    }, {
+        "Question": "What did Dr. Sasaki do when she first did her experiment?",
+        "QuestionNumber": "48",
+        "Options": [{
+            "Alphabet": "A",
+            "Text": "She monitored the brain activity of participants sleeping in a new environment."
+        }, {
+            "Alphabet": "B",
+            "Text": "She recruited 35 participants from her Department of Psychological Sciences."
+        }, {
+            "Alphabet": "C",
+            "Text": "She studied the differences between the two sides of participants‚Ä? brains."
+        }, {
+            "Alphabet": "D",
+            "Text": "She tested her findings about birds and dolphins on human subjects."
+        }],
+        "Answer": "B"
+    }, {
+        "Question": "What did Dr. Sasaki do when re-running her experiment?",
+        "QuestionNumber": "49",
+        "Options": [{
+            "Alphabet": "A",
+            "Text": "She analyzed the negative effect of irregular tones on brains."
+        }, {
+            "Alphabet": "B",
+            "Text": "She recorded participants‚Ä? adaptation to changed environment."
+        }, {
+            "Alphabet": "C",
+            "Text": "She exposed her participants to two different stimuli."
+        }, {
+            "Alphabet": "D",
+            "Text": "She compared the responses of different participants."
+        }],
+        "Answer": "C"
+    }, {
+        "Question": "What did Dr. Sasaki find about the participants in her experiment?",
+        "QuestionNumber": "50",
+        "Options": [{
+            "Alphabet": "A",
+            "Text": "They tended to enjoy certain tones more than others."
+        }, {
+            "Alphabet": "B",
+            "Text": "They tended to perceive irregular beeps as a threat."
+        }, {
+            "Alphabet": "C",
+            "Text": "They felt sleepy when exposed to regular beeps."
+        }, {
+            "Alphabet": "D",
+            "Text": " They differed in their tolerance of irregular tones."
+        }],
+        "Answer": "D"
+    }]
+}

@@ -24,4 +24,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL isSelectedOption;
 @end
 
+@interface ReadSAAnswerModel : NSObject
+@property (nonatomic , copy) NSString              * Alphabet;
+@property (nonatomic , copy) NSString              * Explain;
+@property (nonatomic, assign) BOOL isCorrect;
+@property (nonatomic, assign) BOOL isSelected;
+@property (nonatomic, copy) NSString *yourAnswer;
+@end
+
+
 NS_ASSUME_NONNULL_END

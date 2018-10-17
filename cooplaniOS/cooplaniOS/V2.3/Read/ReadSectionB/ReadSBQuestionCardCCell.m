@@ -30,6 +30,7 @@
         _collectionView.delegate = self;
         _collectionView.pagingEnabled = YES;
         _collectionView.showsHorizontalScrollIndicator = NO;
+        _collectionView.scrollEnabled = NO;
     }
     return _collectionView;
 }
@@ -52,33 +53,37 @@
 }
 #pragma mark UICollectionDelagete&DataSource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-    return 4;
+    return 5;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    if (section == 3) {
-        return 15;
+    if (section == 4) {
+        return self.questionsArray.count;
     }else{
         return 1;
     }
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-        if (indexPath.section == 1 || indexPath.section == 2) {
-            return CGSizeMake(self.collectionView.width - 20, 45);
-        }else if (indexPath.section == 0){
-            return CGSizeMake(self.collectionView.width - 20, 35);
-        }else{
-            return CGSizeMake(40, 40);
-        }
+    if (indexPath.section == 0) {
+        return CGSizeMake(self.collectionView.width - 20, 35);
+    }else if (indexPath.section == 1){
+        return CGSizeMake(self.collectionView.width - 20, 45);
+    }else if (indexPath.section == 2){
+        return CGSizeMake(self.collectionView.width - 20, 20);
+    }else if (indexPath.section == 3){
+        return CGSizeMake(self.collectionView.width - 20, 75);
+    }else{
+        return CGSizeMake(40, 40);
+    }
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
-    if (section == 3) {
+    if (section == 4) {
         return UIEdgeInsetsMake(10, 30, 10, 30);
     }else{
-        return UIEdgeInsetsMake(10, 10, 10, 10);
+        return UIEdgeInsetsMake(0, 10, 0, 10);
     }
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
-    if (section == 3) {
+    if (section == 4) {
         return 20;
     }else{
         return 10;
@@ -105,19 +110,38 @@
         return cell;
     }else if (indexPath.section == 1){
         SAQuestionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([SAQuestionCollectionViewCell class]) forIndexPath:indexPath];
+        cell.questionLb.text = self.question;
         return cell;
     }else if (indexPath.section == 2){
+        UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([UICollectionViewCell class]) forIndexPath:indexPath];
+        return cell;
+    }else if (indexPath.section == 3){
         SAQuestionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([SAQuestionCollectionViewCell class]) forIndexPath:indexPath];
+        cell.questionLb.numberOfLines = 0;
+        cell.questionLb.font = [UIFont systemFontOfSize:14];
+        cell.questionLb.text = [NSString stringWithFormat:@"%@", self.optionsModel.Text];
         return cell;
     }else{
         ReadSBOptionsCCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([ReadSBOptionsCCell class]) forIndexPath:indexPath];
+        ReadSBPassageModel *model = self.questionsArray[indexPath.row];
+        if ([self.optionsModel.yourAnswer isEqualToString:model.Alphabet]) {
+            [cell setBackgroundColor:DRGBCOLOR];
+        }else{
+            [cell setBackgroundColor:[UIColor whiteColor]];
+        }
+        cell.optionLb.text = [NSString stringWithFormat:@"%@", model.Alphabet];
         return cell;
     }
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 3) {
+    if (indexPath.section == 4) {
         if (self.collectionScroll) {
             self.collectionScroll(self.superIndexPath);
+            ReadSBPassageModel *model = self.questionsArray[indexPath.row];
+            self.optionsModel.yourAnswer = model.Alphabet;
+            if ([self.optionsModel.Answer isEqualToString:model.Alphabet]) {
+                self.optionsModel.isCorrect = YES;
+            }
         }
     }
 }
@@ -131,7 +155,11 @@
 {
     UICollectionViewCell* cell = [colView cellForItemAtIndexPath:indexPath];
     //设置(Highlight)高亮下的颜色
-    [cell setBackgroundColor:UIColorFromRGB(0xFAE7B0)];
+//    [cell setBackgroundColor:UIColorFromRGB(0xFAE7B0)];
+    [cell setBackgroundColor:DRGBCOLOR];
 }
-
+- (void)setOptionsModel:(ReadSBOptionsModel *)optionsModel{
+    _optionsModel = optionsModel;
+    [self.collectionView reloadData];
+}
 @end

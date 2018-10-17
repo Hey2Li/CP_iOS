@@ -1,16 +1,16 @@
 //
-//  ReadSAResultsViewController.h
+//  ReadSBResultViewController.h
 //  cooplaniOS
 //
-//  Created by Lee on 2018/10/13.
-//  Copyright © 2018年 Lee. All rights reserved.
+//  Created by Lee on 2018/10/17.
+//  Copyright © 2018 Lee. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ReadSAResultsViewController : UIViewController
+@interface ReadSBResultViewController : UIViewController
 @property (nonatomic, copy) NSString *correct;//正确率
 @property (nonatomic, strong) NSArray *questionsArray;
 @property (nonatomic, copy) NSString *paperName;//试卷题目

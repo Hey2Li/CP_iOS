@@ -88,7 +88,7 @@
             [textStr yy_setTextHighlightRange:subRange color:DRGBCOLOR backgroundColor:nil userInfo:nil tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
                 weakSelf.clickCurrentRange = range;
                 weakSelf.clickIndex = idx;
-                [[NSNotificationCenter defaultCenter]postNotificationName:kReadOpenQuestion object:nil];
+                [[NSNotificationCenter defaultCenter]postNotificationName:kReadOpenQuestion object:@{@"userClick":[NSString stringWithFormat:@"%lu", (unsigned long)idx]}];
             } longPressAction:nil];
         }];
         textLabel.attributedText = textStr;
@@ -133,7 +133,7 @@
             weakSelf.clickIndex = idx;
             NSRange questionRange = NSMakeRange(range.location - 4, 4);
             NSLog(@"点击的第%@题 idx:%ld", [text.string substringWithRange:questionRange],idx);
-            [[NSNotificationCenter defaultCenter]postNotificationName:kReadOpenQuestion object:nil];
+            [[NSNotificationCenter defaultCenter]postNotificationName:kReadOpenQuestion object:@{@"userClick":[NSString stringWithFormat:@"%lu", (unsigned long)idx]}];
         } longPressAction:nil];
     }];
     textLabel.attributedText = textStr;

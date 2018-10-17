@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "answerModel.h"
+#import "ReadSBModel.h"
+#import "ReadSAModel.h"
 
 @interface AnswerTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIButton *yourAnswerBtn;
@@ -28,4 +30,6 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *answerDetailTopHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *answerDetailBottomHeight;
 @property (nonatomic, strong) QuestionsModel *model;
+@property (nonatomic, strong) ReadSBOptionsModel *readSBOptionsModel;
+@property (nonatomic, strong) ReadSAAnswerModel *readSAAnswerModel;
 @end

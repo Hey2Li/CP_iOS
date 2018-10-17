@@ -25,6 +25,8 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
 @property (nonatomic, strong) UILabel *timeLb;
 @property (nonatomic, assign) NSInteger seconds;
 @property (nonatomic, strong) ReadSAModel *readModel;
+@property (nonatomic, assign) NSInteger userIndex;//用户点击的题目
+@property (nonatomic, assign) int correctInt;
 @end
 
 @implementation ReadSectionAViewController
@@ -69,6 +71,7 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
     self.title = @"选词填空";
     [self initWithView];
     _seconds = 0;
+    _correctInt = 0;
     // 获取文件路径
     NSString *path = [[NSBundle mainBundle] pathForResource:@"2012年第一套 (4)" ofType:@"json"];
     // 将文件数据化
@@ -98,7 +101,7 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
     UIPanGestureRecognizer *panGr = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handlePan:)];
     panGr.delegate = self;
     [self.collectionView addGestureRecognizer:panGr];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(openQuestionCard) name:kReadOpenQuestion object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(openQuestionCard:) name:kReadOpenQuestion object:nil];
 //    WeakSelf
 //    ReadRefreshGifHeader *header = [ReadRefreshGifHeader headerWithRefreshingBlock:^{
 //        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -176,7 +179,18 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
 - (void)takePaperClick:(UIButton *)btn{
     LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"确定交卷吗" sureBtn:@"交卷" cancleBtn:@"再检查下" ];
     finishView.resultIndex = ^(NSInteger index) {
-        [self.navigationController pushViewController:ReadSAResultsViewController.new animated:YES];
+        for (ReadSAAnswerModel *model in self.readModel.Answer) {
+            if (model.isCorrect) {
+                _correctInt++;
+            }
+        }
+        NSLog(@"%d", _correctInt);
+        ReadSAResultsViewController *vc = [ReadSAResultsViewController new];
+        vc.userTime = self.timeLb.text;
+        vc.questionsArray = self.readModel.Answer;
+        float correctFloat = (float)_correctInt/(float)self.readModel.Answer.count * 100;
+        vc.correct = [NSString stringWithFormat:@"%.0f",correctFloat];
+        [self.navigationController pushViewController:vc animated:YES];
     };
     [finishView show];
 }
@@ -195,7 +209,9 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
     return format_time;
 }
 
-- (void)openQuestionCard{
+- (void)openQuestionCard:(NSNotification *)notifi{
+    NSInteger index = [notifi.object[@"userClick"] integerValue];
+    _userIndex = index;
     [UIView animateWithDuration:0.2 animations:^{
         self.collectionView.center = self.view.center;
         _questionCardIsOpen = YES;
@@ -303,6 +319,11 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
         ReadSAOptionsModel *model = self.readModel.Options[indexPath.row];
         [[NSNotificationCenter defaultCenter]postNotificationName:kClickReadCard object:nil userInfo:@{@"options":[NSString stringWithFormat:@"%@", model.Text], @"index":@(indexPath.row)}];
         model.isSelectedOption = YES;
+        ReadSAAnswerModel *questionModel = self.readModel.Answer[_userIndex ? _userIndex : 0];
+        if ([model.Text isEqualToString:questionModel.Alphabet]) {
+            questionModel.isCorrect = YES;
+        }
+        questionModel.yourAnswer = model.Alphabet;
         [collectionView reloadData];
         [self.view setNeedsUpdateConstraints];
         [self.view updateConstraints];

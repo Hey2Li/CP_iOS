@@ -10,7 +10,8 @@
 #import "SAQuestionCollectionViewCell.h"
 #import "ReadSBTableViewCell.h"
 #import "ReadSBQuestionCardCCell.h"
-#import "ReadSAResultsViewController.h"
+#import "ReadSBResultViewController.h"
+#import "ReadSBModel.h"
 
 NSString* ssstring =  @"[A] I have always been a poor test-taker. So it may seem rather strange that I have returned to college to finish the degree I left undone some four decades ago. I am making my way through Columbia University, surrounded by students who quickly supply the verbal answer while I am still processing the question.";
 
@@ -22,6 +23,10 @@ NSString* ssstring =  @"[A] I have always been a poor test-taker. So it may seem
 @property (nonatomic, strong) NSTimer *myTimer;
 @property (nonatomic, strong) UILabel *timeLb;
 @property (nonatomic, assign) NSInteger seconds;
+@property (nonatomic, strong) ReadSBModel *readSbModel;
+
+@property (nonatomic, assign) int correctInt;
+@property (nonatomic, assign) int NoCorrectInt;
 @end
 
 @implementation ReadSectionBViewController
@@ -64,6 +69,26 @@ NSString* ssstring =  @"[A] I have always been a poor test-taker. So it may seem
     // Do any additional setup after loading the view.
     [self initWithView];
     self.title = @"段落匹配";
+    self.correctInt = 0;
+    // 获取文件路径
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"20160601SB" ofType:@"json"];
+    // 将文件数据化
+    NSData *data = [[NSData alloc] initWithContentsOfFile:path];
+    // 对数据进行JSON格式化并返回字典形式
+    NSData *data1 = [NSData dataWithContentsOfFile:path];
+    unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+    NSString *str2 = [[NSString alloc]initWithData:data1 encoding:encode];
+    NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *dict1;
+    if (data2 == nil) {
+        dict1 = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+    }else{
+        dict1 = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:nil];
+    }
+    self.readSbModel = [ReadSBModel mj_objectWithKeyValues:dict1];
+    NSLog(@"%@, %@", self.readSbModel.Options, self.readSbModel.Passage);
+    [self.tableView reloadData];
+    [self.collectionView reloadData];
 }
 - (void)initWithView{
     self.view.backgroundColor = UIColorFromRGB(0xF7F7F7);
@@ -161,7 +186,7 @@ NSString* ssstring =  @"[A] I have always been a poor test-taker. So it may seem
 - (void)takePaperClick:(UIButton *)btn{
     LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"确定交卷吗" sureBtn:@"交卷" cancleBtn:@"再检查下" ];
     finishView.resultIndex = ^(NSInteger index) {
-        [self.navigationController pushViewController:ReadSAResultsViewController.new animated:YES];
+        [self.navigationController pushViewController:ReadSBResultViewController.new animated:YES];
     };
     [finishView show];
 }
@@ -207,14 +232,7 @@ NSString* ssstring =  @"[A] I have always been a poor test-taker. So it may seem
     } else if (absY > absX) {
         CGFloat minY = SafeAreaTopHeight + [Tool layoutForAlliPhoneHeight:480]/2;//可拖动题卡的上限
         CGFloat maxY = SCREEN_HEIGHT - 130 - SafeAreaTopHeight + [Tool layoutForAlliPhoneHeight:480]/2;//可拖动题卡的下限
-        NSLog(@"minX:%f,maxY:%f,gr.center.y:%f", minY,maxY, gr.view.center.y);
         CGFloat tranY = gr.view.center.y + translation.y;
-        //    if (tranY == maxY) {
-        //        _isOpen = NO;
-        //    }
-        //    if (tranY == minY) {
-        //        _isOpen = YES;
-        //    }
         if (tranY <= minY) {
             //改变panGestureRecognizer.view的中心点 就是self.imageView的中心点
             tranY = minY;
@@ -235,11 +253,12 @@ NSString* ssstring =  @"[A] I have always been a poor test-taker. So it may seem
 }
 #pragma mark UITableViewDelegate&DataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
+    return self.readSbModel.Options.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    ReadSBPassageModel *passageModel = self.readSbModel.Passage[indexPath.row];
     CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 32, MAXFLOAT);
-    NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:ssstring];
+    NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:passageModel.Text];
     [textStr yy_setFont:[UIFont systemFontOfSize:15] range:textStr.yy_rangeOfAll];
     textStr.yy_lineSpacing = 8;
     //计算文本尺寸
@@ -250,6 +269,8 @@ NSString* ssstring =  @"[A] I have always been a poor test-taker. So it may seem
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     ReadSBTableViewCell *cell = [[ReadSBTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     cell.selectionStyle = NO;
+    ReadSBPassageModel *passageModel = self.readSbModel.Passage[indexPath.row];
+    cell.passage = [NSString stringWithFormat:@"%@  %@", passageModel.Alphabet, passageModel.Text];
     return cell;
 }
 
@@ -258,7 +279,7 @@ NSString* ssstring =  @"[A] I have always been a poor test-taker. So it may seem
     return 1;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return 10;
+    return self.readSbModel.Options.count;
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     return CGSizeMake(SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:480]);
@@ -266,13 +287,27 @@ NSString* ssstring =  @"[A] I have always been a poor test-taker. So it may seem
  - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     ReadSBQuestionCardCCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([ReadSBQuestionCardCCell class]) forIndexPath:indexPath];
      cell.superIndexPath = indexPath;
+     cell.optionsModel = self.readSbModel.Options[indexPath.row];
+     cell.questionsArray = self.readSbModel.Passage;
+     cell.question = self.readSbModel.Question;
      cell.collectionScroll = ^(NSIndexPath * indexPaths) {
-         if (indexPaths.row + 1 <= 9) {
+         if (indexPaths.row + 1 < self.readSbModel.Options.count) {
              [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:indexPaths.row + 1 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
          }else{
              LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"确定交卷吗" sureBtn:@"交卷" cancleBtn:@"再检查下" ];
              finishView.resultIndex = ^(NSInteger index) {
-                 [self.navigationController pushViewController:ReadSAResultsViewController.new animated:YES];
+                 for (ReadSBOptionsModel *quModel in self.readSbModel.Options) {
+                     if (quModel.isCorrect) {
+                         _correctInt++;
+                     }
+                 }
+                 NSLog(@"%d", _correctInt);
+                 ReadSBResultViewController *vc = [ReadSBResultViewController new];
+                 vc.userTime = self.timeLb.text;
+                 vc.questionsArray = self.readSbModel.Options;
+                 float correctFloat = (float)_correctInt/(float)self.readSbModel.Options.count * 100;
+                 vc.correct = [NSString stringWithFormat:@"%.0f",correctFloat];
+                 [self.navigationController pushViewController:vc animated:YES];
              };
              [finishView show];
          }

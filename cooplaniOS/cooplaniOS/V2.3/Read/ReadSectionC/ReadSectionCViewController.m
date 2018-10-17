@@ -11,6 +11,7 @@
 #import "ReadSBTableViewCell.h"
 #import "ReadSCQuestionCardCCell.h"
 #import "ReadSAResultsViewController.h"
+#import "ReadSCModel.h"
 
 NSString* sssstring =  @"[A] I have always been a poor test-taker. So it may seem rather strange that I have returned to college to finish the degree I left undone some four decades ago. I am making my way through Columbia University, surrounded by students who quickly supply the verbal answer while I am still processing the question.";
 
@@ -21,6 +22,10 @@ NSString* sssstring =  @"[A] I have always been a poor test-taker. So it may see
 @property (nonatomic, strong) NSTimer *myTimer;
 @property (nonatomic, strong) UILabel *timeLb;
 @property (nonatomic, assign) NSInteger seconds;
+@property (nonatomic, strong) ReadSCModel *readScModel;
+
+@property (nonatomic, assign) int correctInt;
+@property (nonatomic, assign) int NoCorrectInt;
 @end
 
 @implementation ReadSectionCViewController
@@ -58,14 +63,31 @@ NSString* sssstring =  @"[A] I have always been a poor test-taker. So it may see
     }
     return _collectionView;
 }
-- (void)viewWillLayoutSubviews{
-    NSLog(@"collectionViewCenter:%@", NSStringFromCGPoint(self.collectionView.center));
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self initWithView];
     self.title = @"仔细阅读";
+    _correctInt = 0;
+    // 获取文件路径
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"20171201仔细阅读" ofType:@"json"];
+    // 将文件数据化
+    NSData *data = [[NSData alloc] initWithContentsOfFile:path];
+    // 对数据进行JSON格式化并返回字典形式
+    NSError *error;
+    NSData *data1 = [NSData dataWithContentsOfFile:path];
+    unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+    NSString *str2 = [[NSString alloc]initWithData:data1 encoding:encode];
+    NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *dict1;
+    if (data2 == nil) {
+        dict1 = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+    }else{
+        dict1 = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:nil];
+    }
+    self.readScModel = [ReadSCModel mj_objectWithKeyValues:dict1];
+    [self.tableView reloadData];
+    [self.collectionView reloadData];
 }
 - (void)initWithView{
     self.view.backgroundColor = UIColorFromRGB(0xF7F7F7);
@@ -225,20 +247,21 @@ NSString* sssstring =  @"[A] I have always been a poor test-taker. So it may see
 }
 #pragma mark UITableViewDelegate&DataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
+    return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 32, MAXFLOAT);
-    NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:sssstring];
+    NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:self.readScModel.Passage];
     [textStr yy_setFont:[UIFont systemFontOfSize:15] range:textStr.yy_rangeOfAll];
     textStr.yy_lineSpacing = 8;
     //计算文本尺寸
     YYTextLayout *layout = [YYTextLayout layoutWithContainerSize:maxSize text:textStr];
     CGFloat introHeight = layout.textBoundingSize.height;
-    return introHeight + 20;
+    return introHeight + 50;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     ReadSBTableViewCell *cell = [[ReadSBTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    cell.passage = self.readScModel.Passage;
     cell.selectionStyle = NO;
     return cell;
 }
@@ -248,21 +271,34 @@ NSString* sssstring =  @"[A] I have always been a poor test-taker. So it may see
     return 1;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return 10;
+    return self.readScModel.Questions.count;
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     return CGSizeMake(SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:480]);
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     ReadSCQuestionCardCCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([ReadSCQuestionCardCCell class]) forIndexPath:indexPath];
+    cell.model = self.readScModel.Questions[indexPath.row];
+    cell.passageNoLb.text = self.readScModel.Question;
     cell.superIndexPath = indexPath;
     cell.cellClick = ^(NSIndexPath * _Nonnull nextIndexPath) {
-        if (nextIndexPath.row + 1 <= 9) {
+        if (nextIndexPath.row + 1 < self.readScModel.Questions.count) {
             [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:nextIndexPath.row + 1 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
         }else{
             LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"确定交卷吗" sureBtn:@"交卷" cancleBtn:@"再检查下" ];
             finishView.resultIndex = ^(NSInteger index) {
-                [self.navigationController pushViewController:ReadSAResultsViewController.new animated:YES];
+                for (QuestionsItem *quModel in self.readScModel.Questions) {
+                    if (quModel.isCorrect) {
+                        _correctInt++;
+                    }
+                }
+                NSLog(@"%d", _correctInt);
+                ReadSAResultsViewController *vc = [ReadSAResultsViewController new];
+                vc.userTime = self.timeLb.text;
+                vc.questionsArray = self.readScModel.Questions;
+                float correctFloat = (float)_correctInt/(float)self.readScModel.Questions.count * 100;
+                vc.correct = [NSString stringWithFormat:@"%.0f",correctFloat];
+                [self.navigationController pushViewController:vc animated:YES];
             };
             [finishView show];
         }

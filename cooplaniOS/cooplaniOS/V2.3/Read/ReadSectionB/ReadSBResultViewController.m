@@ -1,20 +1,18 @@
 //
-//  ReadSAResultsViewController.m
+//  ReadSBResultViewController.m
 //  cooplaniOS
 //
-//  Created by Lee on 2018/10/13.
-//  Copyright © 2018年 Lee. All rights reserved.
+//  Created by Lee on 2018/10/17.
+//  Copyright © 2018 Lee. All rights reserved.
 //
 
-#import "ReadSAResultsViewController.h"
-#import "AnswerTableViewCell.h"
-#import "answerModel.h"
-#import "ReadSectionAViewController.h"
+#import "ReadSBResultViewController.h"
 #import "ReadTrainingViewController.h"
 #import "ReadSAResultsHeaderView.h"
-#import "ReadSAModel.h"
+#import "AnswerTableViewCell.h"
+#import "ReadSBModel.h"
 
-@interface ReadSAResultsViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface ReadSBResultViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
 @property (nonatomic, assign) BOOL isOpen;
 @property (nonatomic, strong) NSIndexPath *selectIndexPath;
@@ -23,7 +21,8 @@
 @property (nonatomic ,strong) ReadSAResultsHeaderView *headView;
 @end
 
-@implementation ReadSAResultsViewController
+@implementation ReadSBResultViewController
+
 - (NSMutableArray *)dataSourceArray{
     if (!_dataSourceArray) {
         _dataSourceArray = [NSMutableArray array];
@@ -67,24 +66,13 @@
 - (void)initWithView{
     [self.view addSubview:self.myTableView];
     [self.dataSourceArray removeAllObjects];
-    for (int i = 0; i < self.questionsArray.count; i ++) {
-            answerModel *model = [[answerModel alloc]init];
-            model.yourAnswer = @"1";
-            model.correctAnswer = @"2";
-            model.questionNum = [NSString stringWithFormat:@"Q%d",i];
-            model.correct = self.correct ? self.correct : @"100%";
-            model.answerDetail = @"【精析】事实细节题。新闻讲述了Addison卖柠檬水和画为生病的弟弟筹资的故事。新闻开门见山讲到，新墨西哥州9岁的女孩Addison已经为需要做心脏手术的弟弟筹集了500多美元。由此可知，女孩筹钱是为了给弟弟看病。";
-            model.isCorrect = i%2 ? YES : NO;
-            model.isSelected = NO;
-            [self.dataSourceArray addObject:model];
-        }
-    [self.myTableView reloadData];
+    
     NSString *className = NSStringFromClass([ReadSAResultsHeaderView class]);
     _headView = [[UINib nibWithNibName:className bundle:nil] instantiateWithOwner:nil options:nil].firstObject;
     _headView.correctStr = self.correct;
     _headView.userTimeLb.text = self.userTime;
-//    _headView.paperDateLb.text = [self.paperName substringToIndex:7];
-//    _headView.paperNameLb.text = [self.paperName substringFromIndex:7];
+    //    _headView.paperDateLb.text = [self.paperName substringToIndex:7];
+    //    _headView.paperNameLb.text = [self.paperName substringFromIndex:7];
     self.myTableView.tableHeaderView = _headView;
     
     UIView *bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 46 - 64, SCREEN_WIDTH, 46)];
@@ -133,21 +121,21 @@
 }
 #pragma mark 继续
 - (void)continueBtnClick:(UIButton *)btn{
- 
+    
 }
 - (void)testAgainBtnClick:(UIButton *)btn{
-   
+    
 }
 #pragma mark TableViewDataSource&Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return  1;
+    return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.questionsArray.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    ReadSAAnswerModel *readSAAnswerModel = self.questionsArray[indexPath.row];
-    if (readSAAnswerModel.isSelected) {
+    QuestionsModel *questionModel = self.questionsArray[indexPath.row];
+    if (questionModel.isSelected) {
         return self.myTableView.rowHeight;
     }else{
         return 50;
@@ -161,7 +149,7 @@
         UIView *headerView = [[UIView alloc]init];
         headerView.backgroundColor = UIColorFromRGB(0xf7f7f7);
         UILabel *sectionLb = [UILabel new];
-        sectionLb.text = @"Section A";
+        sectionLb.text = @"Section B";
         sectionLb.font = [UIFont boldSystemFontOfSize:14];
         [headerView addSubview:sectionLb];
         [sectionLb mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -180,14 +168,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     AnswerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([AnswerTableViewCell class]) forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    ReadSAAnswerModel *readSAAnswerModel = self.questionsArray[indexPath.row];
-    cell.readSAAnswerModel = readSAAnswerModel;
+    ReadSBOptionsModel *readSBOptionsModel = self.questionsArray[indexPath.row];
+    cell.readSBOptionsModel = readSBOptionsModel;
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section < self.questionsArray.count) {
-        ReadSAAnswerModel *readSAAnswerModel = self.questionsArray[indexPath.row];
-        readSAAnswerModel.isSelected = !readSAAnswerModel.isSelected;
+        ReadSBOptionsModel *readSBOptionsModel = self.questionsArray[indexPath.row];
+        readSBOptionsModel.isSelected = !readSBOptionsModel.isSelected;
         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:nil];
     }
 }
@@ -200,6 +188,7 @@
         scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
     }
 }
+
 /*
 #pragma mark - Navigation
 

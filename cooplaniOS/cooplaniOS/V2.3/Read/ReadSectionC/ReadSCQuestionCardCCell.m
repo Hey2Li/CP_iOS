@@ -12,6 +12,8 @@
 @interface ReadSCQuestionCardCCell ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UILabel *questionLb;
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UILabel *questionNoLb;
+
 @end
 
 @implementation ReadSCQuestionCardCCell
@@ -96,6 +98,8 @@
     
         self.tableView = tableView;
         self.questionLb = questionLb;
+        self.passageNoLb = passageNoLb;
+        self.questionNoLb = questionNoLb;
     }
     return self;
 }
@@ -126,14 +130,28 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         //            [cell setSelected:model.isSelecteOption animated:YES];
     });
+    OptionsItem *item = self.model.Options[indexPath.row];
     cell.selectionStyle = YES;
     cell.textLabel.numberOfLines = 2;
-    cell.textLabel.text = [NSString stringWithFormat:@"B.    She found birds and dolphins sleep in much"];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@  %@", item.Alphabet, item.Text];
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.cellClick) {
         self.cellClick(self.superIndexPath);
+        OptionsItem *item = self.model.Options[indexPath.row];
+        if ([item.Alphabet isEqualToString:self.model.Answer]) {
+            self.model.isCorrect = YES;
+        }else{
+            self.model.isCorrect = NO;
+        }
+        self.model.youAnswer = item.Alphabet;
     }
+}
+- (void)setModel:(QuestionsItem *)model{
+    _model = model;
+    self.questionLb.text = [NSString stringWithFormat:@"%@",model.Question];
+    self.questionNoLb.text = model.QuestionNumber;
+    [self.tableView reloadData];
 }
 @end

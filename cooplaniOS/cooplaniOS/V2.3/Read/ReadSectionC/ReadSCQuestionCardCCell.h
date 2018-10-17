@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ReadSCModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ReadSCQuestionCardCCell : UICollectionViewCell
 @property (nonatomic, strong) NSIndexPath *superIndexPath;
 @property (nonatomic, copy) void (^cellClick)(NSIndexPath *nextIndexPath);
+@property (nonatomic, strong) QuestionsItem *model;
+@property (nonatomic, strong) UILabel *passageNoLb;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -10,10 +10,18 @@
 
 @implementation ReadSAModel
 + (NSDictionary *)mj_objectClassInArray{
-    return @{@"Options":@"ReadSAOptionsModel"};
+    return @{@"Options":@"ReadSAOptionsModel",
+             @"Answer":@"ReadSAAnswerModel"
+             };
 }
 @end
 
 @implementation ReadSAOptionsModel
+
+
+@end
+
+@implementation ReadSAAnswerModel
+
 
 @end
