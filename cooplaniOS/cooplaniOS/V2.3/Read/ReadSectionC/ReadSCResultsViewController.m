@@ -1,18 +1,18 @@
 //
-//  ReadSBResultViewController.m
+//  ReadSCResultsViewController.m
 //  cooplaniOS
 //
-//  Created by Lee on 2018/10/17.
+//  Created by Lee on 2018/10/18.
 //  Copyright © 2018 Lee. All rights reserved.
 //
 
-#import "ReadSBResultViewController.h"
+#import "ReadSCResultsViewController.h"
 #import "ReadTrainingViewController.h"
 #import "ReadSAResultsHeaderView.h"
 #import "AnswerTableViewCell.h"
-#import "ReadSBModel.h"
+#import "ReadSCModel.h"
 
-@interface ReadSBResultViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface ReadSCResultsViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
 @property (nonatomic, assign) BOOL isOpen;
 @property (nonatomic, strong) NSIndexPath *selectIndexPath;
@@ -21,7 +21,7 @@
 @property (nonatomic ,strong) ReadSAResultsHeaderView *headView;
 @end
 
-@implementation ReadSBResultViewController
+@implementation ReadSCResultsViewController
 
 - (NSMutableArray *)dataSourceArray{
     if (!_dataSourceArray) {
@@ -134,8 +134,8 @@
     return self.questionsArray.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    ReadSBOptionsModel *readSBOptionsModel = self.questionsArray[indexPath.row];
-    if (readSBOptionsModel.isSelected) {
+    QuestionsItem *readSCQuestionModel = self.questionsArray[indexPath.row];
+    if (readSCQuestionModel.isSelected) {
         return self.myTableView.rowHeight;
     }else{
         return 50;
@@ -168,14 +168,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     AnswerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([AnswerTableViewCell class]) forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    ReadSBOptionsModel *readSBOptionsModel = self.questionsArray[indexPath.row];
-    cell.readSBOptionsModel = readSBOptionsModel;
+    QuestionsItem *readSCQuestionModel = self.questionsArray[indexPath.row];
+    cell.readSCAnswerModel = readSCQuestionModel;
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section < self.questionsArray.count) {
-        ReadSBOptionsModel *readSBOptionsModel = self.questionsArray[indexPath.row];
-        readSBOptionsModel.isSelected = !readSBOptionsModel.isSelected;
+        QuestionsItem *readSCQuestionModel = self.questionsArray[indexPath.row];
+        readSCQuestionModel.isSelected = !readSCQuestionModel.isSelected;
         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:nil];
     }
 }
@@ -188,7 +188,6 @@
         scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
     }
 }
-
 /*
 #pragma mark - Navigation
 

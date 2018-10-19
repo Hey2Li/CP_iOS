@@ -176,6 +176,57 @@
     self.youAnswerLb.text = readSAAnswerModel.yourAnswer;
     //    self.answerDetailLb.text = readSAoptionsModel.Explain;
 }
+- (void)setReadSCAnswerModel:(QuestionsItem *)readSCAnswerModel{
+    _readSCAnswerModel = readSCAnswerModel;
+    [self setNeedsUpdateConstraints];
+    [self updateConstraints];
+    if (readSCAnswerModel.isSelected) {
+        self.bottomView.hidden = NO;
+        self.youAnswerBtnTopHeight.constant = 10;
+        self.youAnswertBtnHeight.constant = 40;
+        self.answerDetailBottomHeight.constant = 5;
+        self.answerDetailTopHeight.constant = 10;
+        [UIView animateWithDuration:0.2 animations:^{
+            [self layoutIfNeeded];
+        }];
+    }else{
+        self.bottomView.hidden = YES;
+        self.youAnswerBtnTopHeight.constant = 0;
+        self.youAnswertBtnHeight.constant = 0;
+        self.answerDetailBottomHeight.constant = 0;
+        self.answerDetailTopHeight.constant = 0;
+        [UIView animateWithDuration:0.2 animations:^{
+            [self layoutIfNeeded];
+        }];
+    }
+    if (readSCAnswerModel.isCorrect) {
+        //        self.shapeImageView.hidden = NO;
+        [self.shapeImageView setImage:[UIImage imageNamed:@"Shape"]];
+        //        self.CorrectLb.hidden = YES;
+        self.questionView.backgroundColor = UIColorFromRGB(0xFFFFFF);
+        self.questionNameLb.textColor = UIColorFromRGB(0x666666);
+        self.youAnswerLb.textColor = UIColorFromRGB(0x4DAC7D);
+        self.correctAnswerLb.textColor = UIColorFromRGB(0x4DAC7D);
+    }else{
+        //        self.shapeImageView.hidden = YES;
+        [self.shapeImageView setImage:[UIImage imageNamed:@"回答错误"]];
+        //        self.CorrectLb.hidden = NO;
+        self.questionView.backgroundColor = UIColorFromRGB(0xD76F67);
+        self.questionNameLb.textColor = UIColorFromRGB(0xFFFFFF);
+        self.youAnswerLb.textColor = UIColorFromRGB(0xD76F67);
+        self.correctAnswerLb.textColor = UIColorFromRGB(0x4DAC7D);
+    }
+    //    if (model.cellHeight <= 50) {
+    //        self.cellHeight.constant = 0;
+    //    }else{
+    //        self.cellHeight.constant = model.cellHeight = model.cellHeight;
+    //    }
+    //    self.questionNameLb.text = [NSString stringWithFormat:@"Q%@",readSAoptionsModel.No];
+    
+    self.correctAnswerLb.text = readSCAnswerModel.Answer;
+    self.youAnswerLb.text = readSCAnswerModel.yourAnswer;
+    //    self.answerDetailLb.text = readSAoptionsModel.Explain;
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     // Configure the view for the selected state

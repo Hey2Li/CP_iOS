@@ -102,22 +102,7 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (å
     panGr.delegate = self;
     [self.collectionView addGestureRecognizer:panGr];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(openQuestionCard:) name:kReadOpenQuestion object:nil];
-//    WeakSelf
-//    ReadRefreshGifHeader *header = [ReadRefreshGifHeader headerWithRefreshingBlock:^{
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            [weakSelf.tableView.mj_header endRefreshing];
-//        });
-//    }];
-//    self.tableView.mj_header = header;
-//
-//    ReadRfreshBackGifFooter *footer = [ReadRfreshBackGifFooter footerWithRefreshingBlock:^{
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:NO];
-//            [weakSelf.tableView.mj_footer endRefreshing];
-//        });
-//    }];
-//    self.tableView.mj_footer = footer;
-    
+
     UIView *bottomView = [UIView new];
     bottomView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:bottomView];

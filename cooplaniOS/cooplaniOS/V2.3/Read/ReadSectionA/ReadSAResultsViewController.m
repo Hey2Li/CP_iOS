@@ -67,17 +67,6 @@
 - (void)initWithView{
     [self.view addSubview:self.myTableView];
     [self.dataSourceArray removeAllObjects];
-    for (int i = 0; i < self.questionsArray.count; i ++) {
-            answerModel *model = [[answerModel alloc]init];
-            model.yourAnswer = @"1";
-            model.correctAnswer = @"2";
-            model.questionNum = [NSString stringWithFormat:@"Q%d",i];
-            model.correct = self.correct ? self.correct : @"100%";
-            model.answerDetail = @"【精析】事实细节题。新闻讲述了Addison卖柠檬水和画为生病的弟弟筹资的故事。新闻开门见山讲到，新墨西哥州9岁的女孩Addison已经为需要做心脏手术的弟弟筹集了500多美元。由此可知，女孩筹钱是为了给弟弟看病。";
-            model.isCorrect = i%2 ? YES : NO;
-            model.isSelected = NO;
-            [self.dataSourceArray addObject:model];
-        }
     [self.myTableView reloadData];
     NSString *className = NSStringFromClass([ReadSAResultsHeaderView class]);
     _headView = [[UINib nibWithNibName:className bundle:nil] instantiateWithOwner:nil options:nil].firstObject;

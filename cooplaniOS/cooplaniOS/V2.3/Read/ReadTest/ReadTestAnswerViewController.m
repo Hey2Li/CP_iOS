@@ -1,34 +1,26 @@
 //
-//  ReadSBResultViewController.m
+//  ReadTestAnswerViewController.m
 //  cooplaniOS
 //
-//  Created by Lee on 2018/10/17.
+//  Created by Lee on 2018/10/19.
 //  Copyright © 2018 Lee. All rights reserved.
 //
 
-#import "ReadSBResultViewController.h"
+#import "ReadTestAnswerViewController.h"
 #import "ReadTrainingViewController.h"
 #import "ReadSAResultsHeaderView.h"
 #import "AnswerTableViewCell.h"
-#import "ReadSBModel.h"
 
-@interface ReadSBResultViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface ReadTestAnswerViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
 @property (nonatomic, assign) BOOL isOpen;
 @property (nonatomic, strong) NSIndexPath *selectIndexPath;
 @property (nonatomic, strong) NSIndexPath *lastSelectedIndexPath;
-@property (nonatomic, strong) NSMutableArray *dataSourceArray;
 @property (nonatomic ,strong) ReadSAResultsHeaderView *headView;
 @end
 
-@implementation ReadSBResultViewController
+@implementation ReadTestAnswerViewController
 
-- (NSMutableArray *)dataSourceArray{
-    if (!_dataSourceArray) {
-        _dataSourceArray = [NSMutableArray array];
-    }
-    return _dataSourceArray;
-}
 - (UITableView *)myTableView{
     if (!_myTableView) {
         _myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64 - 46) style:UITableViewStylePlain];
@@ -65,7 +57,6 @@
 }
 - (void)initWithView{
     [self.view addSubview:self.myTableView];
-    [self.dataSourceArray removeAllObjects];
     
     NSString *className = NSStringFromClass([ReadSAResultsHeaderView class]);
     _headView = [[UINib nibWithNibName:className bundle:nil] instantiateWithOwner:nil options:nil].firstObject;
@@ -128,17 +119,39 @@
 }
 #pragma mark TableViewDataSource&Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
+    return 3;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.questionsArray.count;
+    if (section == 0) {
+        return self.rsaModel.Answer.count;
+    }else if (section == 1){
+        return self.rsbModel.Options.count;
+    }else{
+        return self.rscModel.Questions.count;
+    }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    ReadSBOptionsModel *readSBOptionsModel = self.questionsArray[indexPath.row];
-    if (readSBOptionsModel.isSelected) {
-        return self.myTableView.rowHeight;
+    if (indexPath.section == 0) {
+        ReadSAAnswerModel *model = self.rsaModel.Answer[indexPath.row];
+        if (model.isSelected) {
+            return self.myTableView.rowHeight;
+        }else{
+            return 50;
+        }
+    }else if (indexPath.section == 1){
+        ReadSBOptionsModel *model = self.rsbModel.Options[indexPath.row];
+        if (model.isSelected) {
+            return self.myTableView.rowHeight;
+        }else{
+            return 50;
+        }
     }else{
-        return 50;
+        QuestionsItem *model = self.rscModel.Questions[indexPath.row];
+        if (model.isSelected) {
+            return self.myTableView.rowHeight;
+        }else{
+            return 50;
+        }
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -149,7 +162,13 @@
         UIView *headerView = [[UIView alloc]init];
         headerView.backgroundColor = UIColorFromRGB(0xf7f7f7);
         UILabel *sectionLb = [UILabel new];
-        sectionLb.text = @"Section B";
+        if (section == 0) {
+            sectionLb.text = @"Section A";
+        }else if (section == 1){
+            sectionLb.text = @"Section B";
+        }else{
+            sectionLb.text = @"Section C";
+        }
         sectionLb.font = [UIFont boldSystemFontOfSize:14];
         [headerView addSubview:sectionLb];
         [sectionLb mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -168,15 +187,33 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     AnswerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([AnswerTableViewCell class]) forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    ReadSBOptionsModel *readSBOptionsModel = self.questionsArray[indexPath.row];
-    cell.readSBOptionsModel = readSBOptionsModel;
+    if (indexPath.section == 0) {
+        ReadSAAnswerModel *model = self.rsaModel.Answer[indexPath.row];
+        cell.readSAAnswerModel = model;
+    }else if (indexPath.section == 1){
+        ReadSBOptionsModel *model = self.rsbModel.Options[indexPath.row];
+        cell.readSBOptionsModel = model;
+    }else{
+        QuestionsItem *model = self.rscModel.Questions[indexPath.row];
+        cell.readSCAnswerModel = model;
+    }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section < self.questionsArray.count) {
-        ReadSBOptionsModel *readSBOptionsModel = self.questionsArray[indexPath.row];
-        readSBOptionsModel.isSelected = !readSBOptionsModel.isSelected;
-        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:nil];
+        if (indexPath.section == 0) {
+            ReadSAAnswerModel *readSAAnswerModel = self.rsaModel.Answer[indexPath.row];
+            readSAAnswerModel.isSelected = !readSAAnswerModel.isSelected;
+            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:NO];
+        }else if (indexPath.section == 1){
+            ReadSBOptionsModel *readSBOptionsModel = self.rsbModel.Options[indexPath.row];
+            readSBOptionsModel.isSelected = !readSBOptionsModel.isSelected;
+            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:NO];
+        }else{
+            QuestionsItem *readSCQuestionModel = self.rscModel.Questions[indexPath.row];
+            readSCQuestionModel.isSelected = !readSCQuestionModel.isSelected;
+            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:NO];
+        }
     }
 }
 
@@ -188,7 +225,6 @@
         scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
     }
 }
-
 /*
 #pragma mark - Navigation
 

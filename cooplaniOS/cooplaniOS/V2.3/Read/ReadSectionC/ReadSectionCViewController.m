@@ -10,7 +10,7 @@
 #import "SAQuestionCollectionViewCell.h"
 #import "ReadSBTableViewCell.h"
 #import "ReadSCQuestionCardCCell.h"
-#import "ReadSAResultsViewController.h"
+#import "ReadSCResultsViewController.h"
 #import "ReadSCModel.h"
 
 NSString* sssstring =  @"[A] I have always been a poor test-taker. So it may seem rather strange that I have returned to college to finish the degree I left undone some four decades ago. I am making my way through Columbia University, surrounded by students who quickly supply the verbal answer while I am still processing the question.";
@@ -106,24 +106,6 @@ NSString* sssstring =  @"[A] I have always been a poor test-taker. So it may see
     [self.collectionView addGestureRecognizer:panGr];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(openQuestionCard) name:kReadOpenQuestion object:nil];
-    WeakSelf
-    MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [weakSelf.tableView.mj_header endRefreshing];
-        });
-    }];
-    self.tableView.mj_header = header;
-    
-    MJRefreshBackNormalFooter *footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:NO];
-            [weakSelf.tableView.mj_footer endRefreshing];
-        });
-    }];
-    [footer setTitle:@"要再来一题吗" forState:MJRefreshStateIdle];
-    [footer setTitle:@"松开加载下一题" forState:MJRefreshStatePulling];
-    [footer setTitle:@"正在为您加载" forState:MJRefreshStateRefreshing];
-    self.tableView.mj_footer = footer;
     
     UIView *bottomView = [UIView new];
     bottomView.backgroundColor = [UIColor whiteColor];
@@ -185,7 +167,7 @@ NSString* sssstring =  @"[A] I have always been a poor test-taker. So it may see
 - (void)takePaperClick:(UIButton *)btn{
     LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"确定交卷吗" sureBtn:@"交卷" cancleBtn:@"再检查下" ];
     finishView.resultIndex = ^(NSInteger index) {
-        [self.navigationController pushViewController:ReadSAResultsViewController.new animated:YES];
+        [self.navigationController pushViewController:ReadSCResultsViewController.new animated:YES];
     };
     [finishView show];
 }
@@ -293,7 +275,7 @@ NSString* sssstring =  @"[A] I have always been a poor test-taker. So it may see
                     }
                 }
                 NSLog(@"%d", _correctInt);
-                ReadSAResultsViewController *vc = [ReadSAResultsViewController new];
+                ReadSCResultsViewController *vc = [ReadSCResultsViewController new];
                 vc.userTime = self.timeLb.text;
                 vc.questionsArray = self.readScModel.Questions;
                 float correctFloat = (float)_correctInt/(float)self.readScModel.Questions.count * 100;

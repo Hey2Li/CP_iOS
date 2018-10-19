@@ -36,7 +36,7 @@
         tableView.backgroundColor = [UIColor whiteColor];
         tableView.tableFooterView = [UIView new];
         
-        UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, tableView.width, 150)];
+        UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, tableView.width, 160)];
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.backgroundColor = [UIColor whiteColor];
         [headerView addSubview:btn];
@@ -145,7 +145,7 @@
         }else{
             self.model.isCorrect = NO;
         }
-        self.model.youAnswer = item.Alphabet;
+        self.model.yourAnswer = item.Alphabet;
     }
 }
 - (void)setModel:(QuestionsItem *)model{

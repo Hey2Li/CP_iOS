@@ -22,8 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , copy) NSString              * QuestionNumber;
 @property (nonatomic , strong) NSArray              * Options;
 @property (nonatomic , copy) NSString              * Answer;
-@property (nonatomic, copy) NSString *youAnswer;
+@property (nonatomic, copy) NSString *yourAnswer;
 @property (nonatomic, assign) BOOL isCorrect;
+@property (nonatomic, assign) BOOL isSelected;
 @end
 
 @interface ReadSCModel : NSObject

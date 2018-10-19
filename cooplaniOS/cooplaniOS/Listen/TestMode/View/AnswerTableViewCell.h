@@ -10,6 +10,7 @@
 #import "answerModel.h"
 #import "ReadSBModel.h"
 #import "ReadSAModel.h"
+#import "ReadSCModel.h"
 
 @interface AnswerTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIButton *yourAnswerBtn;
@@ -32,4 +33,5 @@
 @property (nonatomic, strong) QuestionsModel *model;
 @property (nonatomic, strong) ReadSBOptionsModel *readSBOptionsModel;
 @property (nonatomic, strong) ReadSAAnswerModel *readSAAnswerModel;
+@property (nonatomic, strong) QuestionsItem *readSCAnswerModel;
 @end
