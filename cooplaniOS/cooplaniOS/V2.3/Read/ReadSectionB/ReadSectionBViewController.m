@@ -13,8 +13,6 @@
 #import "ReadSBResultViewController.h"
 #import "ReadSBModel.h"
 
-NSString* ssstring =  @"[A] I have always been a poor test-taker. So it may seem rather strange that I have returned to college to finish the degree I left undone some four decades ago. I am making my way through Columbia University, surrounded by students who quickly supply the verbal answer while I am still processing the question.";
-
 @interface ReadSectionBViewController ()<UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
@@ -70,25 +68,54 @@ NSString* ssstring =  @"[A] I have always been a poor test-taker. So it may seem
     [self initWithView];
     self.title = @"段落匹配";
     self.correctInt = 0;
-    // 获取文件路径
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"20160601SB" ofType:@"json"];
-    // 将文件数据化
-    NSData *data = [[NSData alloc] initWithContentsOfFile:path];
-    // 对数据进行JSON格式化并返回字典形式
-    NSData *data1 = [NSData dataWithContentsOfFile:path];
-    unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-    NSString *str2 = [[NSString alloc]initWithData:data1 encoding:encode];
-    NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *dict1;
-    if (data2 == nil) {
-        dict1 = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-    }else{
-        dict1 = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:nil];
-    }
-    self.readSbModel = [ReadSBModel mj_objectWithKeyValues:dict1];
-    NSLog(@"%@, %@", self.readSbModel.Options, self.readSbModel.Passage);
-    [self.tableView reloadData];
-    [self.collectionView reloadData];
+    [self loadData];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(findWordIsOpen) name:kFindWordIsOpen object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(findWordIsClose) name:kFindWordIsClose object:nil];
+}
+- (void)findWordIsOpen{
+    [UIView animateWithDuration:0.2 animations:^{
+        self.collectionView.hidden = YES;
+    }];
+}
+- (void)findWordIsClose{
+    [UIView animateWithDuration:0.2 animations:^{
+        self.collectionView.hidden = NO;
+    } completion:^(BOOL finished) {
+    }];
+}
+- (void)loadData{
+    [LTHttpManager getOneNewTestWithUserId:IS_USER_ID Type:@"4-PP" Testpaper_kind:@"1Y" Testpaper_type:@"4-PP" Complete:^(LTHttpResult result, NSString *message, id data) {
+        if (result == LTHttpResultSuccess) {
+            NSString *testPaperUrl = data[@"responseData"][@"testPaperUrl"];
+            [LTHttpManager downloadURL:testPaperUrl progress:^(NSProgress *downloadProgress) {
+            } destination:^(NSURL *targetPath) {
+                NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                NSString *fileName = [url lastPathComponent];
+                NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+                NSString *urlString = [fileName stringByRemovingPercentEncoding];
+                NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
+                NSFileManager *fileManager = [NSFileManager defaultManager];
+                if ([fileManager fileExistsAtPath:fullPath]) {
+                    NSDictionary *dict = [[NSDictionary alloc]init];
+                    NSData *data = [NSData dataWithContentsOfFile:fullPath];
+                    unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+                    NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
+                    NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
+                    NSError *error;
+                    if (data2 == nil) {
+                        dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+                    }else{
+                        dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:&error];
+                    }
+                    self.readSbModel = [ReadSBModel mj_objectWithKeyValues:dict];
+                    [self.tableView reloadData];
+                    [self.collectionView reloadData];
+                }
+            } failure:^(NSError *error) {
+                
+            }];
+        }
+    }];
 }
 - (void)initWithView{
     self.view.backgroundColor = UIColorFromRGB(0xF7F7F7);

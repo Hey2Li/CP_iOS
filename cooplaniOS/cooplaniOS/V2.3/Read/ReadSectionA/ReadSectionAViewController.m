@@ -72,13 +72,41 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
     [self initWithView];
     _seconds = 0;
     _correctInt = 0;
-    // 获取文件路径
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"2012年第一套 (4)" ofType:@"json"];
-    // 将文件数据化
-    NSData *data = [[NSData alloc] initWithContentsOfFile:path];
-    // 对数据进行JSON格式化并返回字典形式
-    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-    self.readModel = [ReadSAModel mj_objectWithKeyValues:dict];
+    [self loadData];
+}
+- (void)loadData{
+    [LTHttpManager getOneNewTestWithUserId:IS_USER_ID Type:@"4-TK" Testpaper_kind:@"1Y" Testpaper_type:@"4-TK" Complete:^(LTHttpResult result, NSString *message, id data) {
+        if (result == LTHttpResultSuccess) {
+            NSString *testPaperUrl = data[@"responseData"][@"testPaperUrl"];
+            [LTHttpManager downloadURL:testPaperUrl progress:^(NSProgress *downloadProgress) {
+            } destination:^(NSURL *targetPath) {
+                NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                NSString *fileName = [url lastPathComponent];
+                NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+                NSString *urlString = [fileName stringByRemovingPercentEncoding];
+                NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
+                NSFileManager *fileManager = [NSFileManager defaultManager];
+                if ([fileManager fileExistsAtPath:fullPath]) {
+                    NSDictionary *dict = [[NSDictionary alloc]init];
+                    NSData *data = [NSData dataWithContentsOfFile:fullPath];
+                    unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+                    NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
+                    NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
+                    NSError *error;
+                    if (data2 == nil) {
+                        dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+                    }else{
+                        dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:&error];
+                    }
+                    self.readModel = [ReadSAModel mj_objectWithKeyValues:dict];
+                    [self.tableView reloadData];
+                    [self.collectionView reloadData];
+                }
+            } failure:^(NSError *error) {
+                
+            }];
+        }
+    }];
 }
 - (void)initWithView{
     self.view.backgroundColor = UIColorFromRGB(0xF7F7F7);
@@ -232,17 +260,23 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 32, MAXFLOAT);
-    NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:self.readModel.Passage];
-    [textStr yy_setFont:[UIFont systemFontOfSize:15] range:textStr.yy_rangeOfAll];
-    textStr.yy_lineSpacing = 8;
-    //计算文本尺寸
-    YYTextLayout *layout = [YYTextLayout layoutWithContainerSize:maxSize text:textStr];
-    CGFloat introHeight = layout.textBoundingSize.height;
-    return introHeight + 100;
+    if (self.readModel.Passage) {
+        NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:self.readModel.Passage];
+        [textStr yy_setFont:[UIFont systemFontOfSize:15] range:textStr.yy_rangeOfAll];
+        textStr.yy_lineSpacing = 8;
+        //计算文本尺寸
+        YYTextLayout *layout = [YYTextLayout layoutWithContainerSize:maxSize text:textStr];
+        CGFloat introHeight = layout.textBoundingSize.height;
+        return introHeight + 100;
+    }else{
+        return 0;
+    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     ReadSATableViewCell *cell = [[ReadSATableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    cell.passage = self.readModel.Passage;
+    if (self.readModel.Passage) {
+        cell.passage = self.readModel.Passage;
+    }
     cell.selectionStyle = NO;
     return cell;
 }
@@ -301,22 +335,27 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 2) {
-        ReadSAOptionsModel *model = self.readModel.Options[indexPath.row];
-        [[NSNotificationCenter defaultCenter]postNotificationName:kClickReadCard object:nil userInfo:@{@"options":[NSString stringWithFormat:@"%@", model.Text], @"index":@(indexPath.row)}];
-        model.isSelectedOption = YES;
-        ReadSAAnswerModel *questionModel = self.readModel.Answer[_userIndex ? _userIndex : 0];
-        if ([model.Text isEqualToString:questionModel.Alphabet]) {
-            questionModel.isCorrect = YES;
+        if (_questionCardIsOpen) {
+            ReadSAOptionsModel *model = self.readModel.Options[indexPath.row];
+            [[NSNotificationCenter defaultCenter]postNotificationName:kClickReadCard object:nil userInfo:@{@"options":[NSString stringWithFormat:@"%@", model.Text], @"index":@(indexPath.row)}];
+            model.isSelectedOption = YES;
+            ReadSAAnswerModel *questionModel = self.readModel.Answer[_userIndex ? _userIndex : 0];
+            if ([model.Text isEqualToString:questionModel.Alphabet]) {
+                questionModel.isCorrect = YES;
+            }
+            questionModel.yourAnswer = model.Alphabet;
+            [collectionView reloadData];
+            [self.view setNeedsUpdateConstraints];
+            [self.view updateConstraints];
+            [self.view layoutIfNeeded];
+            [UIView animateWithDuration:0.2 animations:^{
+                self.collectionView.frame = CGRectMake(16, SCREEN_HEIGHT - 130 - SafeAreaTopHeight, SCREEN_WIDTH - 32, [Tool layoutForAlliPhoneHeight:480]);
+                _questionCardIsOpen = NO;
+            }];
+        }else{
+            SVProgressShowStuteText(@"请先选择一题", NO);
+            return;
         }
-        questionModel.yourAnswer = model.Alphabet;
-        [collectionView reloadData];
-        [self.view setNeedsUpdateConstraints];
-        [self.view updateConstraints];
-        [self.view layoutIfNeeded];
-        [UIView animateWithDuration:0.2 animations:^{
-            self.collectionView.frame = CGRectMake(16, SCREEN_HEIGHT - 130 - SafeAreaTopHeight, SCREEN_WIDTH - 32, [Tool layoutForAlliPhoneHeight:480]);
-            _questionCardIsOpen = NO;
-        }];
     }
 }
 //当cell高亮时返回是否高亮

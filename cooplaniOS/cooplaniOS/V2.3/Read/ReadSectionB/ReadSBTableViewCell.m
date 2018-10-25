@@ -7,9 +7,11 @@
 //
 
 #import "ReadSBTableViewCell.h"
+#import "NewCheckWordView.h"
 
 @interface ReadSBTableViewCell()
 @property (nonatomic, strong) YYLabel *textLabel;
+@property (nonatomic, strong) NewCheckWordView *checkWordView;
 @end
 
 @implementation ReadSBTableViewCell
@@ -48,12 +50,30 @@
         make.height.equalTo(@(introHeight));
         make.centerX.equalTo(self.mas_centerX);
     }];
+    //为passage添加长按事件
     [[self returnWordRangeArray:passage] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSValue *value = obj;
         NSRange subRange = [value rangeValue];
         [textStr yy_setTextHighlightRange:subRange color:nil backgroundColor:[UIColor blueColor] userInfo:nil tapAction:nil longPressAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
-            NSLog(@"%@", [text attributedSubstringFromRange:range].string);
             [textStr yy_setColor:DRGBCOLOR range:range];
+            [[NSNotificationCenter defaultCenter]postNotificationName:kFindWordIsOpen object:nil];
+            self.checkWordView = [[NewCheckWordView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 143 - SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight - 12)];
+            [self.viewController.view addSubview:self.checkWordView];
+            self.checkWordView.word = [text attributedSubstringFromRange:range].string;
+            WeakSelf
+            self.checkWordView.findViewIsOpenBlock = ^(UIButton *btn) {
+                if (btn.selected) {
+                    [UIView animateWithDuration:0.2 animations:^{
+                        weakSelf.checkWordView.frame = CGRectMake(0,  SCREEN_HEIGHT - SafeAreaTopHeight - (SCREEN_HEIGHT - SafeAreaTopHeight - 12), SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight - 12);
+                    } completion:^(BOOL finished) {
+                    }];
+                }else{
+                    [UIView animateWithDuration:0.2 animations:^{
+                        weakSelf.checkWordView.frame = CGRectMake(0, SCREEN_HEIGHT - 143 - SafeAreaTopHeight, SCREEN_WIDTH, SCREEN_HEIGHT - SafeAreaTopHeight - 12);
+                    } completion:^(BOOL finished) {
+                    }];
+                }
+            };
         }];
     }];
     textLabel.attributedText = textStr;
@@ -66,8 +86,8 @@
 - (NSMutableArray *)returnWordRangeArray:(NSString *)wordStr{
     NSMutableArray *array = [NSMutableArray array];
     [wordStr enumerateSubstringsInRange:NSMakeRange(0, wordStr.length) options:NSStringEnumerationByWords usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
-        NSLog(@"substring:%@",substring);
-        NSLog(@"substringRange:%@",NSStringFromRange(substringRange));
+//        NSLog(@"substring:%@",substring);
+//        NSLog(@"substringRange:%@",NSStringFromRange(substringRange));
         [array addObject:[NSValue valueWithRange:substringRange]];
     }];
     return array;

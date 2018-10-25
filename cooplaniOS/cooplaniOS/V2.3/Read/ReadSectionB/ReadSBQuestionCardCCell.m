@@ -138,10 +138,11 @@
         if (self.collectionScroll) {
             self.collectionScroll(self.superIndexPath);
             ReadSBPassageModel *model = self.questionsArray[indexPath.row];
-            self.optionsModel.yourAnswer = model.Alphabet;
             if ([self.optionsModel.Answer isEqualToString:model.Alphabet]) {
                 self.optionsModel.isCorrect = YES;
             }
+            self.optionsModel.yourAnswer = model.Alphabet;
+            NSLog(@"%@", self.optionsModel.yourAnswer);
         }
     }
 }

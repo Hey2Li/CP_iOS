@@ -94,52 +94,98 @@
     _correctInt = 0;
 }
 - (void)loadData{
-    // 获取文件路径
-    NSString *patha = [[NSBundle mainBundle] pathForResource:@"2012年第一套 (4)" ofType:@"json"];
-    // 将文件数据化
-    NSData *dataa = [[NSData alloc] initWithContentsOfFile:patha];
-    // 对数据进行JSON格式化并返回字典形式
-    NSDictionary *dicta = [NSJSONSerialization JSONObjectWithData:dataa options:kNilOptions error:nil];
-    self.readModel = [ReadSAModel mj_objectWithKeyValues:dicta];
-    
-    // 获取文件路径
-    NSString *pathb = [[NSBundle mainBundle] pathForResource:@"20160601SB" ofType:@"json"];
-    // 将文件数据化
-    NSData *datab = [[NSData alloc] initWithContentsOfFile:pathb];
-    // 对数据进行JSON格式化并返回字典形式
-    NSData *data1b = [NSData dataWithContentsOfFile:pathb];
-    unsigned long encodeb = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-    NSString *str2b = [[NSString alloc]initWithData:data1b encoding:encodeb];
-    NSData *data2b = [str2b dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *dict1b;
-    if (data2b == nil) {
-        dict1b = [NSJSONSerialization JSONObjectWithData:datab options:NSJSONReadingAllowFragments error:nil];
-    }else{
-        dict1b = [NSJSONSerialization JSONObjectWithData:data2b options:NSJSONReadingAllowFragments error:nil];
-    }
-    self.readSbModel = [ReadSBModel mj_objectWithKeyValues:dict1b];
-    NSLog(@"%@, %@", self.readSbModel.Options, self.readSbModel.Passage);
-    [self.tableView reloadData];
-    [self.collectionView reloadData];
-    
-    // 获取文件路径
-    NSString *pathc = [[NSBundle mainBundle] pathForResource:@"20171201仔细阅读" ofType:@"json"];
-    // 将文件数据化
-    NSData *datac = [[NSData alloc] initWithContentsOfFile:pathc];
-    // 对数据进行JSON格式化并返回字典形式
-    NSData *data1c = [NSData dataWithContentsOfFile:pathc];
-    unsigned long encodec = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-    NSString *str2c = [[NSString alloc]initWithData:data1c encoding:encodec];
-    NSData *data2c = [str2c dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *dict1c;
-    if (data2c == nil) {
-        dict1c = [NSJSONSerialization JSONObjectWithData:datac options:NSJSONReadingAllowFragments error:nil];
-    }else{
-        dict1c = [NSJSONSerialization JSONObjectWithData:data2c options:NSJSONReadingAllowFragments error:nil];
-    }
-    self.readScModel = [ReadSCModel mj_objectWithKeyValues:dict1c];
-    [self.tableView reloadData];
-    [self.collectionView reloadData];
+    [LTHttpManager getOneNewTestWithUserId:IS_USER_ID Type:@"4-TK" Testpaper_kind:@"1Y" Testpaper_type:@"4-TK" Complete:^(LTHttpResult result, NSString *message, id data) {
+        if (result == LTHttpResultSuccess) {
+            NSString *testPaperUrl = data[@"responseData"][@"testPaperUrl"];
+            [LTHttpManager downloadURL:testPaperUrl progress:^(NSProgress *downloadProgress) {
+            } destination:^(NSURL *targetPath) {
+                NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                NSString *fileName = [url lastPathComponent];
+                NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+                NSString *urlString = [fileName stringByRemovingPercentEncoding];
+                NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
+                NSFileManager *fileManager = [NSFileManager defaultManager];
+                if ([fileManager fileExistsAtPath:fullPath]) {
+                    NSDictionary *dict = [[NSDictionary alloc]init];
+                    NSData *data = [NSData dataWithContentsOfFile:fullPath];
+                    unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+                    NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
+                    NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
+                    NSError *error;
+                    if (data2 == nil) {
+                        dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+                    }else{
+                        dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:&error];
+                    }
+                    self.readModel = [ReadSAModel mj_objectWithKeyValues:dict];
+                    [self.tableView reloadData];
+                    [self.collectionView reloadData];
+                }
+            } failure:^(NSError *error) {
+                
+            }];
+        }
+    }];
+    [LTHttpManager getOneNewTestWithUserId:IS_USER_ID Type:@"4-PP" Testpaper_kind:@"1Y" Testpaper_type:@"4-PP" Complete:^(LTHttpResult result, NSString *message, id data) {
+        if (result == LTHttpResultSuccess) {
+            NSString *testPaperUrl = data[@"responseData"][@"testPaperUrl"];
+            [LTHttpManager downloadURL:testPaperUrl progress:^(NSProgress *downloadProgress) {
+            } destination:^(NSURL *targetPath) {
+                NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                NSString *fileName = [url lastPathComponent];
+                NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+                NSString *urlString = [fileName stringByRemovingPercentEncoding];
+                NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
+                NSFileManager *fileManager = [NSFileManager defaultManager];
+                if ([fileManager fileExistsAtPath:fullPath]) {
+                    NSDictionary *dict = [[NSDictionary alloc]init];
+                    NSData *data = [NSData dataWithContentsOfFile:fullPath];
+                    unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+                    NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
+                    NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
+                    NSError *error;
+                    if (data2 == nil) {
+                        dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+                    }else{
+                        dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:&error];
+                    }
+                    self.readSbModel = [ReadSBModel mj_objectWithKeyValues:dict];
+                }
+            } failure:^(NSError *error) {
+                
+            }];
+        }
+    }];
+    [LTHttpManager getOneNewTestWithUserId:IS_USER_ID Type:@"4-ZXYD" Testpaper_kind:@"1Y" Testpaper_type:@"4-ZXYD" Complete:^(LTHttpResult result, NSString *message, id data) {
+        if (result == LTHttpResultSuccess) {
+            NSString *testPaperUrl = data[@"responseData"][@"testPaperUrl"];
+            [LTHttpManager downloadURL:testPaperUrl progress:^(NSProgress *downloadProgress) {
+            } destination:^(NSURL *targetPath) {
+                NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                NSString *fileName = [url lastPathComponent];
+                NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+                NSString *urlString = [fileName stringByRemovingPercentEncoding];
+                NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
+                NSFileManager *fileManager = [NSFileManager defaultManager];
+                if ([fileManager fileExistsAtPath:fullPath]) {
+                    NSDictionary *dict = [[NSDictionary alloc]init];
+                    NSData *data = [NSData dataWithContentsOfFile:fullPath];
+                    unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+                    NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
+                    NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
+                    NSError *error;
+                    if (data2 == nil) {
+                        dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+                    }else{
+                        dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:&error];
+                    }
+                    self.readScModel = [ReadSCModel mj_objectWithKeyValues:dict];
+                }
+            } failure:^(NSError *error) {
+                
+            }];
+        }
+    }];
 }
 - (void)initWithView{
     self.view.backgroundColor = UIColorFromRGB(0xF7F7F7);
@@ -177,7 +223,8 @@
             [self.collectionView setFrame:CGRectMake(0, SCREEN_HEIGHT - 130 - SafeAreaTopHeight, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:480])];
             [self.collectionView setBackgroundColor:[UIColor clearColor]];
         }
-        [self loadData];
+        [self.tableView reloadData];
+        [self.collectionView reloadData];
         [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
         [weakSelf.tableView.mj_header endRefreshing];
     }];
@@ -196,7 +243,8 @@
             [self.collectionView setFrame:CGRectMake(0, SCREEN_HEIGHT - 130 - SafeAreaTopHeight, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:480])];
             [self.collectionView setBackgroundColor:[UIColor clearColor]];
         }
-        [self loadData];
+        [self.tableView reloadData];
+        [self.collectionView reloadData];
         [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
         [weakSelf.tableView.mj_footer endRefreshing];
     }];
@@ -365,6 +413,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.ReadSetionEnum == ReadSectionA) {
+        if (!self.readModel.Passage) return 0;
         CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 32, MAXFLOAT);
         NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:self.readModel.Passage];
         [textStr yy_setFont:[UIFont systemFontOfSize:15] range:textStr.yy_rangeOfAll];
@@ -384,6 +433,7 @@
         CGFloat introHeight = layout.textBoundingSize.height;
         return introHeight + 20;
     }else{
+        if (!self.readScModel.Passage) return 0;
         CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 32, MAXFLOAT);
         NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:self.readScModel.Passage];
         [textStr yy_setFont:[UIFont systemFontOfSize:15] range:textStr.yy_rangeOfAll];
@@ -398,7 +448,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.ReadSetionEnum == ReadSectionA) {
         ReadSATableViewCell *cell = [[ReadSATableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-        cell.passage = self.readModel.Passage;
+        if (self.readModel.Passage) {
+            cell.passage = self.readModel.Passage;
+        }
         cell.selectionStyle = NO;
         return cell;
     }else if (self.ReadSetionEnum == ReadSectionB){
@@ -409,6 +461,9 @@
         return cell;
     }else{
         ReadSBTableViewCell *cell = [[ReadSBTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        if (self.readScModel.Passage) {
+            cell.passage = self.readScModel.Passage;
+        }
         cell.passage = self.readScModel.Passage;
         cell.selectionStyle = NO;
         return cell;
@@ -495,22 +550,27 @@
             if (indexPaths.row + 1 < self.readSbModel.Options.count) {
                 [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:indexPaths.row + 1 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
             }else{
-                //SectionB答完题
-                if (self.ReadSetionEnum < 2) {
-                    self.ReadSetionEnum ++;
-                }
-                if (self.ReadSetionEnum == ReadSectionA) {
-                    self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-                    [self.collectionView setFrame:CGRectMake(16, SCREEN_HEIGHT - 130 - SafeAreaTopHeight, SCREEN_WIDTH - 32, [Tool layoutForAlliPhoneHeight:480])];
-                    [self.collectionView setBackgroundColor:[UIColor whiteColor]];
-                }else{
-                    self.flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-                    [self.collectionView setFrame:CGRectMake(0, SCREEN_HEIGHT - 130 - SafeAreaTopHeight, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:480])];
-                    [self.collectionView setBackgroundColor:[UIColor clearColor]];
-                }
-                [self loadData];
-                [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-                [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+                LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"确定进入下一个Section？" sureBtn:@"确定" cancleBtn:@"再等等" ];
+                finishView.resultIndex = ^(NSInteger index) {
+                    //SectionB答完题
+                    if (self.ReadSetionEnum < 2) {
+                        self.ReadSetionEnum ++;
+                    }
+                    if (self.ReadSetionEnum == ReadSectionA) {
+                        self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
+                        [self.collectionView setFrame:CGRectMake(16, SCREEN_HEIGHT - 130 - SafeAreaTopHeight, SCREEN_WIDTH - 32, [Tool layoutForAlliPhoneHeight:480])];
+                        [self.collectionView setBackgroundColor:[UIColor whiteColor]];
+                    }else{
+                        self.flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+                        [self.collectionView setFrame:CGRectMake(0, SCREEN_HEIGHT - 130 - SafeAreaTopHeight, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:480])];
+                        [self.collectionView setBackgroundColor:[UIColor clearColor]];
+                    }
+                    [self.tableView reloadData];
+                    [self.collectionView reloadData];
+                    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+                };
+                [finishView show];
             }
         };
         return cell;
@@ -534,22 +594,27 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     if (self.ReadSetionEnum == ReadSectionA) {
         if (indexPath.section == 2) {
-            ReadSAOptionsModel *model = self.readModel.Options[indexPath.row];
-            [[NSNotificationCenter defaultCenter]postNotificationName:kClickReadCard object:nil userInfo:@{@"options":[NSString stringWithFormat:@"%@", model.Text], @"index":@(indexPath.row)}];
-            model.isSelectedOption = YES;
-            ReadSAAnswerModel *questionModel = self.readModel.Answer[_userIndex ? _userIndex : 0];
-            if ([model.Text isEqualToString:questionModel.Alphabet]) {
-                questionModel.isCorrect = YES;
+            if (_questionCardIsOpen) {
+                ReadSAOptionsModel *model = self.readModel.Options[indexPath.row];
+                [[NSNotificationCenter defaultCenter]postNotificationName:kClickReadCard object:nil userInfo:@{@"options":[NSString stringWithFormat:@"%@", model.Text], @"index":@(indexPath.row)}];
+                model.isSelectedOption = YES;
+                ReadSAAnswerModel *questionModel = self.readModel.Answer[_userIndex ? _userIndex : 0];
+                if ([model.Text isEqualToString:questionModel.Alphabet]) {
+                    questionModel.isCorrect = YES;
+                }
+                questionModel.yourAnswer = model.Alphabet;
+                [collectionView reloadData];
+                [self.view setNeedsUpdateConstraints];
+                [self.view updateConstraints];
+                [self.view layoutIfNeeded];
+                [UIView animateWithDuration:0.2 animations:^{
+                    self.collectionView.frame = CGRectMake(16, SCREEN_HEIGHT - 130 - SafeAreaTopHeight, SCREEN_WIDTH - 32, [Tool layoutForAlliPhoneHeight:480]);
+                    _questionCardIsOpen = NO;
+                }];
+            }else{
+                SVProgressShowStuteText(@"请先选择一题", NO);
+                return;
             }
-            questionModel.yourAnswer = model.Alphabet;
-            [collectionView reloadData];
-            [self.view setNeedsUpdateConstraints];
-            [self.view updateConstraints];
-            [self.view layoutIfNeeded];
-            [UIView animateWithDuration:0.2 animations:^{
-                self.collectionView.frame = CGRectMake(16, SCREEN_HEIGHT - 130 - SafeAreaTopHeight, SCREEN_WIDTH - 32, [Tool layoutForAlliPhoneHeight:480]);
-                _questionCardIsOpen = NO;
-            }];
         }
     }else if (self.ReadSetionEnum == ReadSectionB){
         
