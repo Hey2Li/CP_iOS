@@ -365,19 +365,21 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     NSURL *url          = [NSURL URLWithString:urlStr];
     NSURLRequest *req   = [NSURLRequest requestWithURL:url];
     NSURLSessionDataTask * task = [[NSURLSession sharedSession]dataTaskWithRequest:req completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        id jsonObject           = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-        NSDictionary *appInfo   = (NSDictionary*)jsonObject;
-        NSArray *infoContent    = [appInfo objectForKey:@"results"];
-        NSString * version      = [[infoContent objectAtIndex:0]objectForKey:@"version"];//线上最新版本
-        // 获取当前版本
-        NSString *currentVersion    = [self version];//当前用户版本
-        BOOL result          = [currentVersion compare:version] == NSOrderedAscending;
-        if (result) {//需要更新
-            NSLog(@"不是最新版本需要更新");
-            NSString *updateStr = [NSString stringWithFormat:@"发现新版本V%@\n是否更新？",version];
-            [self creatAlterView:updateStr];
-        } else {//已经是最新版；
-            NSLog(@"最新版本不需要更新");
+        if (data) {
+            id jsonObject           = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+            NSDictionary *appInfo   = (NSDictionary*)jsonObject;
+            NSArray *infoContent    = [appInfo objectForKey:@"results"];
+            NSString * version      = [[infoContent objectAtIndex:0]objectForKey:@"version"];//线上最新版本
+            // 获取当前版本
+            NSString *currentVersion    = [self version];//当前用户版本
+            BOOL result          = [currentVersion compare:version] == NSOrderedAscending;
+            if (result) {//需要更新
+                NSLog(@"不是最新版本需要更新");
+                NSString *updateStr = [NSString stringWithFormat:@"发现新版本V%@\n是否更新？",version];
+                [self creatAlterView:updateStr];
+            } else {//已经是最新版；
+                NSLog(@"最新版本不需要更新");
+            }
         }
     }];
     [task resume];
