@@ -461,10 +461,10 @@ url: /client/public/user/modifyOpenBook
  获取一个专项训练 mlg 9/21url: /app/specialized/getOneNewSpecialized
 
  @param user_id 用户ID
- @param type 4-A:sectionA;4-B:sectionB; 4-C:sectionC 4-TK 填空 4-PP 匹配 4-ZYYD 仔细阅读
+ @param type 4-A:sectionA;4-B:sectionB; 4-C:sectionC 4-D 段落匹配 4-E选词填空 4-F 阅读1 G 阅读2
  @param testpaper_kind 0T:完整的听力试卷;1T:听力专项训练 1Y 专项训练阅读
  2018/9-25mlg 改
- @param testpaper_type  4-A:sectionA;4-B:sectionB; 4-C:sectionC 4-TK 填空 4-PP 匹配 4-ZYYD 仔细阅读
+ @param testpaper_type  4-A:sectionA;4-B:sectionB; 4-C:sectionC 4-D 段落匹配 4-E选词填空 4-F 阅读1 G 阅读2
  @param complete block
  */
 + (void)getOneNewTestWithUserId:(NSString *)user_id Type:(NSString *)type Testpaper_kind:(NSString *)testpaper_kind Testpaper_type:(NSString *)testpaper_type Complete:(completeBlock)complete;
