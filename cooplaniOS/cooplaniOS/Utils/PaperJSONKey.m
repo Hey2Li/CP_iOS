@@ -43,6 +43,7 @@ NSString *const kJSONExplanation = @"Explanation";
 NSString *const kVersion_1 = @"1.0.0";
 NSString *const kVersion_2 = @"2.0";
 NSString *const kVersion_2_2 = @"2.2.0";
+NSString *const kVersion_2_3 = @"2.3.0";
 NSString *const kWordAutoPlay = @"wordAutoPlay";
 NSString *const kQuestionVoice = @"questionVoice";//答题音效
 NSString *const kLoadWordHomePageData = @"loadWordHomepageData";//加载单词首页数据

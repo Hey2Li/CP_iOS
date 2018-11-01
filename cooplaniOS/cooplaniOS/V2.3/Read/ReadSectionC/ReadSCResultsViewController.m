@@ -11,6 +11,7 @@
 #import "ReadSAResultsHeaderView.h"
 #import "AnswerTableViewCell.h"
 #import "ReadSCModel.h"
+#import "ReadSectionCViewController.h"
 
 @interface ReadSCResultsViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -121,20 +122,22 @@
 }
 #pragma mark 继续
 - (void)continueBtnClick:(UIButton *)btn{
-    
+    [self.navigationController pushViewController:ReadSectionCViewController.new animated:YES];
 }
 - (void)testAgainBtnClick:(UIButton *)btn{
     
 }
 #pragma mark TableViewDataSource&Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
-}
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.questionsArray.count;
 }
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    ReadSCModel *model = self.questionsArray[section];
+    return model.Questions.count;
+}
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    QuestionsItem *readSCQuestionModel = self.questionsArray[indexPath.row];
+    ReadSCModel *model = self.questionsArray[indexPath.section];
+    QuestionsItem *readSCQuestionModel = model.Questions[indexPath.row];
     if (readSCQuestionModel.isSelected) {
         return self.myTableView.rowHeight;
     }else{
@@ -145,11 +148,25 @@
     return 40;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    if (section < self.questionsArray.count) {
+    if (section == 0) {
         UIView *headerView = [[UIView alloc]init];
         headerView.backgroundColor = UIColorFromRGB(0xf7f7f7);
         UILabel *sectionLb = [UILabel new];
-        sectionLb.text = @"Section B";
+        sectionLb.text = @"Passage One";
+        sectionLb.font = [UIFont boldSystemFontOfSize:14];
+        [headerView addSubview:sectionLb];
+        [sectionLb mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(headerView.mas_left).offset(15);
+            make.right.equalTo(headerView.mas_right).offset(10);
+            make.top.equalTo(headerView);
+            make.height.equalTo(@40);
+        }];
+        return headerView;
+    }else if (section == 1){
+        UIView *headerView = [[UIView alloc]init];
+        headerView.backgroundColor = UIColorFromRGB(0xf7f7f7);
+        UILabel *sectionLb = [UILabel new];
+        sectionLb.text = @"Passage Two";
         sectionLb.font = [UIFont boldSystemFontOfSize:14];
         [headerView addSubview:sectionLb];
         [sectionLb mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -168,13 +185,15 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     AnswerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([AnswerTableViewCell class]) forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    QuestionsItem *readSCQuestionModel = self.questionsArray[indexPath.row];
+    ReadSCModel *model = self.questionsArray[indexPath.section];
+    QuestionsItem *readSCQuestionModel = model.Questions[indexPath.row];
     cell.readSCAnswerModel = readSCQuestionModel;
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section < self.questionsArray.count) {
-        QuestionsItem *readSCQuestionModel = self.questionsArray[indexPath.row];
+        ReadSCModel *model = self.questionsArray[indexPath.section];
+        QuestionsItem *readSCQuestionModel = model.Questions[indexPath.row];
         readSCQuestionModel.isSelected = !readSCQuestionModel.isSelected;
         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:nil];
     }

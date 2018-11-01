@@ -843,4 +843,30 @@
                                  };
     [manager POSTWithParameters:[NSString stringWithFormat:@"%@/app/curriculum/getCurriculum",BaseURL]parameters:paramters complete:complete];
 }
+
+/**
+ 根据编号查询所有阅读试卷 ycj 10/31
+ 
+ @param number 试卷编号
+ @param complete block
+ */
++ (void)searchReadingTestPapersWithId:(NSNumber *)number Complete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"version_2_3":kVersion_2_3,
+                                 @"number":number,
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/testPaper/searchReadingTestPapers",BaseURL]parameters:paramters complete:complete];
+}
+
+/**
+ 查询所有阅读试卷
+ 
+ @param complete block
+ */
++ (void)searchAllReadingTestWithComplete:(completeBlock)complete{
+    LTHTTPSessionManager *manager = [[LTHTTPSessionManager alloc]init];
+    NSDictionary *paramters =  @{@"version_2_3":kVersion_2_3,
+                                 };
+    [manager POSTWithParameters:[NSString stringWithFormat:@"%@/client/public/testPaper/searchReadingName",BaseURL]parameters:paramters complete:complete];
+}
 @end

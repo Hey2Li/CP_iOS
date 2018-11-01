@@ -84,7 +84,7 @@
     }];
 }
 - (void)loadData{
-    [LTHttpManager getOneNewTestWithUserId:IS_USER_ID Type:@"4-PP" Testpaper_kind:@"1Y" Testpaper_type:@"4-PP" Complete:^(LTHttpResult result, NSString *message, id data) {
+    [LTHttpManager getOneNewTestWithUserId:IS_USER_ID Type:@"4-D" Testpaper_kind:@"1Y" Testpaper_type:@"4-D" Complete:^(LTHttpResult result, NSString *message, id data) {
         if (result == LTHttpResultSuccess) {
             NSString *testPaperUrl = data[@"responseData"][@"testPaperUrl"];
             [LTHttpManager downloadURL:testPaperUrl progress:^(NSProgress *downloadProgress) {

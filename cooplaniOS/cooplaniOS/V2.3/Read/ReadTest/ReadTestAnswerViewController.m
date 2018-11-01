@@ -10,6 +10,8 @@
 #import "ReadTrainingViewController.h"
 #import "ReadSAResultsHeaderView.h"
 #import "AnswerTableViewCell.h"
+#import "ReadTestViewController.h"
+#import "ReadTestListViewController.h"
 
 @interface ReadTestAnswerViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -112,22 +114,27 @@
 }
 #pragma mark 继续
 - (void)continueBtnClick:(UIButton *)btn{
-    
+    ReadTestListViewController *vc = [[ReadTestListViewController alloc]init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)testAgainBtnClick:(UIButton *)btn{
-    
+    ReadTestViewController *vc = [[ReadTestViewController alloc]init];
+    vc.testPaperNumber = self.testPaperNumber;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma mark TableViewDataSource&Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 3;
+    return 4;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
         return self.rsaModel.Answer.count;
     }else if (section == 1){
         return self.rsbModel.Options.count;
-    }else{
+    }else if (section == 2){
         return self.rscModel.Questions.count;
+    }else{
+        return self.rscModel2.Questions.count;
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -145,8 +152,15 @@
         }else{
             return 50;
         }
-    }else{
+    }else if (indexPath.section == 2){
         QuestionsItem *model = self.rscModel.Questions[indexPath.row];
+        if (model.isSelected) {
+            return self.myTableView.rowHeight;
+        }else{
+            return 50;
+        }
+    }else{
+        QuestionsItem *model = self.rscModel2.Questions[indexPath.row];
         if (model.isSelected) {
             return self.myTableView.rowHeight;
         }else{
@@ -166,8 +180,10 @@
             sectionLb.text = @"Section A";
         }else if (section == 1){
             sectionLb.text = @"Section B";
+        }else if (section == 2){
+            sectionLb.text = @"Section C Passage One";
         }else{
-            sectionLb.text = @"Section C";
+            sectionLb.text = @"Section C Passage Two";
         }
         sectionLb.font = [UIFont boldSystemFontOfSize:14];
         [headerView addSubview:sectionLb];
@@ -189,12 +205,16 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (indexPath.section == 0) {
         ReadSAAnswerModel *model = self.rsaModel.Answer[indexPath.row];
+        cell.questionNameLb.text = [NSString stringWithFormat:@"Q%ld",26 + indexPath.row];
         cell.readSAAnswerModel = model;
     }else if (indexPath.section == 1){
         ReadSBOptionsModel *model = self.rsbModel.Options[indexPath.row];
         cell.readSBOptionsModel = model;
-    }else{
+    }else if (indexPath.section == 2){
         QuestionsItem *model = self.rscModel.Questions[indexPath.row];
+        cell.readSCAnswerModel = model;
+    }else{
+        QuestionsItem *model = self.rscModel2.Questions[indexPath.row];
         cell.readSCAnswerModel = model;
     }
     return cell;
@@ -209,8 +229,12 @@
             ReadSBOptionsModel *readSBOptionsModel = self.rsbModel.Options[indexPath.row];
             readSBOptionsModel.isSelected = !readSBOptionsModel.isSelected;
             [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:NO];
-        }else{
+        }else if (indexPath.section == 2){
             QuestionsItem *readSCQuestionModel = self.rscModel.Questions[indexPath.row];
+            readSCQuestionModel.isSelected = !readSCQuestionModel.isSelected;
+            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:NO];
+        }else{
+            QuestionsItem *readSCQuestionModel = self.rscModel2.Questions[indexPath.row];
             readSCQuestionModel.isSelected = !readSCQuestionModel.isSelected;
             [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:NO];
         }

@@ -36,6 +36,7 @@
 @property (nonatomic, strong) ReadSAModel *readModel;
 @property (nonatomic, strong) ReadSBModel *readSbModel;
 @property (nonatomic, strong) ReadSCModel *readScModel;
+@property (nonatomic, strong) ReadSCModel *readScModel2;
 
 @property (nonatomic, assign) NSInteger userIndex;//用户点击的题目
 @property (nonatomic, assign) int correctInt;
@@ -90,100 +91,128 @@
     self.title = @"模拟考场";
     [self initWithView];
     [self loadData];
-    _seconds = 0;
+    _seconds = 2400;
     _correctInt = 0;
+    self.ReadSetionEnum = ReadSectionA;
 }
 - (void)loadData{
-    [LTHttpManager getOneNewTestWithUserId:IS_USER_ID Type:@"4-TK" Testpaper_kind:@"1Y" Testpaper_type:@"4-TK" Complete:^(LTHttpResult result, NSString *message, id data) {
-        if (result == LTHttpResultSuccess) {
-            NSString *testPaperUrl = data[@"responseData"][@"testPaperUrl"];
-            [LTHttpManager downloadURL:testPaperUrl progress:^(NSProgress *downloadProgress) {
-            } destination:^(NSURL *targetPath) {
-                NSString *url = [NSString stringWithFormat:@"%@",targetPath];
-                NSString *fileName = [url lastPathComponent];
-                NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-                NSString *urlString = [fileName stringByRemovingPercentEncoding];
-                NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
-                NSFileManager *fileManager = [NSFileManager defaultManager];
-                if ([fileManager fileExistsAtPath:fullPath]) {
-                    NSDictionary *dict = [[NSDictionary alloc]init];
-                    NSData *data = [NSData dataWithContentsOfFile:fullPath];
-                    unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-                    NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
-                    NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
-                    NSError *error;
-                    if (data2 == nil) {
-                        dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-                    }else{
-                        dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:&error];
+    [LTHttpManager searchReadingTestPapersWithId:self.testPaperNumber Complete:^(LTHttpResult result, NSString *message, id data) {
+        if (LTHttpResultSuccess == result) {
+            NSArray *dataArray = data[@"responseData"];
+            if (dataArray.count) {
+                NSDictionary *dDic = dataArray[0];
+                NSDictionary *eDic = dataArray[1];
+                NSDictionary *fDic = dataArray[2];
+                NSDictionary *gDic = dataArray[3];
+                [LTHttpManager downloadURL:eDic[@"testPaperUrl"] progress:^(NSProgress *downloadProgress) {
+                } destination:^(NSURL *targetPath) {
+                    NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                    NSString *fileName = [url lastPathComponent];
+                    NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+                    NSString *urlString = [fileName stringByRemovingPercentEncoding];
+                    NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
+                    NSFileManager *fileManager = [NSFileManager defaultManager];
+                    if ([fileManager fileExistsAtPath:fullPath]) {
+                        NSDictionary *dict = [[NSDictionary alloc]init];
+                        NSData *data = [NSData dataWithContentsOfFile:fullPath];
+                        unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+                        NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
+                        NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
+                        NSError *error;
+                        if (data2 == nil) {
+                            dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+                        }else{
+                            dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:&error];
+                        }
+                        self.readModel = [ReadSAModel mj_objectWithKeyValues:dict];
+                        [self.tableView reloadData];
+                        [self.collectionView reloadData];
                     }
-                    self.readModel = [ReadSAModel mj_objectWithKeyValues:dict];
-                    [self.tableView reloadData];
-                    [self.collectionView reloadData];
-                }
-            } failure:^(NSError *error) {
+                } failure:^(NSError *error) {
+                    
+                }];
                 
-            }];
-        }
-    }];
-    [LTHttpManager getOneNewTestWithUserId:IS_USER_ID Type:@"4-PP" Testpaper_kind:@"1Y" Testpaper_type:@"4-PP" Complete:^(LTHttpResult result, NSString *message, id data) {
-        if (result == LTHttpResultSuccess) {
-            NSString *testPaperUrl = data[@"responseData"][@"testPaperUrl"];
-            [LTHttpManager downloadURL:testPaperUrl progress:^(NSProgress *downloadProgress) {
-            } destination:^(NSURL *targetPath) {
-                NSString *url = [NSString stringWithFormat:@"%@",targetPath];
-                NSString *fileName = [url lastPathComponent];
-                NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-                NSString *urlString = [fileName stringByRemovingPercentEncoding];
-                NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
-                NSFileManager *fileManager = [NSFileManager defaultManager];
-                if ([fileManager fileExistsAtPath:fullPath]) {
-                    NSDictionary *dict = [[NSDictionary alloc]init];
-                    NSData *data = [NSData dataWithContentsOfFile:fullPath];
-                    unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-                    NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
-                    NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
-                    NSError *error;
-                    if (data2 == nil) {
-                        dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-                    }else{
-                        dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:&error];
+                //
+                [LTHttpManager downloadURL:dDic[@"testPaperUrl"] progress:^(NSProgress *downloadProgress) {
+                } destination:^(NSURL *targetPath) {
+                    NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                    NSString *fileName = [url lastPathComponent];
+                    NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+                    NSString *urlString = [fileName stringByRemovingPercentEncoding];
+                    NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
+                    NSFileManager *fileManager = [NSFileManager defaultManager];
+                    if ([fileManager fileExistsAtPath:fullPath]) {
+                        NSDictionary *dict = [[NSDictionary alloc]init];
+                        NSData *data = [NSData dataWithContentsOfFile:fullPath];
+                        unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+                        NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
+                        NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
+                        NSError *error;
+                        if (data2 == nil) {
+                            dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+                        }else{
+                            dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:&error];
+                        }
+                        self.readSbModel = [ReadSBModel mj_objectWithKeyValues:dict];
                     }
-                    self.readSbModel = [ReadSBModel mj_objectWithKeyValues:dict];
-                }
-            } failure:^(NSError *error) {
+                } failure:^(NSError *error) {
+                    
+                }];
                 
-            }];
-        }
-    }];
-    [LTHttpManager getOneNewTestWithUserId:IS_USER_ID Type:@"4-ZXYD" Testpaper_kind:@"1Y" Testpaper_type:@"4-ZXYD" Complete:^(LTHttpResult result, NSString *message, id data) {
-        if (result == LTHttpResultSuccess) {
-            NSString *testPaperUrl = data[@"responseData"][@"testPaperUrl"];
-            [LTHttpManager downloadURL:testPaperUrl progress:^(NSProgress *downloadProgress) {
-            } destination:^(NSURL *targetPath) {
-                NSString *url = [NSString stringWithFormat:@"%@",targetPath];
-                NSString *fileName = [url lastPathComponent];
-                NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-                NSString *urlString = [fileName stringByRemovingPercentEncoding];
-                NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
-                NSFileManager *fileManager = [NSFileManager defaultManager];
-                if ([fileManager fileExistsAtPath:fullPath]) {
-                    NSDictionary *dict = [[NSDictionary alloc]init];
-                    NSData *data = [NSData dataWithContentsOfFile:fullPath];
-                    unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-                    NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
-                    NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
-                    NSError *error;
-                    if (data2 == nil) {
-                        dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-                    }else{
-                        dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:&error];
+                //
+                [LTHttpManager downloadURL:fDic[@"testPaperUrl"] progress:^(NSProgress *downloadProgress) {
+                } destination:^(NSURL *targetPath) {
+                    NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                    NSString *fileName = [url lastPathComponent];
+                    NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+                    NSString *urlString = [fileName stringByRemovingPercentEncoding];
+                    NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
+                    NSFileManager *fileManager = [NSFileManager defaultManager];
+                    if ([fileManager fileExistsAtPath:fullPath]) {
+                        NSDictionary *dict = [[NSDictionary alloc]init];
+                        NSData *data = [NSData dataWithContentsOfFile:fullPath];
+                        unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+                        NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
+                        NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
+                        NSError *error;
+                        if (data2 == nil) {
+                            dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+                        }else{
+                            dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:&error];
+                        }
+                        self.readScModel = [ReadSCModel mj_objectWithKeyValues:dict];
                     }
-                    self.readScModel = [ReadSCModel mj_objectWithKeyValues:dict];
-                }
-            } failure:^(NSError *error) {
+                } failure:^(NSError *error) {
+                    
+                }];
                 
-            }];
+                //
+                [LTHttpManager downloadURL:gDic[@"testPaperUrl"] progress:^(NSProgress *downloadProgress) {
+                } destination:^(NSURL *targetPath) {
+                    NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                    NSString *fileName = [url lastPathComponent];
+                    NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+                    NSString *urlString = [fileName stringByRemovingPercentEncoding];
+                    NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
+                    NSFileManager *fileManager = [NSFileManager defaultManager];
+                    if ([fileManager fileExistsAtPath:fullPath]) {
+                        NSDictionary *dict = [[NSDictionary alloc]init];
+                        NSData *data = [NSData dataWithContentsOfFile:fullPath];
+                        unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+                        NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
+                        NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
+                        NSError *error;
+                        if (data2 == nil) {
+                            dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+                        }else{
+                            dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:&error];
+                        }
+                        self.readScModel2 = [ReadSCModel mj_objectWithKeyValues:dict];
+                    }
+                } failure:^(NSError *error) {
+                    
+                }];
+            }
         }
     }];
 }
@@ -225,13 +254,14 @@
         }
         [self.tableView reloadData];
         [self.collectionView reloadData];
+        [weakSelf.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
         [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
         [weakSelf.tableView.mj_header endRefreshing];
     }];
     self.tableView.mj_header = header;
     
     ReadRfreshBackGifFooter *footer = [ReadRfreshBackGifFooter footerWithRefreshingBlock:^{
-        if (self.ReadSetionEnum < 2) {
+        if (self.ReadSetionEnum < 3) {
             self.ReadSetionEnum ++;
         }
         if (self.ReadSetionEnum == ReadSectionA) {
@@ -245,6 +275,7 @@
         }
         [self.tableView reloadData];
         [self.collectionView reloadData];
+        [weakSelf.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
         [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
         [weakSelf.tableView.mj_footer endRefreshing];
     }];
@@ -256,7 +287,7 @@
     [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
-        make.bottom.equalTo(self.view);
+        make.bottom.equalTo(self.view).offset(-10);
         make.height.equalTo(@40);
     }];
     UILabel *loadTimeLb = [UILabel new];
@@ -269,7 +300,7 @@
     }];
     loadTimeLb.textColor = UIColorFromRGB(0x999999);
     loadTimeLb.font = [UIFont systemFontOfSize:12];
-    loadTimeLb.text = @"00:00";
+    loadTimeLb.text = @"40:00";
     self.timeLb = loadTimeLb;
     [self myTimer];
     [[NSRunLoop mainRunLoop] addTimer:self.myTimer forMode:NSRunLoopCommonModes];
@@ -327,14 +358,21 @@
                 _correctInt++;
             }
         }
+        for (QuestionsItem *quModel in self.readScModel2.Questions) {
+            if (quModel.isCorrect) {
+                _correctInt++;
+            }
+        }
         NSLog(@"%d", _correctInt);
         ReadTestAnswerViewController *vc = [ReadTestAnswerViewController new];
         vc.userTime = self.timeLb.text;
-        vc.questionsArray = @[self.readModel.Answer,self.readSbModel.Options,self.readScModel];
+        vc.questionsArray = @[self.readModel.Answer,self.readSbModel.Options,self.readScModel, self.readScModel2];
         vc.rsaModel = self.readModel;
         vc.rsbModel = self.readSbModel;
         vc.rscModel = self.readScModel;
-        float correctFloat = (float)_correctInt/(float)(self.readScModel.Questions.count + self.readSbModel.Options.count + self.readModel.Answer.count)* 100;
+        vc.rscModel2 = self.readScModel2;
+        vc.testPaperNumber = self.testPaperNumber;
+        float correctFloat = (float)_correctInt/(float)(self.readScModel.Questions.count + self.readSbModel.Options.count + self.readModel.Answer.count + self.readScModel2.Questions.count)* 100;
         vc.correct = [NSString stringWithFormat:@"%.0f",correctFloat];
         [self.navigationController pushViewController:vc animated:YES];
         btn.userInteractionEnabled = YES;
@@ -342,7 +380,7 @@
     [finishView show];
 }
 - (void)time{
-    self.timeLb.text = [self getMMSSFromSS:[NSString stringWithFormat:@"%ld", (long)_seconds++]];
+    self.timeLb.text = [self getMMSSFromSS:[NSString stringWithFormat:@"%ld", (long)_seconds--]];
 }
 //传入 秒  得到  xx分钟xx秒
 -(NSString *)getMMSSFromSS:(NSString *)totalTime{
@@ -432,7 +470,7 @@
         YYTextLayout *layout = [YYTextLayout layoutWithContainerSize:maxSize text:textStr];
         CGFloat introHeight = layout.textBoundingSize.height;
         return introHeight + 20;
-    }else{
+    }else if (self.ReadSetionEnum == ReadSectionC){
         if (!self.readScModel.Passage) return 0;
         CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 32, MAXFLOAT);
         NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:self.readScModel.Passage];
@@ -442,8 +480,17 @@
         YYTextLayout *layout = [YYTextLayout layoutWithContainerSize:maxSize text:textStr];
         CGFloat introHeight = layout.textBoundingSize.height;
         return introHeight + 20;
+    }else{
+        if (!self.readScModel2.Passage) return 0;
+        CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 32, MAXFLOAT);
+        NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:self.readScModel2.Passage];
+        [textStr yy_setFont:[UIFont systemFontOfSize:15] range:textStr.yy_rangeOfAll];
+        textStr.yy_lineSpacing = 8;
+        //计算文本尺寸
+        YYTextLayout *layout = [YYTextLayout layoutWithContainerSize:maxSize text:textStr];
+        CGFloat introHeight = layout.textBoundingSize.height;
+        return introHeight + 20;
     }
-   
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.ReadSetionEnum == ReadSectionA) {
@@ -459,12 +506,18 @@
         ReadSBPassageModel *passageModel = self.readSbModel.Passage[indexPath.row];
         cell.passage = [NSString stringWithFormat:@"%@  %@", passageModel.Alphabet, passageModel.Text];
         return cell;
-    }else{
+    }else if (self.ReadSetionEnum == ReadSectionC){
         ReadSBTableViewCell *cell = [[ReadSBTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
         if (self.readScModel.Passage) {
             cell.passage = self.readScModel.Passage;
         }
-        cell.passage = self.readScModel.Passage;
+        cell.selectionStyle = NO;
+        return cell;
+    }else{
+        ReadSBTableViewCell *cell = [[ReadSBTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        if (self.readScModel2.Passage) {
+            cell.passage = self.readScModel2.Passage;
+        }
         cell.selectionStyle = NO;
         return cell;
     }
@@ -488,8 +541,10 @@
         }
     }else if (self.ReadSetionEnum == ReadSectionB){
         return self.readSbModel.Options.count;
-    }else{
+    }else if (self.ReadSetionEnum == ReadSectionC){
         return self.readScModel.Questions.count;
+    }else{
+        return self.readScModel2.Questions.count;
     }
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -574,13 +629,36 @@
             }
         };
         return cell;
-    }else{
+    }else if (self.ReadSetionEnum == ReadSectionC){
         ReadSCQuestionCardCCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([ReadSCQuestionCardCCell class]) forIndexPath:indexPath];
         cell.model = self.readScModel.Questions[indexPath.row];
         cell.passageNoLb.text = self.readScModel.Question;
         cell.superIndexPath = indexPath;
         cell.cellClick = ^(NSIndexPath * _Nonnull nextIndexPath) {
             if (nextIndexPath.row + 1 < self.readScModel.Questions.count) {
+                [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:nextIndexPath.row + 1 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
+            }else{
+                LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"确定进入下一个Passage吗" sureBtn:@"确定" cancleBtn:@"再等等" ];
+                finishView.resultIndex = ^(NSInteger index) {
+                    if (self.ReadSetionEnum < 3) {
+                        self.ReadSetionEnum ++;
+                    }
+                    [self.tableView reloadData];
+                    [self.collectionView reloadData];
+                    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+                };
+                [finishView show];
+            }
+        };
+        return cell;
+    }else{
+        ReadSCQuestionCardCCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([ReadSCQuestionCardCCell class]) forIndexPath:indexPath];
+        cell.model = self.readScModel2.Questions[indexPath.row];
+        cell.passageNoLb.text = self.readScModel2.Question;
+        cell.superIndexPath = indexPath;
+        cell.cellClick = ^(NSIndexPath * _Nonnull nextIndexPath) {
+            if (nextIndexPath.row + 1 < self.readScModel2.Questions.count) {
                 [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:nextIndexPath.row + 1 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
             }else{
                 //SectionC答完题 交卷

@@ -43,6 +43,7 @@ extern NSString *const kJSONExplanation;
 extern NSString *const kVersion_1;//版本号1.0
 extern NSString *const kVersion_2;//版本号2.0
 extern NSString *const kVersion_2_2;//版本号2.2
+extern NSString *const kVersion_2_3;//版本号2.3
 extern NSString *const kWordAutoPlay;//单词自动发音
 extern NSString *const kQuestionVoice;//答题音效
 extern NSString *const kLoadWordHomePageData;//加载单词首页数据

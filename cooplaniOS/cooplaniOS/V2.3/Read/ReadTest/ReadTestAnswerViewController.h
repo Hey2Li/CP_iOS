@@ -24,6 +24,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) ReadSAModel *rsaModel;
 @property (nonatomic, strong) ReadSBModel *rsbModel;
 @property (nonatomic, strong) ReadSCModel *rscModel;
+@property (nonatomic, strong) ReadSCModel *rscModel2;
+@property (nonatomic, strong) NSNumber *testPaperNumber;
+
 @end
 
 NS_ASSUME_NONNULL_END

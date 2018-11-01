@@ -170,11 +170,10 @@
     //    }else{
     //        self.cellHeight.constant = model.cellHeight = model.cellHeight;
     //    }
-    //    self.questionNameLb.text = [NSString stringWithFormat:@"Q%@",readSAoptionsModel.No];
-    
+//    self.questionNameLb.text = [NSString stringWithFormat:@"Q%@",readSAAnswerModel.];
     self.correctAnswerLb.text = readSAAnswerModel.Alphabet;
     self.youAnswerLb.text = readSAAnswerModel.yourAnswer;
-    //    self.answerDetailLb.text = readSAoptionsModel.Explain;
+    self.answerDetailLb.text = readSAAnswerModel.Explain;
 }
 - (void)setReadSCAnswerModel:(QuestionsItem *)readSCAnswerModel{
     _readSCAnswerModel = readSCAnswerModel;
@@ -225,7 +224,8 @@
     
     self.correctAnswerLb.text = readSCAnswerModel.Answer;
     self.youAnswerLb.text = readSCAnswerModel.yourAnswer;
-    //    self.answerDetailLb.text = readSAoptionsModel.Explain;
+    self.questionNameLb.text = [NSString stringWithFormat:@"Q%@",readSCAnswerModel.QuestionNumber];
+//    self.answerDetailLb.text = readSCAnswerModel.Explain;
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

@@ -13,6 +13,7 @@
 #import "ReadTrainingViewController.h"
 #import "ReadSAResultsHeaderView.h"
 #import "ReadSAModel.h"
+#import "ReadSectionAViewController.h"
 
 @interface ReadSAResultsViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -122,7 +123,8 @@
 }
 #pragma mark 继续
 - (void)continueBtnClick:(UIButton *)btn{
- 
+    ReadSectionAViewController *vc = [[ReadSectionAViewController alloc]init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)testAgainBtnClick:(UIButton *)btn{
    
@@ -171,13 +173,14 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     ReadSAAnswerModel *readSAAnswerModel = self.questionsArray[indexPath.row];
     cell.readSAAnswerModel = readSAAnswerModel;
+    cell.questionNameLb.text = [NSString stringWithFormat:@"Q%ld",26 + indexPath.row];
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section < self.questionsArray.count) {
         ReadSAAnswerModel *readSAAnswerModel = self.questionsArray[indexPath.row];
         readSAAnswerModel.isSelected = !readSAAnswerModel.isSelected;
-        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:nil];
+        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:NO];
     }
 }
 

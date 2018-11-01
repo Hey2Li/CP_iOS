@@ -75,7 +75,7 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (å
     [self loadData];
 }
 - (void)loadData{
-    [LTHttpManager getOneNewTestWithUserId:IS_USER_ID Type:@"4-TK" Testpaper_kind:@"1Y" Testpaper_type:@"4-TK" Complete:^(LTHttpResult result, NSString *message, id data) {
+    [LTHttpManager getOneNewTestWithUserId:IS_USER_ID Type:@"4-E" Testpaper_kind:@"1Y" Testpaper_type:@"4-E" Complete:^(LTHttpResult result, NSString *message, id data) {
         if (result == LTHttpResultSuccess) {
             NSString *testPaperUrl = data[@"responseData"][@"testPaperUrl"];
             [LTHttpManager downloadURL:testPaperUrl progress:^(NSProgress *downloadProgress) {

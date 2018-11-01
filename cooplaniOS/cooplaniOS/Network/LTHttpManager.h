@@ -489,4 +489,21 @@ url: /client/public/user/modifyOpenBook
  @param complete block
  */
 + (void)getCategoryLessonWithCourse_type:(NSString *)course_type Complete:(completeBlock)complete;
+
+
+/**
+ 根据编号查询阅读试卷 ycj 10/31
+
+ @param number 试卷编号
+ @param complete block
+ */
++ (void)searchReadingTestPapersWithId:(NSNumber *)number Complete:(completeBlock)complete;
+
+
+/**
+ 查询所有阅读试卷
+
+ @param complete block
+ */
++ (void)searchAllReadingTestWithComplete:(completeBlock)complete;
 @end

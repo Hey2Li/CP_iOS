@@ -14,8 +14,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *paperName;
 @property (weak, nonatomic) IBOutlet UILabel *fileSizeLb;
 @property (weak, nonatomic) IBOutlet UIButton *dowloadBtn;
+@property (weak, nonatomic) IBOutlet UIImageView *fileImageView;
 @property (nonatomic, strong) MyCollectionModel *model;
 @property (nonatomic, copy) void (^reloadData)(void);
 @property (nonatomic, strong) DownloadFileModel *downloadViewModel;
+@property (nonatomic, strong) MyCollectionModel *testPaperListModel;
 
 @end

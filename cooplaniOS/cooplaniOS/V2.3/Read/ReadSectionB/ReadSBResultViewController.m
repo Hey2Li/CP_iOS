@@ -11,6 +11,7 @@
 #import "ReadSAResultsHeaderView.h"
 #import "AnswerTableViewCell.h"
 #import "ReadSBModel.h"
+#import "ReadSectionBViewController.h"
 
 @interface ReadSBResultViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -121,7 +122,8 @@
 }
 #pragma mark 继续
 - (void)continueBtnClick:(UIButton *)btn{
-    
+    [self.navigationController
+     pushViewController:ReadSectionBViewController.new animated:YES];
 }
 - (void)testAgainBtnClick:(UIButton *)btn{
     

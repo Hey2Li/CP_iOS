@@ -36,6 +36,11 @@
 
     // Configure the view for the selected state
 }
+- (void)setTestPaperListModel:(MyCollectionModel *)testPaperListModel{
+    _testPaperListModel = testPaperListModel;
+    _paperName.text = testPaperListModel.name;
+    self.dowloadBtn.hidden = YES;
+}
 - (void)setModel:(MyCollectionModel *)model{
     self.dowloadBtn.hidden = NO;
     _model = model;

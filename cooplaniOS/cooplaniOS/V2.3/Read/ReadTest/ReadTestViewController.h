@@ -14,10 +14,12 @@ typedef enum : NSUInteger {
     ReadSectionA,
     ReadSectionB,
     ReadSectionC,
+    ReadSectionCPassageTwo,
 } ReadSection;
 
 @interface ReadTestViewController : UIViewController
 @property (nonatomic, assign) ReadSection ReadSetionEnum;
+@property (nonatomic, strong) NSNumber *testPaperNumber;
 @end
 
 NS_ASSUME_NONNULL_END

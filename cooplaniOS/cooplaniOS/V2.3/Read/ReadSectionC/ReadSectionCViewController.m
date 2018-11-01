@@ -14,7 +14,10 @@
 #import "ReadSCModel.h"
 
 NSString* sssstring =  @"[A] I have always been a poor test-taker. So it may seem rather strange that I have returned to college to finish the degree I left undone some four decades ago. I am making my way through Columbia University, surrounded by students who quickly supply the verbal answer while I am still processing the question.";
-
+typedef enum : NSUInteger {
+    SectionPassageOne,
+    SectionPassageTwo,
+} SectionPassageType;
 @interface ReadSectionCViewController ()<UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,UIGestureRecognizerDelegate>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -23,7 +26,8 @@ NSString* sssstring =  @"[A] I have always been a poor test-taker. So it may see
 @property (nonatomic, strong) UILabel *timeLb;
 @property (nonatomic, assign) NSInteger seconds;
 @property (nonatomic, strong) ReadSCModel *readScModel;
-
+@property (nonatomic, strong) ReadSCModel *readScModel2;
+@property (nonatomic, assign) SectionPassageType sectionPassageType;
 @property (nonatomic, assign) int correctInt;
 @property (nonatomic, assign) int NoCorrectInt;
 @end
@@ -70,9 +74,10 @@ NSString* sssstring =  @"[A] I have always been a poor test-taker. So it may see
     self.title = @"仔细阅读";
     _correctInt = 0;
     [self loadData];
+    self.sectionPassageType = SectionPassageOne;
 }
 - (void)loadData{
-    [LTHttpManager getOneNewTestWithUserId:IS_USER_ID Type:@"4-ZXYD" Testpaper_kind:@"1Y" Testpaper_type:@"4-ZXYD" Complete:^(LTHttpResult result, NSString *message, id data) {
+    [LTHttpManager getOneNewTestWithUserId:IS_USER_ID Type:@"4-F" Testpaper_kind:@"1Y" Testpaper_type:@"4-F" Complete:^(LTHttpResult result, NSString *message, id data) {
         if (result == LTHttpResultSuccess) {
             NSString *testPaperUrl = data[@"responseData"][@"testPaperUrl"];
             [LTHttpManager downloadURL:testPaperUrl progress:^(NSProgress *downloadProgress) {
@@ -98,6 +103,36 @@ NSString* sssstring =  @"[A] I have always been a poor test-taker. So it may see
                     self.readScModel = [ReadSCModel mj_objectWithKeyValues:dict];
                     [self.tableView reloadData];
                     [self.collectionView reloadData];
+                }
+            } failure:^(NSError *error) {
+                
+            }];
+        }
+    }];
+    [LTHttpManager getOneNewTestWithUserId:IS_USER_ID Type:@"4-G" Testpaper_kind:@"1Y" Testpaper_type:@"4-G" Complete:^(LTHttpResult result, NSString *message, id data) {
+        if (result == LTHttpResultSuccess) {
+            NSString *testPaperUrl = data[@"responseData"][@"testPaperUrl"];
+            [LTHttpManager downloadURL:testPaperUrl progress:^(NSProgress *downloadProgress) {
+            } destination:^(NSURL *targetPath) {
+                NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                NSString *fileName = [url lastPathComponent];
+                NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+                NSString *urlString = [fileName stringByRemovingPercentEncoding];
+                NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
+                NSFileManager *fileManager = [NSFileManager defaultManager];
+                if ([fileManager fileExistsAtPath:fullPath]) {
+                    NSDictionary *dict = [[NSDictionary alloc]init];
+                    NSData *data = [NSData dataWithContentsOfFile:fullPath];
+                    unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+                    NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
+                    NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
+                    NSError *error;
+                    if (data2 == nil) {
+                        dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+                    }else{
+                        dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:&error];
+                    }
+                    self.readScModel2 = [ReadSCModel mj_objectWithKeyValues:dict];
                 }
             } failure:^(NSError *error) {
                 
@@ -248,26 +283,53 @@ NSString* sssstring =  @"[A] I have always been a poor test-taker. So it may see
     return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (self.readScModel.Passage) {
-        CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 32, MAXFLOAT);
-        NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:self.readScModel.Passage];
-        [textStr yy_setFont:[UIFont systemFontOfSize:15] range:textStr.yy_rangeOfAll];
-        textStr.yy_lineSpacing = 8;
-        //计算文本尺寸
-        YYTextLayout *layout = [YYTextLayout layoutWithContainerSize:maxSize text:textStr];
-        CGFloat introHeight = layout.textBoundingSize.height;
-        return introHeight + 50;
+    if (self.sectionPassageType == SectionPassageOne) {
+        if (self.readScModel.Passage) {
+            CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 32, MAXFLOAT);
+            NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:self.readScModel.Passage];
+            [textStr yy_setFont:[UIFont systemFontOfSize:15] range:textStr.yy_rangeOfAll];
+            textStr.yy_lineSpacing = 8;
+            //计算文本尺寸
+            YYTextLayout *layout = [YYTextLayout layoutWithContainerSize:maxSize text:textStr];
+            CGFloat introHeight = layout.textBoundingSize.height;
+            return introHeight + 20;
+        }else{
+            return 0;
+        }
+    }else if (self.sectionPassageType == SectionPassageTwo){
+        if (self.readScModel2.Passage) {
+            CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 32, MAXFLOAT);
+            NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:self.readScModel2.Passage];
+            [textStr yy_setFont:[UIFont systemFontOfSize:15] range:textStr.yy_rangeOfAll];
+            textStr.yy_lineSpacing = 8;
+            //计算文本尺寸
+            YYTextLayout *layout = [YYTextLayout layoutWithContainerSize:maxSize text:textStr];
+            CGFloat introHeight = layout.textBoundingSize.height;
+            return introHeight + 20;
+        }else{
+            return 0;
+        }
     }else{
         return 0;
     }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     ReadSBTableViewCell *cell = [[ReadSBTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    if (self.readScModel.Passage) {
-        cell.passage = self.readScModel.Passage;
+    if (self.sectionPassageType == SectionPassageOne) {
+        if (self.readScModel.Passage) {
+            cell.passage = self.readScModel.Passage;
+        }
+        cell.selectionStyle = NO;
+        return cell;
+    }else if (self.sectionPassageType == SectionPassageTwo){
+        if (self.readScModel2.Passage) {
+            cell.passage = self.readScModel2.Passage;
+        }
+        cell.selectionStyle = NO;
+        return cell;
+    }else{
+        return cell;
     }
-    cell.selectionStyle = NO;
-    return cell;
 }
 
 #pragma mark UICollectionDelagete&DataSource
@@ -275,39 +337,74 @@ NSString* sssstring =  @"[A] I have always been a poor test-taker. So it may see
     return 1;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return self.readScModel.Questions.count;
+    if (self.sectionPassageType == SectionPassageOne) {
+        return self.readScModel.Questions.count;
+    }else if (self.sectionPassageType == SectionPassageTwo){
+        return self.readScModel2.Questions.count;
+    }else{
+        return 0;
+    }
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     return CGSizeMake(SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:480]);
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     ReadSCQuestionCardCCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([ReadSCQuestionCardCCell class]) forIndexPath:indexPath];
-    cell.model = self.readScModel.Questions[indexPath.row];
-    cell.passageNoLb.text = self.readScModel.Question;
-    cell.superIndexPath = indexPath;
-    cell.cellClick = ^(NSIndexPath * _Nonnull nextIndexPath) {
-        if (nextIndexPath.row + 1 < self.readScModel.Questions.count) {
-            [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:nextIndexPath.row + 1 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
-        }else{
-            LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"确定交卷吗" sureBtn:@"交卷" cancleBtn:@"再检查下" ];
-            finishView.resultIndex = ^(NSInteger index) {
-                for (QuestionsItem *quModel in self.readScModel.Questions) {
-                    if (quModel.isCorrect) {
-                        _correctInt++;
+    if (self.sectionPassageType == SectionPassageOne) {
+        cell.model = self.readScModel.Questions[indexPath.row];
+        cell.passageNoLb.text = self.readScModel.Question;
+        cell.superIndexPath = indexPath;
+        cell.cellClick = ^(NSIndexPath * _Nonnull nextIndexPath) {
+            if (nextIndexPath.row + 1 < self.readScModel.Questions.count) {
+                [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:nextIndexPath.row + 1 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
+            }else{
+                LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"开始下一个Passage吗？" sureBtn:@"确定" cancleBtn:@"再等等" ];
+                finishView.resultIndex = ^(NSInteger index) {
+                    self.sectionPassageType = SectionPassageTwo;
+                    [self.tableView reloadData];
+                    [self.collectionView reloadData];
+                    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+                };
+                [finishView show];
+            }
+        };
+        return cell;
+    }else if (self.sectionPassageType == SectionPassageTwo){
+        cell.model = self.readScModel2.Questions[indexPath.row];
+        cell.passageNoLb.text = self.readScModel2.Question;
+        cell.superIndexPath = indexPath;
+        cell.cellClick = ^(NSIndexPath * _Nonnull nextIndexPath) {
+            if (nextIndexPath.row + 1 < self.readScModel2.Questions.count) {
+                [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:nextIndexPath.row + 1 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
+            }else{
+                LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"确定交卷吗" sureBtn:@"交卷" cancleBtn:@"再检查下" ];
+                finishView.resultIndex = ^(NSInteger index) {
+                    for (QuestionsItem *quModel in self.readScModel.Questions) {
+                        if (quModel.isCorrect) {
+                            _correctInt++;
+                        }
                     }
-                }
-                NSLog(@"%d", _correctInt);
-                ReadSCResultsViewController *vc = [ReadSCResultsViewController new];
-                vc.userTime = self.timeLb.text;
-                vc.questionsArray = self.readScModel.Questions;
-                float correctFloat = (float)_correctInt/(float)self.readScModel.Questions.count * 100;
-                vc.correct = [NSString stringWithFormat:@"%.0f",correctFloat];
-                [self.navigationController pushViewController:vc animated:YES];
-            };
-            [finishView show];
-        }
-    };
-    return cell;
+                    for (QuestionsItem *quModel in self.readScModel2.Questions) {
+                        if (quModel.isCorrect) {
+                            _correctInt++;
+                        }
+                    }
+                    NSLog(@"%d", _correctInt);
+                    ReadSCResultsViewController *vc = [ReadSCResultsViewController new];
+                    vc.userTime = self.timeLb.text;
+                    vc.questionsArray = @[self.readScModel , self.readScModel2];
+                    float correctFloat = (float)_correctInt/(float)(self.readScModel.Questions.count + self.readScModel2.Questions.count) * 100;
+                    vc.correct = [NSString stringWithFormat:@"%.0f",correctFloat];
+                    [self.navigationController pushViewController:vc animated:YES];
+                };
+                [finishView show];
+            }
+        };
+        return cell;
+    }else{
+        return cell;
+    }
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     

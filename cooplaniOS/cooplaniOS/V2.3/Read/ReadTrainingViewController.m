@@ -16,6 +16,7 @@
 #import "ReadSectionB/ReadSectionBViewController.h"
 #import "ReadSectionC/ReadSectionCViewController.h"
 #import "ReadTest/ReadTestViewController.h"
+#import "ReadTest/ReadTestListViewController.h"
 
 @interface ReadTrainingViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
@@ -148,7 +149,7 @@
         [self.navigationController pushViewController:vc animated:YES];
     }else if (indexPath.section == 1){
         [MobClick endEvent:@"listeningpage_examination"];
-        [self.navigationController pushViewController:ReadTestViewController.new animated:YES];
+        [self.navigationController pushViewController:ReadTestListViewController.new animated:YES];
     }
 }
 /*

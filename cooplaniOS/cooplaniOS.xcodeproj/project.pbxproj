@@ -10,6 +10,7 @@
 		311F8994694632DA35DB4797 /* libPods-cooplaniOSUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AE146AACEAF93206FD6086 /* libPods-cooplaniOSUITests.a */; };
 		9B02C4C821193D01008F22B6 /* NO.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9B02C4C621193D00008F22B6 /* NO.mp3 */; };
 		9B02C4C921193D01008F22B6 /* YES.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 9B02C4C721193D01008F22B6 /* YES.mp3 */; };
+		9B0A7A86218942ED00D7B465 /* ReadTestListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B0A7A85218942ED00D7B465 /* ReadTestListViewController.m */; };
 		9B135CBB207C6B1D0040A883 /* UIImage+mask.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B135CBA207C6B1D0040A883 /* UIImage+mask.m */; };
 		9B135CC1207C886A0040A883 /* UISlider+time.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B135CC0207C886A0040A883 /* UISlider+time.m */; };
 		9B135CCF207CD8AA0040A883 /* LTHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B135CCD207CD8AA0040A883 /* LTHTTPSessionManager.m */; };
@@ -190,12 +191,9 @@
 		9BAC4CC521254D3A00A3A58B /* LTEmpty.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BAC4CC421254D3A00A3A58B /* LTEmpty.m */; };
 		9BAC4CCE2125661C00A3A58B /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BAC4CCC2125661C00A3A58B /* AboutUsViewController.m */; };
 		9BAC4CCF2125661C00A3A58B /* AboutUsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BAC4CCD2125661C00A3A58B /* AboutUsViewController.xib */; };
-		9BAD769F2175A8BD0084DC42 /* 20171201仔细阅读.json in Resources */ = {isa = PBXBuildFile; fileRef = 9BAD769E2175A8BD0084DC42 /* 20171201仔细阅读.json */; };
 		9BAD76A22175AC3A0084DC42 /* ReadSCModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BAD76A12175AC3A0084DC42 /* ReadSCModel.m */; };
-		9BAD76A42175D7EC0084DC42 /* 20160601SB.json in Resources */ = {isa = PBXBuildFile; fileRef = 9BAD76A32175D7EC0084DC42 /* 20160601SB.json */; };
 		9BAD76A72175D8C20084DC42 /* ReadSBModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BAD76A62175D8C20084DC42 /* ReadSBModel.m */; };
 		9BAD76AA2176FDCC0084DC42 /* ReadSBResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BAD76A92176FDCC0084DC42 /* ReadSBResultViewController.m */; };
-		9BAD76AC217738D10084DC42 /* 2012年第一套 (4).json in Resources */ = {isa = PBXBuildFile; fileRef = 9BAD76AB217738D10084DC42 /* 2012年第一套 (4).json */; };
 		9BAD76AF217814EC0084DC42 /* ReadSCResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BAD76AE217814EC0084DC42 /* ReadSCResultsViewController.m */; };
 		9BAD76B62178565F0084DC42 /* ReadTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BAD76B52178565F0084DC42 /* ReadTestViewController.m */; };
 		9BB0A07E209C762C00089C4A /* TestPaperModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BB0A07D209C762C00089C4A /* TestPaperModel.m */; };
@@ -275,6 +273,8 @@
 		9AB145F84570512990287D28 /* Pods-cooplaniOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cooplaniOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cooplaniOS/Pods-cooplaniOS.debug.xcconfig"; sourceTree = "<group>"; };
 		9B02C4C621193D00008F22B6 /* NO.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = NO.mp3; sourceTree = "<group>"; };
 		9B02C4C721193D01008F22B6 /* YES.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = YES.mp3; sourceTree = "<group>"; };
+		9B0A7A84218942ED00D7B465 /* ReadTestListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReadTestListViewController.h; sourceTree = "<group>"; };
+		9B0A7A85218942ED00D7B465 /* ReadTestListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReadTestListViewController.m; sourceTree = "<group>"; };
 		9B135CB9207C6B1D0040A883 /* UIImage+mask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+mask.h"; sourceTree = "<group>"; };
 		9B135CBA207C6B1D0040A883 /* UIImage+mask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+mask.m"; sourceTree = "<group>"; };
 		9B135CBF207C886A0040A883 /* UISlider+time.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UISlider+time.h"; sourceTree = "<group>"; };
@@ -591,15 +591,12 @@
 		9BAC4CCB2125661C00A3A58B /* AboutUsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AboutUsViewController.h; sourceTree = "<group>"; };
 		9BAC4CCC2125661C00A3A58B /* AboutUsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AboutUsViewController.m; sourceTree = "<group>"; };
 		9BAC4CCD2125661C00A3A58B /* AboutUsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AboutUsViewController.xib; sourceTree = "<group>"; };
-		9BAD769E2175A8BD0084DC42 /* 20171201仔细阅读.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "20171201仔细阅读.json"; sourceTree = "<group>"; };
 		9BAD76A02175AC3A0084DC42 /* ReadSCModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReadSCModel.h; sourceTree = "<group>"; };
 		9BAD76A12175AC3A0084DC42 /* ReadSCModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReadSCModel.m; sourceTree = "<group>"; };
-		9BAD76A32175D7EC0084DC42 /* 20160601SB.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = 20160601SB.json; sourceTree = "<group>"; };
 		9BAD76A52175D8C20084DC42 /* ReadSBModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReadSBModel.h; sourceTree = "<group>"; };
 		9BAD76A62175D8C20084DC42 /* ReadSBModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReadSBModel.m; sourceTree = "<group>"; };
 		9BAD76A82176FDCC0084DC42 /* ReadSBResultViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReadSBResultViewController.h; sourceTree = "<group>"; };
 		9BAD76A92176FDCC0084DC42 /* ReadSBResultViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReadSBResultViewController.m; sourceTree = "<group>"; };
-		9BAD76AB217738D10084DC42 /* 2012年第一套 (4).json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "2012年第一套 (4).json"; sourceTree = "<group>"; };
 		9BAD76AD217814EC0084DC42 /* ReadSCResultsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReadSCResultsViewController.h; sourceTree = "<group>"; };
 		9BAD76AE217814EC0084DC42 /* ReadSCResultsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReadSCResultsViewController.m; sourceTree = "<group>"; };
 		9BAD76B42178565F0084DC42 /* ReadTestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReadTestViewController.h; sourceTree = "<group>"; };
@@ -1250,9 +1247,6 @@
 			isa = PBXGroup;
 			children = (
 				9BAD76B0217826810084DC42 /* ReadTest */,
-				9BAD76A32175D7EC0084DC42 /* 20160601SB.json */,
-				9BAD76AB217738D10084DC42 /* 2012年第一套 (4).json */,
-				9BAD769E2175A8BD0084DC42 /* 20171201仔细阅读.json */,
 				9B821A43215F40DC00CEA4BF /* ReadSectionC */,
 				9B821A42215F40D400CEA4BF /* ReadSectionB */,
 				9B821A41215F40CC00CEA4BF /* ReadSectionA */,
@@ -1418,6 +1412,8 @@
 				9BAD76B52178565F0084DC42 /* ReadTestViewController.m */,
 				9BC49C502179847B00BC1606 /* ReadTestAnswerViewController.h */,
 				9BC49C512179847B00BC1606 /* ReadTestAnswerViewController.m */,
+				9B0A7A84218942ED00D7B465 /* ReadTestListViewController.h */,
+				9B0A7A85218942ED00D7B465 /* ReadTestListViewController.m */,
 			);
 			path = ReadTest;
 			sourceTree = "<group>";
@@ -1749,7 +1745,6 @@
 				9B16B0942090623E00094EE7 /* QuestionTableViewCell.xib in Resources */,
 				9B3D02D020847C5A005C923B /* PaperDetailTableViewCell.xib in Resources */,
 				9BDFE0C5208833B500B59B3B /* LeftViweTableViewCell.xib in Resources */,
-				9BAD769F2175A8BD0084DC42 /* 20171201仔细阅读.json in Resources */,
 				9B3D02D620848878005C923B /* LoginViewController.xib in Resources */,
 				9BF4CF2C2147BEC800BFBFFF /* HomeCategoryTableViewCell.xib in Resources */,
 				9B286A2F2112F92D00C7A2D4 /* ReciteWordTbHeaderView.xib in Resources */,
@@ -1781,7 +1776,6 @@
 				9BF4CF362148A59600BFBFFF /* HomeBuyLessonTableViewCell.xib in Resources */,
 				9B4ECDD1214123B5009D770D /* WordDetailFirstCellTableViewCell.xib in Resources */,
 				9B81D4DE20EB47ED00BFFC39 /* VideoTableViewCell.xib in Resources */,
-				9BAD76A42175D7EC0084DC42 /* 20160601SB.json in Resources */,
 				9BF4CF492148C4B300BFBFFF /* PracticeTestTableViewCell.xib in Resources */,
 				9B3DA36C20F74C980028CDA9 /* AddressTableViewCell.xib in Resources */,
 				9B286A1A2111ADDE00C7A2D4 /* ReciteWordTbFooterView.xib in Resources */,
@@ -1790,7 +1784,6 @@
 				9BF8A4BB211052FC0079784F /* LearnWordGroupView.xib in Resources */,
 				9B02C4C921193D01008F22B6 /* YES.mp3 in Resources */,
 				9B4ECDCB21412030009D770D /* WordListTableViewCell.xib in Resources */,
-				9BAD76AC217738D10084DC42 /* 2012年第一套 (4).json in Resources */,
 				9B7AD3C720FC6FED00C224CC /* SureChangePhoneViewController.xib in Resources */,
 				9B6877CD2171D55500F07595 /* ReadSAResultsHeaderView.xib in Resources */,
 				9B3DA39420F886960028CDA9 /* LessonServerView.xib in Resources */,
@@ -2017,6 +2010,7 @@
 				9B90287F2138E2DC00F0564C /* SelectedWBTableViewController.m in Sources */,
 				9BF4CF3A2148AFE800BFBFFF /* ListenTrainingViewController.m in Sources */,
 				9B54EC4221424950007DE1B5 /* NoKnowFirstPageCell.m in Sources */,
+				9B0A7A86218942ED00D7B465 /* ReadTestListViewController.m in Sources */,
 				9B1D31D420736856007674CF /* WrongTopicViewController.m in Sources */,
 				9B16B08F20905BF100094EE7 /* PracticeModeViewController.m in Sources */,
 				9B1D31D720736866007674CF /* MyDownloadViewController.m in Sources */,
