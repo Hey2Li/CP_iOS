@@ -90,10 +90,10 @@
             NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
             NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
             NSError *error;
-            if (data2 == nil) {
-                dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-            }else{
+            if (data == nil) {
                 dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:&error];
+            }else{
+                dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
             }
             self.readModel = [ReadSAModel mj_objectWithKeyValues:dict];
             [self.tableView reloadData];
@@ -126,10 +126,10 @@
                         NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
                         NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
                         NSError *error;
-                        if (data2 == nil) {
-                            dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-                        }else{
+                        if (data == nil) {
                             dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:&error];
+                        }else{
+                            dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
                         }
                         self.readModel = [ReadSAModel mj_objectWithKeyValues:dict];
                         [self.tableView reloadData];

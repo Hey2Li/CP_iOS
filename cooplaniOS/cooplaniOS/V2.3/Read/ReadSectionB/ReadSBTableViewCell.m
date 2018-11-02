@@ -38,7 +38,7 @@
     textStr.yy_lineSpacing = 8;//行间距
     //        textStr.yy_headIndent = 10;
     
-    CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 32, MAXFLOAT);
+    CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 32 - 25, MAXFLOAT);
     //计算文本尺寸
     YYTextLayout *layout = [YYTextLayout layoutWithContainerSize:maxSize text:textStr];
     textLabel.textLayout = layout;
@@ -46,7 +46,7 @@
     [self addSubview:textLabel];
     [textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top).offset(10);
-        make.width.equalTo(@(maxSize.width - 25));
+        make.width.equalTo(@(maxSize.width));
         make.height.equalTo(@(introHeight));
         make.centerX.equalTo(self.mas_centerX);
     }];

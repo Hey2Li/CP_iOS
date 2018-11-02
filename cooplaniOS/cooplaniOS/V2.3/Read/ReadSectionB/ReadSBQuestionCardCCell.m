@@ -66,11 +66,11 @@
     if (indexPath.section == 0) {
         return CGSizeMake(self.collectionView.width - 20, 35);
     }else if (indexPath.section == 1){
-        return CGSizeMake(self.collectionView.width - 20, 45);
+        return CGSizeMake(self.collectionView.width - 20, 25);
     }else if (indexPath.section == 2){
-        return CGSizeMake(self.collectionView.width - 20, 20);
+        return CGSizeMake(self.collectionView.width - 20, 1);
     }else if (indexPath.section == 3){
-        return CGSizeMake(self.collectionView.width - 20, 75);
+        return CGSizeMake(self.collectionView.width - 20, 95);
     }else{
         return CGSizeMake(40, 40);
     }
@@ -110,7 +110,8 @@
         return cell;
     }else if (indexPath.section == 1){
         SAQuestionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([SAQuestionCollectionViewCell class]) forIndexPath:indexPath];
-        cell.questionLb.text = self.question;
+        cell.questionLb.text = [NSString stringWithFormat:@"%@", self.optionsModel.No];
+        cell.questionLb.font = [UIFont boldSystemFontOfSize:14];
         return cell;
     }else if (indexPath.section == 2){
         UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([UICollectionViewCell class]) forIndexPath:indexPath];
@@ -135,6 +136,9 @@
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 4) {
+        UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
+        //设置(Highlight)高亮下的颜色
+        [cell setBackgroundColor:DRGBCOLOR];
         if (self.collectionScroll) {
             self.collectionScroll(self.superIndexPath);
             ReadSBPassageModel *model = self.questionsArray[indexPath.row];
@@ -143,22 +147,20 @@
             }
             self.optionsModel.yourAnswer = model.Alphabet;
             NSLog(@"%@", self.optionsModel.yourAnswer);
+            [collectionView reloadData];
         }
     }
 }
 //当cell高亮时返回是否高亮
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return YES;
+    if (indexPath.section < 4) {
+        return NO;
+    }else{
+        return YES;
+    }
 }
 
-- (void)collectionView:(UICollectionView *)colView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    UICollectionViewCell* cell = [colView cellForItemAtIndexPath:indexPath];
-    //设置(Highlight)高亮下的颜色
-//    [cell setBackgroundColor:UIColorFromRGB(0xFAE7B0)];
-    [cell setBackgroundColor:DRGBCOLOR];
-}
 - (void)setOptionsModel:(ReadSBOptionsModel *)optionsModel{
     _optionsModel = optionsModel;
     [self.collectionView reloadData];

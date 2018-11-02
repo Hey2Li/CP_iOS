@@ -101,10 +101,10 @@
             NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
             NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
             NSError *error;
-            if (data2 == nil) {
-                dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-            }else{
+            if (data == nil) {
                 dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:&error];
+            }else{
+                dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
             }
             self.readSbModel = [ReadSBModel mj_objectWithKeyValues:dict];
             [self.tableView reloadData];
@@ -136,10 +136,10 @@
                         NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
                         NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
                         NSError *error;
-                        if (data2 == nil) {
-                            dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-                        }else{
+                        if (data == nil) {
                             dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:&error];
+                        }else{
+                            dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
                         }
                         self.readSbModel = [ReadSBModel mj_objectWithKeyValues:dict];
                         [self.tableView reloadData];
@@ -315,13 +315,14 @@
 }
 #pragma mark UITableViewDelegate&DataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.readSbModel.Options.count;
+    return self.readSbModel.Passage.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     ReadSBPassageModel *passageModel = self.readSbModel.Passage[indexPath.row];
     CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 32, MAXFLOAT);
-    NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:passageModel.Text];
-    [textStr yy_setFont:[UIFont systemFontOfSize:15] range:textStr.yy_rangeOfAll];
+    maxSize.width = maxSize.width - 25;
+    NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@  %@", passageModel.Alphabet, passageModel.Text]];
+    [textStr yy_setFont:[UIFont systemFontOfSize:14] range:textStr.yy_rangeOfAll];
     textStr.yy_lineSpacing = 8;
     //计算文本尺寸
     YYTextLayout *layout = [YYTextLayout layoutWithContainerSize:maxSize text:textStr];

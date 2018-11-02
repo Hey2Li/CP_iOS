@@ -145,7 +145,7 @@
         [MobClick endEvent:@"listeningpage_course"];
         VideoViewController *vc = [[VideoViewController alloc]init];
         vc.title = @"阅读·讲解课";
-        vc.lessonType = @"1";
+        vc.lessonType = @"2";
         [self.navigationController pushViewController:vc animated:YES];
     }else if (indexPath.section == 1){
         [MobClick endEvent:@"listeningpage_examination"];

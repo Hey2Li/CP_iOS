@@ -94,7 +94,7 @@
         textLabel.attributedText = textStr;
         _readStr = textStr;
         _clickAnswerArray = afterRangeArray;
-        _clickCurrentRange = NSMakeRange(0, 0);
+//        _clickCurrentRange = NSMakeRange(0, 0);
     }
 }
 - (void)setPassage:(NSString *)passage{

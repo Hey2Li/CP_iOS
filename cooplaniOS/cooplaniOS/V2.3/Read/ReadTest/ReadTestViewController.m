@@ -96,6 +96,7 @@
     _correctInt = 0;
     self.ReadSetionEnum = ReadSectionA;
 }
+#pragma mark 加载试卷数据
 - (void)loadData{
     [LTHttpManager searchReadingTestPapersWithId:self.testPaperNumber Complete:^(LTHttpResult result, NSString *message, id data) {
         if (LTHttpResultSuccess == result) {
@@ -120,10 +121,10 @@
                         NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
                         NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
                         NSError *error;
-                        if (data2 == nil) {
-                            dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-                        }else{
+                        if (data == nil) {
                             dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:&error];
+                        }else{
+                            dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
                         }
                         self.readModel = [ReadSAModel mj_objectWithKeyValues:dict];
                         [self.tableView reloadData];
@@ -149,10 +150,10 @@
                         NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
                         NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
                         NSError *error;
-                        if (data2 == nil) {
-                            dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-                        }else{
+                        if (data == nil) {
                             dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:&error];
+                        }else{
+                            dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
                         }
                         self.readSbModel = [ReadSBModel mj_objectWithKeyValues:dict];
                     }
@@ -176,10 +177,10 @@
                         NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
                         NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
                         NSError *error;
-                        if (data2 == nil) {
-                            dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+                        if (data == nil) {
+                             dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:&error];
                         }else{
-                            dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:&error];
+                            dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
                         }
                         self.readScModel = [ReadSCModel mj_objectWithKeyValues:dict];
                     }
@@ -203,10 +204,10 @@
                         NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
                         NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
                         NSError *error;
-                        if (data2 == nil) {
-                            dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-                        }else{
+                        if (data == nil) {
                             dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:&error];
+                        }else{
+                            dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
                         }
                         self.readScModel2 = [ReadSCModel mj_objectWithKeyValues:dict];
                     }
@@ -243,45 +244,45 @@
     ReadRefreshGifHeader *header = [ReadRefreshGifHeader headerWithRefreshingBlock:^{
         if (self.ReadSetionEnum > 0) {
             self.ReadSetionEnum --;
-        }
-        if (self.ReadSetionEnum == ReadSectionA) {
-            self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-            [self.collectionView setFrame:CGRectMake(16, SCREEN_HEIGHT - 130 - SafeAreaTopHeight, SCREEN_WIDTH - 32, [Tool layoutForAlliPhoneHeight:480])];
-            [self.collectionView setBackgroundColor:[UIColor whiteColor]];
+            if (self.ReadSetionEnum == ReadSectionA) {
+                self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
+                [self.collectionView setFrame:CGRectMake(16, SCREEN_HEIGHT - 130 - SafeAreaTopHeight, SCREEN_WIDTH - 32, [Tool layoutForAlliPhoneHeight:480])];
+                [self.collectionView setBackgroundColor:[UIColor whiteColor]];
+            }else{
+                self.flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+                [self.collectionView setFrame:CGRectMake(0, SCREEN_HEIGHT - 130 - SafeAreaTopHeight, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:480])];
+                [self.collectionView setBackgroundColor:[UIColor clearColor]];
+            }
+            [self.tableView reloadData];
+            [self.collectionView reloadData];
+            [weakSelf.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+            [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
         }else{
-            self.flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-            [self.collectionView setFrame:CGRectMake(0, SCREEN_HEIGHT - 130 - SafeAreaTopHeight, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:480])];
-            [self.collectionView setBackgroundColor:[UIColor clearColor]];
+            SVProgressShowStuteText(@"没有更多了", NO);
         }
-        [self.tableView reloadData];
-        [self.collectionView reloadData];
-        [weakSelf.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
-        [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
         [weakSelf.tableView.mj_header endRefreshing];
     }];
     self.tableView.mj_header = header;
     
     ReadRfreshBackGifFooter *footer = [ReadRfreshBackGifFooter footerWithRefreshingBlock:^{
-        if (self.ReadSetionEnum == 3) {
-            SVProgressShowStuteText(@"没有更多了", NO);
-            [self.tableView.mj_footer endRefreshing];
-        }
         if (self.ReadSetionEnum < 3) {
             self.ReadSetionEnum ++;
-        }
-        if (self.ReadSetionEnum == ReadSectionA) {
-            self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-            [self.collectionView setFrame:CGRectMake(16, SCREEN_HEIGHT - 130 - SafeAreaTopHeight, SCREEN_WIDTH - 32, [Tool layoutForAlliPhoneHeight:480])];
-            [self.collectionView setBackgroundColor:[UIColor whiteColor]];
+            if (self.ReadSetionEnum == ReadSectionA) {
+                self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
+                [self.collectionView setFrame:CGRectMake(16, SCREEN_HEIGHT - 130 - SafeAreaTopHeight, SCREEN_WIDTH - 32, [Tool layoutForAlliPhoneHeight:480])];
+                [self.collectionView setBackgroundColor:[UIColor whiteColor]];
+            }else{
+                self.flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+                [self.collectionView setFrame:CGRectMake(0, SCREEN_HEIGHT - 130 - SafeAreaTopHeight, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:480])];
+                [self.collectionView setBackgroundColor:[UIColor clearColor]];
+            }
+            [self.tableView reloadData];
+            [self.collectionView reloadData];
+            [weakSelf.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+            [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
         }else{
-            self.flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-            [self.collectionView setFrame:CGRectMake(0, SCREEN_HEIGHT - 130 - SafeAreaTopHeight, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:480])];
-            [self.collectionView setBackgroundColor:[UIColor clearColor]];
+             SVProgressShowStuteText(@"没有更多了", NO);
         }
-        [self.tableView reloadData];
-        [self.collectionView reloadData];
-        [weakSelf.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
-        [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
         [weakSelf.tableView.mj_footer endRefreshing];
     }];
     self.tableView.mj_footer = footer;
@@ -462,7 +463,7 @@
     if (self.ReadSetionEnum == ReadSectionA) {
         return 1;
     }else if (self.ReadSetionEnum == ReadSectionB){
-        return self.readSbModel.Options.count;
+        return self.readSbModel.Passage.count;
     }else{
         return 1;
     }
@@ -481,8 +482,9 @@
     }else if (self.ReadSetionEnum == ReadSectionB){
         ReadSBPassageModel *passageModel = self.readSbModel.Passage[indexPath.row];
         CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 32, MAXFLOAT);
-        NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:passageModel.Text];
-        [textStr yy_setFont:[UIFont systemFontOfSize:15] range:textStr.yy_rangeOfAll];
+        maxSize.width = maxSize.width - 25;
+        NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@  %@", passageModel.Alphabet, passageModel.Text]];
+        [textStr yy_setFont:[UIFont systemFontOfSize:14] range:textStr.yy_rangeOfAll];
         textStr.yy_lineSpacing = 8;
         //计算文本尺寸
         YYTextLayout *layout = [YYTextLayout layoutWithContainerSize:maxSize text:textStr];
