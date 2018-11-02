@@ -15,8 +15,6 @@
 #import "ReadRfreshBackGifFooter.h"
 #import "ReadSAModel.h"
 
-NSString* sstring =  @"The method for making beer has changed over time. Hops (啤酒花)，for example, which give many amodern beer its bitter flavor, are a (26)_______ recent addition to the beverage. This was first mentioned in reference to brewing in the ninth century. Now, researchers have found a (27)_______ ingredient in residue (残留物) from 5,000-year-old beer brewing equipment. While digging two pits at a site in the central plains of China, scientists discovered fragments from pots and vessels. The different shapes of the containers (28)_______    they were used to brew, filter, and store beer. They may be ancient “beer-making tools,” and the earliest (29)_______ evidence of beer brewing in China, the researchers reported in the Proceedings of the National Academy of Sciences. To (30)_______    that theory, the team examined the yellowish, dried (31)_______    inside the vessels. The majority of the grains, about 80%, were from cereal crops like barley(大麦), and about 10% were bits of roots, (32)_______ lily, which would have made the beer sweeter, the scientists say. Barley was an unexpected find: the crop was domesticated in Western Eurasia and didn't become a (33)_______ food in central China until about 2,000 years ago, according to the researchers. Based on that timing, they indicate barley may have (34)_______ in the region not as food, but as (35)_______ material for beer brewing.";
-
 @interface ReadSectionAViewController ()<UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,UIGestureRecognizerDelegate>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -27,6 +25,9 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
 @property (nonatomic, strong) ReadSAModel *readModel;
 @property (nonatomic, assign) NSInteger userIndex;//用户点击的题目
 @property (nonatomic, assign) int correctInt;
+
+@property (nonatomic, strong) DownloadFileModel *downloadModel;
+@property (nonatomic, copy) NSString *downloadJsonUrl;
 @end
 
 @implementation ReadSectionAViewController
@@ -72,41 +73,75 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
     [self initWithView];
     _seconds = 0;
     _correctInt = 0;
+    self.downloadModel = [[DownloadFileModel alloc]init];
     [self loadData];
 }
 - (void)loadData{
-    [LTHttpManager getOneNewTestWithUserId:IS_USER_ID Type:@"4-E" Testpaper_kind:@"1Y" Testpaper_type:@"4-E" Complete:^(LTHttpResult result, NSString *message, id data) {
-        if (result == LTHttpResultSuccess) {
-            NSString *testPaperUrl = data[@"responseData"][@"testPaperUrl"];
-            [LTHttpManager downloadURL:testPaperUrl progress:^(NSProgress *downloadProgress) {
-            } destination:^(NSURL *targetPath) {
-                NSString *url = [NSString stringWithFormat:@"%@",targetPath];
-                NSString *fileName = [url lastPathComponent];
-                NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
-                NSString *urlString = [fileName stringByRemovingPercentEncoding];
-                NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
-                NSFileManager *fileManager = [NSFileManager defaultManager];
-                if ([fileManager fileExistsAtPath:fullPath]) {
-                    NSDictionary *dict = [[NSDictionary alloc]init];
-                    NSData *data = [NSData dataWithContentsOfFile:fullPath];
-                    unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
-                    NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
-                    NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
-                    NSError *error;
-                    if (data2 == nil) {
-                        dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-                    }else{
-                        dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:&error];
-                    }
-                    self.readModel = [ReadSAModel mj_objectWithKeyValues:dict];
-                    [self.tableView reloadData];
-                    [self.collectionView reloadData];
-                }
-            } failure:^(NSError *error) {
-                
-            }];
+    if (self.readCategoryId) {
+        DownloadFileModel *model = [DownloadFileModel  jr_findByPrimaryKey:self.readCategoryId];
+        NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+        NSString *urlString = [model.paperJsonName stringByRemovingPercentEncoding];
+        NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if ([fileManager fileExistsAtPath:fullPath]) {
+            NSDictionary *dict = [[NSDictionary alloc]init];
+            NSData *data = [NSData dataWithContentsOfFile:fullPath];
+            unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+            NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
+            NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
+            NSError *error;
+            if (data2 == nil) {
+                dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+            }else{
+                dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:&error];
+            }
+            self.readModel = [ReadSAModel mj_objectWithKeyValues:dict];
+            [self.tableView reloadData];
+            [self.collectionView reloadData];
         }
-    }];
+    }else{
+        [LTHttpManager getOneNewTestWithUserId:IS_USER_ID Type:@"4-E" Testpaper_kind:@"1Y" Testpaper_type:@"4-E" Complete:^(LTHttpResult result, NSString *message, id data) {
+            if (result == LTHttpResultSuccess) {
+                self.readCategoryId = data[@"responseData"][@"id"];
+                self.downloadJsonUrl = data[@"responseData"][@"testPaperUrl"];
+                self.downloadModel.testPaperId = data[@"responseData"][@"id"];
+                self.downloadModel.name = data[@"responseData"][@"name"];
+                self.downloadModel.info = data[@"responseData"][@"info"];
+                self.downloadModel.number = data[@"responseData"][@"number"];
+                [LTHttpManager downloadURL:self.downloadJsonUrl progress:^(NSProgress *downloadProgress) {
+                } destination:^(NSURL *targetPath) {
+                    NSString *url = [NSString stringWithFormat:@"%@",targetPath];
+                    NSString *fileName = [url lastPathComponent];
+                    self.downloadModel.paperJsonName = fileName;
+                    J_Update(self.downloadModel).Columns(@[@"paperJsonName"]).updateResult;
+                    
+                    NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+                    NSString *urlString = [fileName stringByRemovingPercentEncoding];
+                    NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
+                    NSFileManager *fileManager = [NSFileManager defaultManager];
+                    if ([fileManager fileExistsAtPath:fullPath]) {
+                        NSDictionary *dict = [[NSDictionary alloc]init];
+                        NSData *data = [NSData dataWithContentsOfFile:fullPath];
+                        unsigned long encode = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+                        NSString *str2 = [[NSString alloc]initWithData:data encoding:encode];
+                        NSData *data2 = [str2 dataUsingEncoding:NSUTF8StringEncoding];
+                        NSError *error;
+                        if (data2 == nil) {
+                            dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+                        }else{
+                            dict = [NSJSONSerialization JSONObjectWithData:data2 options:NSJSONReadingAllowFragments error:&error];
+                        }
+                        self.readModel = [ReadSAModel mj_objectWithKeyValues:dict];
+                        [self.tableView reloadData];
+                        [self.collectionView reloadData];
+                    }
+                } failure:^(NSError *error) {
+                    
+                }];
+                J_Insert(self.downloadModel).updateResult;
+            }
+        }];
+    }
 }
 - (void)initWithView{
     self.view.backgroundColor = UIColorFromRGB(0xF7F7F7);
@@ -189,6 +224,7 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
     
     [takePaperBtn addTarget:self action:@selector(takePaperClick:) forControlEvents:UIControlEventTouchUpInside];
 }
+#pragma mark 交卷
 - (void)takePaperClick:(UIButton *)btn{
     LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"确定交卷吗" sureBtn:@"交卷" cancleBtn:@"再检查下" ];
     finishView.resultIndex = ^(NSInteger index) {
@@ -197,13 +233,18 @@ NSString* sstring =  @"The method for making beer has changed over time. Hops (�
                 _correctInt++;
             }
         }
-        NSLog(@"%d", _correctInt);
-        ReadSAResultsViewController *vc = [ReadSAResultsViewController new];
-        vc.userTime = self.timeLb.text;
-        vc.questionsArray = self.readModel.Answer;
-        float correctFloat = (float)_correctInt/(float)self.readModel.Answer.count * 100;
-        vc.correct = [NSString stringWithFormat:@"%.0f",correctFloat];
-        [self.navigationController pushViewController:vc animated:YES];
+        [LTHttpManager addOnlyTestWithUserId:IS_USER_ID TestPaperId:@([self.readCategoryId integerValue]) Type:@"4-E" Testpaper_type:@"2" Complete:^(LTHttpResult result, NSString *message, id data) {
+            if (result == LTHttpResultSuccess) {
+                NSLog(@"%d", _correctInt);
+                ReadSAResultsViewController *vc = [ReadSAResultsViewController new];
+                vc.userTime = self.timeLb.text;
+                vc.readCategoryId = self.readCategoryId;
+                vc.questionsArray = self.readModel.Answer;
+                float correctFloat = (float)_correctInt/(float)self.readModel.Answer.count * 100;
+                vc.correct = [NSString stringWithFormat:@"%.0f",correctFloat];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }];
     };
     [finishView show];
 }

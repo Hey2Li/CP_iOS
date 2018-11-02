@@ -126,7 +126,9 @@
      pushViewController:ReadSectionBViewController.new animated:YES];
 }
 - (void)testAgainBtnClick:(UIButton *)btn{
-    
+    ReadSectionBViewController *vc = [[ReadSectionBViewController alloc]init];
+    vc.readCategoryId = self.readCategoryId;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma mark TableViewDataSource&Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{

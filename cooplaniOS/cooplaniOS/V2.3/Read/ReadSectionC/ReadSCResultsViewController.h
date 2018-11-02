@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *paperName;//试卷题目
 @property (nonatomic, copy) NSString *paperSection;//试卷Section
 @property (nonatomic, assign) NSInteger mode;//刷题类型
-@property (nonatomic, copy) NSString *testPaperId;
+@property (nonatomic, copy) NSString *readSCPassageOneId;
 @property (nonatomic, copy) NSString *userTime;
 @end
 

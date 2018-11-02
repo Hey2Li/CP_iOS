@@ -127,7 +127,9 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)testAgainBtnClick:(UIButton *)btn{
-   
+    ReadSectionAViewController *vc = [[ReadSectionAViewController alloc]init];
+    vc.readCategoryId = self.readCategoryId;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 #pragma mark TableViewDataSource&Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -180,7 +182,7 @@
     if (indexPath.section < self.questionsArray.count) {
         ReadSAAnswerModel *readSAAnswerModel = self.questionsArray[indexPath.row];
         readSAAnswerModel.isSelected = !readSAAnswerModel.isSelected;
-        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:NO];
+        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:nil];
     }
 }
 

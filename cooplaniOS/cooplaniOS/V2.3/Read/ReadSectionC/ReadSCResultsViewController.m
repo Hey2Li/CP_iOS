@@ -72,8 +72,6 @@
     _headView = [[UINib nibWithNibName:className bundle:nil] instantiateWithOwner:nil options:nil].firstObject;
     _headView.correctStr = self.correct;
     _headView.userTimeLb.text = self.userTime;
-    //    _headView.paperDateLb.text = [self.paperName substringToIndex:7];
-    //    _headView.paperNameLb.text = [self.paperName substringFromIndex:7];
     self.myTableView.tableHeaderView = _headView;
     
     UIView *bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 46 - 64, SCREEN_WIDTH, 46)];
@@ -125,19 +123,19 @@
     [self.navigationController pushViewController:ReadSectionCViewController.new animated:YES];
 }
 - (void)testAgainBtnClick:(UIButton *)btn{
-    
+    ReadSectionCViewController *vc = [[ReadSectionCViewController alloc]init];
+    vc.readSCPassageOneId = self.readSCPassageOneId;
+    [self.navigationController pushViewController: vc animated:YES];
 }
 #pragma mark TableViewDataSource&Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return self.questionsArray.count;
+    return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    ReadSCModel *model = self.questionsArray[section];
-    return model.Questions.count;
+    return self.questionsArray.count;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    ReadSCModel *model = self.questionsArray[indexPath.section];
-    QuestionsItem *readSCQuestionModel = model.Questions[indexPath.row];
+    QuestionsItem *readSCQuestionModel = self.questionsArray[indexPath.row];
     if (readSCQuestionModel.isSelected) {
         return self.myTableView.rowHeight;
     }else{
@@ -162,20 +160,6 @@
             make.height.equalTo(@40);
         }];
         return headerView;
-    }else if (section == 1){
-        UIView *headerView = [[UIView alloc]init];
-        headerView.backgroundColor = UIColorFromRGB(0xf7f7f7);
-        UILabel *sectionLb = [UILabel new];
-        sectionLb.text = @"Passage Two";
-        sectionLb.font = [UIFont boldSystemFontOfSize:14];
-        [headerView addSubview:sectionLb];
-        [sectionLb mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(headerView.mas_left).offset(15);
-            make.right.equalTo(headerView.mas_right).offset(10);
-            make.top.equalTo(headerView);
-            make.height.equalTo(@40);
-        }];
-        return headerView;
     }else{
         UIView *headerView = [[UIView alloc]init];
         headerView.backgroundColor = [UIColor whiteColor];
@@ -185,15 +169,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     AnswerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([AnswerTableViewCell class]) forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    ReadSCModel *model = self.questionsArray[indexPath.section];
-    QuestionsItem *readSCQuestionModel = model.Questions[indexPath.row];
+    QuestionsItem *readSCQuestionModel = self.questionsArray[indexPath.row];
     cell.readSCAnswerModel = readSCQuestionModel;
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section < self.questionsArray.count) {
-        ReadSCModel *model = self.questionsArray[indexPath.section];
-        QuestionsItem *readSCQuestionModel = model.Questions[indexPath.row];
+        QuestionsItem *readSCQuestionModel = self.questionsArray[indexPath.row];
         readSCQuestionModel.isSelected = !readSCQuestionModel.isSelected;
         [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:nil];
     }

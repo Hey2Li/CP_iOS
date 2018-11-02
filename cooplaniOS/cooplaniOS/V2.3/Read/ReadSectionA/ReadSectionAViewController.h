@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ReadSectionAViewController : UIViewController
-
+@property (nonatomic, copy) NSString *readCategoryId;
 @end
 
 NS_ASSUME_NONNULL_END

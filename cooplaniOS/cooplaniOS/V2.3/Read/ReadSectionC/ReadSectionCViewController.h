@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ReadSectionCViewController : UIViewController
-
+@property (nonatomic, copy) NSString *readSCPassageOneId;
 @end
 
 NS_ASSUME_NONNULL_END

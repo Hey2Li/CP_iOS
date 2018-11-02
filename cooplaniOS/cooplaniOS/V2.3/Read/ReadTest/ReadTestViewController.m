@@ -41,6 +41,7 @@
 @property (nonatomic, assign) NSInteger userIndex;//用户点击的题目
 @property (nonatomic, assign) int correctInt;
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
+@property (nonatomic, assign) BOOL *isFinish;
 @end
 
 @implementation ReadTestViewController
@@ -261,6 +262,10 @@
     self.tableView.mj_header = header;
     
     ReadRfreshBackGifFooter *footer = [ReadRfreshBackGifFooter footerWithRefreshingBlock:^{
+        if (self.ReadSetionEnum == 3) {
+            SVProgressShowStuteText(@"没有更多了", NO);
+            [self.tableView.mj_footer endRefreshing];
+        }
         if (self.ReadSetionEnum < 3) {
             self.ReadSetionEnum ++;
         }
@@ -287,7 +292,7 @@
     [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
-        make.bottom.equalTo(self.view).offset(-10);
+        make.bottom.equalTo(self.view);
         make.height.equalTo(@40);
     }];
     UILabel *loadTimeLb = [UILabel new];
@@ -339,45 +344,58 @@
     
     [takePaperBtn addTarget:self action:@selector(takePaperClick:) forControlEvents:UIControlEventTouchUpInside];
 }
+#pragma mark 交卷
 - (void)takePaperClick:(UIButton *)btn{
     btn.userInteractionEnabled = NO;
-    LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"确定交卷吗" sureBtn:@"交卷" cancleBtn:@"再检查下" ];
-    finishView.resultIndex = ^(NSInteger index) {
-        for (ReadSAAnswerModel *model in self.readModel.Answer) {
-            if (model.isCorrect) {
-                _correctInt++;
-            }
+    if (_isFinish) {
+        LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"确定交卷吗" sureBtn:@"交卷" cancleBtn:@"再检查下" ];
+        finishView.resultIndex = ^(NSInteger index) {
+            [self loadPaperData];
+            btn.userInteractionEnabled = YES;
+        };
+        [finishView show];
+    }else{
+        LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"还有题目没做完，确定交卷吗?" sureBtn:@"交卷" cancleBtn:@"继续做" ];
+        finishView.resultIndex = ^(NSInteger index) {
+            [self loadPaperData];
+            btn.userInteractionEnabled = YES;
+        };
+        [finishView show];
+    }
+}
+- (void)loadPaperData{
+    for (ReadSAAnswerModel *model in self.readModel.Answer) {
+        if (model.isCorrect) {
+            _correctInt++;
         }
-        for (ReadSBOptionsModel *quModel in self.readSbModel.Options) {
-            if (quModel.isCorrect) {
-                _correctInt++;
-            }
+    }
+    for (ReadSBOptionsModel *quModel in self.readSbModel.Options) {
+        if (quModel.isCorrect) {
+            _correctInt++;
         }
-        for (QuestionsItem *quModel in self.readScModel.Questions) {
-            if (quModel.isCorrect) {
-                _correctInt++;
-            }
+    }
+    for (QuestionsItem *quModel in self.readScModel.Questions) {
+        if (quModel.isCorrect) {
+            _correctInt++;
         }
-        for (QuestionsItem *quModel in self.readScModel2.Questions) {
-            if (quModel.isCorrect) {
-                _correctInt++;
-            }
+    }
+    for (QuestionsItem *quModel in self.readScModel2.Questions) {
+        if (quModel.isCorrect) {
+            _correctInt++;
         }
-        NSLog(@"%d", _correctInt);
-        ReadTestAnswerViewController *vc = [ReadTestAnswerViewController new];
-        vc.userTime = self.timeLb.text;
-        vc.questionsArray = @[self.readModel.Answer,self.readSbModel.Options,self.readScModel, self.readScModel2];
-        vc.rsaModel = self.readModel;
-        vc.rsbModel = self.readSbModel;
-        vc.rscModel = self.readScModel;
-        vc.rscModel2 = self.readScModel2;
-        vc.testPaperNumber = self.testPaperNumber;
-        float correctFloat = (float)_correctInt/(float)(self.readScModel.Questions.count + self.readSbModel.Options.count + self.readModel.Answer.count + self.readScModel2.Questions.count)* 100;
-        vc.correct = [NSString stringWithFormat:@"%.0f",correctFloat];
-        [self.navigationController pushViewController:vc animated:YES];
-        btn.userInteractionEnabled = YES;
-    };
-    [finishView show];
+    }
+    NSLog(@"%d", _correctInt);
+    ReadTestAnswerViewController *vc = [ReadTestAnswerViewController new];
+    vc.userTime = self.timeLb.text;
+    vc.questionsArray = @[self.readModel.Answer,self.readSbModel.Options,self.readScModel, self.readScModel2];
+    vc.rsaModel = self.readModel;
+    vc.rsbModel = self.readSbModel;
+    vc.rscModel = self.readScModel;
+    vc.rscModel2 = self.readScModel2;
+    vc.testPaperNumber = self.testPaperNumber;
+    float correctFloat = (float)_correctInt/(float)(self.readScModel.Questions.count + self.readSbModel.Options.count + self.readModel.Answer.count + self.readScModel2.Questions.count)* 100;
+    vc.correct = [NSString stringWithFormat:@"%.0f",correctFloat];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)time{
     self.timeLb.text = [self getMMSSFromSS:[NSString stringWithFormat:@"%ld", (long)_seconds--]];
@@ -661,6 +679,7 @@
             if (nextIndexPath.row + 1 < self.readScModel2.Questions.count) {
                 [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:nextIndexPath.row + 1 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
             }else{
+                _isFinish = YES;
                 //SectionC答完题 交卷
                 [self takePaperClick:nil];
             }

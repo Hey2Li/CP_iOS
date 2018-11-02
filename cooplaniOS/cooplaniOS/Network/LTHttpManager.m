@@ -773,7 +773,7 @@
  
  @param user_id 用户ID
  @param testpaper_id 试卷ID
- @param type 1:四级听力专项训练
+ @param type 1:四级听力专项训练2阅读
  @param testpaper_type 4-A 4-B 4-C
  @param complete block
  */
