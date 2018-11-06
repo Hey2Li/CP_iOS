@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ReadSBTableViewCell : UITableViewCell
 @property (nonatomic, copy) NSString *passage;
+@property (nonatomic, assign) BOOL isTest;
 @end
 
 NS_ASSUME_NONNULL_END

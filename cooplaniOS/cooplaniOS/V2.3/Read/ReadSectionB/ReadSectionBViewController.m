@@ -22,6 +22,7 @@
 @property (nonatomic, strong) UILabel *timeLb;
 @property (nonatomic, assign) NSInteger seconds;
 @property (nonatomic, strong) ReadSBModel *readSbModel;
+@property (nonatomic, strong) UILabel *pageLb;
 
 @property (nonatomic, assign) int correctInt;
 @property (nonatomic, assign) int NoCorrectInt;
@@ -107,6 +108,8 @@
                 dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
             }
             self.readSbModel = [ReadSBModel mj_objectWithKeyValues:dict];
+            self.pageLb.text = [NSString stringWithFormat:@"1/%ld", self.readSbModel.Options.count];;
+            self.readSbModel.testPaperName = model.name;
             [self.tableView reloadData];
             [self.collectionView reloadData];
         }
@@ -142,6 +145,8 @@
                             dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
                         }
                         self.readSbModel = [ReadSBModel mj_objectWithKeyValues:dict];
+                        self.pageLb.text = [NSString stringWithFormat:@"1/%ld", self.readSbModel.Options.count];
+                        self.readSbModel.testPaperName = self.downloadModel.name;
                         [self.tableView reloadData];
                         [self.collectionView reloadData];
                     }
@@ -215,12 +220,12 @@
     [pageLb mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(bottomView.mas_right).offset(-36);
         make.height.equalTo(@20);
-        make.width.equalTo(@19);
+        make.width.equalTo(@40);
         make.centerY.equalTo(bottomView.mas_centerY);
     }];
     pageLb.textColor = UIColorFromRGB(0x999999);
     pageLb.font = [UIFont systemFontOfSize:12];
-    pageLb.text = @"1/1";
+    self.pageLb = pageLb;
     
     [bottomView.layer setShadowColor:[UIColor blackColor].CGColor];
     [bottomView.layer setShadowOffset:CGSizeMake(0, -2)];
@@ -237,7 +242,7 @@
                 _correctInt++;
             }
         }
-        [LTHttpManager addOnlyTestWithUserId:IS_USER_ID TestPaperId:@([self.readCategoryId integerValue]) Type:@"4-D" Testpaper_type:@"2" Complete:^(LTHttpResult result, NSString *message, id data) {
+        [LTHttpManager addOnlyTestWithUserId:IS_USER_ID TestPaperId:@([self.readCategoryId integerValue]) Type:@"2" Testpaper_type:@"4-D" Complete:^(LTHttpResult result, NSString *message, id data) {
             if (result == LTHttpResultSuccess) {
             }
         }];
@@ -247,6 +252,7 @@
         vc.questionsArray = self.readSbModel.Options;
         vc.readCategoryId = self.readCategoryId;
         float correctFloat = (float)_correctInt/(float)self.readSbModel.Options.count * 100;
+        vc.paperName = self.readSbModel.testPaperName;
         vc.correct = [NSString stringWithFormat:@"%.0f",correctFloat];
         [self.navigationController pushViewController:vc animated:YES];
     };
@@ -369,6 +375,11 @@
     [super viewWillAppear:animated];
     self.mm_drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
     self.mm_drawerController.closeDrawerGestureModeMask = MMCloseDrawerGestureModeNone;
+}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if (scrollView == self.collectionView) {
+        self.pageLb.text = [NSString stringWithFormat:@"%.0f/%lu", self.collectionView.contentOffset.x/self.collectionView.width + 1, (unsigned long)self.readSbModel.Options.count];
+    }
 }
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter]removeObserver:self];

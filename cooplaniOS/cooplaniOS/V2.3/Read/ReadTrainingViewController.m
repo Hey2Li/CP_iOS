@@ -20,6 +20,7 @@
 
 @interface ReadTrainingViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) UITableView *myTableView;
+@property (nonatomic, strong) NSDictionary *categoryDict;
 @end
 
 @implementation ReadTrainingViewController
@@ -51,6 +52,13 @@
             }else{
             }
             }];
+        [LTHttpManager getCategoryTestNumWithUserId:IS_USER_ID Type:@"2" Testpaper_kind:@"1Y" Complete:^(LTHttpResult result, NSString *message, id data) {
+            if (result == LTHttpResultSuccess) {
+                NSDictionary *categoryDict = data[@"responseData"];
+                _categoryDict = categoryDict;
+                [self.myTableView reloadData];
+            }
+        }];
     }else{
         WeakSelf
         [Tool gotoLogin:self CancelClick:^{
@@ -107,6 +115,7 @@
         return cell;
     }else if (indexPath.section == 1){
         PracticeTestTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([PracticeTestTableViewCell class])];
+        cell.learnImg.image = [UIImage imageNamed:@"阅读模拟考场"];
         cell.selectionStyle = NO;
         return cell;
     }
@@ -120,17 +129,17 @@
     if (indexPath.row == 0) {
         cell.textLabel.text = @"选词填空";
         cell.imageView.image = [UIImage imageNamed:@"短篇新闻"];
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"已练习%@/%@道",@"1",@"20"];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"已练习%@/%@篇",_categoryDict[@"special1"][@"4-E"]?_categoryDict[@"special1"][@"4-E"]:@"0", _categoryDict[@"testpaper1T"][@"4-E"]];
     }else if (indexPath.row == 1){
         cell.textLabel.text = @"段落匹配";
         cell.imageView.image = [UIImage imageNamed:@"长对话"];
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"已练习%@/%@道",@"1",@"20"];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"已练习%@/%@篇",_categoryDict[@"special1"][@"4-D"]?_categoryDict[@"special1"][@"4-D"]:@"0", _categoryDict[@"testpaper1T"][@"4-D"]];
     }else{
         cell.textLabel.text = @"仔细阅读";
         cell.imageView.image = [UIImage imageNamed:@"听力篇章"];
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"已练习%@/%@道",@"1",@"20"];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"已练习%@/%ld篇",_categoryDict[@"special1"][@"4-F"]?_categoryDict[@"special1"][@"4-F"]:@"0", [_categoryDict[@"testpaper1T"][@"4-F"] integerValue] + [_categoryDict[@"testpaper1T"][@"4-G"] integerValue]];
     }
-        return cell;
+    return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 2) {

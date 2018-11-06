@@ -18,11 +18,18 @@
 @property (nonatomic, assign) BOOL isOpen;
 @property (nonatomic, strong) NSIndexPath *selectIndexPath;
 @property (nonatomic, strong) NSIndexPath *lastSelectedIndexPath;
-@property (nonatomic ,strong) ReadSAResultsHeaderView *headView;
+@property (nonatomic, strong) ReadSAResultsHeaderView *headView;
+@property (nonatomic, strong) NSDictionary *socreDict;
 @end
 
 @implementation ReadTestAnswerViewController
 
+- (NSDictionary *)socreDict{
+    if (!_socreDict) {
+        _socreDict = @{@"35":@"248.5",@"34":@"238",@"33":@"227.5",@"32":@"220.5",@"31":@"213.5",@"30":@"206.5",@"29":@"199.5",@"28":@"192.5",@"27":@"185.5",@"26":@"178.5",@"25":@"175",@"24":@"171.5",@"23":@"168",@"22":@"164.5",@"21":@"161",@"20":@"157.5",@"19":@"154",@"18":@"154",@"17":@"150.5",@"16":@"147",@"15":@"178.5",@"14":@"140",@"13":@"136.5",@"12":@"133",@"11":@"129.5",@"10":@"126",@"9":@"126",@"8":@"122.5",@"7":@"119",@"6":@"119",@"5":@"115.5",@"4":@"112",@"3":@"108.5",@"2":@"105",@"1":@"105",@"0":@"101.5"};
+    }
+    return _socreDict;
+}
 - (UITableView *)myTableView{
     if (!_myTableView) {
         _myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64 - 46) style:UITableViewStylePlain];
@@ -42,6 +49,7 @@
     self.title = @"成绩单";
     [self initWithView];
     [self initWithNavi];
+   
 }
 - (void)initWithNavi{
     self.navigationItem.hidesBackButton = YES;
@@ -64,49 +72,60 @@
     _headView = [[UINib nibWithNibName:className bundle:nil] instantiateWithOwner:nil options:nil].firstObject;
     _headView.correctStr = self.correct;
     _headView.userTimeLb.text = self.userTime;
+    _headView.userTimeNameLb.text = @"剩余时间";
     //    _headView.paperDateLb.text = [self.paperName substringToIndex:7];
-    //    _headView.paperNameLb.text = [self.paperName substringFromIndex:7];
+    _headView.paperNameLb.text = self.paperName;
     self.myTableView.tableHeaderView = _headView;
     
     UIView *bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 46 - 64, SCREEN_WIDTH, 46)];
     bottomView.backgroundColor =[UIColor whiteColor];
     [self.view addSubview:bottomView];
-    UIButton *continueBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [continueBtn setTitle:@"继续" forState:UIControlStateNormal];
-    [continueBtn setBackgroundColor:[UIColor whiteColor]];
-    [continueBtn setTitleColor:UIColorFromRGB(0xFFCD43) forState:UIControlStateNormal];
-    [bottomView addSubview:continueBtn];
-    [continueBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view);
+    UILabel *scoreLb = [UILabel new];
+    NSString *socreStr = self.socreDict[[NSString stringWithFormat:@"%@", self.correctNum]];
+    scoreLb.textColor = UIColorFromRGB(0x999999);
+    scoreLb.font = [UIFont systemFontOfSize:12];
+    NSMutableAttributedString *AttributedStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"得分:%@",socreStr]];
+    [AttributedStr addAttribute:NSForegroundColorAttributeName
+                          value:UIColorFromRGB(0x2A2A2A)
+                          range:NSMakeRange(3, socreStr.length)];
+    [AttributedStr addAttribute:NSFontAttributeName
+                          value:[UIFont boldSystemFontOfSize:12]
+                          range:NSMakeRange(3, socreStr.length)];
+    scoreLb.attributedText = AttributedStr;
+    [bottomView addSubview:scoreLb];
+    [scoreLb mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.view).offset(20);
         make.right.equalTo(self.view.mas_centerX);
         make.bottom.equalTo(self.view);
         make.height.equalTo(@45);
     }];
-    [continueBtn addTarget:self action:@selector(continueBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *testAgainBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [testAgainBtn setTitle:@"再次练习" forState:UIControlStateNormal];
+    [testAgainBtn setTitle:@"返回" forState:UIControlStateNormal];
     [testAgainBtn setBackgroundColor:[UIColor whiteColor]];
     [testAgainBtn setTitleColor:UIColorFromRGB(0xFFCD43) forState:UIControlStateNormal];
     [bottomView addSubview:testAgainBtn];
     [testAgainBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view.mas_centerX);
-        make.right.equalTo(self.view);
-        make.bottom.equalTo(self.view);
-        make.height.equalTo(@45);
-    }];
-    [testAgainBtn addTarget:self action:@selector(testAgainBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UILabel *lineLb = [UILabel new];
-    [bottomView addSubview:lineLb];
-    [bottomView bringSubviewToFront:lineLb];
-    [lineLb mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(bottomView.mas_centerX);
+        make.right.equalTo(self.view.mas_right).offset(-17);
         make.centerY.equalTo(bottomView.mas_centerY);
-        make.height.equalTo(@24);
-        make.width.equalTo(@2);
+        make.height.equalTo(@26);
+        make.width.equalTo(@102);
     }];
-    [lineLb setBackgroundColor:UIColorFromRGB(0xEEEEEE)];
+    [testAgainBtn.layer setBorderColor:DRGBCOLOR.CGColor];
+    [testAgainBtn.layer setCornerRadius:10];
+    [testAgainBtn.layer setBorderWidth:1];
+    [testAgainBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    
+//    UILabel *lineLb = [UILabel new];
+//    [bottomView addSubview:lineLb];
+//    [bottomView bringSubviewToFront:lineLb];
+//    [lineLb mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerX.equalTo(bottomView.mas_centerX);
+//        make.centerY.equalTo(bottomView.mas_centerY);
+//        make.height.equalTo(@24);
+//        make.width.equalTo(@2);
+//    }];
+//    [lineLb setBackgroundColor:UIColorFromRGB(0xEEEEEE)];
     
     [bottomView.layer setShadowOpacity:0.4];
     [bottomView.layer setShadowColor:[UIColor blackColor].CGColor];

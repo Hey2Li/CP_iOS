@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ReadTestAnswerViewController : UIViewController
 @property (nonatomic, copy) NSString *correct;//正确率
+@property (nonatomic, copy) NSString *correctNum;//正确个数
 @property (nonatomic, strong) NSArray *questionsArray;
 @property (nonatomic, copy) NSString *paperName;//试卷题目
 @property (nonatomic, copy) NSString *paperSection;//试卷Section

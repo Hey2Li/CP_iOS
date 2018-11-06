@@ -32,6 +32,7 @@
 @property (nonatomic, strong) NSTimer *myTimer;
 @property (nonatomic, strong) UILabel *timeLb;
 @property (nonatomic, assign) NSInteger seconds;
+@property (nonatomic, strong) UILabel *pageLb;
 
 @property (nonatomic, strong) ReadSAModel *readModel;
 @property (nonatomic, strong) ReadSBModel *readSbModel;
@@ -41,7 +42,7 @@
 @property (nonatomic, assign) NSInteger userIndex;//用户点击的题目
 @property (nonatomic, assign) int correctInt;
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
-@property (nonatomic, assign) BOOL *isFinish;
+@property (nonatomic, assign) BOOL isFinish;
 @end
 
 @implementation ReadTestViewController
@@ -91,6 +92,7 @@
     // Do any additional setup after loading the view.
     self.title = @"模拟考场";
     [self initWithView];
+    [self initWithNavi];
     [self loadData];
     _seconds = 2400;
     _correctInt = 0;
@@ -127,6 +129,7 @@
                             dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
                         }
                         self.readModel = [ReadSAModel mj_objectWithKeyValues:dict];
+                        self.readModel.testPaperName = eDic[@"testName"];
                         [self.tableView reloadData];
                         [self.collectionView reloadData];
                     }
@@ -218,6 +221,21 @@
         }
     }];
 }
+- (void)initWithNavi{
+    self.navigationItem.hidesBackButton = YES;
+    UIImage *image = [[UIImage imageNamed:@"back"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithImage:image style:UIBarButtonItemStyleDone target:self action:@selector(back)];
+    self.navigationItem.leftItemsSupplementBackButton = YES;
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+}
+#pragma mark 返回
+- (void)back{
+    LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"确定退出" sureBtn:@"确定" cancleBtn:@"取消"];
+    [alertView show];
+    alertView.resultIndex = ^(NSInteger index) {
+        [self.navigationController popViewControllerAnimated:YES];
+    };
+}
 - (void)initWithView{
     self.view.backgroundColor = UIColorFromRGB(0xF7F7F7);
     [self.view addSubview:self.tableView];
@@ -253,6 +271,17 @@
                 [self.collectionView setFrame:CGRectMake(0, SCREEN_HEIGHT - 130 - SafeAreaTopHeight, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:480])];
                 [self.collectionView setBackgroundColor:[UIColor clearColor]];
             }
+            if (self.ReadSetionEnum == ReadSectionA) {
+                self.pageLb.text = @"1/1";
+            }else if (self.ReadSetionEnum == ReadSectionB) {
+                self.pageLb.text = [NSString stringWithFormat:@"1/%lu", (unsigned long)self.readSbModel.Options.count];
+            }else if (self.ReadSetionEnum == ReadSectionC) {
+                self.pageLb.text = [NSString stringWithFormat:@"1/%lu", (unsigned long)self.readScModel.Questions.count];
+            }else if (self.ReadSetionEnum == ReadSectionCPassageTwo){
+                self.pageLb.text = [NSString stringWithFormat:@"1/%lu", (unsigned long)self.readScModel2.Questions.count];
+            }else{
+                self.pageLb.text = @"1/1";
+            }
             [self.tableView reloadData];
             [self.collectionView reloadData];
             [weakSelf.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
@@ -275,6 +304,17 @@
                 self.flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
                 [self.collectionView setFrame:CGRectMake(0, SCREEN_HEIGHT - 130 - SafeAreaTopHeight, SCREEN_WIDTH, [Tool layoutForAlliPhoneHeight:480])];
                 [self.collectionView setBackgroundColor:[UIColor clearColor]];
+            }
+            if (self.ReadSetionEnum == ReadSectionA) {
+                self.pageLb.text = @"1/1";
+            }else if (self.ReadSetionEnum == ReadSectionB) {
+                self.pageLb.text = [NSString stringWithFormat:@"1/%lu", (unsigned long)self.readSbModel.Options.count];
+            }else if (self.ReadSetionEnum == ReadSectionC) {
+                self.pageLb.text = [NSString stringWithFormat:@"1/%lu", (unsigned long)self.readScModel.Questions.count];
+            }else if (self.ReadSetionEnum == ReadSectionCPassageTwo){
+                self.pageLb.text = [NSString stringWithFormat:@"1/%lu", (unsigned long)self.readScModel2.Questions.count];
+            }else{
+                self.pageLb.text = @"1/1";
             }
             [self.tableView reloadData];
             [self.collectionView reloadData];
@@ -331,13 +371,14 @@
     [pageLb mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(bottomView.mas_right).offset(-36);
         make.height.equalTo(@20);
-        make.width.equalTo(@19);
+        make.width.equalTo(@50);
         make.centerY.equalTo(bottomView.mas_centerY);
     }];
     pageLb.textColor = UIColorFromRGB(0x999999);
     pageLb.font = [UIFont systemFontOfSize:12];
-    pageLb.text = @"1/1";
-    
+    self.pageLb = pageLb;
+    self.pageLb.text = @"1/1";
+
     [bottomView.layer setShadowColor:[UIColor blackColor].CGColor];
     [bottomView.layer setShadowOffset:CGSizeMake(0, -2)];
     [bottomView.layer setShadowOpacity:0.2];
@@ -394,6 +435,8 @@
     vc.rscModel = self.readScModel;
     vc.rscModel2 = self.readScModel2;
     vc.testPaperNumber = self.testPaperNumber;
+    vc.paperName = self.readModel.testPaperName;
+    vc.correctNum = [NSString stringWithFormat:@"%d", _correctInt];
     float correctFloat = (float)_correctInt/(float)(self.readScModel.Questions.count + self.readSbModel.Options.count + self.readModel.Answer.count + self.readScModel2.Questions.count)* 100;
     vc.correct = [NSString stringWithFormat:@"%.0f",correctFloat];
     [self.navigationController pushViewController:vc animated:YES];
@@ -471,14 +514,14 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.ReadSetionEnum == ReadSectionA) {
         if (!self.readModel.Passage) return 0;
-        CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 32, MAXFLOAT);
+        CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 35, MAXFLOAT);
         NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:self.readModel.Passage];
         [textStr yy_setFont:[UIFont systemFontOfSize:15] range:textStr.yy_rangeOfAll];
         textStr.yy_lineSpacing = 8;
         //计算文本尺寸
         YYTextLayout *layout = [YYTextLayout layoutWithContainerSize:maxSize text:textStr];
         CGFloat introHeight = layout.textBoundingSize.height;
-        return introHeight + 100;
+        return introHeight + 120;
     }else if (self.ReadSetionEnum == ReadSectionB){
         ReadSBPassageModel *passageModel = self.readSbModel.Passage[indexPath.row];
         CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 32, MAXFLOAT);
@@ -523,6 +566,7 @@
     }else if (self.ReadSetionEnum == ReadSectionB){
         ReadSBTableViewCell *cell = [[ReadSBTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
         cell.selectionStyle = NO;
+        cell.isTest = YES;
         ReadSBPassageModel *passageModel = self.readSbModel.Passage[indexPath.row];
         cell.passage = [NSString stringWithFormat:@"%@  %@", passageModel.Alphabet, passageModel.Text];
         return cell;
@@ -531,6 +575,7 @@
         if (self.readScModel.Passage) {
             cell.passage = self.readScModel.Passage;
         }
+        cell.isTest = YES;
         cell.selectionStyle = NO;
         return cell;
     }else{
@@ -606,7 +651,7 @@
             return cell;
         }else if (indexPath.section == 1){
             SAQuestionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([SAQuestionCollectionViewCell class]) forIndexPath:indexPath];
-            cell.questionLb.text = [NSString stringWithFormat:@"%@", self.readModel.Question];
+            cell.questionLb.text = [NSString stringWithFormat:@"%@", self.readModel.Question ?self.readModel.Question : @""];
             return cell;
         }else{
             SAOptionsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([SAOptionsCollectionViewCell class]) forIndexPath:indexPath];
@@ -696,12 +741,23 @@
             if (_questionCardIsOpen) {
                 ReadSAOptionsModel *model = self.readModel.Options[indexPath.row];
                 [[NSNotificationCenter defaultCenter]postNotificationName:kClickReadCard object:nil userInfo:@{@"options":[NSString stringWithFormat:@"%@", model.Text], @"index":@(indexPath.row)}];
-                model.isSelectedOption = YES;
                 ReadSAAnswerModel *questionModel = self.readModel.Answer[_userIndex ? _userIndex : 0];
-                if ([model.Text isEqualToString:questionModel.Alphabet]) {
+                if ([model.Alphabet isEqualToString:questionModel.Alphabet]) {
                     questionModel.isCorrect = YES;
+                }else{
+                    questionModel.isCorrect = NO;
                 }
                 questionModel.yourAnswer = model.Alphabet;
+                for (ReadSAOptionsModel *otherModel in self.readModel.Options) {
+                    otherModel.isSelectedOption = NO;
+                }
+                for (ReadSAAnswerModel *otherOptions in self.readModel.Answer) {
+                    for (ReadSAOptionsModel *otherModel in self.readModel.Options) {
+                        if ([otherOptions.yourAnswer isEqualToString:otherModel.Alphabet]) {
+                            otherModel.isSelectedOption = YES;
+                        }
+                    }
+                }
                 [collectionView reloadData];
                 [self.view setNeedsUpdateConstraints];
                 [self.view updateConstraints];
@@ -740,6 +796,22 @@
     UICollectionViewCell* cell = [colView cellForItemAtIndexPath:indexPath];
     //设置(Nomal)正常状态下的颜色
     [cell setBackgroundColor:[UIColor whiteColor]];
+}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if (scrollView == self.collectionView) {
+        if (self.ReadSetionEnum == ReadSectionA) {
+            self.pageLb.text = @"1/1";
+        }else if (self.ReadSetionEnum == ReadSectionB) {
+            self.pageLb.text = [NSString stringWithFormat:@"%.0f/%lu", self.collectionView.contentOffset.x/self.collectionView.width + 1, (unsigned long)self.readSbModel.Options.count];
+        }else if (self.ReadSetionEnum == ReadSectionC) {
+             self.pageLb.text = [NSString stringWithFormat:@"%.0f/%lu", self.collectionView.contentOffset.x/self.collectionView.width + 1, (unsigned long)self.readScModel.Questions.count];
+        }else if (self.ReadSetionEnum == ReadSectionCPassageTwo){
+            self.pageLb.text = [NSString stringWithFormat:@"%.0f/%lu", self.collectionView.contentOffset.x/self.collectionView.width + 1, (unsigned long)self.readScModel2.Questions.count];
+        }
+        else{
+            self.pageLb.text = @"1/1";
+        }
+    }
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];

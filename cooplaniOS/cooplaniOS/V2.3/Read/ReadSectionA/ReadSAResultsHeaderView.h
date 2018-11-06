@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *correctLb;
 @property (weak, nonatomic) IBOutlet UILabel *paperNameLb;
 @property (weak, nonatomic) IBOutlet UILabel *userTimeLb;
+@property (weak, nonatomic) IBOutlet UILabel *userTimeNameLb;
 @property (nonatomic, copy) NSString *correctStr;
 @end
 

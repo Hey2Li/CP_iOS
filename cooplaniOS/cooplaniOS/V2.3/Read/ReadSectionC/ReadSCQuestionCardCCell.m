@@ -36,7 +36,7 @@
         tableView.backgroundColor = [UIColor whiteColor];
         tableView.tableFooterView = [UIView new];
         
-        UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, tableView.width, 160)];
+        UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, tableView.width, 180)];
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.backgroundColor = [UIColor whiteColor];
         [headerView addSubview:btn];
@@ -71,7 +71,7 @@
         [questionNoLb mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(passageNoLb);
             make.right.equalTo(passageNoLb);
-            make.height.equalTo(@43);
+            make.height.equalTo(@25);
             make.top.equalTo(passageNoLb.mas_bottom);
         }];
         
@@ -79,12 +79,13 @@
         questionLb.text = @"Questions 46 to 50 are based on the";
         questionLb.textColor = UIColorFromRGB(0x444444);
         questionLb.font = [UIFont systemFontOfSize:14];
-        questionLb.numberOfLines = 2;
+        questionLb.textAlignment = NSTextAlignmentLeft;
+        questionLb.numberOfLines = 0;
         [headerView addSubview:questionLb];
         [questionLb mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(passageNoLb);
             make.right.equalTo(passageNoLb);
-            make.height.equalTo(@40);
+            make.bottom.equalTo(headerView.mas_bottom);
             make.top.equalTo(questionNoLb.mas_bottom);
         }];
         
@@ -108,7 +109,7 @@
     return 4;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-   return 45;
+   return 55;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NoHighlightedTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([NoHighlightedTableViewCell class]) forIndexPath:indexPath];
@@ -127,12 +128,13 @@
         make.height.equalTo(@1);
     }];
     label.backgroundColor = UIColorFromRGB(0xE9E9E9);
-    dispatch_async(dispatch_get_main_queue(), ^{
-        //            [cell setSelected:model.isSelecteOption animated:YES];
-    });
+   
     OptionsItem *item = self.model.Options[indexPath.row];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [cell setSelected:item.isSelecteOption animated:YES];
+    });
     cell.selectionStyle = YES;
-    cell.textLabel.numberOfLines = 2;
+    cell.textLabel.numberOfLines = 0;
     cell.textLabel.text = [NSString stringWithFormat:@"%@  %@", item.Alphabet, item.Text];
     return cell;
 }
@@ -140,6 +142,17 @@
     if (self.cellClick) {
         self.cellClick(self.superIndexPath);
         OptionsItem *item = self.model.Options[indexPath.row];
+        item.isSelecteOption = YES;
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            for (OptionsItem *otherModel in self.model.Options) {
+                if (otherModel != item) {
+                    otherModel.isSelecteOption = NO;
+                }
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [tableView reloadData];
+            });
+        });
         if ([item.Alphabet isEqualToString:self.model.Answer]) {
             self.model.isCorrect = YES;
         }else{
@@ -147,6 +160,8 @@
         }
         self.model.yourAnswer = item.Alphabet;
     }
+    
+    
 }
 - (void)setModel:(QuestionsItem *)model{
     _model = model;

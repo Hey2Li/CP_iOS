@@ -96,6 +96,7 @@
                 dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
             }
             self.readModel = [ReadSAModel mj_objectWithKeyValues:dict];
+            self.readModel.testPaperName = model.name;
             [self.tableView reloadData];
             [self.collectionView reloadData];
         }
@@ -132,6 +133,7 @@
                             dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
                         }
                         self.readModel = [ReadSAModel mj_objectWithKeyValues:dict];
+                        self.readModel.testPaperName = self.downloadModel.name;
                         [self.tableView reloadData];
                         [self.collectionView reloadData];
                     }
@@ -233,7 +235,7 @@
                 _correctInt++;
             }
         }
-        [LTHttpManager addOnlyTestWithUserId:IS_USER_ID TestPaperId:@([self.readCategoryId integerValue]) Type:@"4-E" Testpaper_type:@"2" Complete:^(LTHttpResult result, NSString *message, id data) {
+        [LTHttpManager addOnlyTestWithUserId:IS_USER_ID TestPaperId:@([self.readCategoryId integerValue]) Type:@"2" Testpaper_type:@"4-E" Complete:^(LTHttpResult result, NSString *message, id data) {
             if (result == LTHttpResultSuccess) {
                 NSLog(@"%d", _correctInt);
                 ReadSAResultsViewController *vc = [ReadSAResultsViewController new];
@@ -242,6 +244,7 @@
                 vc.questionsArray = self.readModel.Answer;
                 float correctFloat = (float)_correctInt/(float)self.readModel.Answer.count * 100;
                 vc.correct = [NSString stringWithFormat:@"%.0f",correctFloat];
+                vc.paperName = self.readModel.testPaperName;
                 [self.navigationController pushViewController:vc animated:YES];
             }
         }];
@@ -300,7 +303,7 @@
     return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 32, MAXFLOAT);
+    CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 35, MAXFLOAT);
     if (self.readModel.Passage) {
         NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:self.readModel.Passage];
         [textStr yy_setFont:[UIFont systemFontOfSize:15] range:textStr.yy_rangeOfAll];
@@ -308,7 +311,7 @@
         //计算文本尺寸
         YYTextLayout *layout = [YYTextLayout layoutWithContainerSize:maxSize text:textStr];
         CGFloat introHeight = layout.textBoundingSize.height;
-        return introHeight + 100;
+        return introHeight + 120;
     }else{
         return 0;
     }
@@ -364,7 +367,7 @@
         return cell;
     }else if (indexPath.section == 1){
         SAQuestionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([SAQuestionCollectionViewCell class]) forIndexPath:indexPath];
-        cell.questionLb.text = [NSString stringWithFormat:@"%@", self.readModel.Question];
+        cell.questionLb.text = [NSString stringWithFormat:@"%@", self.readModel.Question ?self.readModel.Question : @""];
         return cell;
     }else{
         SAOptionsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([SAOptionsCollectionViewCell class]) forIndexPath:indexPath];
@@ -379,12 +382,23 @@
         if (_questionCardIsOpen) {
             ReadSAOptionsModel *model = self.readModel.Options[indexPath.row];
             [[NSNotificationCenter defaultCenter]postNotificationName:kClickReadCard object:nil userInfo:@{@"options":[NSString stringWithFormat:@"%@", model.Text], @"index":@(indexPath.row)}];
-            model.isSelectedOption = YES;
             ReadSAAnswerModel *questionModel = self.readModel.Answer[_userIndex ? _userIndex : 0];
-            if ([model.Text isEqualToString:questionModel.Alphabet]) {
+            if ([model.Alphabet isEqualToString:questionModel.Alphabet]) {
                 questionModel.isCorrect = YES;
+            }else{
+                questionModel.isCorrect = NO;
             }
             questionModel.yourAnswer = model.Alphabet;
+            for (ReadSAOptionsModel *otherModel in self.readModel.Options) {
+                otherModel.isSelectedOption = NO;
+            }
+            for (ReadSAAnswerModel *otherOptions in self.readModel.Answer) {
+                for (ReadSAOptionsModel *otherModel in self.readModel.Options) {
+                    if ([otherOptions.yourAnswer isEqualToString:otherModel.Alphabet]) {
+                        otherModel.isSelectedOption = YES;
+                    }
+                }
+            }
             [collectionView reloadData];
             [self.view setNeedsUpdateConstraints];
             [self.view updateConstraints];

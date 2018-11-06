@@ -200,7 +200,8 @@
         [self.navigationController pushViewController:vc animated:YES];
     }else if (indexPath.section == 3){
         [self cleanCaches:[self getCachesPath]];
-        [self.myTableView reloadSections:[NSIndexSet indexSetWithIndex:3] withRowAnimation:UITableViewRowAnimationNone];
+        UITableViewCell *subcell = [tableView cellForRowAtIndexPath:indexPath];
+        subcell.detailTextLabel.text = @"0.00M";
     }
 }
 - (void)switchChange:(UISwitch *)sender{
@@ -291,6 +292,10 @@
             [fileManager removeItemAtPath:subPath error:nil];
         }
     }
+    NSArray *array = [DownloadFileModel jr_findAll];
+    for (DownloadFileModel *model in array) {
+        [model jr_delete];
+    }
     SVProgressShowStuteText(@"缓存清理成功", YES);
     [self.myTableView reloadData];
     //SDWebImage的清除功能
@@ -304,7 +309,7 @@
     {
         [storage deleteCookie:cookie];
     }
-
+    SVProgressShowStuteText(@"缓存清理成功", YES);
 }
 
 - (void)didReceiveMemoryWarning {

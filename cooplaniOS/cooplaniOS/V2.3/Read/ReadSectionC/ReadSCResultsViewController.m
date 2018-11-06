@@ -72,6 +72,7 @@
     _headView = [[UINib nibWithNibName:className bundle:nil] instantiateWithOwner:nil options:nil].firstObject;
     _headView.correctStr = self.correct;
     _headView.userTimeLb.text = self.userTime;
+    _headView.paperNameLb.text = self.paperName;
     self.myTableView.tableHeaderView = _headView;
     
     UIView *bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 46 - 64, SCREEN_WIDTH, 46)];

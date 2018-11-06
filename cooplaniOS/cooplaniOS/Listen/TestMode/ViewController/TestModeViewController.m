@@ -434,14 +434,16 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     QuestionTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([QuestionTableViewCell class])];
-    PartsModel *partsModel = self.partModelArray[0];
-    SectionsModel *sectionModel = self.sectionsModelArray[_collectionIndexPath.section];
-    NSLog(@"%ld",(long)_collectionIndexPath.section);
-    cell.selectionStyle = NO;
-    cell.TopTitleLb.text = partsModel.PartType;
-    cell.sectionLb.text = [NSString stringWithFormat:@"%@\n%@",sectionModel.SectionTitle,sectionModel.SectionType];
-    NSLog(@"%@",sectionModel.SectionTitle);
-    cell.directionsLb.text = sectionModel.SectionDirection;
+    if (self.partModelArray.count) {
+        PartsModel *partsModel = self.partModelArray[0];
+        SectionsModel *sectionModel = self.sectionsModelArray[_collectionIndexPath.section];
+        NSLog(@"%ld",(long)_collectionIndexPath.section);
+        cell.selectionStyle = NO;
+        cell.TopTitleLb.text = partsModel.PartType;
+        cell.sectionLb.text = [NSString stringWithFormat:@"%@\n%@",sectionModel.SectionTitle,sectionModel.SectionType];
+        NSLog(@"%@",sectionModel.SectionTitle);
+        cell.directionsLb.text = sectionModel.SectionDirection;
+    }
     return cell;
 }
 -(void)viewDidAppear:(BOOL)animated{

@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *Question;
 @property (nonatomic, strong) NSArray *Options;
 @property (nonatomic, strong) NSArray *Passage;
+@property (nonatomic, copy) NSString *testPaperName;
 @end
 
 @interface ReadSBPassageModel : NSObject

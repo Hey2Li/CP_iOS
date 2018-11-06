@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface OptionsItem :NSObject
 @property (nonatomic , copy) NSString              * Alphabet;
 @property (nonatomic , copy) NSString              * Text;
-
+@property (nonatomic, assign) BOOL isSelecteOption;
 @end
 
 
@@ -32,5 +32,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , copy) NSString              * Passage;
 @property (nonatomic , copy) NSString              * PassageId;
 @property (nonatomic , strong) NSArray               * Questions;
+@property (nonatomic , copy) NSString              * testPaperName;
 @end
 NS_ASSUME_NONNULL_END

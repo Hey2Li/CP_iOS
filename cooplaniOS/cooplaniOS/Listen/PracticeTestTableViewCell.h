@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface PracticeTestTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UIImageView *learnImg;
 
 @end

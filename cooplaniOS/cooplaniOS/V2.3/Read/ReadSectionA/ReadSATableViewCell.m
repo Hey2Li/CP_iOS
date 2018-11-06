@@ -38,6 +38,7 @@
         textLabel = [YYLabel new];
         textLabel.numberOfLines = 0;
         textLabel.backgroundColor  =UIColorFromRGB(0xF7F7F7);
+        textLabel.textVerticalAlignment = YYTextVerticalAlignmentTop;
       
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(clickAnswer:) name:kClickReadCard object:nil];
     }
@@ -45,12 +46,12 @@
 }
 - (void)clickAnswer:(NSNotification *)notifi{
     NSLog(@"%@", notifi.userInfo);
-    if (self.clickCurrentRange.location == 0) {
-        SVProgressShowStuteText(@"请先选择一题", NO);
-        return;
-    }
+//    if (self.clickCurrentRange.location == 0) {
+//        SVProgressShowStuteText(@"请先选择一题", NO);
+//        return;
+//    }
     if ([notifi.userInfo allKeys]) {
-//        NSString *index = [NSString stringWithFormat:@"%@", notifi.userInfo[@"index"]];
+        //        NSString *index = [NSString stringWithFormat:@"%@", notifi.userInfo[@"index"]];
         NSString *option = notifi.userInfo[@"options"];//获取选项
         NSString *string = [_readStr.string stringByReplacingCharactersInRange:_clickCurrentRange withString:option];//替换文章选项处
         NSValue *value = _clickAnswerArray[self.clickIndex];
@@ -70,7 +71,7 @@
                 [afterRangeArray addObject:[NSValue valueWithRange:subAnswerRange]];
             }
         }
-      
+        
         NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:string];
         [textStr yy_setFont:[UIFont systemFontOfSize:15] range:textStr.yy_rangeOfAll];
         [textStr setYy_color:UIColorFromRGB(0x666666)];
@@ -86,6 +87,7 @@
             [textStr yy_setTextUnderline:deco range:subRange];
             //为label添加点击事件
             [textStr yy_setTextHighlightRange:subRange color:DRGBCOLOR backgroundColor:nil userInfo:nil tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
+                weakSelf.clickCurrentRange = NSMakeRange(0, 0);
                 weakSelf.clickCurrentRange = range;
                 weakSelf.clickIndex = idx;
                 [[NSNotificationCenter defaultCenter]postNotificationName:kReadOpenQuestion object:@{@"userClick":[NSString stringWithFormat:@"%lu", (unsigned long)idx]}];
@@ -94,7 +96,7 @@
         textLabel.attributedText = textStr;
         _readStr = textStr;
         _clickAnswerArray = afterRangeArray;
-//        _clickCurrentRange = NSMakeRange(0, 0);
+        //        _clickCurrentRange = NSMakeRange(0, 0);
     }
 }
 - (void)setPassage:(NSString *)passage{
@@ -105,7 +107,6 @@
     [textStr yy_setFont:[UIFont systemFontOfSize:15] range:textStr.yy_rangeOfAll];
     [textStr setYy_color:UIColorFromRGB(0x666666)];
     textStr.yy_lineSpacing = 8;//行间距
-    
     CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 32, MAXFLOAT);
     //计算文本尺寸
     YYTextLayout *layout = [YYTextLayout layoutWithContainerSize:maxSize text:textStr];
@@ -115,7 +116,7 @@
     [textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.mas_top).offset(10);
         make.width.equalTo(@(maxSize.width));
-        make.height.equalTo(@(introHeight));
+        make.height.equalTo(@(introHeight + 100));
         make.left.equalTo(self.mas_left).offset(16);
     }];
     WeakSelf
@@ -132,7 +133,7 @@
             weakSelf.clickCurrentRange = range;
             weakSelf.clickIndex = idx;
             NSRange questionRange = NSMakeRange(range.location - 4, 4);
-            NSLog(@"点击的第%@题 idx:%ld", [text.string substringWithRange:questionRange],idx);
+            NSLog(@"点击的第%@题 idx:%lu", [text.string substringWithRange:questionRange],(unsigned long)idx);
             [[NSNotificationCenter defaultCenter]postNotificationName:kReadOpenQuestion object:@{@"userClick":[NSString stringWithFormat:@"%lu", (unsigned long)idx]}];
         } longPressAction:nil];
     }];
