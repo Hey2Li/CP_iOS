@@ -29,6 +29,7 @@
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, assign) BOOL questionCardIsOpen;
+@property (nonatomic, assign) BOOL isFirstLoadSectionA;
 @property (nonatomic, strong) NSTimer *myTimer;
 @property (nonatomic, strong) UILabel *timeLb;
 @property (nonatomic, assign) NSInteger seconds;
@@ -562,8 +563,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.ReadSetionEnum == ReadSectionA) {
         ReadSATableViewCell *cell = [[ReadSATableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        cell.isTest = YES;
         if (self.readModel.Passage) {
-            cell.passage = self.readModel.Passage;
+            if (_isFirstLoadSectionA) {
+                cell.secondPassage = self.readModel.Passage;
+            }else{
+                cell.passage = self.readModel.Passage;
+                _isFirstLoadSectionA = YES;
+            }
         }
         cell.selectionStyle = NO;
         return cell;

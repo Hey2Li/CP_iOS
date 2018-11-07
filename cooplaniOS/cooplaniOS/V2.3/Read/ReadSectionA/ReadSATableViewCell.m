@@ -16,10 +16,17 @@
 @property (nonatomic, strong) NSMutableDictionary *rangeDict;
 @property (nonatomic, assign) NSRange clickCurrentRange;
 @property (nonatomic, assign) NSInteger clickIndex;
+@property (nonatomic, strong) NSUserDefaults *userDefaults;
 @end
 
 @implementation ReadSATableViewCell
 @synthesize textLabel;
+- (NSUserDefaults *)userDefaults{
+    if (!_userDefaults) {
+        _userDefaults = [NSUserDefaults standardUserDefaults];
+    }
+    return _userDefaults;
+}
 - (NSMutableDictionary *)rangeDict{
     if (!_rangeDict) {
         _rangeDict = [NSMutableDictionary dictionary];
@@ -92,9 +99,13 @@
                 [[NSNotificationCenter defaultCenter]postNotificationName:kReadOpenQuestion object:@{@"userClick":[NSString stringWithFormat:@"%lu", (unsigned long)idx]}];
             } longPressAction:nil];
         }];
-        textLabel.attributedText = textStr;
         _readStr = textStr;
+        _passage = textStr.string;
         _clickAnswerArray = afterRangeArray;
+        textLabel.attributedText = textStr;
+        [self.userDefaults setObject:[NSKeyedArchiver archivedDataWithRootObject:_clickAnswerArray] forKey:@"AnswerArray"];
+        [self.userDefaults setObject:textStr.string forKey:@"readStr"];
+        [self.userDefaults synchronize];
         //        _clickCurrentRange = NSMakeRange(0, 0);
     }
 }
@@ -138,7 +149,58 @@
     }];
     textLabel.attributedText = textStr;
     _readStr = textStr;
+    _passage = textStr.string;
     _clickAnswerArray = rangeArray;
+    [self.userDefaults setObject:[NSKeyedArchiver archivedDataWithRootObject:_clickAnswerArray] forKey:@"AnswerArray"];
+    [self.userDefaults setObject:textStr.string forKey:@"readStr"];
+    [self.userDefaults synchronize];
+}
+- (void)setSecondPassage:(NSString *)secondPassage{
+    _secondPassage = secondPassage;
+    NSString *passages = [self.userDefaults objectForKey:@"readStr"];
+    NSMutableAttributedString *textStr;
+    if (passages.length) {
+        textStr = [[NSMutableAttributedString alloc]initWithString:passages];
+    }else{
+        textStr = [[NSMutableAttributedString alloc]initWithString:secondPassage];
+    }
+    [textStr yy_setFont:[UIFont systemFontOfSize:15] range:textStr.yy_rangeOfAll];
+    [textStr setYy_color:UIColorFromRGB(0x666666)];
+    textStr.yy_lineSpacing = 8;//行间距
+    CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 32, MAXFLOAT);
+    //计算文本尺寸
+    YYTextLayout *layout = [YYTextLayout layoutWithContainerSize:maxSize text:textStr];
+    textLabel.textLayout = layout;
+    CGFloat introHeight = layout.textBoundingSize.height;
+    [self addSubview:textLabel];
+    [textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.mas_top).offset(10);
+        make.width.equalTo(@(maxSize.width));
+        make.height.equalTo(@(introHeight + 100));
+        make.left.equalTo(self.mas_left).offset(16);
+    }];
+    WeakSelf
+    NSData *arrayData = [self.userDefaults objectForKey:@"AnswerArray"];
+    _clickAnswerArray = [NSKeyedUnarchiver unarchiveObjectWithData:arrayData];
+    //获取所有点击答题位置
+    [_clickAnswerArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSValue *value = obj;
+        NSRange subRange = [value rangeValue];
+        //添加下划线
+        YYTextDecoration* deco=[YYTextDecoration decorationWithStyle:(YYTextLineStyleSingle) width:[NSNumber numberWithInt:1] color:DRGBCOLOR];
+        [textStr yy_setTextUnderline:deco range:subRange];
+        //为label添加点击事件
+        [textStr yy_setTextHighlightRange:subRange color:DRGBCOLOR backgroundColor:nil userInfo:nil tapAction:^(UIView * _Nonnull containerView, NSAttributedString * _Nonnull text, NSRange range, CGRect rect) {
+            weakSelf.clickCurrentRange = range;
+            weakSelf.clickIndex = idx;
+            NSRange questionRange = NSMakeRange(range.location - 4, 4);
+            NSLog(@"点击的第%@题 idx:%lu", [text.string substringWithRange:questionRange],(unsigned long)idx);
+            [[NSNotificationCenter defaultCenter]postNotificationName:kReadOpenQuestion object:@{@"userClick":[NSString stringWithFormat:@"%lu", (unsigned long)idx]}];
+        } longPressAction:nil];
+    }];
+    textLabel.attributedText = textStr;
+    _passage = textStr.string;
+    _readStr = textStr;
 }
 //替换文章中的字符串
 - (NSArray*)rangeOfSubString:(NSString*)subStr inString:(NSString*)string {

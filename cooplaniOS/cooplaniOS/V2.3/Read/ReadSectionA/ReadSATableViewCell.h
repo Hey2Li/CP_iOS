@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ReadSATableViewCell : UITableViewCell
 @property (nonatomic, copy) NSString *passage;
+@property (nonatomic, copy) NSString *secondPassage;
 @end
 
 NS_ASSUME_NONNULL_END

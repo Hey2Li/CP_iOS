@@ -99,7 +99,7 @@
             [self.collectionView reloadData];
         }
     }else{
-        [LTHttpManager getOneNewTestWithUserId:IS_USER_ID Type:@"4-F" Testpaper_kind:@"1Y" Testpaper_type:@"4-F" Complete:^(LTHttpResult result, NSString *message, id data) {
+        [LTHttpManager getOneNewTestWithUserId:IS_USER_ID Type:@"2" Testpaper_kind:@"1Y" Testpaper_type:@"4-F" Complete:^(LTHttpResult result, NSString *message, id data) {
             if (result == LTHttpResultSuccess) {
                 self.readSCPassageOneId = data[@"responseData"][@"id"];
                 self.downloadJsonUrl = data[@"responseData"][@"testPaperUrl"];
@@ -215,6 +215,7 @@
     }];
     pageLb.textColor = UIColorFromRGB(0x999999);
     pageLb.font = [UIFont systemFontOfSize:12];
+    pageLb.textAlignment = NSTextAlignmentRight;
     self.pageLb = pageLb;
 
     [bottomView.layer setShadowColor:[UIColor blackColor].CGColor];
