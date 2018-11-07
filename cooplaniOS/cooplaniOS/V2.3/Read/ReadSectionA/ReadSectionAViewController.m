@@ -175,7 +175,11 @@
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
         make.bottom.equalTo(self.view);
-        make.height.equalTo(@40);
+        if (UI_IS_IPHONEX) {
+            make.height.equalTo(@60);
+        }else{
+            make.height.equalTo(@40);
+        }
     }];
     UILabel *loadTimeLb = [UILabel new];
     [bottomView addSubview:loadTimeLb];

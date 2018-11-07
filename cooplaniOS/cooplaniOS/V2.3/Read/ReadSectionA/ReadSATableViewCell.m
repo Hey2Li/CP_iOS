@@ -51,7 +51,6 @@
 //        return;
 //    }
     if ([notifi.userInfo allKeys]) {
-        //        NSString *index = [NSString stringWithFormat:@"%@", notifi.userInfo[@"index"]];
         NSString *option = notifi.userInfo[@"options"];//获取选项
         NSString *string = [_readStr.string stringByReplacingCharactersInRange:_clickCurrentRange withString:option];//替换文章选项处
         NSValue *value = _clickAnswerArray[self.clickIndex];

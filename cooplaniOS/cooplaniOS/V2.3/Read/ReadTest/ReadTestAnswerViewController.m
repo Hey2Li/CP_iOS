@@ -32,7 +32,7 @@
 }
 - (UITableView *)myTableView{
     if (!_myTableView) {
-        _myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64 - 46) style:UITableViewStylePlain];
+        _myTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, self.view.bounds.size.height - 64 - 50) style:UITableViewStylePlain];
         _myTableView.delegate = self;
         _myTableView.dataSource = self;
         [_myTableView registerNib:[UINib nibWithNibName:NSStringFromClass([AnswerTableViewCell class]) bundle:nil] forCellReuseIdentifier:NSStringFromClass([AnswerTableViewCell class])];
@@ -77,9 +77,15 @@
     _headView.paperNameLb.text = self.paperName;
     self.myTableView.tableHeaderView = _headView;
     
-    UIView *bottomView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 46 - 64, SCREEN_WIDTH, 46)];
+    UIView *bottomView = [[UIView alloc]init];
     bottomView.backgroundColor =[UIColor whiteColor];
     [self.view addSubview:bottomView];
+    [bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.equalTo(@46);
+        make.width.equalTo(@(SCREEN_WIDTH));
+        make.left.equalTo(self.view.mas_left);
+        make.bottom.equalTo(self.view.mas_bottom);
+    }];
     UILabel *scoreLb = [UILabel new];
     NSString *socreStr = self.socreDict[[NSString stringWithFormat:@"%@", self.correctNum]];
     scoreLb.textColor = UIColorFromRGB(0x999999);

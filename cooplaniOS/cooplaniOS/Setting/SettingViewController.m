@@ -210,13 +210,13 @@
     NSString *GPRSDownload;//移动网络下载
     NSString *isPush;//是否推送
     if (sender.tag == 0) {
-        GPRSPlay = sender.on ? @"0":@"1";
+        GPRSPlay = sender.on ? @"1":@"0";
         [userDefaults setObject:GPRSPlay forKey:@"GPRSPlay"];
     }else if (sender.tag == 1){
-        GPRSDownload = sender.on ? @"0" : @"1";
+        GPRSDownload = sender.on ? @"1" : @"0";
         [userDefaults setObject:GPRSDownload forKey:@"GPRSDownload"];
     }else if (sender.tag == 2){
-        isPush = sender.on ? @"0" : @"1";
+        isPush = sender.on ? @"1" : @"0";
         [userDefaults setObject:isPush forKey:@"isPush"];
         if (!sender.on) {
             [[UIApplication sharedApplication]unregisterForRemoteNotifications];

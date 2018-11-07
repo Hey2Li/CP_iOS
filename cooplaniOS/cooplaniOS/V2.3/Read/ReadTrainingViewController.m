@@ -25,6 +25,10 @@
 
 @implementation ReadTrainingViewController
 
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self loadData];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -129,11 +133,11 @@
     if (indexPath.row == 0) {
         cell.textLabel.text = @"选词填空";
         cell.imageView.image = [UIImage imageNamed:@"短篇新闻"];
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"已练习%@/%@篇",_categoryDict[@"special1"][@"4-E"]?_categoryDict[@"special1"][@"4-E"]:@"0", _categoryDict[@"testpaper1T"][@"4-E"]];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"已练习%@/%@篇",_categoryDict[@"special1"][@"4-E"]?_categoryDict[@"special1"][@"4-E"]:@"0", _categoryDict[@"testpaper1T"][@"4-E"] ? _categoryDict[@"testpaper1T"][@"4-E"]:@"0"];
     }else if (indexPath.row == 1){
         cell.textLabel.text = @"段落匹配";
         cell.imageView.image = [UIImage imageNamed:@"长对话"];
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"已练习%@/%@篇",_categoryDict[@"special1"][@"4-D"]?_categoryDict[@"special1"][@"4-D"]:@"0", _categoryDict[@"testpaper1T"][@"4-D"]];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"已练习%@/%@篇",_categoryDict[@"special1"][@"4-D"]?_categoryDict[@"special1"][@"4-D"]:@"0", _categoryDict[@"testpaper1T"][@"4-D"]?_categoryDict[@"testpaper1T"][@"4-D"]:@"0"];
     }else{
         cell.textLabel.text = @"仔细阅读";
         cell.imageView.image = [UIImage imageNamed:@"听力篇章"];
