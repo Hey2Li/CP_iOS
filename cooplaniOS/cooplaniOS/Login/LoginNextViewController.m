@@ -13,6 +13,7 @@
 #import "MMDrawerController.h"
 #import "MMDrawerVisualState.h"
 #import "TYAttributedLabel.h"
+#import <SafariServices/SafariServices.h>
 
 @interface LoginNextViewController ()<UITextFieldDelegate,TYAttributedLabelDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *FirstTF;
@@ -67,7 +68,9 @@
     [self openCountdown];
 }
 - (IBAction)userAgreementClick:(UIButton *)sender {
-    
+    NSURL *url = [NSURL URLWithString:@"https://shimo.im/docs/bbdb04ac4fe54d21/"];
+    SFSafariViewController *safariVC = [[SFSafariViewController alloc] initWithURL:url];
+    [self presentViewController:safariVC animated:YES completion:nil];
 }
 - (IBAction)postVrCodeClick:(UIButton *)sender {
     [LTHttpManager UserSMSCodeWithPhone:self.phoneStr Complete:^(LTHttpResult result, NSString *message, id data) {

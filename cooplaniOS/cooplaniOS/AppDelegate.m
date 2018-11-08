@@ -51,7 +51,7 @@
     //设置
     [self setSetting];
     //极光推送
-    [self JSPush:application :launchOptions];
+//    [self JSPush:application :launchOptions];
     //阿里电商SDK
     [self setAliSDK];
     //检测更新

@@ -45,7 +45,6 @@
     _amLb.text = [NSString stringWithFormat:@"美[%@]",model.ph_am];
     if (childArray.count > 0) {
         [childArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            
             NSArray *arr = obj[@"means"];
             NSString *subStr = [NSString stringWithFormat:@"%@  %@",obj[@"part"],[arr componentsJoinedByString:@","]];
             _allDetailStr = [_allDetailStr stringByAppendingString:[NSString stringWithFormat:@"%@ \n\n",subStr]];

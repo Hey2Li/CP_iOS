@@ -386,6 +386,7 @@
     }];
     pageLb.textColor = UIColorFromRGB(0x999999);
     pageLb.font = [UIFont systemFontOfSize:12];
+    pageLb.textAlignment = NSTextAlignmentRight;
     self.pageLb = pageLb;
     self.pageLb.text = @"1/1";
 
@@ -411,6 +412,8 @@
         make.height.equalTo(@(300));
         make.centerY.equalTo(maskView.mas_centerY);
     }];
+    [alertView.layer setCornerRadius:10];
+    [alertView.layer setMasksToBounds:YES];
     
     UIImageView *topImg = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"加载题目演示"]];
     [alertView addSubview:topImg];
@@ -429,7 +432,7 @@
         make.left.equalTo(alertView);
         make.right.equalTo(alertView);
     }];
-    titleLb.text = @"上下滑动切换滑动阅读文章";
+    titleLb.text = @"上下滑动切换阅读文章";
     titleLb.font = [UIFont boldSystemFontOfSize:16];
     titleLb.textColor = [UIColor blackColor];
     titleLb.textAlignment = NSTextAlignmentCenter;
@@ -465,7 +468,7 @@
 #pragma mark 交卷
 - (void)takePaperClick:(UIButton *)btn{
     if (_isFinish) {
-        LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"确定交卷吗" sureBtn:@"交卷" cancleBtn:@"再检查下" ];
+        LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"确定交卷吗？" sureBtn:@"交卷" cancleBtn:@"再检查下" ];
         finishView.resultIndex = ^(NSInteger index) {
             [self loadPaperData];
         };
@@ -537,7 +540,8 @@
     NSInteger index = [notifi.object[@"userClick"] integerValue];
     _userIndex = index;
     [UIView animateWithDuration:0.2 animations:^{
-        self.collectionView.center = self.view.center;
+        CGPoint center = CGPointMake(self.view.center.x, SafeAreaTopHeight + [Tool layoutForAlliPhoneHeight:480]/2 - 1);
+        self.collectionView.center = center;
         _questionCardIsOpen = YES;
     }];
 }
@@ -706,7 +710,8 @@
                 return CGSizeMake((self.collectionView.width - 10)/2, 39);
             }else{
                 return CGSizeMake((self.collectionView.width - 10)/2, 44);
-            }        }
+            }
+        }
     }else{
         return CGSizeMake(self.collectionView.width, [Tool layoutForAlliPhoneHeight:480]);
     }
@@ -789,7 +794,7 @@
             if (nextIndexPath.row + 1 < self.readScModel.Questions.count) {
                 [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:nextIndexPath.row + 1 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
             }else{
-                LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"确定进入下一个Passage吗" sureBtn:@"确定" cancleBtn:@"再等等" ];
+                LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"确定进入下一个Passage？" sureBtn:@"确定" cancleBtn:@"再等等" ];
                 finishView.resultIndex = ^(NSInteger index) {
                     if (self.ReadSetionEnum < 3) {
                         self.ReadSetionEnum ++;

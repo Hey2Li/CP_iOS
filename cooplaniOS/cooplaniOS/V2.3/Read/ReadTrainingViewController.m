@@ -131,15 +131,15 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     if (indexPath.row == 0) {
         cell.textLabel.text = @"选词填空";
-        cell.imageView.image = [UIImage imageNamed:@"短篇新闻"];
+        cell.imageView.image = [UIImage imageNamed:@"选词填空"];
         cell.detailTextLabel.text = [NSString stringWithFormat:@"已练习%@/%@篇",_categoryDict[@"special1"][@"4-E"]?_categoryDict[@"special1"][@"4-E"]:@"0", _categoryDict[@"testpaper1T"][@"4-E"] ? _categoryDict[@"testpaper1T"][@"4-E"]:@"0"];
     }else if (indexPath.row == 1){
         cell.textLabel.text = @"段落匹配";
-        cell.imageView.image = [UIImage imageNamed:@"长对话"];
+        cell.imageView.image = [UIImage imageNamed:@"段落"];
         cell.detailTextLabel.text = [NSString stringWithFormat:@"已练习%@/%@篇",_categoryDict[@"special1"][@"4-D"]?_categoryDict[@"special1"][@"4-D"]:@"0", _categoryDict[@"testpaper1T"][@"4-D"]?_categoryDict[@"testpaper1T"][@"4-D"]:@"0"];
     }else{
         cell.textLabel.text = @"仔细阅读";
-        cell.imageView.image = [UIImage imageNamed:@"听力篇章"];
+        cell.imageView.image = [UIImage imageNamed:@"阅读-1"];
         cell.detailTextLabel.text = [NSString stringWithFormat:@"已练习%@/%ld篇",_categoryDict[@"special1"][@"4-F"]?_categoryDict[@"special1"][@"4-F"]:@"0", [_categoryDict[@"testpaper1T"][@"4-F"] integerValue] + [_categoryDict[@"testpaper1T"][@"4-G"] integerValue]];
     }
     return cell;

@@ -93,7 +93,7 @@
                 dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
             }
             self.readScModel = [ReadSCModel mj_objectWithKeyValues:dict];
-            self.pageLb.text = [NSString stringWithFormat:@"1/%ld", self.readScModel.Questions.count];;
+            self.pageLb.text = [NSString stringWithFormat:@"1/%lu", (unsigned long)self.readScModel.Questions.count];;
             self.readScModel.testPaperName = model.name;
             [self.tableView reloadData];
             [self.collectionView reloadData];
@@ -131,7 +131,7 @@
                             dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
                         }
                         self.readScModel = [ReadSCModel mj_objectWithKeyValues:dict];
-                        self.pageLb.text = [NSString stringWithFormat:@"1/%ld", self.readScModel.Questions.count];
+                        self.pageLb.text = [NSString stringWithFormat:@"1/%lu", (unsigned long)self.readScModel.Questions.count];
                         self.readScModel.testPaperName = self.downloadModel.name;
                         [self.tableView reloadData];
                         [self.collectionView reloadData];

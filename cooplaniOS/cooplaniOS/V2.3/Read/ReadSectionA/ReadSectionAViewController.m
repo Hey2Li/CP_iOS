@@ -274,8 +274,8 @@
     NSInteger index = [notifi.object[@"userClick"] integerValue];
     _userIndex = index;
     [UIView animateWithDuration:0.2 animations:^{
-        self.collectionView.center = self.view.center;
-        _questionCardIsOpen = YES;
+        CGPoint center = CGPointMake(self.view.center.x, SafeAreaTopHeight + [Tool layoutForAlliPhoneHeight:480]/2 - 1);
+        self.collectionView.center = center;
     }];
 }
 -(void)handlePan:(UIPanGestureRecognizer *)gr{

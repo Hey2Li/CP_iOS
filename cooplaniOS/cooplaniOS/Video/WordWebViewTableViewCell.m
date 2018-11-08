@@ -57,8 +57,12 @@
         UIWebView *rightWebView = [[UIWebView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, kWebViewHeight)];
         rightWebView.backgroundColor = [UIColor whiteColor];
         [scrollView addSubview:rightWebView];
-        
-        UIWebView *leftWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, kWebViewHeight)];
+        UIWebView *leftWebView;
+        if (UI_IS_IPHONEX) {
+            leftWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, kWebViewHeight - 34)];
+        } else {
+            leftWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, kWebViewHeight)];
+        }
         rightWebView.backgroundColor = [UIColor whiteColor];
         [scrollView addSubview:leftWebView];
         rightWebView.backgroundColor = [UIColor whiteColor];
