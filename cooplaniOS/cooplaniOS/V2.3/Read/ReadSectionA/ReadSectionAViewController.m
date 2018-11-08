@@ -347,7 +347,11 @@
     }else if (indexPath.section == 0){
         return CGSizeMake(self.collectionView.width, 35);
     }else{
-        return CGSizeMake((self.collectionView.width - 10)/2, 44);
+        if (UI_IS_IPHONE5) {
+            return CGSizeMake((self.collectionView.width - 10)/2, 39);
+        }else{
+            return CGSizeMake((self.collectionView.width - 10)/2, 44);
+        }
     }
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{

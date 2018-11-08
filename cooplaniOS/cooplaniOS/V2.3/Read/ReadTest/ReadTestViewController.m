@@ -95,6 +95,11 @@
     [self initWithView];
     [self initWithNavi];
     [self loadData];
+    BOOL isFirstTestPaper = [USERDEFAULTS boolForKey:kIsFisrtTestPaper];
+    if (!isFirstTestPaper) {
+        [self loadFirstReadAlert];
+        [USERDEFAULTS setBool:YES forKey:kIsFisrtTestPaper];
+    }
     _seconds = 2400;
     _correctInt = 0;
     self.ReadSetionEnum = ReadSectionA;
@@ -391,21 +396,84 @@
     
     [takePaperBtn addTarget:self action:@selector(takePaperClick:) forControlEvents:UIControlEventTouchUpInside];
 }
+- (void)loadFirstReadAlert{
+    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+    UIView *maskView = [[UIView alloc]initWithFrame:keyWindow.bounds];
+    maskView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.7];
+    [keyWindow addSubview:maskView];
+    
+    UIView *alertView = [[UIView alloc]init];
+    alertView.backgroundColor = [UIColor whiteColor];
+    [maskView addSubview:alertView];
+    [alertView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(maskView.mas_left).offset(30);
+        make.right.equalTo(maskView.mas_right).offset(-30);
+        make.height.equalTo(@(300));
+        make.centerY.equalTo(maskView.mas_centerY);
+    }];
+    
+    UIImageView *topImg = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"加载题目演示"]];
+    [alertView addSubview:topImg];
+    [topImg mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(alertView);
+        make.left.equalTo(alertView);
+        make.right.equalTo(alertView);
+        make.bottom.equalTo(alertView.mas_bottom).offset(-150);
+    }];
+    
+    UILabel *titleLb = [UILabel new];
+    [alertView addSubview:titleLb];
+    [titleLb mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(topImg.mas_bottom).offset(10);
+        make.height.equalTo(@30);
+        make.left.equalTo(alertView);
+        make.right.equalTo(alertView);
+    }];
+    titleLb.text = @"上下滑动切换滑动阅读文章";
+    titleLb.font = [UIFont boldSystemFontOfSize:16];
+    titleLb.textColor = [UIColor blackColor];
+    titleLb.textAlignment = NSTextAlignmentCenter;
+    
+    UILabel *subTitleLb = [UILabel new];
+    [alertView addSubview:subTitleLb];
+    [subTitleLb mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(titleLb.mas_bottom);
+        make.height.equalTo(@30);
+        make.left.equalTo(alertView);
+        make.right.equalTo(alertView);
+    }];
+    subTitleLb.text = @"滑动到底部切换下一篇文章";
+    subTitleLb.font = [UIFont systemFontOfSize:14];
+    subTitleLb.textColor = [UIColor blackColor];
+    subTitleLb.textAlignment = NSTextAlignmentCenter;
+    
+    UIButton *sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [sureBtn setTitle:@"我知道了" forState:UIControlStateNormal];
+    [sureBtn setTitleColor:DRGBCOLOR forState:UIControlStateNormal];
+    [alertView addSubview:sureBtn];
+    [sureBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(subTitleLb.mas_bottom);
+        make.bottom.equalTo(alertView.mas_bottom);
+        make.left.equalTo(alertView);
+        make.right.equalTo(alertView);
+    }];
+    [sureBtn addTarget:self action:@selector(sureBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+}
+- (void)sureBtnClick:(UIButton *)btn{
+    [btn.superview.superview  removeFromSuperview];
+}
 #pragma mark 交卷
 - (void)takePaperClick:(UIButton *)btn{
-    btn.userInteractionEnabled = NO;
     if (_isFinish) {
         LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"确定交卷吗" sureBtn:@"交卷" cancleBtn:@"再检查下" ];
         finishView.resultIndex = ^(NSInteger index) {
             [self loadPaperData];
-            btn.userInteractionEnabled = YES;
         };
         [finishView show];
     }else{
         LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"还有题目没做完，确定交卷吗?" sureBtn:@"交卷" cancleBtn:@"继续做" ];
         finishView.resultIndex = ^(NSInteger index) {
             [self loadPaperData];
-            btn.userInteractionEnabled = YES;
         };
         [finishView show];
     }
@@ -447,7 +515,11 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)time{
-    self.timeLb.text = [self getMMSSFromSS:[NSString stringWithFormat:@"%ld", (long)_seconds--]];
+    if (_seconds > 0) {
+        self.timeLb.text = [self getMMSSFromSS:[NSString stringWithFormat:@"%ld", (long)_seconds--]];
+    }else{
+        self.timeLb.text = [self getMMSSFromSS:[NSString stringWithFormat:@"%d", 0]];
+    }
 }
 //传入 秒  得到  xx分钟xx秒
 -(NSString *)getMMSSFromSS:(NSString *)totalTime{
@@ -563,7 +635,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (self.ReadSetionEnum == ReadSectionA) {
         ReadSATableViewCell *cell = [[ReadSATableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-        cell.isTest = YES;
         if (self.readModel.Passage) {
             if (_isFirstLoadSectionA) {
                 cell.secondPassage = self.readModel.Passage;
@@ -583,18 +654,18 @@
         return cell;
     }else if (self.ReadSetionEnum == ReadSectionC){
         ReadSBTableViewCell *cell = [[ReadSBTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        cell.isTest = YES;
         if (self.readScModel.Passage) {
             cell.passage = self.readScModel.Passage;
         }
-        cell.isTest = YES;
         cell.selectionStyle = NO;
         return cell;
     }else{
         ReadSBTableViewCell *cell = [[ReadSBTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+        cell.isTest = YES;
         if (self.readScModel2.Passage) {
             cell.passage = self.readScModel2.Passage;
         }
-        cell.isTest = YES;
         cell.selectionStyle = NO;
         return cell;
     }
@@ -631,8 +702,11 @@
         }else if (indexPath.section == 0){
             return CGSizeMake(self.collectionView.width, 35);
         }else{
-            return CGSizeMake((self.collectionView.width - 10)/2, 44);
-        }
+            if (UI_IS_IPHONE5) {
+                return CGSizeMake((self.collectionView.width - 10)/2, 39);
+            }else{
+                return CGSizeMake((self.collectionView.width - 10)/2, 44);
+            }        }
     }else{
         return CGSizeMake(self.collectionView.width, [Tool layoutForAlliPhoneHeight:480]);
     }

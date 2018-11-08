@@ -58,4 +58,7 @@ NSString *const kFindWordIsClose = @"kFindWordIsClose";//查词页面关闭了
 NSString *const kLoadListenTraining = @"kLoadListenTraining";//加载听力训练页
 NSString *const kReadOpenQuestion = @"kReadOpenQuestion";//选词填空打开题卡
 NSString *const kClickReadCard = @"kClickReadCard";//点击选词填空题卡
+NSString *const kIsFisrtLogin = @"kIsFisrtLogin";//第一次打开APP
+NSString *const kIsFisrtTestPaper = @"kIsFisrtTestPaper";//第一次打开模拟考场
+
 @end

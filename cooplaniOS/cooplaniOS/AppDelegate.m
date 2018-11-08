@@ -293,9 +293,9 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     [WXApi registerApp:@"wx0e4cba8a7ddfc51c" enableMTA:YES];
 }
 - (void)monitorNetworking{
-    NSString *loginTime = [USERDEFAULTS objectForKey:@"logintime"];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    if (loginTime.length == 0) {
+    BOOL isFirst = [userDefaults boolForKey:kIsFisrtLogin];
+    if (!isFirst) {
         NSString *GPRSPlay;//移动网络播放
         NSString *GPRSDownload;//移动网络下载
         GPRSPlay = @"0";
@@ -304,6 +304,7 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
         [userDefaults setObject:GPRSDownload forKey:@"GPRSDownload"];
         [userDefaults setObject:@"1" forKey:kWordAutoPlay];//设置自动播放单词发音
         [userDefaults setObject:@"1" forKey:kQuestionVoice];//设置答题音效
+        [userDefaults setBool:YES forKey:kIsFisrtLogin];
     }else{
         if ([userDefaults objectForKey:kWordAutoPlay] == nil || [[userDefaults objectForKey:kWordAutoPlay] isEqualToString: @""]) {
             [userDefaults setObject:@"1" forKey:kWordAutoPlay];//设置自动播放单词发音

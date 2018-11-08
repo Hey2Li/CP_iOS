@@ -124,7 +124,7 @@
     self.wordNameLb.text = model.word;
     self.AmYinBiaoLb.text = [NSString stringWithFormat:@"美[%@]",model.us_soundmark];
     self.enYinBiaoLb.text = [NSString stringWithFormat:@"英[%@]",model.uk_soundmark];
-    self.explainLb.text = model.options;
+    self.explainLb.text = model.ex;
 }
 - (void)playVocieWithUrl:(NSString *)url{
     if (url) {

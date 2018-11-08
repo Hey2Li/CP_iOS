@@ -34,7 +34,6 @@
     // Do any additional setup after loading the view.
     self.title = @"阅读训练";
     [self initWithView];
-    [self loadData];
 }
 - (void)initWithView{
     UITableView *tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - 64) style:UITableViewStylePlain];

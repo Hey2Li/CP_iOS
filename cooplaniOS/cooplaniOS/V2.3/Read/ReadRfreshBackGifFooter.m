@@ -32,6 +32,6 @@
     
     self.stateLabel.font = [UIFont systemFontOfSize:14];
     [self setTitle:@"松开阅读下一篇题目" forState:MJRefreshStatePulling];
-    [self setTitle:@"上拉作答上一篇阅读" forState:MJRefreshStateIdle];
+    [self setTitle:@"上拉作答下一篇阅读" forState:MJRefreshStateIdle];
 }
 @end
