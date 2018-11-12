@@ -9,6 +9,8 @@
 #import "HomeCategoryTableViewCell.h"
 #import "ListenTrainingViewController.h"
 #import "ReadTrainingViewController.h"
+#import "WriteTrainingViewController.h"
+#import "TranslationTrainingViewController.h"
 
 @implementation HomeCategoryTableViewCell
 
@@ -52,11 +54,11 @@
 }
 - (IBAction)writeClick:(UIButton *)sender {
     [MobClick event:@"homepage_writing"];
-    SVProgressShowStuteText(@"暂未开放", NO);
+    [self.viewController.navigationController pushViewController:WriteTrainingViewController.new animated:YES];
 }
 - (IBAction)fanyiClick:(UIButton *)sender {
     [MobClick event:@"homepage_translation"];
-    SVProgressShowStuteText(@"暂未开放", NO);
+    [self.viewController.navigationController pushViewController:TranslationTrainingViewController.new animated:YES];
 }
 
 @end

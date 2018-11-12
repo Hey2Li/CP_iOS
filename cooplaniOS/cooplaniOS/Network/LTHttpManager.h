@@ -9,7 +9,7 @@
 #import "LTHTTPSessionManager.h"
 #import "PaperJSONKey.h"
 
-#define BaseURL @"http://test.cooplan.cn"
+#define BaseURL @"http://app.cooplan.cn"
 //http://192.168.0.101:8080/cooplan-app
 @interface LTHttpManager : LTHTTPSessionManager
 

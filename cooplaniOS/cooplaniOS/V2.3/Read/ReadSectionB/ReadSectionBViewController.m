@@ -249,17 +249,17 @@
         }
         [LTHttpManager addOnlyTestWithUserId:IS_USER_ID TestPaperId:@([self.readCategoryId integerValue]) Type:@"2" Testpaper_type:@"4-D" Complete:^(LTHttpResult result, NSString *message, id data) {
             if (result == LTHttpResultSuccess) {
+                NSLog(@"%d", _correctInt);
+                ReadSBResultViewController *vc = [ReadSBResultViewController new];
+                vc.userTime = self.timeLb.text;
+                vc.questionsArray = self.readSbModel.Options;
+                vc.readCategoryId = self.readCategoryId;
+                float correctFloat = (float)_correctInt/(float)self.readSbModel.Options.count * 100;
+                vc.paperName = self.readSbModel.testPaperName;
+                vc.correct = [NSString stringWithFormat:@"%.0f",correctFloat];
+                [self.navigationController pushViewController:vc animated:YES];
             }
         }];
-        NSLog(@"%d", _correctInt);
-        ReadSBResultViewController *vc = [ReadSBResultViewController new];
-        vc.userTime = self.timeLb.text;
-        vc.questionsArray = self.readSbModel.Options;
-        vc.readCategoryId = self.readCategoryId;
-        float correctFloat = (float)_correctInt/(float)self.readSbModel.Options.count * 100;
-        vc.paperName = self.readSbModel.testPaperName;
-        vc.correct = [NSString stringWithFormat:@"%.0f",correctFloat];
-        [self.navigationController pushViewController:vc animated:YES];
     };
     [finishView show];
 }

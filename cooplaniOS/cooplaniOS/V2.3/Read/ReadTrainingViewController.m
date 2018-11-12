@@ -7,26 +7,16 @@
 //
 
 #import "ReadTrainingViewController.h"
-#import "ListenTeacherTableViewCell.h"
-#import "PracticeTestTableViewCell.h"
-#import "HomeListenCell.h"
-#import "VideoViewController.h"
-#import "MyCollectionViewController.h"
-#import "ReadSectionA/ReadSectionAViewController.h"
-#import "ReadSectionB/ReadSectionBViewController.h"
-#import "ReadSectionC/ReadSectionCViewController.h"
-#import "ReadTest/ReadTestViewController.h"
-#import "ReadTest/ReadTestListViewController.h"
 
 @interface ReadTrainingViewController ()<UITableViewDelegate, UITableViewDataSource>
-@property (nonatomic, strong) UITableView *myTableView;
-@property (nonatomic, strong) NSDictionary *categoryDict;
 @end
 
 @implementation ReadTrainingViewController
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    self.mm_drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
+    self.mm_drawerController.closeDrawerGestureModeMask = MMCloseDrawerGestureModeNone;
     [self loadData];
 }
 - (void)viewDidLoad {
@@ -98,7 +88,7 @@
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section{
-    if (section < 2) {
+    if (section < 3) {
         // Background color
         view.tintColor = [UIColor whiteColor];
         

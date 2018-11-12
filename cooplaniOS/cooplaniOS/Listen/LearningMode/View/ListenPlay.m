@@ -510,6 +510,7 @@
 }
 #pragma mark 单句收藏
 - (IBAction)collectionOneSentence:(UIButton *)sender {
+    sender.userInteractionEnabled = NO;
     NSString *testPaperId = [USERDEFAULTS objectForKey:@"testPaperId"];
     NSString *testPaperName = [USERDEFAULTS objectForKey:@"testPaperName"];
     DownloadFileModel *model = [DownloadFileModel  jr_findByPrimaryKey:testPaperId];
@@ -525,11 +526,14 @@
 //                model.paperName = self.paperName;
 //                [model jr_save];
                 SVProgressShowStuteText(@"收藏成功", YES);
+                sender.userInteractionEnabled = YES;
             }else{
                 SVProgressShowStuteText(message, NO);
+                sender.userInteractionEnabled = YES;
             }
         }];
     }else{
+        sender.userInteractionEnabled = YES;
         LoginViewController *vc = [[LoginViewController alloc]init];
         [self.viewController.navigationController pushViewController:vc animated:YES];
     }

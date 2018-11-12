@@ -144,6 +144,8 @@
             ReadSBPassageModel *model = self.questionsArray[indexPath.row];
             if ([self.optionsModel.Answer isEqualToString:model.Alphabet]) {
                 self.optionsModel.isCorrect = YES;
+            }else{
+                self.optionsModel.isCorrect = NO;
             }
             self.optionsModel.yourAnswer = model.Alphabet;
             NSLog(@"%@", self.optionsModel.yourAnswer);

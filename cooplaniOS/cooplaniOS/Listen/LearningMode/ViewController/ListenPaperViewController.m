@@ -377,6 +377,7 @@
 }
 #pragma mark 单句收藏
 - (IBAction)collectionOneSentence:(UIButton *)sender {
+    sender.userInteractionEnabled = NO;
     ListenTableViewCell *cell = [self.lyricTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:_currentIndex inSection:0]];
     if (IS_USER_ID) {
         NSArray *array = [cell.listenLb.text componentsSeparatedByString:@"\n"];
@@ -388,11 +389,14 @@
 //                model.paperName = self.title;
 //                [model jr_save];
                 SVProgressShowStuteText(@"收藏成功", YES);
+                sender.userInteractionEnabled = YES;
             }else{
                 SVProgressShowStuteText(message, NO);
+                sender.userInteractionEnabled = YES;
             }
         }];
     }else{
+        sender.userInteractionEnabled = YES;
         LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"请先登录" sureBtn:@"去登录" cancleBtn:@"取消"];
         [alertView show];
         alertView.resultIndex = ^(NSInteger index) {

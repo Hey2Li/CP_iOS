@@ -60,6 +60,7 @@
 }
 #pragma mark 添加笔记
 - (IBAction)addNoteClick:(UIButton *)btn {
+    btn.userInteractionEnabled = NO;
     if (_isFindWord) {
         if (IS_USER_ID) {
             [MobClick endEvent:@"doingpracticeApage_addnote"];
@@ -68,20 +69,23 @@
                 [LTHttpManager addWordsWithUserId:IS_USER_ID Word:self.wordNameLb.text Tranlate:[Tool arrayToJSONString:array] Ph_en_mp3:_dataDict[@"ph_en_mp3"] Ph_am_mp3:_dataDict[@"ph_am_mp3"] Ph_am:_dataDict[@"ph_am"] Ph_en:_dataDict[@"ph_en"] Complete:^(LTHttpResult result, NSString *message, id data) {
                     if (LTHttpResultSuccess == result) {
                         btn.selected = !btn.selected;
+                        btn.userInteractionEnabled = YES;
                         SVProgressShowStuteText(@"添加成功", YES);
                     }else{
-                        
+                        btn.userInteractionEnabled = YES;
                     }
                 }];
             }else{
                 [LTHttpManager removeWordsWithUseId:IS_USER_ID Word:self.wordNameLb.text Complete:^(LTHttpResult result, NSString *message, id data) {
                     if (LTHttpResultSuccess == result) {
                         btn.selected = !btn.selected;
+                        btn.userInteractionEnabled = YES;
                         SVProgressShowStuteText(@"取消成功", YES);
                     }
                 }];
             }
         }else{
+            btn.userInteractionEnabled = YES;
             LTAlertView *alertView = [[LTAlertView alloc]initWithTitle:@"请先登录" sureBtn:@"去登录" cancleBtn:@"取消"];
             [alertView show];
             alertView.resultIndex = ^(NSInteger index) {
@@ -92,7 +96,6 @@
     }
 }
 - (void)setDataDict:(NSDictionary *)dataDict{
-    NSLog(@"addNoteBtn :%@", NSStringFromCGRect(self.addNoteBtn.frame));
     _isFindWord = YES;
     self.addNoteBtn.hidden = NO;
     _dataDict = dataDict;

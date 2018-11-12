@@ -119,6 +119,11 @@
     }
     return _paperMutableArray;
 }
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.mm_drawerController.openDrawerGestureModeMask = MMOpenDrawerGestureModeNone;
+    self.mm_drawerController.closeDrawerGestureModeMask = MMCloseDrawerGestureModeNone;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.

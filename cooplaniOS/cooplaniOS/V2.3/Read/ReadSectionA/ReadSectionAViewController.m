@@ -276,6 +276,7 @@
     [UIView animateWithDuration:0.2 animations:^{
         CGPoint center = CGPointMake(self.view.center.x, SafeAreaTopHeight + [Tool layoutForAlliPhoneHeight:480]/2 - 1);
         self.collectionView.center = center;
+        _questionCardIsOpen = YES;
     }];
 }
 -(void)handlePan:(UIPanGestureRecognizer *)gr{
