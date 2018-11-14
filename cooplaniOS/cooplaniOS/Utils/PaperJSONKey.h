@@ -60,5 +60,6 @@ extern NSString *const kReadOpenQuestion;//选词填空打开题卡
 extern NSString *const kClickReadCard;//点击选词填空题卡
 extern NSString *const kIsFisrtLogin;//第一次打开APP
 extern NSString *const kIsFisrtTestPaper;//第一次打开模拟考场
-
+extern NSString *const kListenBackground;//APP音频后台
+extern NSString *const kListenForeground;//app回到前台
 @end

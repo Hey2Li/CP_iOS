@@ -654,7 +654,7 @@
         cell.selectionStyle = NO;
         cell.isTest = YES;
         ReadSBPassageModel *passageModel = self.readSbModel.Passage[indexPath.row];
-        cell.passage = [NSString stringWithFormat:@"%@  %@", passageModel.Alphabet, passageModel.Text];
+        cell.passage = [NSString stringWithFormat:@"[%@]  %@", passageModel.Alphabet, passageModel.Text];
         return cell;
     }else if (self.ReadSetionEnum == ReadSectionC){
         ReadSBTableViewCell *cell = [[ReadSBTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];

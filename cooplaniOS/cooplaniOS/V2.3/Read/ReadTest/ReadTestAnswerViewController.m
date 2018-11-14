@@ -20,13 +20,20 @@
 @property (nonatomic, strong) NSIndexPath *lastSelectedIndexPath;
 @property (nonatomic, strong) ReadSAResultsHeaderView *headView;
 @property (nonatomic, strong) NSDictionary *socreDict;
+@property (nonatomic, strong) UIImageView *scoreWhyImageView;
 @end
 
 @implementation ReadTestAnswerViewController
-
+- (UIImageView *)scoreWhyImageView{
+    if (!_scoreWhyImageView) {
+       _scoreWhyImageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"得分解释"]];
+        _scoreWhyImageView.hidden = YES;
+    }
+    return _scoreWhyImageView;
+}
 - (NSDictionary *)socreDict{
     if (!_socreDict) {
-        _socreDict = @{@"35":@"248.5",@"34":@"238",@"33":@"227.5",@"32":@"220.5",@"31":@"213.5",@"30":@"206.5",@"29":@"199.5",@"28":@"192.5",@"27":@"185.5",@"26":@"178.5",@"25":@"175",@"24":@"171.5",@"23":@"168",@"22":@"164.5",@"21":@"161",@"20":@"157.5",@"19":@"154",@"18":@"154",@"17":@"150.5",@"16":@"147",@"15":@"178.5",@"14":@"140",@"13":@"136.5",@"12":@"133",@"11":@"129.5",@"10":@"126",@"9":@"126",@"8":@"122.5",@"7":@"119",@"6":@"119",@"5":@"115.5",@"4":@"112",@"3":@"108.5",@"2":@"105",@"1":@"105",@"0":@"101.5"};
+        _socreDict = @{@"35":@"248.5",@"34":@"238",@"33":@"227.5",@"32":@"220.5",@"31":@"213.5",@"30":@"206.5",@"29":@"199.5",@"28":@"192.5",@"27":@"185.5",@"26":@"178.5",@"25":@"175",@"24":@"171.5",@"23":@"168",@"22":@"164.5",@"21":@"161",@"20":@"157.5",@"19":@"154",@"18":@"154",@"17":@"150.5",@"16":@"147",@"15":@"178.5",@"14":@"140",@"13":@"136.5",@"12":@"133",@"11":@"129.5",@"10":@"126",@"9":@"126",@"8":@"122.5",@"7":@"119",@"6":@"119",@"5":@"115.5",@"4":@"112",@"3":@"108.5",@"2":@"105",@"1":@"105",@"0":@"0"};
     }
     return _socreDict;
 }
@@ -101,10 +108,21 @@
     [bottomView addSubview:scoreLb];
     [scoreLb mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view).offset(20);
-        make.right.equalTo(self.view.mas_centerX);
-        make.bottom.equalTo(self.view);
+        make.width.equalTo(@50);
+        make.centerY.equalTo(bottomView.mas_centerY);
         make.height.equalTo(@45);
     }];
+    
+    UIButton *scoreWhyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [scoreWhyBtn setImage:[UIImage imageNamed:@"疑问"] forState:UIControlStateNormal];
+    [bottomView addSubview:scoreWhyBtn];
+    [scoreWhyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(scoreLb.mas_right);
+        make.height.equalTo(@30);
+        make.width.equalTo(@30);
+        make.centerY.equalTo(scoreLb.mas_centerY);
+    }];
+    [scoreWhyBtn addTarget:self action:@selector(scoreWhyBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *testAgainBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [testAgainBtn setTitle:@"返回" forState:UIControlStateNormal];
@@ -122,20 +140,20 @@
     [testAgainBtn.layer setBorderWidth:1];
     [testAgainBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     
-//    UILabel *lineLb = [UILabel new];
-//    [bottomView addSubview:lineLb];
-//    [bottomView bringSubviewToFront:lineLb];
-//    [lineLb mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.centerX.equalTo(bottomView.mas_centerX);
-//        make.centerY.equalTo(bottomView.mas_centerY);
-//        make.height.equalTo(@24);
-//        make.width.equalTo(@2);
-//    }];
-//    [lineLb setBackgroundColor:UIColorFromRGB(0xEEEEEE)];
-    
     [bottomView.layer setShadowOpacity:0.4];
     [bottomView.layer setShadowColor:[UIColor blackColor].CGColor];
     [bottomView.layer setShadowOffset:CGSizeMake(0, 3)];
+}
+- (void)scoreWhyBtnClick:(UIButton *)btn{
+    //显示分数说明
+    [self.view addSubview:self.scoreWhyImageView];
+    [self.scoreWhyImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(btn.mas_left);
+        make.bottom.equalTo(btn.mas_top).offset(-10);
+        make.height.equalTo(@80);
+        make.width.equalTo(@160);
+    }];
+    self.scoreWhyImageView.hidden = !self.scoreWhyImageView.hidden;
 }
 #pragma mark 继续
 - (void)continueBtnClick:(UIButton *)btn{

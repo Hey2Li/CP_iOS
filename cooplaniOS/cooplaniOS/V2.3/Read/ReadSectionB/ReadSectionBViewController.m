@@ -344,7 +344,7 @@
     ReadSBTableViewCell *cell = [[ReadSBTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     cell.selectionStyle = NO;
     ReadSBPassageModel *passageModel = self.readSbModel.Passage[indexPath.row];
-    cell.passage = [NSString stringWithFormat:@"%@  %@", passageModel.Alphabet, passageModel.Text];
+    cell.passage = [NSString stringWithFormat:@"[%@]  %@", passageModel.Alphabet, passageModel.Text];
     return cell;
 }
 

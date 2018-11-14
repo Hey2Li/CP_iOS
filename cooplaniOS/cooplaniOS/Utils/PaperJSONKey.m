@@ -60,5 +60,6 @@ NSString *const kReadOpenQuestion = @"kReadOpenQuestion";//选词填空打开题
 NSString *const kClickReadCard = @"kClickReadCard";//点击选词填空题卡
 NSString *const kIsFisrtLogin = @"kIsFisrtLogin";//第一次打开APP
 NSString *const kIsFisrtTestPaper = @"kIsFisrtTestPaper";//第一次打开模拟考场
-
+NSString *const kListenBackground = @"kListenBackground";//APP音频后台
+NSString *const kListenForeground = @"kListenForeground";//app回到前台
 @end

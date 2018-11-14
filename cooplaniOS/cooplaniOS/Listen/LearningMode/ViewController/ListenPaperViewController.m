@@ -128,8 +128,8 @@
     [self.player play];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(cacheSuccess) name:@"cacheSuccess" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playFinished:) name:@"playFinished" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(listenPause) name:@"listenBackground" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(listenPlay) name:@"listenForeground" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(listenPause) name:kListenBackground object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(listenPlay) name:kListenForeground object:nil];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
     //添加手势
     
