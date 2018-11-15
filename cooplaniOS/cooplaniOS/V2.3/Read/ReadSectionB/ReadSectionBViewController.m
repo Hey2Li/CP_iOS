@@ -333,7 +333,7 @@
     CGSize maxSize = CGSizeMake(SCREEN_WIDTH - 32, MAXFLOAT);
     maxSize.width = maxSize.width - 25;
     NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@  %@", passageModel.Alphabet, passageModel.Text]];
-    [textStr yy_setFont:[UIFont systemFontOfSize:14] range:textStr.yy_rangeOfAll];
+    [textStr yy_setFont:[UIFont systemFontOfSize:15] range:textStr.yy_rangeOfAll];
     textStr.yy_lineSpacing = 8;
     //计算文本尺寸
     YYTextLayout *layout = [YYTextLayout layoutWithContainerSize:maxSize text:textStr];

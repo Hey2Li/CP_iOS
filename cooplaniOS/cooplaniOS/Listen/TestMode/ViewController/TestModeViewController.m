@@ -167,6 +167,7 @@
 - (void)loadData{
     DownloadFileModel *model = [DownloadFileModel  jr_findByPrimaryKey:self.testPaperId];
     self.title = [[model.paperJsonName stringByRemovingPercentEncoding]stringByDeletingPathExtension];//去掉后缀
+    self.title = @"模拟考场";
     NSString *caches = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
     NSString *urlString = [model.paperJsonName stringByRemovingPercentEncoding];
     NSString *fullPath = [NSString stringWithFormat:@"%@/%@", caches, urlString];
@@ -263,7 +264,7 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
     if ([keyPath isEqualToString:@"progress"]) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSString *time = [NSString stringWithFormat:@"%@",[self convertStringWithTime:self.player.progress * self.player.duration]];
+            NSString *time = [NSString stringWithFormat:@"%@",[self convertStringWithTime:(1 - self.player.progress) * self.player.duration]];
             self.bottomView.leftTimeLb.text = time;
         });
     }

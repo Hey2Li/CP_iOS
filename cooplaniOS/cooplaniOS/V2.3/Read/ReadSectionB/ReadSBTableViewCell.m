@@ -33,7 +33,7 @@
 - (void)setPassage:(NSString *)passage{
     _passage = passage;
     NSMutableAttributedString *textStr = [[NSMutableAttributedString alloc]initWithString:passage];
-    [textStr yy_setFont:[UIFont systemFontOfSize:14] range:textStr.yy_rangeOfAll];
+    [textStr yy_setFont:[UIFont systemFontOfSize:15] range:textStr.yy_rangeOfAll];
     [textStr setYy_color:UIColorFromRGB(0x666666)];
     textStr.yy_lineSpacing = 8;//行间距
     //        textStr.yy_headIndent = 10;
