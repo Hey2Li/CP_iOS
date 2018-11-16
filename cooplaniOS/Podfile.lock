@@ -34,6 +34,7 @@ PODS:
   - AlipaySDK (2.0.0-bc)
   - BCUserTrack (5.1.0.9):
     - UTDID
+  - Bugly (2.5.0)
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
@@ -100,6 +101,7 @@ PODS:
 DEPENDENCIES:
   - AFNetworking (~> 3.1.0)
   - AlibcTradeSDK
+  - Bugly
   - IQKeyboardManager (~> 3.3.4)
   - JPush
   - JRDB
@@ -137,6 +139,7 @@ SPEC REPOS:
     - UTDID
   https://github.com/cocoapods/specs.git:
     - AFNetworking
+    - Bugly
     - FMDB
     - IQKeyboardManager
     - JCore
@@ -169,6 +172,7 @@ SPEC CHECKSUMS:
   AlibcTradeSDK: 7a17d15eb13182a6e96aeab0c73b6d4d2bc5b00a
   AlipaySDK: a40a4099b24328d90d7ba4fb67f6ce753d7fa2c7
   BCUserTrack: 684f468b8143be7a2ed10a8c449fd959b2a3a099
+  Bugly: 3ca9f255c01025582df26f9222893b383c7e4b4e
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   IQKeyboardManager: 249c3946acf61345c18b038eb50863fe2793e3a8
   JCore: f14c0549968a63c22e246a4875aa9d428446f373
@@ -200,6 +204,6 @@ SPEC CHECKSUMS:
   YJLocationPicker: 8cbdc99433435b17562de6f5d965cc52c8873355
   YYText: 5c461d709e24d55a182d1441c41dc639a18a4849
 
-PODFILE CHECKSUM: 127469dfeb82dbcfa8ced187ec7c56ab7d748181
+PODFILE CHECKSUM: 14b16d7927d9554d1dab30a95982e1ecec9725a9
 
 COCOAPODS: 1.5.3

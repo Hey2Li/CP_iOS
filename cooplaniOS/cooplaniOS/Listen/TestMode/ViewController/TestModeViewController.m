@@ -137,6 +137,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    SVProgressShowText(@"加载听力中，约5S内开始，请稍后...");
     [self initWithView];
     [self.view setBackgroundColor:UIColorFromRGB(0xf7f7f7)];
     [self loadData];
@@ -144,7 +145,11 @@
     _NoCorrectInt = 0;
     [self initWithNavi];
     [self.player play];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(cacheSuccess) name:@"cacheSuccess" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playFinished:) name:@"playFinished" object:nil];
+}
+- (void)cacheSuccess{
+    SVProgressHiden();
 }
 - (void)initWithNavi{
     self.navigationItem.hidesBackButton = YES;

@@ -35,6 +35,10 @@
     [self.view addSubview:tableView];
     tableView.tableFooterView = [UIView new];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loadData) name:kLoadListenTraining object:nil];
+    tableView.ly_emptyView = [LTEmpty NoNetworkEmpty:^{
+        [self loadData];
+    }];
+    tableView.ly_emptyView.emptyViewIsCompleteCoverSuperView = YES;//完全覆盖父视图，背景色默认为浅白色，可自行设置
     self.myTableView = tableView;
 }
 - (void)loadData{
@@ -43,13 +47,16 @@
             if (result == LTHttpResultSuccess) {
                 [self.myTableView reloadData];
             }else{
+                [self.myTableView ly_showEmptyView];
             }
-            }];
+        }];
         [LTHttpManager getCategoryTestNumWithUserId:IS_USER_ID Type:@"2" Testpaper_kind:@"1Y" Complete:^(LTHttpResult result, NSString *message, id data) {
             if (result == LTHttpResultSuccess) {
                 NSDictionary *categoryDict = data[@"responseData"];
                 _categoryDict = categoryDict;
                 [self.myTableView reloadData];
+            }else{
+                [self.myTableView ly_showEmptyView];
             }
         }];
     }else{
@@ -91,7 +98,6 @@
     if (section < 3) {
         // Background color
         view.tintColor = [UIColor whiteColor];
-        
         // Text Color
         UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
         [header.textLabel setTextColor:[UIColor blackColor]];

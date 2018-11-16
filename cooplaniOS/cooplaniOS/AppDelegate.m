@@ -18,6 +18,7 @@
 #import <UMShare/UMShare.h>
 #import <UMAnalytics/MobClick.h>
 #import <UMCommon/UMCommon.h>
+#import <Bugly/Bugly.h>
 #import <AVFoundation/AVFoundation.h>
 #import "WXApi.h"
 #import "WXApiManager.h"
@@ -219,6 +220,7 @@
     AVAudioSession *avSession = [AVAudioSession sharedInstance];
     [avSession setCategory:AVAudioSessionCategoryPlayback error:nil];
     [avSession setActive:YES error:nil];
+    [Bugly startWithAppId:@"52b139fbed"];
     //JRDB数据库注册
     [[JRDBMgr shareInstance] registerClazzes:@[
                                                [DownloadFileModel class],

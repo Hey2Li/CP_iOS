@@ -103,8 +103,8 @@
     enStr = [enStr stringByReplacingOccurrencesOfString:@" " withString:@""];
     NSString *amStr = dataDict[@"ph_am"];
     amStr = [amStr stringByReplacingOccurrencesOfString:@" " withString:@""];
-    self.AmYinBiaoLb.text = [NSString stringWithFormat:@"美[%@]",amStr];
-    self.enYinBiaoLb.text = [NSString stringWithFormat:@"英[%@]",enStr];
+    self.AmYinBiaoLb.text = [NSString stringWithFormat:@"美[%@]",amStr ? amStr : @""];
+    self.enYinBiaoLb.text = [NSString stringWithFormat:@"英[%@]",enStr ? enStr : @""];
     if ([dataDict[@"ph_am_mp3"] isEqualToString:@""]) {
         self.playEn.hidden = YES;
         self.playAm.hidden = YES;
@@ -119,15 +119,15 @@
         NSArray *arr = dict[@"means"];
         [str appendString:[NSString stringWithFormat:@"\n%@%@",dict[@"part"],[arr componentsJoinedByString:@","]]];
     }
-    self.explainLb.text = str;
+    self.explainLb.text = str ? str : @"";
 }
 - (void)setModel:(ReciteWordModel *)model{
     _model = model;
     _isFindWord = NO;
-    self.wordNameLb.text = model.word;
+    self.wordNameLb.text = model.word ? model.word : @"";
     self.AmYinBiaoLb.text = [NSString stringWithFormat:@"美[%@]",model.us_soundmark];
     self.enYinBiaoLb.text = [NSString stringWithFormat:@"英[%@]",model.uk_soundmark];
-    self.explainLb.text = model.ex;
+    self.explainLb.text = model.ex ? model.ex : @"";
 }
 - (void)playVocieWithUrl:(NSString *)url{
     if (url) {

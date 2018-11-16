@@ -44,7 +44,6 @@
 		9B1D31C320735804007674CF /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1D31C220735804007674CF /* LeftViewController.m */; };
 		9B1D31CE2073683A007674CF /* MyNoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1D31CD2073683A007674CF /* MyNoteViewController.m */; };
 		9B1D31D120736846007674CF /* MyCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1D31D020736846007674CF /* MyCollectionViewController.m */; };
-		9B1D31D420736856007674CF /* WrongTopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1D31D320736856007674CF /* WrongTopicViewController.m */; };
 		9B1D31D720736866007674CF /* MyDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1D31D620736866007674CF /* MyDownloadViewController.m */; };
 		9B1EDCE0208891BA0033183F /* ListenTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9B1EDCDE208891BA0033183F /* ListenTableViewCell.m */; };
 		9B1EDCE1208891BA0033183F /* ListenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9B1EDCDF208891BA0033183F /* ListenTableViewCell.xib */; };
@@ -338,8 +337,6 @@
 		9B1D31CD2073683A007674CF /* MyNoteViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyNoteViewController.m; sourceTree = "<group>"; };
 		9B1D31CF20736846007674CF /* MyCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyCollectionViewController.h; sourceTree = "<group>"; };
 		9B1D31D020736846007674CF /* MyCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyCollectionViewController.m; sourceTree = "<group>"; };
-		9B1D31D220736856007674CF /* WrongTopicViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WrongTopicViewController.h; sourceTree = "<group>"; };
-		9B1D31D320736856007674CF /* WrongTopicViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WrongTopicViewController.m; sourceTree = "<group>"; };
 		9B1D31D520736866007674CF /* MyDownloadViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyDownloadViewController.h; sourceTree = "<group>"; };
 		9B1D31D620736866007674CF /* MyDownloadViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyDownloadViewController.m; sourceTree = "<group>"; };
 		9B1EDCDD208891BA0033183F /* ListenTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListenTableViewCell.h; sourceTree = "<group>"; };
@@ -956,15 +953,6 @@
 			path = Collection;
 			sourceTree = "<group>";
 		};
-		9B1D31CA207367F4007674CF /* WrongTopic */ = {
-			isa = PBXGroup;
-			children = (
-				9B1D31D220736856007674CF /* WrongTopicViewController.h */,
-				9B1D31D320736856007674CF /* WrongTopicViewController.m */,
-			);
-			path = WrongTopic;
-			sourceTree = "<group>";
-		};
 		9B1D31CB20736800007674CF /* Download */ = {
 			isa = PBXGroup;
 			children = (
@@ -1526,7 +1514,6 @@
 				9B135CCC207CD8850040A883 /* Network */,
 				9BC1D6B220738393007D88EF /* Utils */,
 				9B1D31CB20736800007674CF /* Download */,
-				9B1D31CA207367F4007674CF /* WrongTopic */,
 				9B1D31C9207367E0007674CF /* Collection */,
 				9B1D31C8207367D5007674CF /* Note */,
 				9B1D31C7207363C4007674CF /* Base */,
@@ -2034,7 +2021,6 @@
 				9BF4CF3A2148AFE800BFBFFF /* ListenTrainingViewController.m in Sources */,
 				9B54EC4221424950007DE1B5 /* NoKnowFirstPageCell.m in Sources */,
 				9B0A7A86218942ED00D7B465 /* ReadTestListViewController.m in Sources */,
-				9B1D31D420736856007674CF /* WrongTopicViewController.m in Sources */,
 				9B16B08F20905BF100094EE7 /* PracticeModeViewController.m in Sources */,
 				9B1D31D720736866007674CF /* MyDownloadViewController.m in Sources */,
 				9B16C50621702F3D00A72236 /* ReadSBOptionsCCell.m in Sources */,

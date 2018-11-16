@@ -239,6 +239,7 @@
     
     [takePaperBtn addTarget:self action:@selector(takePaperClick:) forControlEvents:UIControlEventTouchUpInside];
 }
+#pragma mark 交卷
 - (void)takePaperClick:(UIButton *)btn{
     LTAlertView *finishView = [[LTAlertView alloc]initWithTitle:@"确定交卷吗" sureBtn:@"交卷" cancleBtn:@"再检查下" ];
     finishView.resultIndex = ^(NSInteger index) {
@@ -249,7 +250,6 @@
         }
         [LTHttpManager addOnlyTestWithUserId:IS_USER_ID TestPaperId:@([self.readCategoryId integerValue]) Type:@"2" Testpaper_type:@"4-D" Complete:^(LTHttpResult result, NSString *message, id data) {
             if (result == LTHttpResultSuccess) {
-                NSLog(@"%d", _correctInt);
                 ReadSBResultViewController *vc = [ReadSBResultViewController new];
                 vc.userTime = self.timeLb.text;
                 vc.questionsArray = self.readSbModel.Options;

@@ -41,6 +41,10 @@
     [self initWithView];
     [self loadData];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(loadData) name:kLoadWordHomePageData object:nil];
+    self.myTableView.ly_emptyView = [LTEmpty NoNetworkEmpty:^{
+        [self loadData];
+    }];
+    self.myTableView.ly_emptyView.emptyViewIsCompleteCoverSuperView = YES;//完全覆盖父视图，背景色默认为浅白色，可自行设置
 }
 - (void)loadData{
     NSString *wordbookId = [[NSUserDefaults standardUserDefaults]objectForKey:kWordBookId];
@@ -59,13 +63,15 @@
                 }
             }];
         }else{
-            
+            [self.myTableView ly_showEmptyView];
         }
     }];
     [LTHttpManager findOpenBookWithUser_id:IS_USER_ID ? IS_USER_ID : @"" Complete:^(LTHttpResult result, NSString *message, id data) {
         if (LTHttpResultSuccess == result) {
             self.wordbookArray = data[@"responseData"];
             [self.myTableView reloadData];
+        }else{
+            [self.myTableView ly_showEmptyView];
         }
     }];
 //    [LTHttpManager getAllWordbookComplete:^(LTHttpResult result, NSString *message, id data) {
@@ -77,6 +83,8 @@
     [LTHttpManager findWordsWithUserId:IS_USER_ID Complete:^(LTHttpResult result, NSString *message, id data) {
         if (LTHttpResultSuccess == result) {
            self.noKnowArray = data[@"responseData"];
+        }else{
+            [self.myTableView ly_showEmptyView];
         }
     }];
 }

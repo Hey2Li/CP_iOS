@@ -10,7 +10,6 @@
 #import "MyNoteViewController.h"
 #import "MyCollectionViewController.h"
 #import "MyDownloadViewController.h"
-#import "WrongTopicViewController.h"
 #import "LoginViewController.h"
 #import "LeftViweTableViewCell.h"
 #import "NoContentViewController.h"

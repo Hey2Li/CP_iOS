@@ -144,6 +144,7 @@
     [bottomView.layer setShadowColor:[UIColor blackColor].CGColor];
     [bottomView.layer setShadowOffset:CGSizeMake(0, 3)];
 }
+#pragma mark 分数说明
 - (void)scoreWhyBtnClick:(UIButton *)btn{
     //显示分数说明
     [self.view addSubview:self.scoreWhyImageView];
@@ -154,6 +155,13 @@
         make.width.equalTo(@160);
     }];
     self.scoreWhyImageView.hidden = !self.scoreWhyImageView.hidden;
+}
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    CGPoint point = [[touches anyObject] locationInView:self.view];
+    point = [self.scoreWhyImageView.layer convertPoint:point fromLayer:self.view.layer];
+    if (![self.scoreWhyImageView.layer containsPoint:point]) {
+        self.scoreWhyImageView.hidden = YES;
+    }
 }
 #pragma mark 继续
 - (void)continueBtnClick:(UIButton *)btn{
